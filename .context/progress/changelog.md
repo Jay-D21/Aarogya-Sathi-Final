@@ -1,4 +1,10 @@
-﻿# Changelog
+# Changelog
+
+## 2026-10-24 (Jayesh — Session 31: Play Store Phone Mockups & Listing Assets Suite)
+- [Jayesh] Generated photorealistic smartphone frames around real application screenshots:
+  - Upgraded Feature Graphic (`1024x500` PNG/JPEG) with dual phone mockups showcasing Home Dashboard + AI Chat alongside ICMR value proposition copy.
+  - Generated complete 5-asset Google Play Store Phone Listing Screenshots suite (`1080x2400` PNGs) with branded gradient backdrops, category badges, and descriptive promotional titles in `docs/brand/playstore_screenshots/`.
+  - Synced assets to project root and `docs/brand/`.
 
 ## 2026-10-24 (Jayesh — Session 30: ASLogo.svg Full-System Brand Identity & Play Store Assets)
 - [Jayesh] Deployed new Google Health Sliced Heart & Companion Logo (`ASLogo.svg`):
@@ -417,3 +423,4 @@
 - [Developer] Project initialized with iLabs context system
 
 _Format: [Developer] What was done (PR #XX)_
+<!-- dev-log: 2026-05-28T19:45:31 -->
