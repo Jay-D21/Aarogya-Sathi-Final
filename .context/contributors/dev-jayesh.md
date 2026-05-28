@@ -69,3 +69,5 @@
 - **2026-09-30 (Session 12)**: Built intent.py, tools.py, insights.py, session.py. Rewrote pipeline.py to agentic flow. Added user_id to ChatRequest. Added /api/session/{user_id}/insights. Fixed language selector persistence. Removed dead deps. Integration test passed.
 - **2026-09-30 (Session 11)**: Multi-key rotation, Hinglish optimization, context styling, agentic roadmap.
 - **2026-09-27 (Session 10)**: Audit, cleanup, honest README.
+
+<!-- dev-log: 2026-05-28T16:50:01 -->
