@@ -4,10 +4,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../config/api_config.dart';
 
 class ApiService {
-  static const _storage = FlutterSecureStorage();
+    // Secure storage instance – persists tokens across app restarts using
+  // platform Keystore (Android) / Keychain (iOS). Never stored in plain prefs.
+static const _storage = FlutterSecureStorage();
   static String? _token;
 
-  static Future<void> setToken(String token) async {
+  
+  /// Persists [token] to secure storage and updates the in-memory cache.
+  /// Called after successful login and token refresh.
+static Future<void> setToken(String token) async {
     _token = token;
     await _storage.write(key: 'access_token', value: token);
   }
@@ -17,7 +22,10 @@ class ApiService {
     return _token;
   }
 
-  static Future<void> clearToken() async {
+  
+  /// Clears both access and refresh tokens from memory and secure storage.
+  /// Invoke on explicit logout or when refresh token is rejected (401 chain).
+static Future<void> clearToken() async {
     _token = null;
     await _storage.delete(key: 'access_token');
     await _storage.delete(key: 'refresh_token');
@@ -31,7 +39,10 @@ class ApiService {
     return await _storage.read(key: 'refresh_token');
   }
 
-  static Map<String, String> _headers() {
+  
+  // Build request headers, injecting Bearer token when authenticated.
+  // Authorization header is omitted for anonymous endpoints (login, register).
+static Map<String, String> _headers() {
     final h = {'Content-Type': 'application/json'};
     if (_token != null) h['Authorization'] = 'Bearer $_token';
     return h;
@@ -57,6 +68,8 @@ class ApiService {
               await setRefreshToken(data['refresh_token']);
             }
             _token = data['access_token'];
+                        // Token refreshed successfully – replay the original request
+            // with the new access token now in the Authorization header.
             resp = await reqFunc(); // retry original request
           } else {
             await clearToken();
