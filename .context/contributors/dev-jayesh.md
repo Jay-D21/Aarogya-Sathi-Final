@@ -71,3 +71,5 @@
 - **2026-09-27 (Session 10)**: Audit, cleanup, honest README.
 
 <!-- dev-log: 2026-05-28T16:50:01 -->
+
+<!-- dev-log: 2026-05-29T14:30:35 -->
