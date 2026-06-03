@@ -58,3 +58,5 @@ https://jay-d21.github.io/Aarogya-Sathi-Final/privacy-policy.html
 <!-- dev-log: 2026-05-31T12:20:07 -->
 
 <!-- dev-log: 2026-06-02T13:46:37 -->
+
+<!-- dev-log: 2026-06-03T14:11:19 -->
