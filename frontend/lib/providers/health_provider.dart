@@ -5,21 +5,30 @@ import '../services/api_service.dart';
 import '../services/health_alert_service.dart';
 
 class HealthProvider extends ChangeNotifier {
-  static const _kCache = 'health_records_cache_v1';
+    // SharedPreferences key for the local health record cache.
+  // Versioned so stale data is not read after schema changes.
+static const _kCache = 'health_records_cache_v1';
 
   bool _isLoading = false;
   List<Map<String, dynamic>> _records = [];
   Map<String, dynamic>? _lastBPStatus;
   Map<String, dynamic>? _lastSugarStatus;
 
-  bool get isLoading      => _isLoading;
+  
+  // ── Public state getters ────────────────────────────────────────────────
+bool get isLoading      => _isLoading;
   List<Map<String, dynamic>> get records => List.unmodifiable(_records);
   Map<String, dynamic>? get lastBPStatus    => _lastBPStatus;
   Map<String, dynamic>? get lastSugarStatus => _lastSugarStatus;
 
   // ── Load records ──────────────────────────────────────────────────────────
 
-  Future<void> loadRecords({String? type, int days = 30}) async {
+  
+  /// Fetches health records from the backend and caches them locally.
+  ///
+  /// Falls back to the cached snapshot when offline so the UI always
+  /// shows the last known data rather than an empty state.
+Future<void> loadRecords({String? type, int days = 30}) async {
     _isLoading = true;
 
     // Load from local cache so UI is never empty
