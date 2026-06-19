@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_service.dart';
 
+/// Manages authentication state including login, registration, token
+/// refresh, and session persistence. Uses [ApiService] for network calls
+/// and [FlutterSecureStorage] indirectly via [ApiService] for token storage.
 class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool _isLoggedIn = false;
