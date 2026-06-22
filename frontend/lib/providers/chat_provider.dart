@@ -22,6 +22,9 @@ class ChatMessage {
   });
 }
 
+/// Manages AI chat conversation state including message history,
+/// streaming token handling, and Gemini API interaction.
+/// Persists conversation history across sessions via SharedPreferences.
 class ChatProvider extends ChangeNotifier {
   // Demo fallback responses — hardcoded ICMR-based answers that protect the
   // presentation if both the backend AND Groq direct APIs are unreachable.
