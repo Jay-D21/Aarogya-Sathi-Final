@@ -16,6 +16,13 @@ import '../config/api_config.dart';
 ///
 /// WHY on-device: Zero-budget constraint means no push notification server.
 /// Local notifications work offline, cost nothing, and keep data private (DPDP).
+/// Monitors health vitals and environmental data to fire timely
+/// Android notifications when ICMR-defined thresholds are breached.
+///
+/// Channels:
+///   • vital_alerts   – critical BP, glucose, SpO2, HR alerts
+///   • env_alerts     – AQI hazard and pollen warnings
+///   • insight_alerts – daily AI-generated health insights
 class HealthAlertService {
   static final _plugin = FlutterLocalNotificationsPlugin();
 
