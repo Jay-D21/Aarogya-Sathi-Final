@@ -32,6 +32,9 @@ class SyncResult {
   });
 }
 
+/// Aggregates activity data from Health Connect, on-device pedometer,
+/// and location services. Provides step count, active calories, heart
+/// rate, and sleep metrics with offline-first caching.
 class FitnessProvider extends ChangeNotifier {
   // ── SharedPreferences keys ──────────────────────────────────────────────────
   static const _kDate       = 'fit_date';          // 'YYYY-MM-DD'
