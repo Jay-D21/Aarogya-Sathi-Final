@@ -3,6 +3,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+/// Initialises and manages the three Android notification channels
+/// used by Aarogya Sathi. All channels are created at app startup so
+/// users can independently control each category in Android settings.
 class NotificationService {
   static final _plugin = FlutterLocalNotificationsPlugin();
 
