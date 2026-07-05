@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:health/health.dart';
 import '../models/wearable_data_model.dart';
 
+/// Abstracts all Health Connect (Android 14+) read/write operations.
+/// Falls back to manual entry when Health Connect is unavailable or
+/// permissions have not been granted by the user.
 class HealthConnectService {
   final Health _health = Health();
   bool _configured = false;
