@@ -3,6 +3,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Wraps Geolocator and Geocoding to provide city-level location data
+/// for AQI and weather-aware health tips. Caches last known coordinates
+/// to avoid blocking the UI on repeated GPS requests.
 class LocationService {
   static const _kCachedCity = 'location_cached_city';
 
