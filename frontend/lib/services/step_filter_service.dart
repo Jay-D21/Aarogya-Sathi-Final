@@ -1,5 +1,8 @@
 /// Intelligent gait and cadence filter to prevent false-positive step counts
 /// caused by idle hand movements, desk typing, or phone fidgeting.
+/// Filters raw accelerometer data to remove spurious step counts from
+/// vehicle vibration and pocket movements. Uses a cadence window of
+/// 0.5 steps/sec minimum to qualify walking activity.
 class StepFilterService {
   final int minBoutSteps;
   final double maxCadenceHz;
