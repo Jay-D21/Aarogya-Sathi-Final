@@ -4,6 +4,9 @@
 /// - production: Deployed FastAPI backend on Render
 /// - emulator: Android emulator (10.0.2.2:8000 maps to host localhost)
 /// - physical: Local network IP address for physical device debugging
+/// Central configuration for all network settings.
+/// [baseUrl] switches automatically between local dev and production
+/// endpoints based on the build flavour.
 class ApiConfig {
   // Switch to _Environment.production before committing / deploying
   static const _Environment _environment = _Environment.production;
