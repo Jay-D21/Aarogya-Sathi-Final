@@ -1,6 +1,9 @@
 import 'package:intl/intl.dart';
 
 /// Categories supported in the local medical records vault.
+/// Represents a single encrypted medical document in the File Vault.
+/// Files are stored with AES-256 encryption on device and never
+/// transmitted to the backend in plaintext.
 class MedicalFileCategory {
   static const String prescription = 'Prescription';
   static const String labReport = 'Lab Report';
