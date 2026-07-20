@@ -1,0 +1,271 @@
+﻿{
+  "status": "success",
+  "results_count": 1,
+  "papers": [
+    {
+      "id": "2210.02627v1",
+      "title": "Improving the Domain Adaptation of Retrieval Augmented Generation (RAG) Models for Open Domain Question Answering",
+      "pdf_url": "https://arxiv.org/pdf/2210.02627v1",
+      "summary": "Retrieval Augment Generation (RAG) is a recent advancement in Open-Domain Question Answering (ODQA). RAG has only been trained and explored with a Wikipedia-based external knowledge base and is not optimized for use in other specialized domains such as healthcare and news. In this paper, we evaluate the impact of joint training of the retriever and generator components of RAG for the task of domain adaptation in ODQA. We propose \\textit{RAG-end2end}, an extension to RAG, that can adapt to a domain-specific knowledge base by updating all components of the external knowledge base during training. In addition, we introduce an auxiliary training signal to inject more domain-specific knowledge. This auxiliary signal forces \\textit{RAG-end2end} to reconstruct a given sentence by accessing the relevant information from the external knowledge base. Our novel contribution is unlike RAG, RAG-end2end does joint training of the retriever and generator for the end QA task and domain adaptation. We evaluate our approach with datasets from three domains: COVID-19, News, and Conversations, and achieve significant performance improvements compared to the original RAG model. Our work has been open-sourced through the Huggingface Transformers library, attesting to our work's credibility and technical consistency.",
+      "published": "2022-10-06T01:21:25Z",
+      "comment": "This paper is awaiting publication at Transactions of the Association for Computational Linguistics. This is a pre-MIT Press publication version. For associated huggingface transformers code, see https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag-end2end-retriever",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Shamane Siriwardhana",
+        "Rivindu Weerasekera",
+        "Elliott Wen",
+        "Tharindu Kaluarachchi",
+        "Rajib Rana",
+        "Suranga Nanayakkara"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 2,
+  "papers": [
+    {
+      "id": "2210.02627v1",
+      "title": "Improving the Domain Adaptation of Retrieval Augmented Generation (RAG) Models for Open Domain Question Answering",
+      "pdf_url": "https://arxiv.org/pdf/2210.02627v1",
+      "summary": "Retrieval Augment Generation (RAG) is a recent advancement in Open-Domain Question Answering (ODQA). RAG has only been trained and explored with a Wikipedia-based external knowledge base and is not optimized for use in other specialized domains such as healthcare and news. In this paper, we evaluate the impact of joint training of the retriever and generator components of RAG for the task of domain adaptation in ODQA. We propose \\textit{RAG-end2end}, an extension to RAG, that can adapt to a domain-specific knowledge base by updating all components of the external knowledge base during training. In addition, we introduce an auxiliary training signal to inject more domain-specific knowledge. This auxiliary signal forces \\textit{RAG-end2end} to reconstruct a given sentence by accessing the relevant information from the external knowledge base. Our novel contribution is unlike RAG, RAG-end2end does joint training of the retriever and generator for the end QA task and domain adaptation. We evaluate our approach with datasets from three domains: COVID-19, News, and Conversations, and achieve significant performance improvements compared to the original RAG model. Our work has been open-sourced through the Huggingface Transformers library, attesting to our work's credibility and technical consistency.",
+      "published": "2022-10-06T01:21:25Z",
+      "comment": "This paper is awaiting publication at Transactions of the Association for Computational Linguistics. This is a pre-MIT Press publication version. For associated huggingface transformers code, see https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag-end2end-retriever",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Shamane Siriwardhana",
+        "Rivindu Weerasekera",
+        "Elliott Wen",
+        "Tharindu Kaluarachchi",
+        "Rajib Rana",
+        "Suranga Nanayakkara"
+      ]
+    },
+    {
+      "id": "2412.04235v3",
+      "title": "Addressing Hallucinations with RAG and NMISS in Italian Healthcare LLM Chatbots",
+      "pdf_url": "https://arxiv.org/pdf/2412.04235v3",
+      "summary": "I combine detection and mitigation techniques to addresses hallucinations in Large Language Models (LLMs). Mitigation is achieved in a question-answering Retrieval-Augmented Generation (RAG) framework while detection is obtained by introducing the Negative Missing Information Scoring System (NMISS), which accounts for contextual relevance in responses. While RAG mitigates hallucinations by grounding answers in external data, NMISS refines the evaluation by identifying cases where traditional metrics incorrectly flag contextually accurate responses as hallucinations. I use Italian health news articles as context to evaluate LLM performance. Results show that Gemma2 and GPT-4 outperform the other models, with GPT-4 producing answers closely aligned with reference responses. Mid-tier models, such as Llama2, Llama3, and Mistral benefit significantly from NMISS, highlighting their ability to provide richer contextual information. This combined approach offers new insights into the reduction and more accurate assessment of hallucinations in LLMs, with applications in real-world healthcare tasks and other domains.",
+      "published": "2024-12-05T15:11:12Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Maria Paola Priola"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 3,
+  "papers": [
+    {
+      "id": "2210.02627v1",
+      "title": "Improving the Domain Adaptation of Retrieval Augmented Generation (RAG) Models for Open Domain Question Answering",
+      "pdf_url": "https://arxiv.org/pdf/2210.02627v1",
+      "summary": "Retrieval Augment Generation (RAG) is a recent advancement in Open-Domain Question Answering (ODQA). RAG has only been trained and explored with a Wikipedia-based external knowledge base and is not optimized for use in other specialized domains such as healthcare and news. In this paper, we evaluate the impact of joint training of the retriever and generator components of RAG for the task of domain adaptation in ODQA. We propose \\textit{RAG-end2end}, an extension to RAG, that can adapt to a domain-specific knowledge base by updating all components of the external knowledge base during training. In addition, we introduce an auxiliary training signal to inject more domain-specific knowledge. This auxiliary signal forces \\textit{RAG-end2end} to reconstruct a given sentence by accessing the relevant information from the external knowledge base. Our novel contribution is unlike RAG, RAG-end2end does joint training of the retriever and generator for the end QA task and domain adaptation. We evaluate our approach with datasets from three domains: COVID-19, News, and Conversations, and achieve significant performance improvements compared to the original RAG model. Our work has been open-sourced through the Huggingface Transformers library, attesting to our work's credibility and technical consistency.",
+      "published": "2022-10-06T01:21:25Z",
+      "comment": "This paper is awaiting publication at Transactions of the Association for Computational Linguistics. This is a pre-MIT Press publication version. For associated huggingface transformers code, see https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag-end2end-retriever",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Shamane Siriwardhana",
+        "Rivindu Weerasekera",
+        "Elliott Wen",
+        "Tharindu Kaluarachchi",
+        "Rajib Rana",
+        "Suranga Nanayakkara"
+      ]
+    },
+    {
+      "id": "2412.04235v3",
+      "title": "Addressing Hallucinations with RAG and NMISS in Italian Healthcare LLM Chatbots",
+      "pdf_url": "https://arxiv.org/pdf/2412.04235v3",
+      "summary": "I combine detection and mitigation techniques to addresses hallucinations in Large Language Models (LLMs). Mitigation is achieved in a question-answering Retrieval-Augmented Generation (RAG) framework while detection is obtained by introducing the Negative Missing Information Scoring System (NMISS), which accounts for contextual relevance in responses. While RAG mitigates hallucinations by grounding answers in external data, NMISS refines the evaluation by identifying cases where traditional metrics incorrectly flag contextually accurate responses as hallucinations. I use Italian health news articles as context to evaluate LLM performance. Results show that Gemma2 and GPT-4 outperform the other models, with GPT-4 producing answers closely aligned with reference responses. Mid-tier models, such as Llama2, Llama3, and Mistral benefit significantly from NMISS, highlighting their ability to provide richer contextual information. This combined approach offers new insights into the reduction and more accurate assessment of hallucinations in LLMs, with applications in real-world healthcare tasks and other domains.",
+      "published": "2024-12-05T15:11:12Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Maria Paola Priola"
+      ]
+    },
+    {
+      "id": "2601.15429v1",
+      "title": "Domain-Specific Knowledge Graphs in RAG-Enhanced Healthcare LLMs",
+      "pdf_url": "https://arxiv.org/pdf/2601.15429v1",
+      "summary": "Large Language Models (LLMs) generate fluent answers but can struggle with trustworthy, domain-specific reasoning. We evaluate whether domain knowledge graphs (KGs) improve Retrieval-Augmented Generation (RAG) for healthcare by constructing three PubMed-derived graphs: $\\mathbb{G}_1$ (T2DM), $\\mathbb{G}_2$ (Alzheimer's disease), and $\\mathbb{G}_3$ (AD+T2DM). We design two probes: Probe 1 targets merged AD T2DM knowledge, while Probe 2 targets the intersection of $\\mathbb{G}_1$ and $\\mathbb{G}_2$. Seven instruction-tuned LLMs are tested across retrieval sources {No-RAG, $\\mathbb{G}_1$, $\\mathbb{G}_2$, $\\mathbb{G}_1$ + $\\mathbb{G}_2$, $\\mathbb{G}_3$, $\\mathbb{G}_1$+$\\mathbb{G}_2$ + $\\mathbb{G}_3$} and three decoding temperatures. Results show that scope alignment between probe and KG is decisive: precise, scope-matched retrieval (notably $\\mathbb{G}_2$) yields the most consistent gains, whereas indiscriminate graph unions often introduce distractors that reduce accuracy. Larger models frequently match or exceed KG-RAG with a No-RAG baseline on Probe 1, indicating strong parametric priors, whereas smaller/mid-sized models benefit more from well-scoped retrieval. Temperature plays a secondary role; higher values rarely help. We conclude that precision-first, scope-matched KG-RAG is preferable to breadth-first unions, and we outline practical guidelines for graph selection, model sizing, and retrieval/reranking. Code and Data available here - https://github.com/sydneyanuyah/RAGComparison",
+      "published": "2026-01-21T19:55:12Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Sydney Anuyah",
+        "Mehedi Mahmud Kaushik",
+        "Hao Dai",
+        "Rakesh Shiradkar",
+        "Arjan Durresi",
+        "Sunandan Chakraborty"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 4,
+  "papers": [
+    {
+      "id": "2210.02627v1",
+      "title": "Improving the Domain Adaptation of Retrieval Augmented Generation (RAG) Models for Open Domain Question Answering",
+      "pdf_url": "https://arxiv.org/pdf/2210.02627v1",
+      "summary": "Retrieval Augment Generation (RAG) is a recent advancement in Open-Domain Question Answering (ODQA). RAG has only been trained and explored with a Wikipedia-based external knowledge base and is not optimized for use in other specialized domains such as healthcare and news. In this paper, we evaluate the impact of joint training of the retriever and generator components of RAG for the task of domain adaptation in ODQA. We propose \\textit{RAG-end2end}, an extension to RAG, that can adapt to a domain-specific knowledge base by updating all components of the external knowledge base during training. In addition, we introduce an auxiliary training signal to inject more domain-specific knowledge. This auxiliary signal forces \\textit{RAG-end2end} to reconstruct a given sentence by accessing the relevant information from the external knowledge base. Our novel contribution is unlike RAG, RAG-end2end does joint training of the retriever and generator for the end QA task and domain adaptation. We evaluate our approach with datasets from three domains: COVID-19, News, and Conversations, and achieve significant performance improvements compared to the original RAG model. Our work has been open-sourced through the Huggingface Transformers library, attesting to our work's credibility and technical consistency.",
+      "published": "2022-10-06T01:21:25Z",
+      "comment": "This paper is awaiting publication at Transactions of the Association for Computational Linguistics. This is a pre-MIT Press publication version. For associated huggingface transformers code, see https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag-end2end-retriever",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Shamane Siriwardhana",
+        "Rivindu Weerasekera",
+        "Elliott Wen",
+        "Tharindu Kaluarachchi",
+        "Rajib Rana",
+        "Suranga Nanayakkara"
+      ]
+    },
+    {
+      "id": "2412.04235v3",
+      "title": "Addressing Hallucinations with RAG and NMISS in Italian Healthcare LLM Chatbots",
+      "pdf_url": "https://arxiv.org/pdf/2412.04235v3",
+      "summary": "I combine detection and mitigation techniques to addresses hallucinations in Large Language Models (LLMs). Mitigation is achieved in a question-answering Retrieval-Augmented Generation (RAG) framework while detection is obtained by introducing the Negative Missing Information Scoring System (NMISS), which accounts for contextual relevance in responses. While RAG mitigates hallucinations by grounding answers in external data, NMISS refines the evaluation by identifying cases where traditional metrics incorrectly flag contextually accurate responses as hallucinations. I use Italian health news articles as context to evaluate LLM performance. Results show that Gemma2 and GPT-4 outperform the other models, with GPT-4 producing answers closely aligned with reference responses. Mid-tier models, such as Llama2, Llama3, and Mistral benefit significantly from NMISS, highlighting their ability to provide richer contextual information. This combined approach offers new insights into the reduction and more accurate assessment of hallucinations in LLMs, with applications in real-world healthcare tasks and other domains.",
+      "published": "2024-12-05T15:11:12Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Maria Paola Priola"
+      ]
+    },
+    {
+      "id": "2601.15429v1",
+      "title": "Domain-Specific Knowledge Graphs in RAG-Enhanced Healthcare LLMs",
+      "pdf_url": "https://arxiv.org/pdf/2601.15429v1",
+      "summary": "Large Language Models (LLMs) generate fluent answers but can struggle with trustworthy, domain-specific reasoning. We evaluate whether domain knowledge graphs (KGs) improve Retrieval-Augmented Generation (RAG) for healthcare by constructing three PubMed-derived graphs: $\\mathbb{G}_1$ (T2DM), $\\mathbb{G}_2$ (Alzheimer's disease), and $\\mathbb{G}_3$ (AD+T2DM). We design two probes: Probe 1 targets merged AD T2DM knowledge, while Probe 2 targets the intersection of $\\mathbb{G}_1$ and $\\mathbb{G}_2$. Seven instruction-tuned LLMs are tested across retrieval sources {No-RAG, $\\mathbb{G}_1$, $\\mathbb{G}_2$, $\\mathbb{G}_1$ + $\\mathbb{G}_2$, $\\mathbb{G}_3$, $\\mathbb{G}_1$+$\\mathbb{G}_2$ + $\\mathbb{G}_3$} and three decoding temperatures. Results show that scope alignment between probe and KG is decisive: precise, scope-matched retrieval (notably $\\mathbb{G}_2$) yields the most consistent gains, whereas indiscriminate graph unions often introduce distractors that reduce accuracy. Larger models frequently match or exceed KG-RAG with a No-RAG baseline on Probe 1, indicating strong parametric priors, whereas smaller/mid-sized models benefit more from well-scoped retrieval. Temperature plays a secondary role; higher values rarely help. We conclude that precision-first, scope-matched KG-RAG is preferable to breadth-first unions, and we outline practical guidelines for graph selection, model sizing, and retrieval/reranking. Code and Data available here - https://github.com/sydneyanuyah/RAGComparison",
+      "published": "2026-01-21T19:55:12Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Sydney Anuyah",
+        "Mehedi Mahmud Kaushik",
+        "Hao Dai",
+        "Rakesh Shiradkar",
+        "Arjan Durresi",
+        "Sunandan Chakraborty"
+      ]
+    },
+    {
+      "id": "2410.13085v2",
+      "title": "MMed-RAG: Versatile Multimodal RAG System for Medical Vision Language Models",
+      "pdf_url": "https://arxiv.org/pdf/2410.13085v2",
+      "summary": "Artificial Intelligence (AI) has demonstrated significant potential in healthcare, particularly in disease diagnosis and treatment planning. Recent progress in Medical Large Vision-Language Models (Med-LVLMs) has opened up new possibilities for interactive diagnostic tools. However, these models often suffer from factual hallucination, which can lead to incorrect diagnoses. Fine-tuning and retrieval-augmented generation (RAG) have emerged as methods to address these issues. However, the amount of high-quality data and distribution shifts between training data and deployment data limit the application of fine-tuning methods. Although RAG is lightweight and effective, existing RAG-based approaches are not sufficiently general to different medical domains and can potentially cause misalignment issues, both between modalities and between the model and the ground truth. In this paper, we propose a versatile multimodal RAG system, MMed-RAG, designed to enhance the factuality of Med-LVLMs. Our approach introduces a domain-aware retrieval mechanism, an adaptive retrieved contexts selection method, and a provable RAG-based preference fine-tuning strategy. These innovations make the RAG process sufficiently general and reliable, significantly improving alignment when introducing retrieved contexts. Experimental results across five medical datasets (involving radiology, ophthalmology, pathology) on medical VQA and report generation demonstrate that MMed-RAG can achieve an average improvement of 43.8% in the factual accuracy of Med-LVLMs. Our data and code are available in https://github.com/richard-peng-xia/MMed-RAG.",
+      "published": "2024-10-16T23:03:27Z",
+      "comment": "ICLR 2025",
+      "primary_category": "cs.LG",
+      "authors": [
+        "Peng Xia",
+        "Kangyu Zhu",
+        "Haoran Li",
+        "Tianze Wang",
+        "Weijia Shi",
+        "Sheng Wang",
+        "Linjun Zhang",
+        "James Zou",
+        "Huaxiu Yao"
+      ]
+    }
+  ]
+}
+{
+  "status": "success",
+  "results_count": 5,
+  "papers": [
+    {
+      "id": "2210.02627v1",
+      "title": "Improving the Domain Adaptation of Retrieval Augmented Generation (RAG) Models for Open Domain Question Answering",
+      "pdf_url": "https://arxiv.org/pdf/2210.02627v1",
+      "summary": "Retrieval Augment Generation (RAG) is a recent advancement in Open-Domain Question Answering (ODQA). RAG has only been trained and explored with a Wikipedia-based external knowledge base and is not optimized for use in other specialized domains such as healthcare and news. In this paper, we evaluate the impact of joint training of the retriever and generator components of RAG for the task of domain adaptation in ODQA. We propose \\textit{RAG-end2end}, an extension to RAG, that can adapt to a domain-specific knowledge base by updating all components of the external knowledge base during training. In addition, we introduce an auxiliary training signal to inject more domain-specific knowledge. This auxiliary signal forces \\textit{RAG-end2end} to reconstruct a given sentence by accessing the relevant information from the external knowledge base. Our novel contribution is unlike RAG, RAG-end2end does joint training of the retriever and generator for the end QA task and domain adaptation. We evaluate our approach with datasets from three domains: COVID-19, News, and Conversations, and achieve significant performance improvements compared to the original RAG model. Our work has been open-sourced through the Huggingface Transformers library, attesting to our work's credibility and technical consistency.",
+      "published": "2022-10-06T01:21:25Z",
+      "comment": "This paper is awaiting publication at Transactions of the Association for Computational Linguistics. This is a pre-MIT Press publication version. For associated huggingface transformers code, see https://github.com/huggingface/transformers/tree/main/examples/research_projects/rag-end2end-retriever",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Shamane Siriwardhana",
+        "Rivindu Weerasekera",
+        "Elliott Wen",
+        "Tharindu Kaluarachchi",
+        "Rajib Rana",
+        "Suranga Nanayakkara"
+      ]
+    },
+    {
+      "id": "2412.04235v3",
+      "title": "Addressing Hallucinations with RAG and NMISS in Italian Healthcare LLM Chatbots",
+      "pdf_url": "https://arxiv.org/pdf/2412.04235v3",
+      "summary": "I combine detection and mitigation techniques to addresses hallucinations in Large Language Models (LLMs). Mitigation is achieved in a question-answering Retrieval-Augmented Generation (RAG) framework while detection is obtained by introducing the Negative Missing Information Scoring System (NMISS), which accounts for contextual relevance in responses. While RAG mitigates hallucinations by grounding answers in external data, NMISS refines the evaluation by identifying cases where traditional metrics incorrectly flag contextually accurate responses as hallucinations. I use Italian health news articles as context to evaluate LLM performance. Results show that Gemma2 and GPT-4 outperform the other models, with GPT-4 producing answers closely aligned with reference responses. Mid-tier models, such as Llama2, Llama3, and Mistral benefit significantly from NMISS, highlighting their ability to provide richer contextual information. This combined approach offers new insights into the reduction and more accurate assessment of hallucinations in LLMs, with applications in real-world healthcare tasks and other domains.",
+      "published": "2024-12-05T15:11:12Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Maria Paola Priola"
+      ]
+    },
+    {
+      "id": "2601.15429v1",
+      "title": "Domain-Specific Knowledge Graphs in RAG-Enhanced Healthcare LLMs",
+      "pdf_url": "https://arxiv.org/pdf/2601.15429v1",
+      "summary": "Large Language Models (LLMs) generate fluent answers but can struggle with trustworthy, domain-specific reasoning. We evaluate whether domain knowledge graphs (KGs) improve Retrieval-Augmented Generation (RAG) for healthcare by constructing three PubMed-derived graphs: $\\mathbb{G}_1$ (T2DM), $\\mathbb{G}_2$ (Alzheimer's disease), and $\\mathbb{G}_3$ (AD+T2DM). We design two probes: Probe 1 targets merged AD T2DM knowledge, while Probe 2 targets the intersection of $\\mathbb{G}_1$ and $\\mathbb{G}_2$. Seven instruction-tuned LLMs are tested across retrieval sources {No-RAG, $\\mathbb{G}_1$, $\\mathbb{G}_2$, $\\mathbb{G}_1$ + $\\mathbb{G}_2$, $\\mathbb{G}_3$, $\\mathbb{G}_1$+$\\mathbb{G}_2$ + $\\mathbb{G}_3$} and three decoding temperatures. Results show that scope alignment between probe and KG is decisive: precise, scope-matched retrieval (notably $\\mathbb{G}_2$) yields the most consistent gains, whereas indiscriminate graph unions often introduce distractors that reduce accuracy. Larger models frequently match or exceed KG-RAG with a No-RAG baseline on Probe 1, indicating strong parametric priors, whereas smaller/mid-sized models benefit more from well-scoped retrieval. Temperature plays a secondary role; higher values rarely help. We conclude that precision-first, scope-matched KG-RAG is preferable to breadth-first unions, and we outline practical guidelines for graph selection, model sizing, and retrieval/reranking. Code and Data available here - https://github.com/sydneyanuyah/RAGComparison",
+      "published": "2026-01-21T19:55:12Z",
+      "primary_category": "cs.CL",
+      "authors": [
+        "Sydney Anuyah",
+        "Mehedi Mahmud Kaushik",
+        "Hao Dai",
+        "Rakesh Shiradkar",
+        "Arjan Durresi",
+        "Sunandan Chakraborty"
+      ]
+    },
+    {
+      "id": "2410.13085v2",
+      "title": "MMed-RAG: Versatile Multimodal RAG System for Medical Vision Language Models",
+      "pdf_url": "https://arxiv.org/pdf/2410.13085v2",
+      "summary": "Artificial Intelligence (AI) has demonstrated significant potential in healthcare, particularly in disease diagnosis and treatment planning. Recent progress in Medical Large Vision-Language Models (Med-LVLMs) has opened up new possibilities for interactive diagnostic tools. However, these models often suffer from factual hallucination, which can lead to incorrect diagnoses. Fine-tuning and retrieval-augmented generation (RAG) have emerged as methods to address these issues. However, the amount of high-quality data and distribution shifts between training data and deployment data limit the application of fine-tuning methods. Although RAG is lightweight and effective, existing RAG-based approaches are not sufficiently general to different medical domains and can potentially cause misalignment issues, both between modalities and between the model and the ground truth. In this paper, we propose a versatile multimodal RAG system, MMed-RAG, designed to enhance the factuality of Med-LVLMs. Our approach introduces a domain-aware retrieval mechanism, an adaptive retrieved contexts selection method, and a provable RAG-based preference fine-tuning strategy. These innovations make the RAG process sufficiently general and reliable, significantly improving alignment when introducing retrieved contexts. Experimental results across five medical datasets (involving radiology, ophthalmology, pathology) on medical VQA and report generation demonstrate that MMed-RAG can achieve an average improvement of 43.8% in the factual accuracy of Med-LVLMs. Our data and code are available in https://github.com/richard-peng-xia/MMed-RAG.",
+      "published": "2024-10-16T23:03:27Z",
+      "comment": "ICLR 2025",
+      "primary_category": "cs.LG",
+      "authors": [
+        "Peng Xia",
+        "Kangyu Zhu",
+        "Haoran Li",
+        "Tianze Wang",
+        "Weijia Shi",
+        "Sheng Wang",
+        "Linjun Zhang",
+        "James Zou",
+        "Huaxiu Yao"
+      ]
+    },
+    {
+      "id": "2605.14488v1",
+      "title": "Deepchecks: Evaluating Retrieval-Augmented Generation (RAG)",
+      "pdf_url": "https://arxiv.org/pdf/2605.14488v1",
+      "summary": "Large Language Models (LLMs) augmented with Retrieval-Augmented Generation (RAG) techniques are revolutionizing applications across multiple domains, such as healthcare, finance, and customer service. Despite their potential, evaluating RAG systems remains a complex challenge due to the stochastic nature of generated outputs and the intricate interplay between retrieval and generation components. This paper introduces Deepchecks, a comprehensive framework tailored for evaluating RAG applications. Deepchecks' evaluation framework addresses RAG applications evaluation through a multi-faceted approach, root cause analysis and production monitoring. By ensuring alignment with application-specific requirements, Deepchecks framework provides a robust foundation for assessing reliability, relevance, and user satisfaction in RAG systems.",
+      "published": "2026-05-14T07:27:50Z",
+      "primary_category": "cs.AI",
+      "authors": [
+        "Assaf Gerner",
+        "Netta Madvil",
+        "Nadav Barak",
+        "Alex Zaikman",
+        "Jonatan Liberman",
+        "Liron Hamra",
+        "Rotem Brazilay",
+        "Shay Tsadok",
+        "Yaron Friedman",
+        "Neal Harow",
+        "Noam Bresler",
+        "Shir Chorev",
+        "Philip Tannor",
+        "Lior Rokach"
+      ]
+    }
+  ]
+}
