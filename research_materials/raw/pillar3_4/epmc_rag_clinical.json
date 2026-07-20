@@ -1,0 +1,4639 @@
+{
+  "hitCount": 5218,
+  "nextCursorMark": "AoJwwLa+jZ8DKDU1ODU4MzMy",
+  "results": [
+    {
+      "id": "42165009",
+      "source": "MED",
+      "pmid": "42165009",
+      "pmcid": "PMC13184051",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13184051"
+        ]
+      },
+      "doi": "10.1007/s11571-026-10464-w",
+      "title": "The AHEPA EEG benchmark: setting the standard for machine learning in dementia diagnosis, a scoping review.",
+      "authorString": "Miltiadous A, Ntetska A, Aspiotis V, Moustakli E, Tsipouras MG, Tzallas AT, Giannakeas N, Glavas E, Angelidis P, Tzimourta KD.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Miltiadous A",
+            "firstName": "Andreas",
+            "lastName": "Miltiadous",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Informatics and Telecommunications, University of Ioannina, Kostakioi, Arta, 47100 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Ntetska A",
+            "firstName": "Aimilia",
+            "lastName": "Ntetska",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Electrical and Computer Engineering, University of Western Macedonia, Kozani, 50100 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Aspiotis V",
+            "firstName": "Vasileios",
+            "lastName": "Aspiotis",
+            "initials": "V",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Informatics and Telecommunications, University of Ioannina, Kostakioi, Arta, 47100 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Moustakli E",
+            "firstName": "Efthalia",
+            "lastName": "Moustakli",
+            "initials": "E",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Laboratory of Medical Genetics in Clinical Practice, Faculty of Medicine, School of Health Sciences, University of Ioannina, Ioannina, 45110 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Tsipouras MG",
+            "firstName": "Markos G",
+            "lastName": "Tsipouras",
+            "initials": "MG",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Electrical and Computer Engineering, University of Western Macedonia, Kozani, 50100 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Tzallas AT",
+            "firstName": "Alexandros T",
+            "lastName": "Tzallas",
+            "initials": "AT",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Informatics and Telecommunications, University of Ioannina, Kostakioi, Arta, 47100 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Giannakeas N",
+            "firstName": "Nikolaos",
+            "lastName": "Giannakeas",
+            "initials": "N",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Informatics and Telecommunications, University of Ioannina, Kostakioi, Arta, 47100 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Glavas E",
+            "firstName": "Euripidis",
+            "lastName": "Glavas",
+            "initials": "E",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Informatics and Telecommunications, University of Ioannina, Kostakioi, Arta, 47100 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Angelidis P",
+            "firstName": "Pantelis",
+            "lastName": "Angelidis",
+            "initials": "P",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Electrical and Computer Engineering, University of Western Macedonia, Kozani, 50100 Greece."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Tzimourta KD",
+            "firstName": "Katerina D",
+            "lastName": "Tzimourta",
+            "initials": "KD",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Electrical and Computer Engineering, University of Western Macedonia, Kozani, 50100 Greece."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "1",
+        "volume": "20",
+        "journalIssueId": 4047609,
+        "dateOfPublication": "2026 Dec",
+        "monthOfPublication": 12,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-12-01",
+        "journal": {
+          "title": "Cognitive neurodynamics",
+          "medlineAbbreviation": "Cogn Neurodyn",
+          "nlmid": "101306907",
+          "isoabbreviation": "Cogn Neurodyn",
+          "essn": "1871-4099",
+          "issn": "1871-4080"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "95",
+      "abstractText": "Accurate and reproducible electroencephalography (EEG)-based classification of dementia remains a key challenge in computational neurodiagnostics. The open-access AHEPA dataset has become the most commonly used benchmark for Alzheimer's disease (AD) and Frontotemporal dementia (FTD) classification, yet reported results vary widely due to methodological inconsistencies. This study presents the first systematic and quantitative benchmark review of all published machine learning approaches applied to the AHEPA dataset. Forty-six studies were reviewed and stratified into three validity tiers, with Validity 1 representing the highest methodological rigor and Validity 3 the lowest.According to their evaluation rigor: (1) subject-level validation (e.g., Leave-One-Subject-Out cross-validation, LOSO-CV), (2) subject-level train/test splits, and (3) epoch-level k-fold cross-validation. Performance metrics were normalized across classification problems. The analysis revealed that methodological rigor is inversely correlated with reported accuracy: for AD versus Cognitively Normal controls, mean accuracy decreased from 90.81% overall to 82.11% in Validity-1 studies; for FTD versus controls, accuracy dropped from 86.53% to 75.18%. Linear regression analyses demonstrated that weaker validation protocols were associated with systematic increases of 7-10% points in reported accuracy, explaining more than half of the observed performance variance. Deep and hybrid models reported the highest nominal accuracies, but under proper validation, traditional algorithms performed comparably, indicating that data leakage often drives apparent improvements. The review also highlights the lack of cross-configuration generalization and the urgent need for adaptive, montage-independent methodologies. Overall, this benchmark establishes the first reproducible reference framework for EEG-based dementia classification on the AHEPA dataset, providing quantitative baselines and validity criteria against which all future studies should be evaluated.",
+      "affiliation": "Department of Informatics and Telecommunications, University of Ioannina, Kostakioi, Arta, 47100 Greece.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Electroencephalography",
+          "Alzheimer's disease",
+          "Machine Learning",
+          "Benchmark",
+          "Public Dataset",
+          "Ahepa"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1007/s11571-026-10464-w"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13184051"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13184051?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-05-21",
+      "dateOfCreation": "2026-05-21",
+      "firstIndexDate": "2026-05-21",
+      "fullTextReceivedDate": "2026-05-21",
+      "dateOfRevision": "2026-05-21",
+      "electronicPublicationDate": "2026-05-18",
+      "firstPublicationDate": "2026-05-18"
+    },
+    {
+      "id": "42005095",
+      "source": "MED",
+      "pmid": "42005095",
+      "pmcid": "PMC13087713",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13087713"
+        ]
+      },
+      "doi": "10.1016/j.jdsr.2026.03.001",
+      "title": "Clinician-accessible automated machine learning in oral healthcare: A systematic review.",
+      "authorString": "Shujaat S, Riaz M, Almutairi H, Alanazi H, Altalhi L, Alenazi N, Bin Osayl H, Philip MR, Aboalela AA, Ma H.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Shujaat S",
+            "firstName": "Sohaib",
+            "lastName": "Shujaat",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "King Abdullah International Medical Research Center, Department of Maxillofacial Surgery & Diagnostic Sciences, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Riaz M",
+            "firstName": "Marryam",
+            "lastName": "Riaz",
+            "initials": "M",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Physiology, Azra Naheed Dental College, Superior University, Lahore, Pakistan."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Almutairi H",
+            "firstName": "Hawazin",
+            "lastName": "Almutairi",
+            "initials": "H",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "King Abdullah International Medical Research Center, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Alanazi H",
+            "firstName": "Hala",
+            "lastName": "Alanazi",
+            "initials": "H",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "King Abdullah International Medical Research Center, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Altalhi L",
+            "firstName": "Lujain",
+            "lastName": "Altalhi",
+            "initials": "L",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "King Abdullah International Medical Research Center, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Alenazi N",
+            "firstName": "Naden",
+            "lastName": "Alenazi",
+            "initials": "N",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "King Abdullah International Medical Research Center, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Bin Osayl H",
+            "firstName": "Haya",
+            "lastName": "Bin Osayl",
+            "initials": "H",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "King Abdullah International Medical Research Center, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Philip MR",
+            "firstName": "Manju Roby",
+            "lastName": "Philip",
+            "initials": "MR",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "King Abdullah International Medical Research Center, Department of Maxillofacial Surgery & Diagnostic Sciences, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Aboalela AA",
+            "firstName": "Ali Anwar",
+            "lastName": "Aboalela",
+            "initials": "AA",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "King Abdullah International Medical Research Center, Department of Maxillofacial Surgery & Diagnostic Sciences, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Ma H",
+            "firstName": "Hongyang",
+            "lastName": "Ma",
+            "initials": "H",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-1645-312X"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Oral Implantology, The Second Affiliated Hospital of Harbin Medical University, Harbin, China."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0003-1645-312X"
+          }
+        ]
+      },
+      "dataLinksTagsList": {
+        "dataLinkstag": [
+          "altmetrics"
+        ]
+      },
+      "journalInfo": {
+        "volume": "62",
+        "journalIssueId": 4080158,
+        "dateOfPublication": "2026 Dec",
+        "monthOfPublication": 12,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-12-01",
+        "journal": {
+          "title": "The Japanese dental science review",
+          "medlineAbbreviation": "Jpn Dent Sci Rev",
+          "nlmid": "101481371",
+          "isoabbreviation": "Jpn Dent Sci Rev",
+          "essn": "2213-6851",
+          "issn": "1882-7616"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "94-113",
+      "abstractText": "Automated machine learning (AutoML) has emerged as a clinician-accessible approach to artificial intelligence by automating key stages of model development, including algorithm selection and hyperparameter optimization. This systematic review aimed to evaluate the application, performance, and translational relevance of AutoML in oral healthcare. Electronic searches of PubMed, Web of Science, Cochrane Library, and grey literature were conducted. Nineteen primary studies met the inclusion criteria. AutoML was applied across multiple dental specialties, including periodontology, orthodontics, pediatric dentistry, oral surgery, oral radiology, and public oral health, using heterogeneous data modalities such as radiographic images, clinical records, photographs, and omics data. Most studies reported strong performance on internal validation (e.g., cross-validation or validation splits) and/or independent hold-out test sets, particularly for imaging-based classification tasks, with several models achieving high accuracy and discrimination. However, external validation was uncommon, sample sizes were frequently limited, and substantial risk of bias was identified, particularly in analysis and participant selection. No study evaluated real-world clinical implementation or patient outcomes. Overall, AutoML shows promise in reducing technical barriers and supporting clinician-led artificial intelligence research in dentistry. Nevertheless, current evidence base remains exploratory, and rigorous external validation, standardized reporting, and prospective clinical evaluation are required before routine clinical adoption.",
+      "affiliation": "King Abdullah International Medical Research Center, Department of Maxillofacial Surgery & Diagnostic Sciences, College of Dentistry, King Saud Bin Abdulaziz University for Health Sciences, Ministry of National Guard Health Affairs, Riyadh, Kingdom of Saudi Arabia.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Predictive modeling",
+          "Clinical Decision Support",
+          "Diagnostic Model",
+          "Oral Healthcare",
+          "Automated Machine Learning",
+          "Dental Artificial Intelligence"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.jdsr.2026.03.001"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13087713"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13087713?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 1,
+      "hasData": "Y",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "Y",
+      "license": "cc by-nc-nd",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-04-21",
+      "dateOfCreation": "2026-04-20",
+      "firstIndexDate": "2026-04-20",
+      "fullTextReceivedDate": "2026-04-22",
+      "dateOfRevision": "2026-04-21",
+      "electronicPublicationDate": "2026-04-01",
+      "firstPublicationDate": "2026-04-01"
+    },
+    {
+      "id": "41843736",
+      "source": "MED",
+      "pmid": "41843736",
+      "pmcid": "PMC13014559",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13014559"
+        ]
+      },
+      "doi": "10.1080/21505594.2026.2646800",
+      "title": "Single-cell landscape of piglet lung response with &lt;i&gt;Actinobacillus pleuropneumoniae&lt;/i&gt;.",
+      "authorString": "Zhu J, Zhu S, Xia C, Jiang X, Bao C, Li Z, Zhu R, Jiang H, Li F, Zhang X, Wang W, Chen H, Mei J, Gu J, Li N, Lei L.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Zhu J",
+            "firstName": "Junhui",
+            "lastName": "Zhu",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                },
+                {
+                  "affiliation": "School of Public Health, Beihua University, Jilin, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Zhu S",
+            "firstName": "Sibo",
+            "lastName": "Zhu",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "MOE Key Laboratory of Contemporary Anthropology, School of Life Sciences, Fudan University, Shanghai, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Xia C",
+            "firstName": "Changyou",
+            "lastName": "Xia",
+            "initials": "C",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Animal Disease Control and Prevention, National Poultry Laboratory Animal Resource Center, Heilongjiang Provincial Key Laboratory of Laboratory Animal and Comparative Medicine, Harbin Veterinary Research Institute, Chinese Academy of Agricultural Sciences, Harbin, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Jiang X",
+            "firstName": "Xuan",
+            "lastName": "Jiang",
+            "initials": "X",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Bao C",
+            "firstName": "Chuntong",
+            "lastName": "Bao",
+            "initials": "C",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Li Z",
+            "firstName": "Ziheng",
+            "lastName": "Li",
+            "initials": "Z",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Zhu R",
+            "firstName": "Rining",
+            "lastName": "Zhu",
+            "initials": "R",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Jiang H",
+            "firstName": "Hexiang",
+            "lastName": "Jiang",
+            "initials": "H",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Li F",
+            "firstName": "Fengyang",
+            "lastName": "Li",
+            "initials": "F",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-5102-6284"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Zhang X",
+            "firstName": "Xiaoguang",
+            "lastName": "Zhang",
+            "initials": "X",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Wang W",
+            "firstName": "Wei",
+            "lastName": "Wang",
+            "initials": "W",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chen H",
+            "firstName": "Hong",
+            "lastName": "Chen",
+            "initials": "H",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Mei J",
+            "firstName": "Jikun",
+            "lastName": "Mei",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Gu J",
+            "firstName": "Jingmin",
+            "lastName": "Gu",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Li N",
+            "firstName": "Na",
+            "lastName": "Li",
+            "initials": "N",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Lei L",
+            "firstName": "Liancheng",
+            "lastName": "Lei",
+            "initials": "L",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-5872-1842"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0001-5102-6284"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-5872-1842"
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "1",
+        "volume": "17",
+        "journalIssueId": 4069776,
+        "dateOfPublication": "2026 Dec",
+        "monthOfPublication": 12,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-12-01",
+        "journal": {
+          "title": "Virulence",
+          "medlineAbbreviation": "Virulence",
+          "nlmid": "101531386",
+          "isoabbreviation": "Virulence",
+          "essn": "2150-5608",
+          "issn": "2150-5594"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "2646800",
+      "abstractText": "Pulmonary fibrosis is a prevalent, chronic, and fatal illness that poses considerable risks to life and health. <i>Actinobacillus pleuropneumoniae</i> (<i>A. pleuropneumoniae</i>) is an archetypal bacteria responsible for inducing significant pulmonary fibrosis, resulting in substantial economic losses in the pig industry. Nevertheless, the immune response in pig lungs against this pathogen and the specific characteristics of fibrosis remain obscure. In this study, single-cell RNA sequencing (scRNA-seq) analysis of piglet lungs with or without <i>A. pleuropneumoniae</i> infection identified 18 subpopulations with different phenotypes. Monocytes, neutrophils, and plasmacytoid dendritic cells (pDCs) were enriched in the lungs post-infection and responded to infection by boosting IFN-\u03b3-inducible and inflammatory-related gene expression. <i>A. pleuropneumoniae</i> reduces the number of macrophages by inhibiting monocyte differentiation into interstitial macrophages (IM) and alveolar macrophages (AM) and triggering AM endogenous apoptosis. Furthermore, we identified significantly augmented pathological fibroblast-like cells that contributed to the rapid development of pulmonary fibrosis. In contrast, epithelial cells were significantly decreased and included those with features of epithelial-mesenchymal transition differentiated into fibroblasts through the signaling of TGFB1 and HIF1A. Cell-to-cell communication analysis further indicated that the interaction between the epithelial, vascular endothelial, pDCs, and fibroblast subsets, except for COL3A1 fibroblasts, was enhanced mainly via CD74/(COPA or MIF) receptor ligands after infection. Our findings elucidate the key pathogenic mechanisms driving bacterial pneumonia, while establishing a comprehensive molecular resource for developing targeted strategies against <i>A. pleuropneumoniae</i> infection and related human fibrotic lung disorders.",
+      "affiliation": "State Key Laboratory for Diagnosis and Treatment of Severe Zoonotic Infectious Diseases, Key Laboratory for Zoonosis Research of the Ministry of Education, Institute of Zoonosis, and College of Veterinary Medicine, Jilin University, Changchun, China.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Lung",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "MI",
+                  "qualifierName": "microbiology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "PA",
+                  "qualifierName": "pathology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Dendritic Cells",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Neutrophils",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Monocytes",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Fibroblasts"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Macrophages",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Macrophages, Alveolar",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Epithelial Cells",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "MI",
+                  "qualifierName": "microbiology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Animals"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Swine"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Actinobacillus pleuropneumoniae",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "PY",
+                  "qualifierName": "pathogenicity",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Actinobacillus Infections",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "MI",
+                  "qualifierName": "microbiology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "PA",
+                  "qualifierName": "pathology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "VE",
+                  "qualifierName": "veterinary",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Pulmonary Fibrosis",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "MI",
+                  "qualifierName": "microbiology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "VE",
+                  "qualifierName": "veterinary",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Swine Diseases",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "MI",
+                  "qualifierName": "microbiology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Single-Cell Analysis"
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Fibroblast",
+          "Actinobacillus pleuropneumoniae",
+          "Single-cell Rna Sequencing",
+          "Piglet Lung"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1080/21505594.2026.2646800"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13014559"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13014559?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-07-11",
+      "dateOfCreation": "2026-03-17",
+      "firstIndexDate": "2026-03-17",
+      "fullTextReceivedDate": "2026-03-26",
+      "dateOfRevision": "2026-07-11",
+      "electronicPublicationDate": "2026-03-24",
+      "firstPublicationDate": "2026-03-24"
+    },
+    {
+      "id": "41627832",
+      "source": "MED",
+      "pmid": "41627832",
+      "pmcid": "PMC12867409",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC12867409"
+        ]
+      },
+      "doi": "10.1080/19336918.2026.2624204",
+      "title": "Research on tissue-resident macrophages in the field of cancer research: a bibliometric analysis from 2004 to 2025.",
+      "authorString": "Song Q, Yu Z, Lu W, Chi Q.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Song Q",
+            "firstName": "Qingya",
+            "lastName": "Song",
+            "initials": "Q",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Oncology, Guang'anmen Hospital, China Academy of Chinese Medical Sciences, Beijing, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Yu Z",
+            "firstName": "Zongliang",
+            "lastName": "Yu",
+            "initials": "Z",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-3100-2685"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Graduate School, Beijing University of Chinese Medicine, Beijing, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Lu W",
+            "firstName": "Wenping",
+            "lastName": "Lu",
+            "initials": "W",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-5589-1048"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Oncology, Guang'anmen Hospital, China Academy of Chinese Medical Sciences, Beijing, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chi Q",
+            "firstName": "Qingyuan",
+            "lastName": "Chi",
+            "initials": "Q",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-5742-9380"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Oncology, Guang'anmen Hospital, China Academy of Chinese Medical Sciences, Beijing, China."
+                },
+                {
+                  "affiliation": "Graduate School, Beijing University of Chinese Medicine, Beijing, China."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0001-5589-1048"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-5742-9380"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0003-3100-2685"
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "1",
+        "volume": "20",
+        "journalIssueId": 4089805,
+        "dateOfPublication": "2026 Dec",
+        "monthOfPublication": 12,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-12-01",
+        "journal": {
+          "title": "Cell adhesion & migration",
+          "medlineAbbreviation": "Cell Adh Migr",
+          "nlmid": "101469464",
+          "isoabbreviation": "Cell Adh Migr",
+          "essn": "1933-6926",
+          "issn": "1933-6918"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "2624204",
+      "abstractText": "In the tumor microenvironment, tissue-resident macrophages (TRMs) promote malignant tumor progression, yet their tissue-specific heterogeneity and complex functions bring research challenges. This study analyzes the research status and trends of TRMs in oncology. Via VOSviewer, CiteSpace, R software and WoSCC, a visual bibliometric network was built for quantitative analysis, with future research directions explored in depth. The US leads in publications and academic influence, and the University of Washington tops in paper output. Research focuses on TRMs' origin, classification and tumor microenvironment functions; microglia and Kupffer cells are the most studied subsets. Current research centers on pathway exploration, immunotherapy and single-cell sequencing. This study summarizes TRMs' research status, hotspots and trends in oncology, providing valuable insights for relevant collaborators and institutions.",
+      "affiliation": "Department of Oncology, Guang'anmen Hospital, China Academy of Chinese Medical Sciences, Beijing, China.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Macrophages",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "ME",
+                  "qualifierName": "metabolism",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Animals"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Humans"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Neoplasms",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "IM",
+                  "qualifierName": "immunology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "PA",
+                  "qualifierName": "pathology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Biomedical Research"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Bibliometrics"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Tumor Microenvironment"
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Cancer",
+          "Bibliometric Analysis",
+          "Citespace",
+          "Tissue Resident Macrophages"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1080/19336918.2026.2624204"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC12867409"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC12867409?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-07-06",
+      "dateOfCreation": "2026-02-02",
+      "firstIndexDate": "2026-02-06",
+      "fullTextReceivedDate": "2026-02-14",
+      "dateOfRevision": "2026-07-14",
+      "electronicPublicationDate": "2026-02-02",
+      "firstPublicationDate": "2026-02-02"
+    },
+    {
+      "id": "41568558",
+      "source": "MED",
+      "pmid": "41568558",
+      "pmcid": "PMC12863069",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC12863069"
+        ]
+      },
+      "doi": "10.1080/20008066.2025.2605803",
+      "title": "Augmenting virtual reality exposure for PTSD with physical activity: study protocol of a randomised controlled trial.",
+      "authorString": "de Haart R, Daniels JK, Timmerman ME, Cath DC, Lommen MJJ.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "de Haart R",
+            "firstName": "Rick",
+            "lastName": "de Haart",
+            "initials": "R",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-6621-4779"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Clinical Psychology and Experimental Psychopathology, Faculty of Behavioral and Social Sciences, University of Groningen, Groningen, The Netherlands."
+                },
+                {
+                  "affiliation": "Department Trauma Center, GGZ Drenthe Mental Health Institute, Beilen, The Netherlands."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Daniels JK",
+            "firstName": "Judith K",
+            "lastName": "Daniels",
+            "initials": "JK",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-6304-2310"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Clinical Psychology and Experimental Psychopathology, Faculty of Behavioral and Social Sciences, University of Groningen, Groningen, The Netherlands."
+                },
+                {
+                  "affiliation": "Department Trauma Center, GGZ Drenthe Mental Health Institute, Beilen, The Netherlands."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Timmerman ME",
+            "firstName": "Marieke E",
+            "lastName": "Timmerman",
+            "initials": "ME",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-1579-6964"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Psychometrics and Statistics, Faculty of Behavioral and Social Sciences, University of Groningen, Groningen, The Netherlands."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Cath DC",
+            "firstName": "Danielle C",
+            "lastName": "Cath",
+            "initials": "DC",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-9539-4118"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Outpatient clinics, GGZ Drenthe Mental Health Institute, Assen, The Netherlands."
+                },
+                {
+                  "affiliation": "Department of Psychiatry, University of Groningen, University Medical Center Groningen, Groningen, The Netherlands."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Lommen MJJ",
+            "firstName": "Miriam J J",
+            "lastName": "Lommen",
+            "initials": "MJJ",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-8845-4338"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Clinical Psychology and Experimental Psychopathology, Faculty of Behavioral and Social Sciences, University of Groningen, Groningen, The Netherlands."
+                },
+                {
+                  "affiliation": "Department Trauma Center, GGZ Drenthe Mental Health Institute, Beilen, The Netherlands."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0001-6304-2310"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0001-8845-4338"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0001-9539-4118"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-6621-4779"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0003-1579-6964"
+          }
+        ]
+      },
+      "dataLinksTagsList": {
+        "dataLinkstag": [
+          "supporting_data"
+        ]
+      },
+      "journalInfo": {
+        "issue": "1",
+        "volume": "17",
+        "journalIssueId": 4078786,
+        "dateOfPublication": "2026 Dec",
+        "monthOfPublication": 12,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-12-01",
+        "journal": {
+          "title": "European journal of psychotraumatology",
+          "medlineAbbreviation": "Eur J Psychotraumatol",
+          "nlmid": "101559025",
+          "isoabbreviation": "Eur J Psychotraumatol",
+          "essn": "2000-8066",
+          "issn": "2000-8066"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "2605803",
+      "abstractText": "<b>Background:</b> Physical activity is increasingly incorporated in trauma-focused treatments as an augmentation strategy to improve treatment outcome. In a novel VR exposure treatment known as 3MDR (Multi-modal Motion-assisted Memory Desensitization and Reconsolidation), patients engage in low-intensity physical activity by walking on a treadmill throughout the therapy session, approaching trauma-related pictures that progressively enlarge until fully displayed in a VR environment. Physical activity is considered a key augmentation strategy in this treatment, with the proposed mechanism that walking toward a trauma-related picture facilitates the reduction of trauma-related avoidance, thereby improving treatment outcome. However, neither the specific effect of walking during this treatment nor the proposed working mechanism have been scientifically examined yet.<b>Objective:</b> In this paper we describe the rationale and study design of a randomised controlled trial (RCT) to examine the specific effect of walking toward trauma-related stimuli during VR exposure on treatment outcome. In addition, we will test whether walking toward trauma-related pictures facilitates a greater reduction in trauma-related avoidance.<b>Method:</b> Patients with PTSD (<i>N</i>\u2009=\u2009158) are randomised to two treatment conditions: <b>walking</b> (VR exposure while walking) or <b>stationary</b> (VR exposure without walking), while keeping all other treatment aspects constant. Participants in both conditions receive two preparatory treatment sessions, 6 or 12 VR exposure sessions, and one closure session. The primary outcome is clinician-rated PTSD symptom severity. Secondary outcomes are both clinician-rated- and self-reported trauma-related avoidance symptom severity, as well as self-reported PTSD symptom severity. Assessments take place pre- and after 6 and 12 VR exposure sessions (posttreatment), and at 3-, 6-, 12- and 18- months follow-up.<b>Conclusion:</b> This RCT aims to examine whether incorporating walking during trauma-focused treatment in a VR exposure environment augments the treatment of patients with PTSD.",
+      "affiliation": "Department of Clinical Psychology and Experimental Psychopathology, Faculty of Behavioral and Social Sciences, University of Groningen, Groningen, The Netherlands.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "Clinical Trial Protocol",
+          "other",
+          "Journal Article"
+        ]
+      },
+      "grantsList": {
+        "grant": [
+          {
+            "agency": "Espria, a Dutch healthcare organisation",
+            "orderIn": 0
+          }
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Humans"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Treatment Outcome"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Exercise"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Walking"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Stress Disorders, Post-Traumatic",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "TH",
+                  "qualifierName": "therapy",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Adult"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Middle Aged"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Female"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Male"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Randomized Controlled Trials as Topic"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Virtual Reality Exposure Therapy",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "MT",
+                  "qualifierName": "methods",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Virtual Reality"
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Physical Activity",
+          "Ptsd",
+          "Actividad F\u00edsica",
+          "Tept",
+          "Augmentation Strategy",
+          "Trauma-related Avoidance",
+          "Estrategia De Potenciaci\u00f3n",
+          "Evitaci\u00f3n Relacionada Con El Trauma",
+          "Tratamiento De Exposici\u00f3n En Realidad Virtual (Vret)",
+          "Virtual Reality Exposure Treatment (Vret)"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1080/20008066.2025.2605803"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC12863069"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC12863069?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by-nc",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "Y",
+      "tmAccessionTypeList": {
+        "accessionType": [
+          "pdb"
+        ]
+      },
+      "dateOfCompletion": "2026-01-22",
+      "dateOfCreation": "2026-01-22",
+      "firstIndexDate": "2026-01-22",
+      "fullTextReceivedDate": "2026-02-12",
+      "dateOfRevision": "2026-02-04",
+      "electronicPublicationDate": "2026-01-22",
+      "firstPublicationDate": "2026-01-22"
+    },
+    {
+      "id": "42181170",
+      "source": "MED",
+      "pmid": "42181170",
+      "pmcid": "PMC13196466",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13196466"
+        ]
+      },
+      "doi": "10.1016/j.bioactmat.2026.04.028",
+      "title": "AI for bioactive materials: From material design to biological applications.",
+      "authorString": "Shi J, Liang T, Heljak M, Qiu Z, Chen S, Li J, Kazakidi A, \u015awi\u0119szkowski W, Li B, Shu W.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Shi J",
+            "firstName": "Jiezhong",
+            "lastName": "Shi",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "SINOPEC Key Laboratory of Research and Application of Medical and Hygienic Materials, SINOPEC Beijing Research Institute of Chemical Industry Co., Ltd., Beijing, 100013, PR China."
+                },
+                {
+                  "affiliation": "Department of Biomedical Engineering, University of Strathclyde, Glasgow, G4 0NW, UK."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Liang T",
+            "firstName": "Ting",
+            "lastName": "Liang",
+            "initials": "T",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-7467-3046"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Medical 3D Printing Center, Orthopedic Institute, Department of Orthopedic Surgery, The First Affiliated Hospital, Biomedical Basic Research Center (BBRC) of Jiangsu Province, MOE Key Laboratory of Geriatric Diseases and Immunology, Suzhou Medical College, Soochow University, Suzhou, Jiangsu, 215000, PR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Heljak M",
+            "firstName": "Marcin",
+            "lastName": "Heljak",
+            "initials": "M",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Warsaw University of Technology, Faculty of Materials Science and Engineering, ul. Wo\u0142oska 141, 02-507, Warsaw, Poland."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Qiu Z",
+            "firstName": "Zhen",
+            "lastName": "Qiu",
+            "initials": "Z",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-0226-7855"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Biomedical Engineering, University of Strathclyde, Glasgow, G4 0NW, UK."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chen S",
+            "firstName": "Song",
+            "lastName": "Chen",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Medical 3D Printing Center, Orthopedic Institute, Department of Orthopedic Surgery, The First Affiliated Hospital, Biomedical Basic Research Center (BBRC) of Jiangsu Province, MOE Key Laboratory of Geriatric Diseases and Immunology, Suzhou Medical College, Soochow University, Suzhou, Jiangsu, 215000, PR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Li J",
+            "firstName": "Jiaying",
+            "lastName": "Li",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Medical 3D Printing Center, Orthopedic Institute, Department of Orthopedic Surgery, The First Affiliated Hospital, Biomedical Basic Research Center (BBRC) of Jiangsu Province, MOE Key Laboratory of Geriatric Diseases and Immunology, Suzhou Medical College, Soochow University, Suzhou, Jiangsu, 215000, PR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Kazakidi A",
+            "firstName": "Asimina",
+            "lastName": "Kazakidi",
+            "initials": "A",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-7124-4123"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Biomedical Engineering, University of Strathclyde, Glasgow, G4 0NW, UK."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "\u015awi\u0119szkowski W",
+            "firstName": "Wojciech",
+            "lastName": "\u015awi\u0119szkowski",
+            "initials": "W",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Warsaw University of Technology, Faculty of Materials Science and Engineering, ul. Wo\u0142oska 141, 02-507, Warsaw, Poland."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Li B",
+            "firstName": "Bin",
+            "lastName": "Li",
+            "initials": "B",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Medical 3D Printing Center, Orthopedic Institute, Department of Orthopedic Surgery, The First Affiliated Hospital, Biomedical Basic Research Center (BBRC) of Jiangsu Province, MOE Key Laboratory of Geriatric Diseases and Immunology, Suzhou Medical College, Soochow University, Suzhou, Jiangsu, 215000, PR China."
+                },
+                {
+                  "affiliation": "Collaborative Innovation Center of Hematology, Soochow University, Suzhou, Jiangsu, 215000, PR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Shu W",
+            "firstName": "Wenmiao",
+            "lastName": "Shu",
+            "initials": "W",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-1220-361X"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Biomedical Engineering, University of Strathclyde, Glasgow, G4 0NW, UK."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0001-7124-4123"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0001-7467-3046"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0001-8516-9953"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-0226-7855"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-1220-361X"
+          }
+        ]
+      },
+      "dataLinksTagsList": {
+        "dataLinkstag": [
+          "altmetrics"
+        ]
+      },
+      "journalInfo": {
+        "volume": "64",
+        "journalIssueId": 4190519,
+        "dateOfPublication": "2026 Oct",
+        "monthOfPublication": 10,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-10-01",
+        "journal": {
+          "title": "Bioactive materials",
+          "medlineAbbreviation": "Bioact Mater",
+          "nlmid": "101685294",
+          "isoabbreviation": "Bioact Mater",
+          "essn": "2452-199X",
+          "issn": "2452-199X"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "471-509",
+      "abstractText": "Bioactive materials are engineered to actively interact with biological systems and induce favorable cellular and tissue responses. The development of bioactive materials is inherently challenging due to the complexity of the biological processes that they participate in. Traditional high-throughput platforms and computational simulations are often insufficient to address the multidimensional requirements. Artificial intelligence (AI) provides powerful tools to address these challenges. By utilizing data-driven models, AI can reveal non-obvious relationships within experimental datasets, enable prediction of material behaviors, and guide rational design of new materials. In this review, we provide a systematic overview of recent advances in AI for bioactive materials. Firstly, the classification of bioactive materials is summarized, including bioactive metals, bioactive ceramics, bioactive polymers and bioactive composites. Then, current AI tools employed in bioactive materials are presented according to various classification methods. Next, the process-oriented applications of AI in bioactive materials are introduced, such as material design, fabrication optimization, property prediction, in vitro assessments, and in vivo assessments. Finally, the key challenges and future opportunities in this field are discussed comprehensively.",
+      "affiliation": "SINOPEC Key Laboratory of Research and Application of Medical and Hygienic Materials, SINOPEC Beijing Research Institute of Chemical Industry Co., Ltd., Beijing, 100013, PR China.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "grantsList": {
+        "grant": [
+          {
+            "agency": "Program for Innovation Team Building at Institutions of Higher Education in Chongqing",
+            "orderIn": 0
+          },
+          {
+            "grantId": "BK20255001",
+            "agency": "Natural Science Research of Jiangsu Higher Education Institutions of China",
+            "orderIn": 0
+          },
+          {
+            "grantId": "2023YFB3810200",
+            "agency": "National Key Research and Development Program of China",
+            "orderIn": 0
+          },
+          {
+            "grantId": "EP/X033686/1",
+            "agency": "Engineering and Physical Sciences Research Council",
+            "orderIn": 0
+          },
+          {
+            "grantId": "EP/W004860/1",
+            "agency": "Engineering and Physical Sciences Research Council",
+            "orderIn": 0
+          },
+          {
+            "agency": "Priority Academic Program Development of Jiangsu Higher Education Institutions",
+            "orderIn": 0
+          },
+          {
+            "grantId": "223077",
+            "agency": "SINOPEC Petroleum Exploration and Production Research Institute",
+            "orderIn": 0
+          },
+          {
+            "agency": "Natural Science Foundation of Jiangsu Province",
+            "orderIn": 0
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Artificial intelligence",
+          "Machine Learning",
+          "Bioactive Materials",
+          "Material Design",
+          "Property Prediction"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.bioactmat.2026.04.028"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13196466"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13196466?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "Y",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-05-25",
+      "dateOfCreation": "2026-05-25",
+      "firstIndexDate": "2026-05-25",
+      "fullTextReceivedDate": "2026-05-27",
+      "dateOfRevision": "2026-05-25",
+      "electronicPublicationDate": "2026-05-14",
+      "firstPublicationDate": "2026-05-14"
+    },
+    {
+      "id": "42358455",
+      "source": "MED",
+      "pmid": "42358455",
+      "pmcid": "PMC13292244",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13292244"
+        ]
+      },
+      "doi": "10.1016/j.invent.2026.100960",
+      "title": "Anna vs. Judith: A randomized comparison of AI-delivered psychodynamic and cognitive behavioral therapies for social anxiety disorder.",
+      "authorString": "Hlynsson JI, Mechler J, Lindqvist K, Andersson G, Carlbring P.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Hlynsson JI",
+            "firstName": "J\u00f3n Ingi",
+            "lastName": "Hlynsson",
+            "initials": "JI",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Psychology, Stockholm University, Stockholm, Sweden."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Mechler J",
+            "firstName": "Jakob",
+            "lastName": "Mechler",
+            "initials": "J",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-1296-3432"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Psychology, Stockholm University, Stockholm, Sweden."
+                },
+                {
+                  "affiliation": "Department of Psychology, Uppsala University, Uppsala, Sweden."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Lindqvist K",
+            "firstName": "Karin",
+            "lastName": "Lindqvist",
+            "initials": "K",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-6325-4380"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Psychology, Stockholm University, Stockholm, Sweden."
+                },
+                {
+                  "affiliation": "The Erica Foundation, Sweden."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Andersson G",
+            "firstName": "Gerhard",
+            "lastName": "Andersson",
+            "initials": "G",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-4753-6745"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Behavioural Sciences and Learning, Link\u00f6ping University, Link\u00f6ping, Sweden."
+                },
+                {
+                  "affiliation": "Department of Clinical Neuroscience, Karolinska Institute, Stockholm, Sweden."
+                },
+                {
+                  "affiliation": "Lus\u00f3fona University, Digital Human-Environment Interaction Labs, Lisboa, Portugal."
+                },
+                {
+                  "affiliation": "Department of Biomedical and Clinical Sciences, Link\u00f6ping University, Link\u00f6ping, Sweden."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Carlbring P",
+            "firstName": "Per",
+            "lastName": "Carlbring",
+            "initials": "P",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-2172-8813"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Psychology, Stockholm University, Stockholm, Sweden."
+                },
+                {
+                  "affiliation": "School of Psychology, Korea University, Seoul, 02481, South Korea."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0001-6325-4380"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-1296-3432"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-2172-8813"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0003-4753-6745"
+          }
+        ]
+      },
+      "dataLinksTagsList": {
+        "dataLinkstag": [
+          "altmetrics",
+          "supporting_data"
+        ]
+      },
+      "journalInfo": {
+        "volume": "45",
+        "journalIssueId": 4208642,
+        "dateOfPublication": "2026 Sep",
+        "monthOfPublication": 9,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-09-01",
+        "journal": {
+          "title": "Internet interventions",
+          "medlineAbbreviation": "Internet Interv",
+          "nlmid": "101631612",
+          "isoabbreviation": "Internet Interv",
+          "essn": "2214-7829",
+          "issn": "2214-7829"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "100960",
+      "abstractText": "Artificial intelligence (AI) offers a potential solution to the scalability limits of internet-based psychological interventions. This randomized controlled trial evaluated two smartphone-based, AI-delivered interventions for social anxiety disorder (SAD): Psychodynamic Therapy (AI-PDT) and Cognitive Behavioral Therapy (AI-CBT). One hundred and two adults with SAD were randomized (1:1:1) to AI-PDT, AI-CBT, or a waitlist control for a 4-week daily intervention. The primary outcome was social anxiety severity measured by the Social Phobia Inventory, and analyzed using Linear Mixed Models. Both interventions yielded significant, moderate reductions in symptoms from baseline to post-treatment, with within group effect sizes of <i>d</i>\u00a0=\u00a00.79 (AI-PDT) and <i>d</i>\u00a0=\u00a00.72 (AI-CBT), and with no significant differences observed between the two active treatments. However, the between-group difference against the waitlist control at post-treatment was not significant (AI-PDT: <i>p</i>\u00a0=\u00a0.204, <i>d</i>\u00a0=\u00a00.43; AI-CBT: <i>p</i>\u00a0=\u00a0.727, <i>d</i>\u00a0=\u00a00.18), possibly due to substantial improvement in the waitlist condition (<i>d</i>\u00a0=\u00a00.54). At 1-month follow-up, the difference widened: AI-PDT became significantly superior to waitlist (<i>d</i>\u00a0=\u00a00.65), while AI-CBT did not (<i>d</i>\u00a0=\u00a00.51). Therapeutic alliance was established early in both conditions and remained stable throughout treatment, suggesting that AI-delivered interventions can foster a therapeutic alliance regardless of theoretical orientation. Secondary regression analysis revealed that a co-occurring diagnosis of ADHD or autism spectrum disorder significantly predicted poorer outcomes. These findings suggest that the comparative efficacy of AI-guided interventions may increase over time and are capable of fostering moderate symptom reductions, though future iterations require adaptation to better support neurodivergent users.",
+      "affiliation": "Department of Psychology, Stockholm University, Stockholm, Sweden.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Artificial intelligence",
+          "Cognitive Behavioral Therapy",
+          "Social Anxiety Disorder",
+          "Psychodynamic Therapy",
+          "Neurodivergence"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.invent.2026.100960"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13292244"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13292244?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "Y",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "Y",
+      "tmAccessionTypeList": {
+        "accessionType": [
+          "nct",
+          "doi"
+        ]
+      },
+      "dateOfCompletion": "2026-06-26",
+      "dateOfCreation": "2026-06-26",
+      "firstIndexDate": "2026-06-27",
+      "fullTextReceivedDate": "2026-06-26",
+      "dateOfRevision": "2026-06-26",
+      "electronicPublicationDate": "2026-06-13",
+      "firstPublicationDate": "2026-06-13"
+    },
+    {
+      "id": "42339402",
+      "source": "MED",
+      "pmid": "42339402",
+      "pmcid": "PMC13285422",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13285422"
+        ]
+      },
+      "doi": "10.1016/j.imr.2026.101349",
+      "title": "Integration of large language models and evidence-based Chinese medicine: A scoping review.",
+      "authorString": "Yao Y, Liu H, Yang D, Luo X, Lai H, Wang Z, Chen Y, Bian Z.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Yao Y",
+            "firstName": "Yuanyuan",
+            "lastName": "Yao",
+            "initials": "Y",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Research Unit of Evidence-Based Evaluation and Guidelines, Chinese Academy of Medical Sciences (2021RU017), School of Basic Medical Sciences, Lanzhou University, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Institute of Global Health, University of Geneva, Geneva, Switzerland."
+                },
+                {
+                  "affiliation": "Key Laboratory of Evidence Based Medicine of Gansu Province, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Institute of Health Data Science, Lanzhou University, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Evidence-Based Medicine Center, School of Basic Medical Sciences, Lanzhou University, Lanzhou, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Liu H",
+            "firstName": "Hui",
+            "lastName": "Liu",
+            "initials": "H",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Research Unit of Evidence-Based Evaluation and Guidelines, Chinese Academy of Medical Sciences (2021RU017), School of Basic Medical Sciences, Lanzhou University, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Department of Health Research Methods, Evidence, and Impact (HEI), McMaster University, Hamilton, Ontario, Canada."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Yang D",
+            "firstName": "Daoze",
+            "lastName": "Yang",
+            "initials": "D",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "The Second Hospital & Clinical Medical School, Lanzhou University, Lanzhou, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Luo X",
+            "firstName": "Xufei",
+            "lastName": "Luo",
+            "initials": "X",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-9433-9280"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Research Unit of Evidence-Based Evaluation and Guidelines, Chinese Academy of Medical Sciences (2021RU017), School of Basic Medical Sciences, Lanzhou University, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Vincent V.C. Woo Chinese Medicine Clinical Research Institute, School of Chinese Medicine, Hong Kong Baptist University, Hong Kong SAR, China."
+                },
+                {
+                  "affiliation": "Chinese EQUATOR Centre, Hong Kong Baptist University, Hong Kong SAR, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Lai H",
+            "firstName": "Honghao",
+            "lastName": "Lai",
+            "initials": "H",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "School of Public Health, Lanzhou University, Lanzhou, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Wang Z",
+            "firstName": "Zhe",
+            "lastName": "Wang",
+            "initials": "Z",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-7666-0396"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Health Research Methods, Evidence, and Impact (HEI), McMaster University, Hamilton, Ontario, Canada."
+                },
+                {
+                  "affiliation": "School of Acupuncture and Tuina, Shandong University of Chinese Medicine, Jinan, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chen Y",
+            "firstName": "Yaolong",
+            "lastName": "Chen",
+            "initials": "Y",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Research Unit of Evidence-Based Evaluation and Guidelines, Chinese Academy of Medical Sciences (2021RU017), School of Basic Medical Sciences, Lanzhou University, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Key Laboratory of Evidence Based Medicine of Gansu Province, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Institute of Health Data Science, Lanzhou University, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Evidence-Based Medicine Center, School of Basic Medical Sciences, Lanzhou University, Lanzhou, China."
+                },
+                {
+                  "affiliation": "Vincent V.C. Woo Chinese Medicine Clinical Research Institute, School of Chinese Medicine, Hong Kong Baptist University, Hong Kong SAR, China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Bian Z",
+            "firstName": "Zhaoxiang",
+            "lastName": "Bian",
+            "initials": "Z",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Vincent V.C. Woo Chinese Medicine Clinical Research Institute, School of Chinese Medicine, Hong Kong Baptist University, Hong Kong SAR, China."
+                },
+                {
+                  "affiliation": "Chinese EQUATOR Centre, Hong Kong Baptist University, Hong Kong SAR, China."
+                },
+                {
+                  "affiliation": "The Chinese Medicine Hospital of Hong Kong, Hong Kong SAR, China."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0001-7666-0396"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0001-9433-9280"
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "3Part B",
+        "volume": "15",
+        "journalIssueId": 4185899,
+        "dateOfPublication": "2026 Sep",
+        "monthOfPublication": 9,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-09-01",
+        "journal": {
+          "title": "Integrative medicine research",
+          "medlineAbbreviation": "Integr Med Res",
+          "nlmid": "101612707",
+          "isoabbreviation": "Integr Med Res",
+          "essn": "2213-4239",
+          "issn": "2213-4220"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "101349",
+      "abstractText": "<h4>Background</h4>Large language models (LLMs) have attracted increasing attention in medical research and clinical practice and have been applied to processes related to evidence-based medicine (EBM). However, the extent of their integration with evidence-based Chinese medicine (CM) remains unclear.<h4>Methods</h4>We systematically searched PubMed, Web of Science, China National Knowledge Infrastructure (CNKI), and Wanfang Data from 30 November 2022 to 31 January 2026, with supplementary searches conducted in Google Scholar. Studies were included if they applied LLMs to EBM processes within a CM context or investigated LLMs in CM using established evidence-based research designs. Descriptive analysis summarized study characteristics, and findings were mapped according to the evidence ecosystem framework.<h4>Results</h4>A total of 12 studies published between 2023 and 2025 were included. Most studies integrated LLMs into different stages of the EBM workflow within a CM context. At the evidence generation stage, studies explored the role of LLMs in identifying research priorities. At the evidence synthesis stage, LLM performance was evaluated in literature screening, data extraction, and risk-of-bias assessment. At the evidence translation stage, studies evaluated the performance of LLMs in guideline-related question answering and recommendation generation. At the evidence implementation stage, LLMs combined with knowledge graphs or retrieval-augmented generation were used to develop intelligent question-answering systems based on CM guidelines or standards.<h4>Conclusion</h4>Existing studies suggest that LLMs have begun to be explored across multiple stages of evidence-based CM research and show potential for improving evidence synthesis efficiency and supporting knowledge translation and application.<h4>Protocol registration</h4>Open Science Framework (https://osf.io/ztbd5/overview).",
+      "affiliation": "Research Unit of Evidence-Based Evaluation and Guidelines, Chinese Academy of Medical Sciences (2021RU017), School of Basic Medical Sciences, Lanzhou University, Lanzhou, China.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "grantsList": {
+        "grant": [
+          {
+            "grantId": "202508370025",
+            "agency": "Universit\u00e9 de Gen\u00e8ve",
+            "orderIn": 0
+          },
+          {
+            "grantId": "202506180089",
+            "agency": "China Scholarship Council",
+            "orderIn": 0
+          },
+          {
+            "agency": "Hong Kong Baptist University",
+            "orderIn": 0
+          },
+          {
+            "grantId": "202506180090",
+            "agency": "Universit\u00e9 de Gen\u00e8ve",
+            "orderIn": 0
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Chinese medicine",
+          "evidence-based medicine",
+          "Scoping Review",
+          "Large Language Model"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.imr.2026.101349"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13285422"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13285422?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by-nc-nd",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-24",
+      "dateOfCreation": "2026-06-24",
+      "firstIndexDate": "2026-06-24",
+      "fullTextReceivedDate": "2026-06-26",
+      "dateOfRevision": "2026-06-24",
+      "electronicPublicationDate": "2026-05-07",
+      "firstPublicationDate": "2026-05-07"
+    },
+    {
+      "id": "42338518",
+      "source": "MED",
+      "pmid": "42338518",
+      "pmcid": "PMC13285752",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13285752"
+        ]
+      },
+      "doi": "10.1016/j.esmorw.2026.100726",
+      "title": "Development and evaluation of a large language model-based, retrieval-augmented generation application for query response in early oncology clinical trials.",
+      "authorString": "Pes\u00e1ntez D, Fuc\u00e0 G, Magr\u00ec A, Koulai L, Bliznashki K, Soltani A, Khan M, Multari F, Moschetta M.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Pes\u00e1ntez D",
+            "firstName": "D",
+            "lastName": "Pes\u00e1ntez",
+            "initials": "D",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Oncology R&D, Early Oncology Clinical, AstraZeneca Barcelona Global Hub, Barcelona, Spain."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Fuc\u00e0 G",
+            "firstName": "G",
+            "lastName": "Fuc\u00e0",
+            "initials": "G",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-1560-2253"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Oncology R&D, Early Oncology Clinical, AstraZeneca Barcelona Global Hub, Barcelona, Spain."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Magr\u00ec A",
+            "firstName": "A",
+            "lastName": "Magr\u00ec",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Oncology R&D, Early Oncology Clinical, AstraZeneca Barcelona Global Hub, Barcelona, Spain."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Koulai L",
+            "firstName": "L",
+            "lastName": "Koulai",
+            "initials": "L",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Oncology R&D, AstraZeneca, Cambridge, UK."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Bliznashki K",
+            "firstName": "K",
+            "lastName": "Bliznashki",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Evinova, Human-Centered AI and Data Science, Gaithersburg, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Soltani A",
+            "firstName": "A",
+            "lastName": "Soltani",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Evinova, Human-Centered AI and Data Science, Waltham, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Khan M",
+            "firstName": "M",
+            "lastName": "Khan",
+            "initials": "M",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Evinova, Human-Centered AI and Data Science, Gaithersburg, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Multari F",
+            "firstName": "F",
+            "lastName": "Multari",
+            "initials": "F",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Evinova, Human-Centered AI and Data Science, Barcelona, Spain."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Moschetta M",
+            "firstName": "M",
+            "lastName": "Moschetta",
+            "initials": "M",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Oncology R&D, Early Oncology Clinical, AstraZeneca Barcelona Global Hub, Barcelona, Spain."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0002-1560-2253"
+          }
+        ]
+      },
+      "dataLinksTagsList": {
+        "dataLinkstag": [
+          "altmetrics"
+        ]
+      },
+      "journalInfo": {
+        "volume": "13",
+        "journalIssueId": 4219706,
+        "dateOfPublication": "2026 Sep",
+        "monthOfPublication": 9,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-09-01",
+        "journal": {
+          "title": "ESMO real world data and digital oncology",
+          "medlineAbbreviation": "ESMO Real World Data Digit Oncol",
+          "nlmid": "9919053637506676",
+          "isoabbreviation": "ESMO Real World Data Digit Oncol",
+          "essn": "2949-8201",
+          "issn": "2949-8201"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "100726",
+      "abstractText": "<h4>Background</h4>Early-phase oncology trials involve complex protocols and extensive documents, making timely resolution of study queries challenging. We developed the Study Document Assistant (SDA), a retrieval-augmented generation (RAG) system that integrates semantic search with large language models to generate context-specific answers from clinical trial documentation.<h4>Materials and methods</h4>SDA processes study documents and delivers responses through a secure, conversational interface. A two-arm experiment was conducted in which sponsor clinical study team members answered protocol-related queries either with or without SDA. Questions were stratified by difficulty and assessed by blinded subject matter experts (SMEs) and artificial intelligence (AI) models. The primary endpoint was mean response time. Main secondary endpoints included response time as a time-to-event outcome and overall accuracy. SDA user satisfaction was also assessed. Data were analyzed using Welch <i>t</i>-test for the primary endpoint, Kaplan-Meier method and log-rank test for time-to-event analysis, Mann-Whitney <i>U</i> test for accuracy, and descriptive statistics for satisfaction.<h4>Results</h4>In the experiment (<i>N</i> = 10 per arm), SDA users achieved a mean response time of 14.9 [95% confidence interval (CI) 9.3-20.6] versus 26.5 (95% CI 16.8-36.1) minutes in controls, corresponding to a 43.8% reduction (95% CI 11.9% to 64%, <i>P</i> = 0.0347). A similar reduction for median time to response was observed. Accuracy, measured as the median SME score (scale 1-4), was \u223c3 (\"Mostly Correct\") for both arms, with no statistically significant difference. Evaluation by AI models showed similar results.<h4>Conclusions</h4>Our findings demonstrate that SDA accelerates query resolution without compromising answer quality, highlighting the potential of RAG-based digital assistants to streamline clinical trial operations and enhance research efficiency.",
+      "affiliation": "Oncology R&D, Early Oncology Clinical, AstraZeneca Barcelona Global Hub, Barcelona, Spain.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Oncology",
+          "Clinical Trials",
+          "Digital Health",
+          "Large Language Model",
+          "Retrieval-augmented Generation",
+          "Study Document Assistant"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.esmorw.2026.100726"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13285752"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13285752?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "Y",
+      "license": "cc by-nc-nd",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-24",
+      "dateOfCreation": "2026-06-24",
+      "firstIndexDate": "2026-06-24",
+      "fullTextReceivedDate": "2026-06-26",
+      "dateOfRevision": "2026-06-24",
+      "electronicPublicationDate": "2026-06-15",
+      "firstPublicationDate": "2026-06-15"
+    },
+    {
+      "id": "42310851",
+      "source": "MED",
+      "pmid": "42310851",
+      "pmcid": "PMC13275549",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13275549"
+        ]
+      },
+      "doi": "10.1002/prp2.70289",
+      "title": "Leveraging Administrative Health Data to Capture Rare Adverse Drug Reactions: Identifying Pediatric Patients With Trimethoprim-Sulfamethoxazole Acute Respiratory Distress Syndrome.",
+      "authorString": "Feldman K, Miller JO, Doane K, Loftis L, Antoon JW, Downes KJ, Goldman JL.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Feldman K",
+            "firstName": "Keith",
+            "lastName": "Feldman",
+            "initials": "K",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-6935-5844"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Learning Health Sciences, University of Michigan, Ann Arbor, Michigan, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Miller JO",
+            "firstName": "Jenna O",
+            "lastName": "Miller",
+            "initials": "JO",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Pediatrics, University of Missouri - Kansas City, Kansas City, Missouri, USA."
+                },
+                {
+                  "affiliation": "Division of Critical Care Medicine, Children's Mercy Kansas City, Kansas City, Missouri, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Doane K",
+            "firstName": "Katherine",
+            "lastName": "Doane",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Pediatrics, Division of Critical Care Medicine, Baylor College of Medicine, Houston, Texas, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Loftis L",
+            "firstName": "Laura",
+            "lastName": "Loftis",
+            "initials": "L",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Pediatrics, Division of Critical Care Medicine, Baylor College of Medicine, Houston, Texas, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Antoon JW",
+            "firstName": "James W",
+            "lastName": "Antoon",
+            "initials": "JW",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-6188-2658"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Pediatrics, Division of Hospital Medicine, Vanderbilt University Medical Center, Nashville, Tennessee, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Downes KJ",
+            "firstName": "Kevin J",
+            "lastName": "Downes",
+            "initials": "KJ",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-5015-8146"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Pediatrics, Perelman School of Medicine of the University of Pennsylvania, Division of Infectious Diseases, Children's Hospital of Philadelphia, Philadelphia, Pennsylvania, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Goldman JL",
+            "firstName": "Jennifer L",
+            "lastName": "Goldman",
+            "initials": "JL",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-6628-8949"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Pediatrics, University of Missouri - Kansas City, Kansas City, Missouri, USA."
+                },
+                {
+                  "affiliation": "Divisions of Infectious Diseases and Clinical Pharmacology, Children's Mercy Kansas City, Kansas City, Missouri, USA."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0001-5015-8146"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0001-6188-2658"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0001-6628-8949"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0001-6935-5844"
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "4",
+        "volume": "14",
+        "journalIssueId": 4217902,
+        "dateOfPublication": "2026 Aug",
+        "monthOfPublication": 8,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-08-01",
+        "journal": {
+          "title": "Pharmacology research & perspectives",
+          "medlineAbbreviation": "Pharmacol Res Perspect",
+          "nlmid": "101626369",
+          "isoabbreviation": "Pharmacol Res Perspect",
+          "essn": "2052-1707",
+          "issn": "2052-1707"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "e70289",
+      "abstractText": "Rare adverse drug reactions (ADRs) are underrecognized and underreported in the electronic medical record (EMR). These events often require clinical review, making systematic identification challenging. The study aim was to develop an approach to prioritize identification and validation of a rare ADR to trimethoprim-sulfamethoxazole causing acute respiratory distress syndrome (TMP-SMX ARDS) across medical institutions. We developed a clinical phenotype based on 2 local TMP-SMX ARDS cases mapped to standardized elements of a national comparative healthcare database (PHIS). We validated identification of TMP-SMX ARDS at scale across medical institutions. A set of scoring criteria was created to prioritize cases and generate a center-specific top 10 list of candidate encounters. External validation at 3 PHIS contributing hospitals with a known TMP-SMX ARDS case was performed by reviewing the top 10 candidate list for the known case. The review period was January 1, 2012-January 1, 2025. EMR data extracted from 2 TMP-SMX ARDS cases included patients that both required extracorporeal membrane oxygenation for >\u2009100\u2009days, experienced air leak early in hospital presentation, required tracheostomy placement, and were hospitalized for >\u2009440\u2009days. Based on the TMP-SMX ARDS phenotype, the local cases ranked 1st and 3rd on the PHIS generated top 10 candidate list for internal validation. For external validation, known cases were identified on their respective hospital top 10 lists, ranking 3rd, 3rd, and 5th. Applying a TMP-SMX ARDS phenotype to a national health care database paired with clinical review of candidate cases may be an effective approach to identify underrecognized ADRs.",
+      "affiliation": "Department of Learning Health Sciences, University of Michigan, Ann Arbor, Michigan, USA.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "grantsList": {
+        "grant": [
+          {
+            "grantId": "R35GM15641",
+            "agency": "National Institute of General Medical Sciences",
+            "orderIn": 0
+          },
+          {
+            "grantId": "K23AI168496",
+            "agency": "National Institute of Allergy and Infectious Diseases (NIAID)",
+            "orderIn": 0
+          },
+          {
+            "grantId": "R35GM15641",
+            "agency": "NIGMS NIH HHS",
+            "acronym": "GM",
+            "orderIn": 0
+          }
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Humans"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Anti-Bacterial Agents",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "AE",
+                  "qualifierName": "adverse effects",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Databases, Factual"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Child"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Child, Preschool"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Infant"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Female"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Electronic Health Records",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "SN",
+                  "qualifierName": "statistics & numerical data",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Trimethoprim, Sulfamethoxazole Drug Combination",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "AE",
+                  "qualifierName": "adverse effects",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Respiratory Distress Syndrome",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "CI",
+                  "qualifierName": "chemically induced",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "EP",
+                  "qualifierName": "epidemiology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Detection",
+          "Lung Failure",
+          "Trimethoprim\u2010sulfamethoxazole",
+          "Rare Adverse Drug Reactions"
+        ]
+      },
+      "chemicalList": {
+        "chemical": [
+          {
+            "name": "Anti-Bacterial Agents",
+            "registryNumber": "0"
+          },
+          {
+            "name": "Trimethoprim, Sulfamethoxazole Drug Combination",
+            "registryNumber": "8064-90-2"
+          }
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1002/prp2.70289"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13275549"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13275549?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by-nc",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-18",
+      "dateOfCreation": "2026-06-18",
+      "firstIndexDate": "2026-06-18",
+      "fullTextReceivedDate": "2026-06-24",
+      "dateOfRevision": "2026-06-18",
+      "firstPublicationDate": "2026-08-01"
+    },
+    {
+      "id": "42281755",
+      "source": "MED",
+      "pmid": "42281755",
+      "pmcid": "PMC13251499",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13251499"
+        ]
+      },
+      "doi": "10.1016/j.jpi.2026.100673",
+      "title": "SCRIPT: Stratified clinical risk prediction from pathology reports using large language models.",
+      "authorString": "Loeffler CML, Reitsam NG, Wolf F, Stueker EH, Muti HS, Wiest IC, Kather JN.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Loeffler CML",
+            "firstName": "Chiara M L",
+            "lastName": "Loeffler",
+            "initials": "CML",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Else Kroener Fresenius Center for Digital Health, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                },
+                {
+                  "affiliation": "Department of Medicine I, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                },
+                {
+                  "affiliation": "National Center for Tumor Diseases Dresden (NCT/UCC), a partnership between DKFZ, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, and Helmholtz-Zentrum Dresden - Rossendorf (HZDR), Dresden, Germany."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Reitsam NG",
+            "firstName": "Nic G",
+            "lastName": "Reitsam",
+            "initials": "NG",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Else Kroener Fresenius Center for Digital Health, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                },
+                {
+                  "affiliation": "Pathology, Faculty of Medicine, University of Augsburg, Augsburg, Germany."
+                },
+                {
+                  "affiliation": "Bavarian Center for Cancer Research, BZKF, Augsburg, Germany."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Wolf F",
+            "firstName": "Fabian",
+            "lastName": "Wolf",
+            "initials": "F",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Else Kroener Fresenius Center for Digital Health, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Stueker EH",
+            "firstName": "Esther H",
+            "lastName": "Stueker",
+            "initials": "EH",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Else Kroener Fresenius Center for Digital Health, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Muti HS",
+            "firstName": "Hannah S",
+            "lastName": "Muti",
+            "initials": "HS",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Else Kroener Fresenius Center for Digital Health, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                },
+                {
+                  "affiliation": "National Center for Tumor Diseases Dresden (NCT/UCC), a partnership between DKFZ, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, and Helmholtz-Zentrum Dresden - Rossendorf (HZDR), Dresden, Germany."
+                },
+                {
+                  "affiliation": "Department for Visceral, Thoracic and Vascular Surgery, University Hospital and Faculty of Medicine Carl Gustav Carus, Technische Universit\u00e4t Dresden, Dresden, Germany."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Wiest IC",
+            "firstName": "Isabella C",
+            "lastName": "Wiest",
+            "initials": "IC",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Else Kroener Fresenius Center for Digital Health, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                },
+                {
+                  "affiliation": "Department of Medicine II, Medical Faculty Mannheim, Heidelberg University, Mannheim, Germany."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Kather JN",
+            "firstName": "Jakob Nikolas",
+            "lastName": "Kather",
+            "initials": "JN",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Else Kroener Fresenius Center for Digital Health, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                },
+                {
+                  "affiliation": "Department of Medicine I, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany."
+                },
+                {
+                  "affiliation": "Medical Oncology, National Center for Tumor Diseases (NCT), University Hospital Heidelberg, Heidelberg, Germany."
+                },
+                {
+                  "affiliation": "Pathology & Data Analytics, Leeds Institute of Medical Research at St James's, University of Leeds, Leeds, United Kingdom."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "volume": "22",
+        "journalIssueId": 4206257,
+        "dateOfPublication": "2026 Aug",
+        "monthOfPublication": 8,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-08-01",
+        "journal": {
+          "title": "Journal of pathology informatics",
+          "medlineAbbreviation": "J Pathol Inform",
+          "nlmid": "101528849",
+          "isoabbreviation": "J Pathol Inform",
+          "essn": "2153-3539",
+          "issn": "2229-5089"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "100673",
+      "abstractText": "<h4>Background</h4>Accurate risk stratification in oncology is essential for guiding treatment decisions, yet current algorithms rely on a narrow set of structured variables, and hence potentially ignore the rich signal in narrative pathology reports. These reports contain nuanced morphological descriptions and expert clinical judgmentThis narrative information remains largely unused in clinical decision-making as it gets lost in \"prose\" text-based reports. We hypothesized that large language models (LLMs) could extract prognostic information from complete free-text pathology reports and convert it into a binary survival biomarker.<h4>Methods</h4>We used the open-weight LLaMA 3.3 70B model to generate risk scores directly from publicly available pathology reports across three gastrointestinal cancer types. The model was prompted to synthesize the complete narrative reports into a binary prognostic score. We evaluated associations between the LLM-generated scores and survival outcomes, including overall survival, progression-free survival, and disease-specific survival.<h4>Results</h4>In colorectal cancer, LLM-generated risk scores demonstrated significant prognostic value for overall survival (Hazard ratio (HR)\u202f=\u202f2.77, 95% confidence interval (CI)\u202f=\u202f1.92-3.97, <i>p</i>\u202f<\u202f0.001), progression-free survival (HR\u202f=\u202f2.93, 95% CI\u202f=\u202f2.11-4.08, <i>p</i>\u202f<\u202f0.001), and disease-specific survival (HR\u202f=\u202f5.85, 95% CI\u202f=\u202f3.66-9.36, <i>p</i>\u202f<\u202f0.001). Multivariate analysis confirmed the LLM-generated risk score as an independent prognostic factor for progression-free survival.<h4>Conclusion</h4>LLMs can turn narrative pathology reports into a single, independent survival biomarker. This approach leverages routinely available free-text documentation without requiring additional tissue analysis or pathologist workload, providing a deployable method to enhance risk stratification for treatment decision-making.",
+      "affiliation": "Else Kroener Fresenius Center for Digital Health, Faculty of Medicine and University Hospital Carl Gustav Carus, TUD Dresden University of Technology, 01307 Dresden, Germany.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "grantsList": {
+        "grant": [
+          {
+            "grantId": "01VSF21048",
+            "agency": "German Academic Exchange Service",
+            "orderIn": 0
+          },
+          {
+            "agency": "European Commission",
+            "orderIn": 0
+          },
+          {
+            "grantId": "01KD2104C",
+            "agency": "Bundesministerium f\u00fcr Forschung, Technologie und Raumfahrt",
+            "orderIn": 0
+          },
+          {
+            "grantId": "101114631",
+            "agency": "European Research Council",
+            "orderIn": 0
+          },
+          {
+            "grantId": "535081457",
+            "agency": "Deutsche Forschungsgemeinschaft",
+            "orderIn": 0
+          },
+          {
+            "agency": "European Research Council",
+            "acronym": "ERC_",
+            "orderIn": 0
+          },
+          {
+            "agency": "National Institute for Health and Care Research",
+            "orderIn": 0
+          },
+          {
+            "agency": "National Institute on Handicapped Research",
+            "orderIn": 0
+          },
+          {
+            "agency": "Breast Cancer Research Foundation",
+            "orderIn": 0
+          },
+          {
+            "grantId": "57616814",
+            "agency": "German Academic Exchange Service",
+            "orderIn": 0
+          },
+          {
+            "grantId": "NIHR203331",
+            "agency": "Leeds Biomedical Research Centre",
+            "orderIn": 0
+          },
+          {
+            "grantId": "SFB 1709/1 2025",
+            "agency": "Deutsche Forschungsgemeinschaft",
+            "orderIn": 0
+          },
+          {
+            "grantId": "TRR 412/1",
+            "agency": "Deutsche Forschungsgemeinschaft",
+            "orderIn": 0
+          },
+          {
+            "grantId": "533056198",
+            "agency": "Deutsche Forschungsgemeinschaft",
+            "orderIn": 0
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Gastrointestinal Cancer",
+          "Prognostic Biomarker",
+          "Llm",
+          "Deep Learning",
+          "Pathology Reports"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.jpi.2026.100673"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13251499"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13251499?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-12",
+      "dateOfCreation": "2026-06-12",
+      "firstIndexDate": "2026-06-13",
+      "fullTextReceivedDate": "2026-06-13",
+      "dateOfRevision": "2026-06-12",
+      "electronicPublicationDate": "2026-05-12",
+      "firstPublicationDate": "2026-05-12"
+    },
+    {
+      "id": "42184717",
+      "source": "MED",
+      "pmid": "42184717",
+      "pmcid": "PMC13223827",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13223827"
+        ]
+      },
+      "doi": "10.1016/j.identj.2026.109626",
+      "title": "Explainable Artificial Intelligence in Dentistry: A Systematic Review of Its Trust and Translation.",
+      "authorString": "Thaweesapphithak S, Thongchotchat V, Alinejad-Rokny H, Samaranayake L, Osathanon T, Porntaveetus T.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Thaweesapphithak S",
+            "firstName": "Sermporn",
+            "lastName": "Thaweesapphithak",
+            "initials": "S",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-0327-5320"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Center of Excellence in Precision Medicine and Digital Health, Department of Physiology, Faculty of Dentistry, Chulalongkorn University, Bangkok, Thailand; Department of Oral Biomedical Sciences, International College of Dentistry, Walailak University, Bangkok, Thailand."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Thongchotchat V",
+            "firstName": "Vivat",
+            "lastName": "Thongchotchat",
+            "initials": "V",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Center of Excellence in Precision Medicine and Digital Health, Department of Physiology, Faculty of Dentistry, Chulalongkorn University, Bangkok, Thailand."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Alinejad-Rokny H",
+            "firstName": "Hamid",
+            "lastName": "Alinejad-Rokny",
+            "initials": "H",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "UNSW BioMedical Machine Learning Lab (BML), School of Biomedical Engineering, UNSW Sydney, Sydney, NSW 2052, Australia; Visiting Scholar (Collaborative Projects), Center of Excellence in Precision Medicine and Digital Health, Chulalongkorn University, Bangkok, Thailand."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Samaranayake L",
+            "firstName": "Lakshman",
+            "lastName": "Samaranayake",
+            "initials": "L",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Center of Excellence in Precision Medicine and Digital Health, Department of Physiology, Faculty of Dentistry, Chulalongkorn University, Bangkok, Thailand; Faculty of Dentistry, University of Hong Kong, Hong Kong; Global Research Cell, Dr. D. Y. Patil Dental College and Hospital, Dr. D. Y. Patil Vidyapeeth, Pimpri, Pune, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Osathanon T",
+            "firstName": "Thanaphum",
+            "lastName": "Osathanon",
+            "initials": "T",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Center of Excellence for Dental Stem Cell Biology, Center of Artificial Intelligence and Innovation, Department of Anatomy, Faculty of Dentistry, Chulalongkorn University, Bangkok, Thailand."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Porntaveetus T",
+            "firstName": "Thantrira",
+            "lastName": "Porntaveetus",
+            "initials": "T",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-0145-9801"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Center of Excellence in Precision Medicine and Digital Health, Department of Physiology, Faculty of Dentistry, Chulalongkorn University, Bangkok, Thailand; Chulalongkorn University Implant and Esthetic Center, Faculty of Dentistry, Chulalongkorn University, Bangkok, Thailand; Clinic of General-, Special Care and Geriatric Dentistry, Center for Dental Medicine, University of Zurich, Zurich, Switzerland. Electronic address: thantrira.p@chula.ac.th."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0002-0327-5320"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0003-0145-9801"
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "4",
+        "volume": "76",
+        "journalIssueId": 4227336,
+        "dateOfPublication": "2026 Aug",
+        "monthOfPublication": 8,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-08-01",
+        "journal": {
+          "title": "International dental journal",
+          "medlineAbbreviation": "Int Dent J",
+          "nlmid": "0374714",
+          "isoabbreviation": "Int Dent J",
+          "essn": "1875-595X",
+          "issn": "0020-6539"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "109626",
+      "abstractText": "<h4>Introduction and aims</h4>Explainable artificial intelligence (XAI) is a set of methods and processes that make the decisions of artificial intelligence (AI) models understandable to those who are not conversant with the technology. This \"black box\" nature of complex AI models appears to be a primary barrier to their clinical adoption in health sciences, including dentistry. XAI is being touted as a solution to build clinician trust. This review critically assesses whether current dental XAI research is methodologically rigorous enough to substantiate claims of enhanced trustworthiness.<h4>Methods</h4>This systematic review followed Preferred Reporting Items for Systematic Reviews and Meta-Analyses 2020 guidelines, searching PubMed, IEEE Xplore, medRxiv, and Ovid for dental XAI studies (2015-2025). We assessed the risk of bias and applicability using QUADAS-2 and PROBAST.<h4>Results</h4>Nineteen of the 100 identified studies met the inclusion criteria. Although these studies used diverse XAI techniques, including image-based saliency methods (eg, Grad-CAM), feature attribution approaches (eg, SHAP), and local approximation methods (eg, LIME) across various dental specialties, quality assessment exposed significant limitations. Most (14 of 19) exhibited a high risk of bias, driven by small retrospective datasets, lack of external validation, and weak reference standards. Interestingly, only 1 study has evaluated the impact of XAI on human understanding.<h4>Conclusion</h4>Current dental XAI research remains in a proof-of-concept phase, characterised by technical demonstrations based on low-quality evidence. The field has not yet substantiated claims that XAI enhances clinical trust or decision-making. To bridge this gap, future work must prioritise methodological rigour, external validation, and, most importantly, human-centred evaluations with dental professionals to measure the true impact of explainability on clinical workflows and patient care.<h4>Clinical relevance</h4>Current dental XAI lacks the evidence quality required for clinical reliance. Practitioners should exercise caution, as these tools have not been proven to actually improve diagnostic accuracy or trust in daily practice. Until validated in real-world settings, XAI remains experimental technology rather than a standard of care.",
+      "affiliation": "Center of Excellence in Precision Medicine and Digital Health, Department of Physiology, Faculty of Dentistry, Chulalongkorn University, Bangkok, Thailand; Department of Oral Biomedical Sciences, International College of Dentistry, Walailak University, Bangkok, Thailand.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "Systematic Review",
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "grantsList": {
+        "grant": [
+          {
+            "agency": "Thailand Science Research and Innovation",
+            "orderIn": 0
+          },
+          {
+            "agency": "Health System Research Institute",
+            "orderIn": 0
+          },
+          {
+            "agency": "Chulalongkorn University Faculty of Dentistry",
+            "orderIn": 0
+          }
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Humans"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Dentistry"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Trust"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Artificial Intelligence"
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Systematic review",
+          "TRUST",
+          "Dentistry",
+          "Quadas-2",
+          "Clinical Adoption",
+          "Interpretable Machine Learning",
+          "Explainable Ai",
+          "Probast"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.identj.2026.109626"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13223827"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13223827?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-07-07",
+      "dateOfCreation": "2026-05-25",
+      "firstIndexDate": "2026-05-26",
+      "fullTextReceivedDate": "2026-06-04",
+      "dateOfRevision": "2026-07-07",
+      "electronicPublicationDate": "2026-05-25",
+      "firstPublicationDate": "2026-05-25"
+    },
+    {
+      "id": "42150339",
+      "source": "MED",
+      "pmid": "42150339",
+      "pmcid": "PMC13202568",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13202568"
+        ]
+      },
+      "doi": "10.1016/j.identj.2026.109609",
+      "title": "Accuracy of Large Language Models in Answering Dental Examination Questions: A Systematic Review and Meta-Analysis.",
+      "authorString": "Dashti M, Khosraviani F, Meyari A, Amirzade-Iranaq MH, Chaurasia A, Hefzi D, Ghadimi N, Tichy A, Khurshid Z, Schwendicke F.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Dashti M",
+            "firstName": "Mahmood",
+            "lastName": "Dashti",
+            "initials": "M",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-2013-0374"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Dentofacial Deformities Research Center, Research Institute of Dental Sciences, Shahid Beheshti University of Medical Sciences, Tehran, Iran; Department of Artificial Intelligence Engineering, Graduate School of Natural and Applied Sciences, Istinye University, Istanbul, T\u00fcrkiye. Electronic address: 2533275099@stu.istinye.edu.tr."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Khosraviani F",
+            "firstName": "Farshad",
+            "lastName": "Khosraviani",
+            "initials": "F",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "UCLA School of Dentistry, CA, USA."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Meyari A",
+            "firstName": "Atieh",
+            "lastName": "Meyari",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Esthetic & Restorative Dentistry, School of Dentistry, Tehran Azad University of Medical Sciences, Tehran, Iran."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Amirzade-Iranaq MH",
+            "firstName": "Mohammad Hosein",
+            "lastName": "Amirzade-Iranaq",
+            "initials": "MH",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0001-8095-0337"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Universal Scientific Education and Research Network (USERN), Tehran University of Medical Sciences, Tehran, Iran."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chaurasia A",
+            "firstName": "Akhilanand",
+            "lastName": "Chaurasia",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Oral Medicine and Radiology, King George's Medical University, Lucknow, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Hefzi D",
+            "firstName": "Delband",
+            "lastName": "Hefzi",
+            "initials": "D",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "School of Dentistry, Tehran University of Medical Science, Tehran, Iran."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Ghadimi N",
+            "firstName": "Niloofar",
+            "lastName": "Ghadimi",
+            "initials": "N",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Dental Materials Research Center, TeMS.C., School of Dentistry, Azad University of Medical Sciences, Tehran, Iran."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Tichy A",
+            "firstName": "Antonin",
+            "lastName": "Tichy",
+            "initials": "A",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-6260-9992"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Clinic for Conservative Dentistry, Periodontology and Digital Dentistry, LMU University Hospital, LMU Munich, Munich, Germany; Institute of Dental Medicine, First Faculty of Medicine, Charles University, Prague, Czech Republic."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Khurshid Z",
+            "firstName": "Zohaib",
+            "lastName": "Khurshid",
+            "initials": "Z",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Prosthodontics and Dental Implantology, College of Dentistry, King Faisal University, Al-Ahsa, Saudi Arabia; Center for Artificial Intelligence and Innovation (CAII), Faculty of Dentistry, Chulalongkorn University, Bangkok, Thailand."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Schwendicke F",
+            "firstName": "Falk",
+            "lastName": "Schwendicke",
+            "initials": "F",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Clinic for Conservative Dentistry, Periodontology and Digital Dentistry, LMU University Hospital, LMU Munich, Munich, Germany. Electronic address: falk.schwendicke@med.uni-muenchen.de."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0001-8095-0337"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-6260-9992"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0003-2013-0374"
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "4",
+        "volume": "76",
+        "journalIssueId": 4227336,
+        "dateOfPublication": "2026 Aug",
+        "monthOfPublication": 8,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-08-01",
+        "journal": {
+          "title": "International dental journal",
+          "medlineAbbreviation": "Int Dent J",
+          "nlmid": "0374714",
+          "isoabbreviation": "Int Dent J",
+          "essn": "1875-595X",
+          "issn": "0020-6539"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "109609",
+      "abstractText": "<h4>Introduction</h4>Large language models (LLMs), including OpenAI's GPT family accessed via interfaces such as ChatGPT and Microsoft Copilot, as well as non-GPT systems such as Google Gemini, are increasingly applied in healthcare and dental education. However, the accuracy of these systems in specialized tasks such as answering dental examination questions remains unclear.<h4>Methods</h4>This systematic review and meta-analysis evaluated LLM performance in answering dental questions. Databases searched were PubMed, Embase, Scopus, and Web of Science. Data on question type and number, LLM versions, and accuracy rates were extracted. Pooled accuracy was estimated using a random-effects model; heterogeneity and publication bias were assessed.<h4>Results</h4>A total of 39 studies were included, with ChatGPT-4 being the most frequently evaluated model. The pooled accuracy for LLMs was 63.7% (95% CI: 60.3%-67.1%), with high heterogeneity (I\u00b2 = 91.5%). Subgroup analysis revealed ChatGPT-4 and Copilot (a GPT-based interface) achieved the highest pooled accuracies (\u223c73% and \u223c75%, respectively). Direct comparisons confirmed ChatGPT-4 significantly outperformed earlier versions and some competitor models. Sensitivity analyses supported the robustness of findings.<h4>Conclusion</h4>LLMs demonstrate moderate accuracy in answering dental examination questions and are currently insufficient for autonomous clinical decision-making. When their limitations are explicitly recognized, however, these systems may serve as valuable adjuncts in dental education and examination preparation. Methodological strategies such as structured prompting and retrieval-augmented approaches warrant further investigation but were not the primary focus of the present analysis.",
+      "affiliation": "Dentofacial Deformities Research Center, Research Institute of Dental Sciences, Shahid Beheshti University of Medical Sciences, Tehran, Iran; Department of Artificial Intelligence Engineering, Graduate School of Natural and Applied Sciences, Istinye University, Istanbul, T\u00fcrkiye. Electronic address: 2533275099@stu.istinye.edu.tr.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "Meta-Analysis",
+          "Systematic Review",
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Humans"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Education, Dental",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "MT",
+                  "qualifierName": "methods",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Educational Measurement",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "MT",
+                  "qualifierName": "methods",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Large Language Models"
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Artificial intelligence",
+          "Meta-analysis",
+          "Dental Examination",
+          "Large Language Models"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.identj.2026.109609"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13202568"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13202568?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-07-07",
+      "dateOfCreation": "2026-05-18",
+      "firstIndexDate": "2026-05-19",
+      "fullTextReceivedDate": "2026-05-27",
+      "dateOfRevision": "2026-07-13",
+      "electronicPublicationDate": "2026-05-18",
+      "firstPublicationDate": "2026-05-18"
+    },
+    {
+      "id": "42030750",
+      "source": "MED",
+      "pmid": "42030750",
+      "pmcid": "PMC13127626",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13127626"
+        ]
+      },
+      "doi": "10.1016/j.identj.2026.109575",
+      "title": "Context-Guided Mixture-of-Experts with Multimodal LLMs for Lesion Detection in Buccal Mucosa Images.",
+      "authorString": "Nayak A, Diddigi RB, Kestur R, Kumar PDM, Ranganathan K, Lavanya C, Rajeshwari S, Behera SS.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Nayak A",
+            "firstName": "Anwesh",
+            "lastName": "Nayak",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Data Science and Artificial Intelligence, IIIT Bangalore, Bangalore, Karnataka, 560100, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Diddigi RB",
+            "firstName": "Raghuram Bharadwaj",
+            "lastName": "Diddigi",
+            "initials": "RB",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Data Science and Artificial Intelligence, IIIT Bangalore, Bangalore, Karnataka, 560100, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Kestur R",
+            "firstName": "Ramesh",
+            "lastName": "Kestur",
+            "initials": "R",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Data Science and Artificial Intelligence, IIIT Bangalore, Bangalore, Karnataka, 560100, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Kumar PDM",
+            "firstName": "P D Madan",
+            "lastName": "Kumar",
+            "initials": "PDM",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Ragas Dental College and Hospital, Chennai, Tamil Nadu, 600119, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Ranganathan K",
+            "firstName": "K",
+            "lastName": "Ranganathan",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Ragas Dental College and Hospital, Chennai, Tamil Nadu, 600119, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Lavanya C",
+            "firstName": "C",
+            "lastName": "Lavanya",
+            "initials": "C",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Ragas Dental College and Hospital, Chennai, Tamil Nadu, 600119, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Rajeshwari S",
+            "firstName": "S",
+            "lastName": "Rajeshwari",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Ragas Dental College and Hospital, Chennai, Tamil Nadu, 600119, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Behera SS",
+            "firstName": "Sushree S",
+            "lastName": "Behera",
+            "initials": "SS",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Data Science and Artificial Intelligence, IIIT Bangalore, Bangalore, Karnataka, 560100, India. Electronic address: Sushree.behera@iiitb.ac.in."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "4",
+        "volume": "76",
+        "journalIssueId": 4227336,
+        "dateOfPublication": "2026 Aug",
+        "monthOfPublication": 8,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-08-01",
+        "journal": {
+          "title": "International dental journal",
+          "medlineAbbreviation": "Int Dent J",
+          "nlmid": "0374714",
+          "isoabbreviation": "Int Dent J",
+          "essn": "1875-595X",
+          "issn": "0020-6539"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "109575",
+      "abstractText": "<h4>Introduction and aims</h4>Oral lesions are highly prevalent globally, and oral cancer ranks among the most common malignancies, underscoring the need for AI-driven tools to support early detection and triage, especially in resource-scarce settings. This work investigates the capabilities of multimodal large language models (MLLMs) for automated detection of oral lesions in smartphone-acquired buccal mucosa images. Unlike convolutional neural networks (CNNs), which require large annotated datasets and significant computational resources, MLLMs need no task-specific training and can adapt quickly through intelligent prompting architectures.<h4>Method</h4>We propose a novel expert-informed mixture-of-experts paradigm that mimics the idealistic collaborative medical decision-making approach of clinicians, where each expert module independently retrieves contextually relevant images and the corresponding expert-generated descriptions from the existing data corpus, guided by different similarity metrics. These enriched examples help the expert to form an independent, informed diagnosis. A specialist MLLM then reviews all expert opinions and the image and synthesises a final decision, effectively emulating a consensus diagnosis process.<h4>Results</h4>Experimental results on a dataset of buccal mucosa images show that the proposed method attains a sensitivity of 89.81%, making it comparable with existing CNN-based approaches. Additionally, we provide explainability through a detailed interpretation of experimental results and failure case analysis, supported by insights from medical experts.<h4>Conclusion</h4>The proposed framework represents a human-AI collaborative model, where we do not leave diagnostic outcomes entirely to the model's internal representations. Rather, it actively shapes the model's reasoning through curated, expert-informed descriptions provided as few-shot examples. Overall, it facilitates reliable decision-making while reducing dependence on large, annotated datasets and extensive computational resources.<h4>Clinical relevance</h4>By enabling accurate and interpretable lesion detection from smartphone images, the proposed approach has strong potential to support early triage in low-resource and remote health care environments, contributing to improved oral cancer prevention and patient outcomes.",
+      "affiliation": "Department of Data Science and Artificial Intelligence, IIIT Bangalore, Bangalore, Karnataka, 560100, India.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "grantsList": {
+        "grant": [
+          {
+            "grantId": "IIRP-2023-1049",
+            "agency": "Indian Council of Medical Research",
+            "orderIn": 0
+          }
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Mouth Mucosa",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "DG",
+                  "qualifierName": "diagnostic imaging",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "PA",
+                  "qualifierName": "pathology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Humans"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Mouth Neoplasms",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "DG",
+                  "qualifierName": "diagnostic imaging",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "DI",
+                  "qualifierName": "diagnosis",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Sensitivity and Specificity"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Large Language Models"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Convolutional Neural Networks"
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Oral Pathology",
+          "Mixture-of-experts",
+          "Multimodal Large Language Model",
+          "Retriever-augmented Generation",
+          "Chain-of-thought Reasoning"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.identj.2026.109575"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13127626"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13127626?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by-nc-nd",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-07-07",
+      "dateOfCreation": "2026-04-24",
+      "firstIndexDate": "2026-04-25",
+      "fullTextReceivedDate": "2026-05-18",
+      "dateOfRevision": "2026-07-07",
+      "electronicPublicationDate": "2026-04-23",
+      "firstPublicationDate": "2026-04-23"
+    },
+    {
+      "id": "42358410",
+      "source": "MED",
+      "pmid": "42358410",
+      "pmcid": "PMC13291560",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13291560"
+        ]
+      },
+      "doi": "10.1002/mco2.70833",
+      "title": "Generative Artificial Intelligence and Large Language Models in Clinical Oncology.",
+      "authorString": "Yu Y, Zhao Z, Wang Z, Lin R, Tan Y, Chen Y, Li T, Baptista-Hon D, Zhang X, Wu C, Tong M, Zheng L, Wu J, Monteiro O, Zhang K.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Yu Y",
+            "firstName": "Yunfang",
+            "lastName": "Yu",
+            "initials": "Y",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-2579-6220"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                },
+                {
+                  "affiliation": "Department of Medical Oncology, Department of Pharmacy, Phase I Clinical Trial Centre, Sun Yat-sen Memorial Hospital, School of Computer Science and Engineering & Key Laboratory of Machine Intelligence and Advanced Computing Sun Yat-sen University Guangzhou China."
+                },
+                {
+                  "affiliation": "Department of Breast Surgery, The First Affiliated Hospital Jinan University Guangzhou China."
+                },
+                {
+                  "affiliation": "Guangdong Provincial Key Laboratory of Cancer Pathogenesis and Precision Diagnosis and Treatment, AI Big Data Laboratory, Shenshan Medical Center Memorial Hospital of Sun Yat-Sen University Shanwei China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Zhao Z",
+            "firstName": "Zhenhui",
+            "lastName": "Zhao",
+            "initials": "Z",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Wang Z",
+            "firstName": "Zehua",
+            "lastName": "Wang",
+            "initials": "Z",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Lin R",
+            "firstName": "Ruichong",
+            "lastName": "Lin",
+            "initials": "R",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Tan Y",
+            "firstName": "Yujie",
+            "lastName": "Tan",
+            "initials": "Y",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                },
+                {
+                  "affiliation": "Department of Medical Oncology, Department of Pharmacy, Phase I Clinical Trial Centre, Sun Yat-sen Memorial Hospital, School of Computer Science and Engineering & Key Laboratory of Machine Intelligence and Advanced Computing Sun Yat-sen University Guangzhou China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chen Y",
+            "firstName": "Yongjian",
+            "lastName": "Chen",
+            "initials": "Y",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Medicine Solna, Center For Molecular Medicine Karolinska Institutet Stockholm Sweden."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Li T",
+            "firstName": "Ting",
+            "lastName": "Li",
+            "initials": "T",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-2339-5901"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Baptista-Hon D",
+            "firstName": "Daniel",
+            "lastName": "Baptista-Hon",
+            "initials": "D",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                },
+                {
+                  "affiliation": "School of Medicine University of Dundee Dundee UK."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Zhang X",
+            "firstName": "Xiaoxi",
+            "lastName": "Zhang",
+            "initials": "X",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Medical Oncology, Department of Pharmacy, Phase I Clinical Trial Centre, Sun Yat-sen Memorial Hospital, School of Computer Science and Engineering & Key Laboratory of Machine Intelligence and Advanced Computing Sun Yat-sen University Guangzhou China."
+                },
+                {
+                  "affiliation": "Shenzhen Loop Area Institute Shenzhen China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Wu C",
+            "firstName": "Chuan",
+            "lastName": "Wu",
+            "initials": "C",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "School of Computing and Data Science The University of Hong Kong Hong Kong SAR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Tong M",
+            "firstName": "Man",
+            "lastName": "Tong",
+            "initials": "M",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "School of Biomedical Sciences The Chinese University of Hong Kong Hong Kong SAR China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Zheng L",
+            "firstName": "Lijun",
+            "lastName": "Zheng",
+            "initials": "L",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "China United Network Communications Corporation GuangZhou Branch Guangzhou China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Wu J",
+            "firstName": "Junyan",
+            "lastName": "Wu",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Medical Oncology, Department of Pharmacy, Phase I Clinical Trial Centre, Sun Yat-sen Memorial Hospital, School of Computer Science and Engineering & Key Laboratory of Machine Intelligence and Advanced Computing Sun Yat-sen University Guangzhou China."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Monteiro O",
+            "firstName": "Olivia",
+            "lastName": "Monteiro",
+            "initials": "O",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                },
+                {
+                  "affiliation": "School of Medicine University of Dundee Dundee UK."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Zhang K",
+            "firstName": "Kang",
+            "lastName": "Zhang",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China."
+                },
+                {
+                  "affiliation": "The First Affiliated Hospital of Chongqing Medical University Chongqing China."
+                },
+                {
+                  "affiliation": "Department of Ophthalmology, Zhuhai People's Hospital and the First Affiliated Hospital of Faculty of Medicine Macau University of Science and Technology Zhuhai China."
+                },
+                {
+                  "affiliation": "Guangzhou National Laboratory Guangzhou China."
+                },
+                {
+                  "affiliation": "Eye and Vision Innovation Center Eye Valley Wenzhou China."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0002-2339-5901"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0003-2579-6220"
+          }
+        ]
+      },
+      "dataLinksTagsList": {
+        "dataLinkstag": [
+          "supporting_data"
+        ]
+      },
+      "journalInfo": {
+        "issue": "7",
+        "volume": "7",
+        "journalIssueId": 4218550,
+        "dateOfPublication": "2026 Jul",
+        "monthOfPublication": 7,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-07-01",
+        "journal": {
+          "title": "MedComm",
+          "medlineAbbreviation": "MedComm (2020)",
+          "nlmid": "101769925",
+          "isoabbreviation": "MedComm (2020)",
+          "essn": "2688-2663",
+          "issn": "2688-2663"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "e70833",
+      "abstractText": "Cancer remains a major global health challenge, and the increasing availability of multimodal biomedical data has created unprecedented opportunities for precision oncology. Recent advances in generative artificial intelligence (AI), particularly large language models (LLMs), have enabled new approaches for integrating heterogeneous data sources, including electronic health records, medical imaging, pathology, genomics, and clinical text. However, current studies remain fragmented across specific tasks, cancer types, and model architectures, and a comprehensive synthesis of how generative AI can support the entire oncology continuum is still lacking. This review provides an overview of generative AI in clinical oncology, covering LLMs, generative adversarial networks, diffusion models, and multimodal foundation models. We summarize their methodological foundations and discuss applications in cancer diagnosis, prognosis prediction, treatment planning, patient management, and clinical trial optimization. Particular attention is given to multimodal data integration, synthetic data generation, clinical reasoning, and decision support, together with current challenges related to interpretability, reliability, data privacy, regulatory governance, and real-world implementation. By consolidating recent technological advances and clinical evidence, this review highlights future priorities toward safe, trustworthy, and clinically deployable intelligent oncology systems. Emerging agent-based architectures and human-AI collaborative workflows may further expand the clinical utility of generative AI in oncology.",
+      "affiliation": "Artificial Intelligence Cross Disciplinary Research Institute, Faculty of Medicine, Faculty of Innovation Engineering, School of Computer Science and Engineering Macau University of Science and Technology Macau SAR China.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "grantsList": {
+        "grant": [
+          {
+            "grantId": "0022/2025/RIA1",
+            "agency": "Fundo para o Desenvolvimento das Ci\u00eancias e da Tecnologia",
+            "orderIn": 0
+          },
+          {
+            "grantId": "0055/2022/A1",
+            "agency": "Fundo para o Desenvolvimento das Ci\u00eancias e da Tecnologia",
+            "orderIn": 0
+          },
+          {
+            "grantId": "82404087",
+            "agency": "National Natural Science Foundation of China",
+            "orderIn": 0
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Oncology",
+          "Clinical Decision Support",
+          "Multimodal Data Integration",
+          "Generative Artificial Intelligence",
+          "Large Language Models"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1002/mco2.70833"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13291560"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13291560?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "Y",
+      "tmAccessionTypeList": {
+        "accessionType": [
+          "doi"
+        ]
+      },
+      "dateOfCompletion": "2026-06-26",
+      "dateOfCreation": "2026-06-26",
+      "firstIndexDate": "2026-06-27",
+      "fullTextReceivedDate": "2026-06-26",
+      "dateOfRevision": "2026-06-26",
+      "electronicPublicationDate": "2026-06-23",
+      "firstPublicationDate": "2026-06-23"
+    }
+  ]
+}

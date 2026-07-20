@@ -1,0 +1,2274 @@
+{
+  "hitCount": 593,
+  "nextCursorMark": "AoJwgLm18J0DKDU1NzAzODMx",
+  "results": [
+    {
+      "id": "42088772",
+      "source": "MED",
+      "pmid": "42088772",
+      "pmcid": "PMC13137066",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13137066"
+        ]
+      },
+      "doi": "10.1016/j.jdsr.2026.04.002",
+      "title": "Masticatory performance in aging populations: A scoping review of research landscapes in Japan, Sweden, and India.",
+      "authorString": "Kosaka T, Khanna V, Ikebe K, Grigoriadis A, Kumar A.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Kosaka T",
+            "firstName": "Takayuki",
+            "lastName": "Kosaka",
+            "initials": "T",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Removable Prosthodontics and Gerodontology, Graduate School of Dentistry, The University of Osaka, Suita, Osaka, Japan."
+                },
+                {
+                  "affiliation": "Department of Dental Medicine, Karolinska Institutet, Huddinge, Sweden."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Khanna V",
+            "firstName": "Vikram",
+            "lastName": "Khanna",
+            "initials": "V",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Oral Medicine & Radiology, Faculty of Dental Sciences, King George's Medical University, Lucknow, Uttar Pradesh, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Ikebe K",
+            "firstName": "Kazunori",
+            "lastName": "Ikebe",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Removable Prosthodontics and Gerodontology, Graduate School of Dentistry, The University of Osaka, Suita, Osaka, Japan."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Grigoriadis A",
+            "firstName": "Anastasios",
+            "lastName": "Grigoriadis",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Dental Medicine, Karolinska Institutet, Huddinge, Sweden."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Kumar A",
+            "firstName": "Abhishek",
+            "lastName": "Kumar",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Dental Medicine, Karolinska Institutet, Huddinge, Sweden."
+                },
+                {
+                  "affiliation": "Academic Center for Geriatric Dentistry, Stockholm, Sweden."
+                },
+                {
+                  "affiliation": "Department of Conservative Dentistry and Endodontics, Dr. D. Y. Patil Dental College and Hospital, Pimpri, Pune, India."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "volume": "62",
+        "journalIssueId": 4080158,
+        "dateOfPublication": "2026 Dec",
+        "monthOfPublication": 12,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-12-01",
+        "journal": {
+          "title": "The Japanese dental science review",
+          "medlineAbbreviation": "Jpn Dent Sci Rev",
+          "nlmid": "101481371",
+          "isoabbreviation": "Jpn Dent Sci Rev",
+          "issn": "1882-7616",
+          "essn": "2213-6851"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "143-153",
+      "abstractText": "Evidence suggests that masticatory function reflects overall well-being, particularly in an aging population. The present review aims to map and characterize the research landscape on masticatory function among older adults in Japan, Sweden, and India, focusing on study designs, assessment methods, outcomes, and publication patterns to identify gaps and highlight methodological diversity across countries. A systematic search was conducted, which identified 51 articles, with the majority originating from Japan (n\u202f=\u202f44). Cross-sectional study designs were predominant (n\u202f=\u202f35), with various methods used for assessing masticatory function. The majority of studies investigated systemic health outcomes (n\u202f=\u202f24), particularly frailty and nutrition, while others focused on associated factors (n\u202f=\u202f13), intervention effects (n\u202f=\u202f4), or methodological validation (n\u202f=\u202f3). The review revealed that most studies originated from Japan, with relatively limited evidence from Sweden and India, highlighting gaps in cross-national research. A variety of assessment methods and outcomes were used, and recent studies increasingly emphasize the role of masticatory function in overall health. By proposing masticatory performance as a holistic health marker, this review emphasizes its relevance as an indicator of health inequality in aging populations across diverse settings.",
+      "affiliation": "Department of Removable Prosthodontics and Gerodontology, Graduate School of Dentistry, The University of Osaka, Suita, Osaka, Japan.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Cognition",
+          "Frailty",
+          "Mastication",
+          "Older Adults",
+          "International Comparison",
+          "General Health"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.jdsr.2026.04.002"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13137066"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13137066?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by-nc-nd",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-05-06",
+      "dateOfCreation": "2026-05-06",
+      "firstIndexDate": "2026-05-13",
+      "fullTextReceivedDate": "2026-05-20",
+      "dateOfRevision": "2026-05-06",
+      "electronicPublicationDate": "2026-04-28",
+      "firstPublicationDate": "2026-04-28"
+    },
+    {
+      "id": "42292071",
+      "source": "MED",
+      "pmid": "42292071",
+      "pmcid": "PMC13264029",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13264029"
+        ]
+      },
+      "doi": "10.1016/j.jdin.2026.05.006",
+      "title": "Political determinants of melanoma: Global inequities in skin cancer care.",
+      "authorString": "Ma S, Zieneldien T, Aljassabi A, Kim J, Tan IJ, Willmann J, Feliciano EJG, Dee EC, Lipner S, Grant-Kels JM.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Ma S",
+            "firstName": "Sophia",
+            "lastName": "Ma",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Johns Hopkins University School of Medicine, Baltimore, Maryland."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Zieneldien T",
+            "firstName": "Tarek",
+            "lastName": "Zieneldien",
+            "initials": "T",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Johns Hopkins University School of Medicine, Baltimore, Maryland."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Aljassabi A",
+            "firstName": "Ali",
+            "lastName": "Aljassabi",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Pharmaceutical Science, Taneja College of Pharmacy, University of South Florida. Tampa, Florida."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Kim J",
+            "firstName": "Janice",
+            "lastName": "Kim",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Michigan State University College of Osteopathic Medicine, East Lansing, Michigan."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Tan IJ",
+            "firstName": "Isabella J",
+            "lastName": "Tan",
+            "initials": "IJ",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Rutgers Robert Wood Johnson Medical School, New Brunswick, New Jersey."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Willmann J",
+            "firstName": "Jonas",
+            "lastName": "Willmann",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Radiation Oncology, University Hospital Zurich, University of Zurich, Zurich, Switzerland."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Feliciano EJG",
+            "firstName": "Erin Jay G",
+            "lastName": "Feliciano",
+            "initials": "EJG",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "School of Medicine and Public Health, Ateneo de Manila University, Pasig City, Philippines."
+                },
+                {
+                  "affiliation": "Department of Medicine, NYC Health + Hospitals/Elmhurst, Icahn School of Medicine at Mount Sinai, Queens, New York."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Dee EC",
+            "firstName": "Edward Christopher",
+            "lastName": "Dee",
+            "initials": "EC",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Radiation Oncology, Memorial Sloan Kettering Cancer Center, New York, New York."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Lipner S",
+            "firstName": "Shari",
+            "lastName": "Lipner",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Dermatology, Weill Cornell Medicine, New York, New York."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Grant-Kels JM",
+            "firstName": "Jane M",
+            "lastName": "Grant-Kels",
+            "initials": "JM",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Dermatology, University of Connecticut School of Medicine, Farmington, Connecticut."
+                },
+                {
+                  "affiliation": "Department of Dermatology, University of Florida College of Medicine, Gainesville, Florida."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "volume": "27",
+        "journalIssueId": 4212228,
+        "dateOfPublication": "2026 Aug",
+        "monthOfPublication": 8,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-08-01",
+        "journal": {
+          "title": "JAAD international",
+          "medlineAbbreviation": "JAAD Int",
+          "nlmid": "101774762",
+          "isoabbreviation": "JAAD Int",
+          "issn": "2666-3287",
+          "essn": "2666-3287"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "55-63",
+      "abstractText": "<h4>Background</h4>Melanoma outcomes differ across countries, income settings, and skin tones, reflecting not only variable environmental and genetic risks but also upstream political determinants of health that shape exposure, access, and resources.<h4>Objective</h4>To apply the 3-I framework (Interests, Ideas, and Institutions) to synthesize global melanoma inequities and identify actionable dermatologic implications.<h4>Methods</h4>A narrative review of the literature (1990-2025) examined melanoma, inequities, health-system and political determinants, financing, therapies, and global and low- and middle-income country (LMIC) contexts, mapping sources to the 3-I framework.<h4>Results</h4>Interests of governments, payers, and industry determine financing priorities, creating access gaps to immunotherapy, surgery, and pathology, particularly in LMICs and underinsured US populations. Ideas in clinical trials, artificial intelligence tools, and education underrepresent skin of color and LMIC contexts. Institutions, including segregation, colonial legacies, and centralized services, create structural barriers to timely evaluation and treatment. Examples from Australia, the US, India, and African contexts reveal recurring patterns.<h4>Conclusions</h4>The 3-I framework (Interests, Ideas, and Institutions) identifies levers (equitable financing expansion, inclusive evidence generation, and institutional reform) through which dermatologists can promote earlier detection and equitable care via total body skin examinations for all skin tones and advocacy for covered, integrated skin cancer screening in primary care and high-risk clinic networks.",
+      "affiliation": "Johns Hopkins University School of Medicine, Baltimore, Maryland.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Melanoma",
+          "Artificial intelligence",
+          "Socioeconomic status",
+          "Health Insurance",
+          "Skin Cancer",
+          "Uninsured",
+          "Skin Cancer Prevention",
+          "Skin Of Color",
+          "Political Determinants Of Health",
+          "Regional Health Disparities",
+          "Global Health Inequities"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.jdin.2026.05.006"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13264029"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13264029?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-15",
+      "dateOfCreation": "2026-06-15",
+      "firstIndexDate": "2026-06-16",
+      "fullTextReceivedDate": "2026-06-24",
+      "dateOfRevision": "2026-06-15",
+      "electronicPublicationDate": "2026-05-13",
+      "firstPublicationDate": "2026-05-13"
+    },
+    {
+      "id": "42232194",
+      "source": "MED",
+      "pmid": "42232194",
+      "pmcid": "PMC13223714",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13223714"
+        ]
+      },
+      "doi": "10.1016/j.jpi.2026.100664",
+      "title": "Accelerating the implementation of digital pathology in India.",
+      "authorString": "Desai S, Deshmukh J, Mehta A, Sharma K, Vidya MN, Chadha K, Veena R, Sewlikar S, Jara-Lazaro AR.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Desai S",
+            "firstName": "Sangeeta",
+            "lastName": "Desai",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Tata Memorial Centre, Dr. E Borges Road, Parel, Mumbai 400012, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Deshmukh J",
+            "firstName": "Jayesh",
+            "lastName": "Deshmukh",
+            "initials": "J",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Roche Diagnostics India and Neighboring Markets, 501B, Silver Utopia, Cardinal Gracias Road, Chakala, Andheri East, Mumbai 400069, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Mehta A",
+            "firstName": "Anurag",
+            "lastName": "Mehta",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Rajiv Gandhi Cancer Institute and Research Center, New Delhi 110085, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Sharma K",
+            "firstName": "Kunal",
+            "lastName": "Sharma",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Global Reference Laboratory, Agilus Diagnostics, Plot No 1, Prime Square Building, Gaiwadi Industrial Estate, Next to Patel Petrol Pump, Opposite Mahesh Nagar, S.V. Road, Goregaon West, Mumbai 400062, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Vidya MN",
+            "firstName": "M N",
+            "lastName": "Vidya",
+            "initials": "MN",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Manipal Hospitals, 98, HAL Old Airport Rd, Kodihalli, Bengaluru 56001, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chadha K",
+            "firstName": "Kirti",
+            "lastName": "Chadha",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Metropolis Healthcare Ltd., 4th Floor, East Wing, Plot-254 B, Nirlon House, Dr. Annie Besant Road, Worli, Mumbai 400030, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Veena R",
+            "firstName": "R",
+            "lastName": "Veena",
+            "initials": "R",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "HCG Cancer Hospital, No 8, HCG Towers, P. Kalinga Rao Road, Sampangi Ram Nagar, Bangalore 560020, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Sewlikar S",
+            "firstName": "Sandeep",
+            "lastName": "Sewlikar",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Roche Diagnostics India Pvt Ltd., 501B, Silver Utopia, Cardinal Gracias Road, Chakala, Andheri East, Mumbai 400069, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Jara-Lazaro AR",
+            "firstName": "Ana Richelia",
+            "lastName": "Jara-Lazaro",
+            "initials": "AR",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Roche Diagnostics Asia-Pacific Pte Ltd., 8 Kallang Avenue, #10-01/09 Aperia, Tower 1, 339509, Singapore."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "volume": "22",
+        "journalIssueId": 4206257,
+        "dateOfPublication": "2026 Aug",
+        "monthOfPublication": 8,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-08-01",
+        "journal": {
+          "title": "Journal of pathology informatics",
+          "medlineAbbreviation": "J Pathol Inform",
+          "nlmid": "101528849",
+          "isoabbreviation": "J Pathol Inform",
+          "issn": "2229-5089",
+          "essn": "2153-3539"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "100664",
+      "abstractText": "Digital pathology (DP), which utilizes whole-slide imaging (WSI), adds value to traditional pathology by enabling high-resolution imaging, remote diagnostics, and artificial intelligence (AI)-assisted analysis. Despite its potential, DP adoption in resource-constrained settings, such as India, remains limited. A significant gap exists in understanding the diverse applications of DP, adoption barriers, and cost-effective implementation strategies specific to India's healthcare landscape. Hence, this narrative review explores opportunities for DP application in India, including primary diagnosis, second opinion, telepathology, education, frozen section analysis, AI-assisted diagnostics, data management, and quality assurance. It also examines the hurdles toward widespread adoption, including infrastructure and information technology limitations, high costs, and data security concerns. Limited awareness and apprehensions about job displacement further prevent DP adoption. Addressing these challenges requires a strategic approach, including innovative revenue-generating strategies, targeted training programs, robust data security, and development of high-quality datasets. Further, collaboration among pathologists, healthcare providers, policymakers, and technology developers is essential. With structured implementation and targeted investments, DP can potentially revolutionize pathology services in India, enhancing diagnostic accuracy, reducing turnaround times, and expanding access to specialized care, particularly in underserved regions.",
+      "affiliation": "Tata Memorial Centre, Dr. E Borges Road, Parel, Mumbai 400012, India.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Artificial intelligence",
+          "Telepathology",
+          "Digital Pathology",
+          "Whole-slide Imaging",
+          "Implementation Barriers",
+          "Ai-assisted Diagnostics",
+          "Healthcare In India"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.jpi.2026.100664"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13223714"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13223714?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-03",
+      "dateOfCreation": "2026-06-03",
+      "firstIndexDate": "2026-06-03",
+      "fullTextReceivedDate": "2026-06-04",
+      "dateOfRevision": "2026-06-03",
+      "electronicPublicationDate": "2026-04-30",
+      "firstPublicationDate": "2026-04-30"
+    },
+    {
+      "id": "PMC13299217",
+      "source": "PMC",
+      "pmcid": "PMC13299217",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13299217"
+        ]
+      },
+      "title": "From Integrated Care to Learning Systems",
+      "authorString": "Tsitiridis A, Perakis K, Antoniades A, Manias G.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Tsitiridis A",
+            "firstName": "Aristeidis",
+            "lastName": "Tsitiridis",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Face Recognition & Artificial Vision, Escuela T\u00e9cnica Superior de Ingenier\u00eda Inform\u00e1tica (ETSII), Universidad Rey Juan Carlos, Calle Tulipan S/N, 28933 Mostoles, Madrid, Spain"
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Perakis K",
+            "firstName": "Konstantinos",
+            "lastName": "Perakis",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Ubitech Ltd., 15231 Chalandri, Greece;"
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Antoniades A",
+            "firstName": "Athos",
+            "lastName": "Antoniades",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Stremble Ventures Ltd., 4042 Limassol, Cyprus;"
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Manias G",
+            "firstName": "George",
+            "lastName": "Manias",
+            "initials": "G",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Digital Systems, University of Piraeus, Karaoli & Dimitriou 80, 18534 Piraeus, Greece;"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "12",
+        "volume": "14",
+        "journalIssueId": 4221244,
+        "dateOfPublication": "2026 Jun",
+        "monthOfPublication": 6,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-06-01",
+        "journal": {
+          "title": "Healthcare (Basel, Switzerland)",
+          "medlineAbbreviation": "Healthcare (Basel)",
+          "nlmid": "101666525",
+          "isoabbreviation": "Healthcare (Basel)",
+          "issn": "2227-9032",
+          "essn": "2227-9032"
+        }
+      },
+      "pubYear": "2026",
+      "language": "eng",
+      "pubModel": "Undetermined",
+      "pubTypeList": {
+        "pubType": [
+          "review-article",
+          "Review",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Artificial intelligence",
+          "Global Health",
+          "Integrated Care Models",
+          "Integrated Care",
+          "Healthy Ageing",
+          "Scoping Review",
+          "Learning Health Systems",
+          "Data Governance",
+          "Prisma-scr",
+          "Eu Ai Act",
+          "Large Language Models",
+          "Stewarded Learning",
+          "Future-ai",
+          "Multimodal Analytics"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Free",
+            "availabilityCode": "F",
+            "documentStyle": "html",
+            "site": "PubMedCentral",
+            "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13299217/?tool=EBI"
+          },
+          {
+            "availability": "Free",
+            "availabilityCode": "F",
+            "documentStyle": "pdf",
+            "site": "PubMedCentral",
+            "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13299217/pdf/?tool=EBI"
+          },
+          {
+            "availability": "Free",
+            "availabilityCode": "F",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13299217"
+          },
+          {
+            "availability": "Free",
+            "availabilityCode": "F",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13299217?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCreation": "2026-06-27",
+      "firstIndexDate": "2026-06-27",
+      "fullTextReceivedDate": "2026-06-27",
+      "dateOfRevision": "2026-06-27",
+      "electronicPublicationDate": "2026-06-01",
+      "firstPublicationDate": "2026-06-01"
+    },
+    {
+      "id": "42303433",
+      "source": "MED",
+      "pmid": "42303433",
+      "pmcid": "PMC13288696",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13288696"
+        ]
+      },
+      "doi": "10.1136/bmjgh-2025-022544",
+      "title": "Barriers to health and social inclusion among transgender and MSM populations in India: a mixed-methods multicentric study.",
+      "authorString": "Aggarwal S, Simmy S, Nigam K, Kohli S, Chandra B, Srikrishnan AK, Kailapuri M, Huidrom R.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Aggarwal S",
+            "firstName": "Sumit",
+            "lastName": "Aggarwal",
+            "initials": "S",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-0652-1611"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Division of Descriptive Research, V. Ramalingaswami Bhawan, Indian Council of Medical Research, New Delhi, Delhi, India drsumiticmr@gmail.com."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Simmy S",
+            "firstName": "Simmy",
+            "lastName": "Simmy",
+            "initials": "S",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-4655-8176"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Division of Descriptive Research, V. Ramalingaswami Bhawan, Indian Council of Medical Research, New Delhi, Delhi, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Nigam K",
+            "firstName": "Kuldeep",
+            "lastName": "Nigam",
+            "initials": "K",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Division of Descriptive Research, V. Ramalingaswami Bhawan, Indian Council of Medical Research, New Delhi, Delhi, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Kohli S",
+            "firstName": "Simran",
+            "lastName": "Kohli",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Division of Descriptive Research, V. Ramalingaswami Bhawan, Indian Council of Medical Research, New Delhi, Delhi, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chandra B",
+            "firstName": "Binoy",
+            "lastName": "Chandra",
+            "initials": "B",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "India HIV/AIDS Alliance (Alliance India), Delhi, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Srikrishnan AK",
+            "firstName": "Aylur K",
+            "lastName": "Srikrishnan",
+            "initials": "AK",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "YRG CARE, Chennai, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Kailapuri M",
+            "firstName": "Muruguvel",
+            "lastName": "Kailapuri",
+            "initials": "M",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "YRG CARE, Chennai, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Huidrom R",
+            "firstName": "Rosenara",
+            "lastName": "Huidrom",
+            "initials": "R",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "India HIV/AIDS Alliance (Alliance India), Delhi, India."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0002-0652-1611"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0003-4655-8176"
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "6",
+        "volume": "11",
+        "journalIssueId": 4204771,
+        "dateOfPublication": "2026 Jun",
+        "monthOfPublication": 6,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-06-01",
+        "journal": {
+          "title": "BMJ global health",
+          "medlineAbbreviation": "BMJ Glob Health",
+          "nlmid": "101685275",
+          "isoabbreviation": "BMJ Glob Health",
+          "issn": "2059-7908",
+          "essn": "2059-7908"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "e022544",
+      "abstractText": "<h4>Background</h4>Despite legal reforms advancing the rights of transgender (TG) individuals and men who have sex with men (MSM) in India, social exclusion, stigma and systemic barriers continue to undermine their access to healthcare and social services. Evidence on identity recognition, service utilisation and healthcare gaps remains limited.<h4>Methods</h4>We conducted a sequential explanatory mixed-methods study. The qualitative phase involved 26 in-depth interviews, 14 focus group discussions and 3 key informant interviews with TG and MSM participants in Delhi and West Bengal. Insights informed a quantitative survey across 14 states (n=2208), exploring socio-demographic profiles, identity documentation, employment and healthcare utilisation. Data were analysed thematically using NVivo V.14 and statistically using SPSS V.27.<h4>Results</h4>TG and MSM participants reported pervasive educational exclusion, precarious livelihoods and limited family support. Only 52.4% of TG respondents possessed a TG identity card, while fewer than 20% had updated other legal documents. Employment remained insecure, with 35% of TG individuals reliant on sex work, begging or ritualistic practices. Health service uptake was low: only 12% of TG respondents accessed Ayushman TG Plus insurance, and 3.9% received human papillomavirus (HPV) vaccination. While most HIV-positive respondents reported being linked to antiretroviral therapy centres, many participants diagnosed with other sexually transmitted infections (STIs) or hepatitis B/C were not receiving treatment. Qualitative findings highlighted stigma in healthcare interactions, administrative delays in accessing welfare schemes and restrictions within community-based support structures such as Deras. Despite these barriers, peer networks provided critical emotional and financial support.<h4>Discussion</h4>Findings reveal persistent gaps between legal recognition and lived realities for TG and MSM individuals. Structural stigma, economic marginalisation and administrative inefficiencies undermine access to identity documentation, healthcare and social protection schemes. Addressing these inequities requires stigma-sensitive healthcare, streamlined administrative processes and inclusive welfare programmes. Embedding psychosocial support and trans-inclusive care beyond HIV services into India's public health system is essential for ensuring health equity and advancing Sustainable Development Goals 3 and 10.",
+      "affiliation": "Division of Descriptive Research, V. Ramalingaswami Bhawan, Indian Council of Medical Research, New Delhi, Delhi, India drsumiticmr@gmail.com.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Multicenter Study",
+          "Journal Article"
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Humans"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Focus Groups"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Homosexuality, Male",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "PX",
+                  "qualifierName": "psychology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "SN",
+                  "qualifierName": "statistics & numerical data",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Qualitative Research"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Adolescent"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Adult"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Middle Aged"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Health Services Accessibility",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "SN",
+                  "qualifierName": "statistics & numerical data",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Patient Acceptance of Health Care",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "SN",
+                  "qualifierName": "statistics & numerical data",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "India"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Female"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Male"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Young Adult"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Social Stigma"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Transgender Persons",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "PX",
+                  "qualifierName": "psychology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "SN",
+                  "qualifierName": "statistics & numerical data",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "India",
+          "Delivery Of Health Care",
+          "Social Discrimination",
+          "Health Services Research",
+          "Social Stigma"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1136/bmjgh-2025-022544"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13288696"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13288696?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by-nc",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-16",
+      "dateOfCreation": "2026-06-16",
+      "firstIndexDate": "2026-06-18",
+      "fullTextReceivedDate": "2026-06-26",
+      "dateOfRevision": "2026-06-17",
+      "electronicPublicationDate": "2026-06-16",
+      "firstPublicationDate": "2026-06-16"
+    },
+    {
+      "id": "42293512",
+      "source": "MED",
+      "pmid": "42293512",
+      "pmcid": "PMC13261300",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13261300"
+        ]
+      },
+      "doi": "10.1002/puh2.70298",
+      "title": "Postnatal Care Utilisation Among Adolescent Mothers in India: A Pooled Cross-Sectional Study of NFHS-4 and NFHS-5.",
+      "authorString": "Singh A, Singh A, Chandra R, Hossain M, Jain U.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Singh A",
+            "firstName": "Anshika",
+            "lastName": "Singh",
+            "initials": "A",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-8643-7419"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Banaras Hindu University Varanasi India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Singh A",
+            "firstName": "Aditya",
+            "lastName": "Singh",
+            "initials": "A",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0003-3031-5225"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Banaras Hindu University Varanasi India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Chandra R",
+            "firstName": "Rakesh",
+            "lastName": "Chandra",
+            "initials": "R",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-8330-9809"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Tata Institute of Social Sciences Mumbai India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Hossain M",
+            "firstName": "Muhammad",
+            "lastName": "Hossain",
+            "initials": "M",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0000-0002-4939-1597"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Birmingham City University Birmingham UK."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Jain U",
+            "firstName": "Utkarsh",
+            "lastName": "Jain",
+            "initials": "U",
+            "authorId": {
+              "type": "ORCID",
+              "value": "0009-0009-8857-4028"
+            },
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Banaras Hindu University Varanasi India."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "authorIdList": {
+        "authorId": [
+          {
+            "type": "ORCID",
+            "value": "0000-0002-4939-1597"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-8330-9809"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0002-8643-7419"
+          },
+          {
+            "type": "ORCID",
+            "value": "0000-0003-3031-5225"
+          },
+          {
+            "type": "ORCID",
+            "value": "0009-0009-8857-4028"
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "2",
+        "volume": "5",
+        "journalIssueId": 4170272,
+        "dateOfPublication": "2026 Jun",
+        "monthOfPublication": 6,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-06-01",
+        "journal": {
+          "title": "Public health challenges",
+          "medlineAbbreviation": "Public Health Chall",
+          "nlmid": "9918574282106676",
+          "isoabbreviation": "Public Health Chall",
+          "issn": "2769-2450",
+          "essn": "2769-2450"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "e70298",
+      "abstractText": "Although postnatal care (PNC) is a critical component of maternal health services, empirical evidence on its utilisation and associated factors among adolescent mothers in India remains limited. Using nationally representative data from the fourth (2015-16) and fifth (2019-21) rounds of the National Family Health Survey, this study examines trends and determinants of PNC utilisation among mothers aged 15-19 years. PNC within 42 days of delivery was analysed as a binary outcome using multivariable logistic regression. PNC utilisation among adolescent mothers increased substantially between the two survey rounds, from 69.9% in 2015-16 to 82.3% in 2019-21. Despite this progress, marked socio-economic and regional inequalities persisted. By 2019-21, the lowest utilisation was concentrated in the north-eastern region, particularly in Nagaland (47.1%), Mizoram (64.7%), Assam (69.3%), and Arunachal Pradesh (69.7%). Multivariable regression analysis showed that PNC utilisation was most strongly associated with place of delivery and antenatal care attendance, with a clear dose-response relationship for the number of antenatal care visits. Adolescent mothers delivering in health facilities and those receiving eight or more antenatal care visits were significantly more likely to utilise PNC. Household wealth, health insurance coverage, and region of residence were also significant predictors. Although India has made substantial progress in antenatal care and institutional delivery, PNC utilisation among adolescent mothers remains uneven. Improving continuity between antenatal care, delivery services and postnatal follow-up, and addressing persistent socio-economic and regional inequalities, is important for ensuring equitable access to PNC.",
+      "affiliation": "Banaras Hindu University Varanasi India.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "India",
+          "Maternal Health",
+          "Postnatal Care",
+          "Adolescent Mothers",
+          "Nfhs\u20104",
+          "Nfhs\u20105"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1002/puh2.70298"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13261300"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13261300?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-15",
+      "dateOfCreation": "2026-06-15",
+      "firstIndexDate": "2026-06-16",
+      "fullTextReceivedDate": "2026-06-13",
+      "dateOfRevision": "2026-06-15",
+      "electronicPublicationDate": "2026-06-12",
+      "firstPublicationDate": "2026-06-12"
+    },
+    {
+      "id": "41585320",
+      "source": "MED",
+      "pmid": "41585320",
+      "pmcid": "PMC12828544",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC12828544"
+        ]
+      },
+      "doi": "10.1016/j.dialog.2026.100279",
+      "title": "Gendered role disruption in women with rheumatoid arthritis: A phenomenological study in Kashmir.",
+      "authorString": "Gadda ZH, Jahangir MS, Shafi A.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Gadda ZH",
+            "firstName": "Zakir Hussain",
+            "lastName": "Gadda",
+            "initials": "ZH",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Sociology, University of Kashmir, Jammu & Kashmir, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Jahangir MS",
+            "firstName": "Mohmad Saleem",
+            "lastName": "Jahangir",
+            "initials": "MS",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Sociology, University of Kashmir, Jammu & Kashmir, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Shafi A",
+            "firstName": "Aneesa",
+            "lastName": "Shafi",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Sociology, University of Kashmir, Jammu & Kashmir, India."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "volume": "8",
+        "journalIssueId": 4080167,
+        "dateOfPublication": "2026 Jun",
+        "monthOfPublication": 6,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-06-01",
+        "journal": {
+          "title": "Dialogues in health",
+          "medlineAbbreviation": "Dialogues Health",
+          "nlmid": "9918506184906676",
+          "isoabbreviation": "Dialogues Health",
+          "issn": "2772-6533",
+          "essn": "2772-6533"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "100279",
+      "abstractText": "This study employed a descriptive phenomenological approach to explore the day-to-day social role experiences of women living with Rheumatoid Arthritis (RA) in Kashmir. Participants were recruited through purposive and theoretical sampling until data saturation was reached. The study included 15 women, aged 21 to 67\u00a0years, with a clinical diagnosis of RA. Most of these women participants were married homemakers. Data were collected via in-depth semi-structured interviews and analyzed with the help of Colaizzi's method. Results revealed that the challenges posed by RA, including pain, discomfort and progressive disability, have curtailed the patients' ability to fulfill their culturally assigned social roles. Such limitations increased their vulnerability to impaired well-being and a loss of identity and purpose. Furthermore, RA has increased patients' dependence on others, which diminished their perceived significance both within and beyond their familial boundaries. As a result, they have adopted various strategies to adapt to the changing demands and expectations associated with their social roles. The study findings emphasize the need for active family involvement in RA care to promote empathy and support. Moreover, healthcare providers need to address not only the physical aspects of RA, but also its under-recognized emotional, psychological, and sexual impacts to improve the quality of care.",
+      "affiliation": "Department of Sociology, University of Kashmir, Jammu & Kashmir, India.",
+      "publicationStatus": "epublish",
+      "language": "eng",
+      "pubModel": "Electronic-eCollection",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Arthritis",
+          "Loss",
+          "Gender",
+          "adaptive strategies",
+          "Chronic Illness",
+          "Role",
+          "Kashmir"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.1016/j.dialog.2026.100279"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC12828544"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC12828544?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-01-26",
+      "dateOfCreation": "2026-01-26",
+      "firstIndexDate": "2026-01-26",
+      "fullTextReceivedDate": "2026-01-26",
+      "dateOfRevision": "2026-01-28",
+      "electronicPublicationDate": "2026-01-11",
+      "firstPublicationDate": "2026-01-11"
+    },
+    {
+      "id": "42344079",
+      "source": "MED",
+      "pmid": "42344079",
+      "pmcid": "PMC13289985",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13289985"
+        ]
+      },
+      "doi": "10.4103/ijcm.ijcm_307_25",
+      "title": "A Global Wake-up Call: The 2025 International Diabetes Federation Diabetes Atlas and what it Means for India.",
+      "authorString": "Kapoor N, Krishna STR.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Kapoor N",
+            "firstName": "Neelesh",
+            "lastName": "Kapoor",
+            "initials": "N",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Chair, Public Health, Diabetes Education and Advocacy, Diabetes India, Noida, Uttar Pradesh, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Krishna STR",
+            "firstName": "S Teja Rama",
+            "lastName": "Krishna",
+            "initials": "STR",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Community and Family Medicine, AIIMS Rishikesh, Uttarakhand, India."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "3",
+        "volume": "51",
+        "journalIssueId": 4220131,
+        "dateOfPublication": "2026 May-Jun",
+        "monthOfPublication": 0,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-05-01",
+        "journal": {
+          "title": "Indian journal of community medicine : official publication of Indian Association of Preventive & Social Medicine",
+          "medlineAbbreviation": "Indian J Community Med",
+          "nlmid": "9315574",
+          "isoabbreviation": "Indian J Community Med",
+          "issn": "0970-0218",
+          "essn": "1998-3581"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "441-442",
+      "affiliation": "Chair, Public Health, Diabetes Education and Advocacy, Diabetes India, Noida, Uttar Pradesh, India.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print-Electronic",
+      "pubTypeList": {
+        "pubType": [
+          "Editorial"
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.4103/ijcm.ijcm_307_25"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13289985"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13289985?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "N",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by-nc-nd",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-25",
+      "dateOfCreation": "2026-06-25",
+      "firstIndexDate": "2026-06-25",
+      "fullTextReceivedDate": "2026-06-26",
+      "dateOfRevision": "2026-06-25",
+      "electronicPublicationDate": "2026-06-06",
+      "firstPublicationDate": "2026-05-01"
+    },
+    {
+      "id": "42237832",
+      "source": "MED",
+      "pmid": "42237832",
+      "pmcid": "PMC13235559",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13235559"
+        ]
+      },
+      "doi": "10.25259/ijmr_2286_2025",
+      "title": "Out of pocket expenditure incurred by couples seeking infertility services at tertiary level facilities in India.",
+      "authorString": "Padhan AK, Patil P, Vikani A, Sharma D, Sachin O, Somen B, Shankara Bagepally B, Tanwar R, Suri V, V R, M A, P R, Shrivastava D, Patel S, Prinja S, Joshi B.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Padhan AK",
+            "firstName": "Asim Kumar",
+            "lastName": "Padhan",
+            "initials": "AK",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Operational Research, ICMR-National Institute For Research in Reproductive and Child Health, Mumbai, Maharashtra, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Patil P",
+            "firstName": "Prerana",
+            "lastName": "Patil",
+            "initials": "P",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "National Cancer Grid, Tata Memorial Hospital, Mumbai, Maharashtra, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Vikani A",
+            "firstName": "Akshita",
+            "lastName": "Vikani",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Community Medicine, Postgraduate Institute of Medical Education and Research, Chandigarh, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Sharma D",
+            "firstName": "Deepshikha",
+            "lastName": "Sharma",
+            "initials": "D",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Health Research, Government of India, Delhi, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Sachin O",
+            "firstName": "Oshima",
+            "lastName": "Sachin",
+            "initials": "O",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Community Medicine, Sree Chitra Tirunal Institute for Medical Sciences and Technology, Trivandrum, Kerala, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Somen B",
+            "firstName": "Biju",
+            "lastName": "Somen",
+            "initials": "B",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "ICMR-National Centre for Disease Informatics and Research, Bengaluru, Karnataka, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Shankara Bagepally B",
+            "firstName": "Bhavani",
+            "lastName": "Shankara Bagepally",
+            "initials": "B",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of IVF and Reproductive Biology Centre, Maulana Azad Medical College, Delhi, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Tanwar R",
+            "firstName": "Renu",
+            "lastName": "Tanwar",
+            "initials": "R",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of IVF Centre, Postgraduate Institute of Medical Education and Research, Chandigarh, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Suri V",
+            "firstName": "Vanita",
+            "lastName": "Suri",
+            "initials": "V",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Reproductive Medicine and Surgery, Sri Rama Chandra Institute of Higher Education and Research Chennai, Chennai, Tamil Nadu, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "V R",
+            "firstName": "Radha",
+            "lastName": "V",
+            "initials": "R",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of IVF Centre, Sree Avittham Thirunal Hospital, Trivandrum, Kerala, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "M A",
+            "firstName": "Anitha",
+            "lastName": "M",
+            "initials": "A",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Obstetrics and Gynaecology, Jawaharlal Nehru Medical College, Datta Meghe Institute of Medical Sciences, Wardha, Chhattisgarh, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "P R",
+            "firstName": "Ramesh",
+            "lastName": "P",
+            "initials": "R",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Operational Research, ICMR-National Institute For Research in Reproductive and Child Health, Mumbai, Maharashtra, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Shrivastava D",
+            "firstName": "Deepti",
+            "lastName": "Shrivastava",
+            "initials": "D",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Operational Research, ICMR-National Institute For Research in Reproductive and Child Health, Mumbai, Maharashtra, India."
+                },
+                {
+                  "affiliation": "Department of DOIR, ICMR-National Institute For Research in Reproductive and Child Health, Mumbai, Maharashtra, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Patel S",
+            "firstName": "Sukhpreet",
+            "lastName": "Patel",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of DOIR, ICMR-National Institute For Research in Reproductive and Child Health, Mumbai, Maharashtra, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Prinja S",
+            "firstName": "Shankar",
+            "lastName": "Prinja",
+            "initials": "S",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Community Medicine, Postgraduate Institute of Medical Education and Research, Chandigarh, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Joshi B",
+            "firstName": "Beena",
+            "lastName": "Joshi",
+            "initials": "B",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Operational Research, ICMR-National Institute For Research in Reproductive and Child Health, Mumbai, Maharashtra, India."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "journalInfo": {
+        "issue": "5",
+        "volume": "163",
+        "journalIssueId": 4208621,
+        "dateOfPublication": "2026 May",
+        "monthOfPublication": 5,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-05-01",
+        "journal": {
+          "title": "The Indian journal of medical research",
+          "medlineAbbreviation": "Indian J Med Res",
+          "nlmid": "0374701",
+          "isoabbreviation": "Indian J Med Res",
+          "issn": "0971-5916"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "618-624",
+      "abstractText": "Background and objectives Diagnosis and treatment of infertility, mostly sought at tertiary facilities, contribute to substantial out-of-pocket expenditure (OOPE). This study estimated OOPE among couples seeking care for endometriosis, male infertility, polycystic ovary syndrome (PCOS), tubal factor, and uterine factor, including costs of diagnosis, management, and intrauterine insemination (IUI). Methods A cross-sectional study was conducted across five tertiary healthcare facilities (three public, two private) selected through convenience sampling to represent different regions. Based on mean (SD) OOPE INR (\u20b9)144,393 (\u20b9130,943), effect size 0.16, \u03b1=0.05, and 80% power, the sample was equally distributed across sites and IVF/non-IVF groups, with \u223c100 participants per site. Couples were interviewed between April 2022-March 2023. Catastrophic health expenditure was defined as infertility spending exceeding 40% of annual household non-food expenditure. OOPE over the preceding year covered direct medical, non-medical, and indirect costs. Results Annual median OOPE was \u20b911,317 (US $136.5) (IQR: \u20b94,801-\u20b919,513) US $, higher in private facilities \u20b914,217 ($171.4) (IQR: \u20b98,030-\u20b921,848) than public facilities \u20b98,355 ($100.7) (IQR: \u20b93,785-\u20b917,386). Direct medical costs were the major contributor: median \u20b95,802 ($69.9) (IQR: \u20b92,186-\u20b911,847) Highest OOPE was for endometriosis \u20b915,084 ($181.9) (IQR: \u20b98,114-\u20b920,758), followed by uterine factor and male infertility \u20b913,211 ($159.3) (IQR: \u20b96,654-\u20b921,521). OOPE increased with absence of insurance (\u20b96,919; $83.4), comorbidities (\u20b92,593; $31.3), IUI (\u20b92,668; $32.1), and PCOS (\u20b92,004; $24.1). Catastrophic Health Expenditure was associated with comorbidities (OR=1.61), IUI (OR=1.88), and lower per capita income <\u20b959,400 ($715.7) (OR=3.44). Overall, 59.4% experienced CHE. Interpretation and conclusions Infertility care imposes substantial out of pocket expenditure in India. Strengthened insurance coverage and public sector investment are critical for equitable access.",
+      "affiliation": "Department of Operational Research, ICMR-National Institute For Research in Reproductive and Child Health, Mumbai, Maharashtra, India.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print",
+      "pubTypeList": {
+        "pubType": [
+          "research-article",
+          "Journal Article"
+        ]
+      },
+      "meshHeadingList": {
+        "meshHeading": [
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Humans"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Polycystic Ovary Syndrome",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "EC",
+                  "qualifierName": "economics",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "EP",
+                  "qualifierName": "epidemiology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "TH",
+                  "qualifierName": "therapy",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Infertility",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "EC",
+                  "qualifierName": "economics",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "EP",
+                  "qualifierName": "epidemiology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "TH",
+                  "qualifierName": "therapy",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Infertility, Male",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "EC",
+                  "qualifierName": "economics",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "EP",
+                  "qualifierName": "epidemiology",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "TH",
+                  "qualifierName": "therapy",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Endometriosis",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "EC",
+                  "qualifierName": "economics",
+                  "majorTopic_YN": "N"
+                },
+                {
+                  "abbreviation": "EP",
+                  "qualifierName": "epidemiology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Cross-Sectional Studies"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Adult"
+          },
+          {
+            "majorTopic_YN": "Y",
+            "descriptorName": "Health Expenditures",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "SN",
+                  "qualifierName": "statistics & numerical data",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "India",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "EP",
+                  "qualifierName": "epidemiology",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Female"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Male"
+          },
+          {
+            "majorTopic_YN": "N",
+            "descriptorName": "Tertiary Care Centers",
+            "meshQualifierList": {
+              "meshQualifier": [
+                {
+                  "abbreviation": "EC",
+                  "qualifierName": "economics",
+                  "majorTopic_YN": "N"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "keywordList": {
+        "keyword": [
+          "Iui",
+          "Catastrophic Health Expenditure",
+          "Out Of Pocket Expenditure"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.25259/IJMR_2286_2025"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13235559"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13235559?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "Y",
+      "citedByCount": 0,
+      "hasData": "Y",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "N",
+      "license": "cc by-nc-sa",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCompletion": "2026-06-04",
+      "dateOfCreation": "2026-06-04",
+      "firstIndexDate": "2026-06-05",
+      "fullTextReceivedDate": "2026-06-07",
+      "dateOfRevision": "2026-06-04",
+      "firstPublicationDate": "2026-05-01"
+    },
+    {
+      "id": "42237826",
+      "source": "MED",
+      "pmid": "42237826",
+      "pmcid": "PMC13235577",
+      "fullTextIdList": {
+        "fullTextId": [
+          "PMC13235577"
+        ]
+      },
+      "doi": "10.25259/ijmr_1285_2026",
+      "title": "Beyond the prescription: Addressing socio-clinical determinants of asthma care in India.",
+      "authorString": "Koul PA, Saydain G.",
+      "authorList": {
+        "author": [
+          {
+            "fullName": "Koul PA",
+            "firstName": "Parvaiz A",
+            "lastName": "Koul",
+            "initials": "PA",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Formerly, Department of Pulmonary Medicine, Sher-i-Kashmir Institute of Medical Sciences, Srinagar, Jammu and Kashmir, India."
+                }
+              ]
+            }
+          },
+          {
+            "fullName": "Saydain G",
+            "firstName": "Ghulam",
+            "lastName": "Saydain",
+            "initials": "G",
+            "authorAffiliationDetailsList": {
+              "authorAffiliation": [
+                {
+                  "affiliation": "Department of Medicine (Pulmonary Critical Care and Sleep Division), Wayne State University, Michigan, United States."
+                },
+                {
+                  "affiliation": "School of Medicine, Harper-Hutzel Hospital, Detroit Medical Centre, Detroit, United States."
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "dataLinksTagsList": {
+        "dataLinkstag": [
+          "altmetrics"
+        ]
+      },
+      "journalInfo": {
+        "issue": "5",
+        "volume": "163",
+        "journalIssueId": 4208621,
+        "dateOfPublication": "2026 May",
+        "monthOfPublication": 5,
+        "yearOfPublication": 2026,
+        "printPublicationDate": "2026-05-01",
+        "journal": {
+          "title": "The Indian journal of medical research",
+          "medlineAbbreviation": "Indian J Med Res",
+          "nlmid": "0374701",
+          "isoabbreviation": "Indian J Med Res",
+          "issn": "0971-5916"
+        }
+      },
+      "pubYear": "2026",
+      "pageInfo": "565-568",
+      "affiliation": "Formerly, Department of Pulmonary Medicine, Sher-i-Kashmir Institute of Medical Sciences, Srinagar, Jammu and Kashmir, India.",
+      "publicationStatus": "ppublish",
+      "language": "eng",
+      "pubModel": "Print",
+      "pubTypeList": {
+        "pubType": [
+          "Editorial"
+        ]
+      },
+      "subsetList": {
+        "subset": [
+          {
+            "code": "IM",
+            "name": "Index Medicus"
+          }
+        ]
+      },
+      "fullTextUrlList": {
+        "fullTextUrl": [
+          {
+            "availability": "Subscription required",
+            "availabilityCode": "S",
+            "documentStyle": "doi",
+            "site": "DOI",
+            "url": "https://doi.org/10.25259/IJMR_1285_2026"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "html",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13235577"
+          },
+          {
+            "availability": "Open access",
+            "availabilityCode": "OA",
+            "documentStyle": "pdf",
+            "site": "Europe_PMC",
+            "url": "https://europepmc.org/articles/PMC13235577?pdf=render"
+          }
+        ]
+      },
+      "isOpenAccess": "Y",
+      "inEPMC": "Y",
+      "inPMC": "Y",
+      "hasPDF": "Y",
+      "hasBook": "N",
+      "hasSuppl": "N",
+      "citedByCount": 0,
+      "hasData": "N",
+      "hasReferences": "Y",
+      "hasTextMinedTerms": "Y",
+      "hasDbCrossReferences": "N",
+      "hasLabsLinks": "Y",
+      "license": "cc by-nc-sa",
+      "hasEvaluations": "N",
+      "authMan": "N",
+      "epmcAuthMan": "N",
+      "nihAuthMan": "N",
+      "hasTMAccessionNumbers": "N",
+      "dateOfCreation": "2026-06-04",
+      "firstIndexDate": "2026-06-05",
+      "fullTextReceivedDate": "2026-06-07",
+      "dateOfRevision": "2026-06-04",
+      "firstPublicationDate": "2026-05-01"
+    }
+  ]
+}
