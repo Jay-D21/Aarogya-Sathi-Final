@@ -43,11 +43,11 @@ html, body { width:100%; height:100%; overflow:hidden; font-family:'Inter',sans-
 
 /* ── TYPOGRAPHY ── */
 h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; line-height:1.1; }
-h1 { font-size:clamp(3.2rem,5.5vw,5rem); font-weight:700; letter-spacing:-.03em; }
-h2 { font-size:clamp(1.9rem,2.8vw,2.6rem); font-weight:700; letter-spacing:-.02em; margin-bottom:.6rem; }
-h3 { font-size:clamp(1.05rem,1.5vw,1.35rem); font-weight:600; }
-h4 { font-size:.82rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--primary); }
-p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-muted); }
+h1 { font-size:clamp(3.36rem, 6.88vw, 5.25rem); font-weight:700; letter-spacing:-.03em; }
+h2 { font-size:clamp(2.18rem, 3.5vw, 2.99rem); font-weight:700; letter-spacing:-.02em; margin-bottom:.6rem; }
+h3 { font-size:clamp(1.47rem, 1.88vw, 1.76rem); font-weight:600; }
+h4 { font-size:1.23rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--primary); }
+p,li { font-size:clamp(1.4rem, 1.56vw, 1.56rem); line-height:1.62; color:var(--text-muted); }
 
 /* ── HEADER BAR ── */
 .slide-header {
@@ -55,22 +55,22 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
   margin-bottom:2.5vh; flex-shrink:0;
 }
 .slide-tag {
-  font-family:'Space Grotesk',sans-serif; font-size:.72rem; font-weight:600;
+  font-family:'Space Grotesk',sans-serif; font-size:1.08rem; font-weight:600;
   color:var(--primary); background:var(--accent-light);
   padding:.3rem .9rem; border-radius:100px; border:1px solid var(--border);
 }
 .accent-line { width:52px; height:4px; background:var(--primary); border-radius:2px; margin-bottom:1.2rem; }
 
 /* ── CHROME ── */
-.slide-counter { position:fixed; bottom:2.8vh; left:3vw; font-family:'Space Grotesk',sans-serif; font-size:.78rem; font-weight:500; color:var(--text-light); z-index:100; }
-.keyboard-hint { position:fixed; bottom:2.8vh; left:50%; transform:translateX(-50%); font-size:.68rem; color:var(--text-light); z-index:100; opacity:.6; }
+.slide-counter { position:fixed; bottom:2.8vh; left:3vw; font-family:'Space Grotesk',sans-serif; font-size:1.17rem; font-weight:500; color:var(--text-light); z-index:100; }
+.keyboard-hint { position:fixed; bottom:2.8vh; left:50%; transform:translateX(-50%); font-size:1.02rem; color:var(--text-light); z-index:100; opacity:.6; }
 .progress-bar { position:fixed; bottom:0; left:0; height:3px; background:var(--primary); transition:width .4s ease; z-index:100; }
 .nav-controls { position:fixed; bottom:2.2vh; right:3vw; display:flex; gap:.7rem; z-index:100; }
 .nav-btn {
   width:40px; height:40px; border-radius:50%;
   border:1.5px solid var(--border); background:var(--bg); color:var(--primary);
   cursor:pointer; display:flex; align-items:center; justify-content:center;
-  transition:all .2s ease; font-size:1rem;
+  transition:all .2s ease; font-size:1.4rem;
 }
 .nav-btn:hover { background:var(--primary); color:var(--bg); border-color:var(--primary); }
 .nav-btn:disabled { opacity:.3; cursor:not-allowed; }
@@ -86,18 +86,18 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
 .g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
 
 /* ── BIG STAT ── */
-.stat-val { font-family:'Space Grotesk',sans-serif; font-size:clamp(2.4rem,3.8vw,3.4rem); font-weight:700; color:var(--primary); line-height:1; }
-.stat-label { font-size:.95rem; font-weight:600; color:var(--text); margin:.35rem 0 .25rem; }
-.stat-sub { font-size:.88rem; color:var(--text-muted); line-height:1.45; }
+.stat-val { font-family:'Space Grotesk',sans-serif; font-size:clamp(2.76rem, 4.75vw, 3.57rem); font-weight:700; color:var(--primary); line-height:1; }
+.stat-label { font-size:1.33rem; font-weight:600; color:var(--text); margin:.35rem 0 .25rem; }
+.stat-sub { font-size:1.23rem; color:var(--text-muted); line-height:1.45; }
 
 /* ── NUMBERED LIST ── */
 .num-list { list-style:none; counter-reset:nl; display:flex; flex-direction:column; gap:.85rem; }
-.num-list li { counter-increment:nl; position:relative; padding-left:2.4rem; font-size:clamp(1rem,1.25vw,1.18rem); line-height:1.55; color:var(--text); }
-.num-list li::before { content:counter(nl,decimal-leading-zero); position:absolute; left:0; font-family:'Space Grotesk',sans-serif; font-size:.8rem; font-weight:700; color:var(--primary); line-height:1.8; }
+.num-list li { counter-increment:nl; position:relative; padding-left:2.4rem; font-size:clamp(1.4rem, 1.56vw, 1.53rem); line-height:1.55; color:var(--text); }
+.num-list li::before { content:counter(nl,decimal-leading-zero); position:absolute; left:0; font-family:'Space Grotesk',sans-serif; font-size:1.2rem; font-weight:700; color:var(--primary); line-height:1.8; }
 
 /* ── BULLET LIST ── */
 .blist { list-style:none; display:flex; flex-direction:column; gap:.55rem; }
-.blist li { position:relative; padding-left:1.1rem; font-size:clamp(.95rem,1.2vw,1.12rem); line-height:1.5; }
+.blist li { position:relative; padding-left:1.1rem; font-size:clamp(1.33rem, 1.5vw, 1.46rem); line-height:1.5; }
 .blist li::before { content:''; position:absolute; left:0; top:.55rem; width:5px; height:5px; border-radius:50%; background:var(--primary); }
 
 /* ────────────────────────────────────
@@ -119,14 +119,14 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
   display:grid; grid-template-columns:repeat(5,1fr); gap:10px; opacity:.2;
 }
 .cover-dots .dot { width:6px; height:6px; background:var(--primary); border-radius:50%; }
-.cover-eyebrow { font-size:.8rem; font-weight:600; color:var(--primary); letter-spacing:.14em; text-transform:uppercase; margin-bottom:1.4rem; }
-.cover-title { font-size:clamp(3.2rem,6vw,5.5rem); font-weight:700; letter-spacing:-.04em; line-height:1.02; margin-bottom:1.4rem; }
-.cover-sub { font-size:clamp(1rem,1.6vw,1.3rem); color:var(--text-muted); max-width:38vw; margin-bottom:2.8rem; line-height:1.5; }
-.cover-meta { font-family:'Space Grotesk',sans-serif; font-size:.85rem; color:var(--text-light); letter-spacing:.04em; }
+.cover-eyebrow { font-size:1.2rem; font-weight:600; color:var(--primary); letter-spacing:.14em; text-transform:uppercase; margin-bottom:1.4rem; }
+.cover-title { font-size:clamp(3.36rem, 7.5vw, 5.78rem); font-weight:700; letter-spacing:-.04em; line-height:1.02; margin-bottom:1.4rem; }
+.cover-sub { font-size:clamp(1.4rem, 2.0vw, 1.69rem); color:var(--text-muted); max-width:38vw; margin-bottom:2.8rem; line-height:1.5; }
+.cover-meta { font-family:'Space Grotesk',sans-serif; font-size:1.27rem; color:var(--text-light); letter-spacing:.04em; }
 .cover-pill {
   display:inline-flex; align-items:center; gap:.5rem;
   background:var(--primary); color:#fff; padding:.5rem 1.2rem;
-  border-radius:100px; font-size:.82rem; font-weight:600;
+  border-radius:100px; font-size:1.23rem; font-weight:600;
   margin-bottom:2rem; font-family:'Space Grotesk',sans-serif;
 }
 
@@ -143,18 +143,18 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
 .flow-step:not(:last-child)::after {
   content:'→';
   position:absolute; right:-12px; top:28px;
-  font-size:1.6rem; color:var(--primary); font-weight:700; z-index:5;
+  font-size:2.08rem; color:var(--primary); font-weight:700; z-index:5;
 }
 .flow-circle {
   width:60px; height:60px; border-radius:50%;
   background:var(--primary); color:#fff;
   display:flex; align-items:center; justify-content:center;
-  font-family:'Space Grotesk',sans-serif; font-size:1.4rem; font-weight:700;
+  font-family:'Space Grotesk',sans-serif; font-size:1.82rem; font-weight:700;
   margin-bottom:1rem; flex-shrink:0;
   box-shadow:0 6px 20px rgba(30,43,250,.3);
 }
-.flow-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(1.05rem,1.4vw,1.25rem); font-weight:700; margin-bottom:.5rem; color:var(--text); }
-.flow-desc { font-size:clamp(.88rem,1.05vw,1rem); color:var(--text-muted); line-height:1.5; max-width:200px; }
+.flow-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(1.47rem, 1.75vw, 1.62rem); font-weight:700; margin-bottom:.5rem; color:var(--text); }
+.flow-desc { font-size:clamp(1.23rem, 1.31vw, 1.4rem); color:var(--text-muted); line-height:1.5; max-width:200px; }
 
 /* ────────────────────────────────────
    ARCHITECTURE DIAGRAM
@@ -178,14 +178,14 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
   border:2.5px solid var(--primary); background:var(--accent-light);
   padding:1.2rem .9rem;
 }
-.arch-icon { font-size:2.4rem; line-height:1; }
-.arch-title { font-family:'Space Grotesk',sans-serif; font-size:1rem; font-weight:700; color:var(--text); }
-.arch-sub { font-size:.82rem; color:var(--text-muted); line-height:1.4; }
+.arch-icon { font-size:2.76rem; line-height:1; }
+.arch-title { font-family:'Space Grotesk',sans-serif; font-size:1.4rem; font-weight:700; color:var(--text); }
+.arch-sub { font-size:1.23rem; color:var(--text-muted); line-height:1.4; }
 .arch-arrow { flex:0 0 40px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.3rem; }
-.arch-arrow-line { display:flex; align-items:center; color:var(--primary); font-size:1.4rem; font-weight:700; }
-.arch-arrow-label { font-size:.62rem; color:var(--text-muted); text-align:center; }
+.arch-arrow-line { display:flex; align-items:center; color:var(--primary); font-size:1.82rem; font-weight:700; }
+.arch-arrow-label { font-size:0.93rem; color:var(--text-muted); text-align:center; }
 .sub-modules { display:flex; flex-direction:column; gap:.5rem; margin-top:.5rem; width:100%; }
-.sub-mod { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:.5rem .7rem; font-size:.82rem; color:var(--text); font-weight:500; text-align:center; }
+.sub-mod { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:.5rem .7rem; font-size:1.23rem; color:var(--text); font-weight:500; text-align:center; }
 
 /* ────────────────────────────────────
    GANTT CHART
@@ -197,16 +197,16 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
   gap:3px 4px;
   align-items:center;
 }
-.gantt-head-task { font-family:'Space Grotesk',sans-serif; font-size:.82rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; padding-bottom:.6rem; border-bottom:2px solid var(--border); }
-.gantt-head-week { font-family:'Space Grotesk',sans-serif; font-size:.78rem; font-weight:600; color:var(--primary); text-align:center; padding-bottom:.6rem; border-bottom:2px solid var(--border); }
-.gantt-task { font-size:.9rem; font-weight:600; color:var(--text); padding:.5rem 0; border-bottom:1px dashed rgba(30,43,250,.12); }
+.gantt-head-task { font-family:'Space Grotesk',sans-serif; font-size:1.23rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; padding-bottom:.6rem; border-bottom:2px solid var(--border); }
+.gantt-head-week { font-family:'Space Grotesk',sans-serif; font-size:1.17rem; font-weight:600; color:var(--primary); text-align:center; padding-bottom:.6rem; border-bottom:2px solid var(--border); }
+.gantt-task { font-size:1.26rem; font-weight:600; color:var(--text); padding:.5rem 0; border-bottom:1px dashed rgba(30,43,250,.12); }
 .gantt-cell { height:36px; border-bottom:1px dashed rgba(30,43,250,.12); position:relative; }
 .gantt-bar {
   position:absolute; inset:4px 0;
   background:var(--primary); border-radius:6px;
   opacity:.88; display:flex; align-items:center;
   padding-left:.5rem;
-  font-size:.65rem; font-weight:600; color:#fff;
+  font-size:0.98rem; font-weight:600; color:#fff;
   white-space:nowrap; overflow:hidden;
 }
 .gantt-bar.phase2 { background:#4f46e5; }
@@ -217,41 +217,41 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
    TECH STACK GRID
 ──────────────────────────────────── */
 .tech-category { display:flex; flex-direction:column; gap:.6rem; }
-.tech-cat-title { font-family:'Space Grotesk',sans-serif; font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--primary); margin-bottom:.3rem; padding-bottom:.4rem; border-bottom:2px solid var(--primary); }
+.tech-cat-title { font-family:'Space Grotesk',sans-serif; font-size:1.23rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--primary); margin-bottom:.3rem; padding-bottom:.4rem; border-bottom:2px solid var(--primary); }
 .tech-item { background:var(--white); border:1.5px solid var(--border); border-radius:10px; padding:.75rem 1rem; display:flex; align-items:center; gap:.7rem; box-shadow:0 2px 8px rgba(30,43,250,.05); }
-.tech-icon { font-size:1.5rem; flex-shrink:0; }
-.tech-name { font-family:'Space Grotesk',sans-serif; font-size:.92rem; font-weight:700; color:var(--text); }
-.tech-desc { font-size:.8rem; color:var(--text-muted); }
+.tech-icon { font-size:1.95rem; flex-shrink:0; }
+.tech-name { font-family:'Space Grotesk',sans-serif; font-size:1.29rem; font-weight:700; color:var(--text); }
+.tech-desc { font-size:1.2rem; color:var(--text-muted); }
 
 /* ────────────────────────────────────
    SCOPE TABLE
 ──────────────────────────────────── */
 .scope-split { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; flex:1; }
-.scope-col h3 { font-size:1rem; font-weight:700; margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
-.scope-col h3 .badge { font-size:.68rem; padding:.2rem .6rem; border-radius:100px; font-weight:700; }
+.scope-col h3 { font-size:1.4rem; font-weight:700; margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
+.scope-col h3 .badge { font-size:1.02rem; padding:.2rem .6rem; border-radius:100px; font-weight:700; }
 .in-scope .badge { background:rgba(5,150,105,.12); color:var(--green); }
 .out-scope .badge { background:rgba(220,38,38,.1); color:var(--red); }
-.scope-item { display:flex; align-items:flex-start; gap:.6rem; padding:.65rem .9rem; border-radius:9px; margin-bottom:.45rem; font-size:.92rem; line-height:1.45; }
+.scope-item { display:flex; align-items:flex-start; gap:.6rem; padding:.65rem .9rem; border-radius:9px; margin-bottom:.45rem; font-size:1.29rem; line-height:1.45; }
 .scope-item.in { background:rgba(5,150,105,.06); border-left:3px solid var(--green); color:var(--text); }
 .scope-item.out { background:rgba(220,38,38,.05); border-left:3px solid var(--red); color:var(--text); }
-.scope-icon { font-size:.9rem; flex-shrink:0; margin-top:.1rem; }
+.scope-icon { font-size:1.26rem; flex-shrink:0; margin-top:.1rem; }
 
 /* ────────────────────────────────────
    OUTCOMES
 ──────────────────────────────────── */
 .outcome-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; flex:1; }
 .outcome-card { background:var(--card-bg); border:1.5px solid var(--border); border-radius:14px; padding:1.3rem; display:flex; flex-direction:column; gap:.6rem; }
-.outcome-card .icon { font-size:2rem; }
-.outcome-card h3 { font-size:1.1rem; font-weight:700; color:var(--text); }
-.outcome-card p { font-size:.95rem; color:var(--text-muted); line-height:1.5; }
-.outcome-metric { font-family:'Space Grotesk',sans-serif; font-size:1.8rem; font-weight:700; color:var(--primary); margin-top:auto; }
+.outcome-card .icon { font-size:2.3rem; }
+.outcome-card h3 { font-size:1.43rem; font-weight:700; color:var(--text); }
+.outcome-card p { font-size:1.33rem; color:var(--text-muted); line-height:1.5; }
+.outcome-metric { font-family:'Space Grotesk',sans-serif; font-size:2.07rem; font-weight:700; color:var(--primary); margin-top:auto; }
 
 /* ────────────────────────────────────
    REFERENCES
 ──────────────────────────────────── */
 .ref-entry { display:flex; gap:.8rem; padding:.7rem .9rem; border-radius:9px; background:var(--card-bg); border-left:3px solid var(--primary); margin-bottom:.55rem; }
-.ref-num { font-family:'Space Grotesk',sans-serif; font-size:.9rem; font-weight:700; color:var(--primary); flex-shrink:0; min-width:28px; }
-.ref-text { font-size:.88rem; line-height:1.55; color:var(--text-muted); }
+.ref-num { font-family:'Space Grotesk',sans-serif; font-size:1.26rem; font-weight:700; color:var(--primary); flex-shrink:0; min-width:28px; }
+.ref-text { font-size:1.23rem; line-height:1.55; color:var(--text-muted); }
 .ref-text strong { color:var(--text); font-weight:600; }
 
 /* ────────────────────────────────────
@@ -264,12 +264,12 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
 /* ────────────────────────────────────
    LIT REVIEW TABLE
 ──────────────────────────────────── */
-.lit-table { width:100%; border-collapse:collapse; flex:1; font-size:.8rem; }
-.lit-table th { background:var(--primary); color:#fff; font-family:'Space Grotesk',sans-serif; font-size:.82rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; padding:.8rem 1rem; text-align:left; }
+.lit-table { width:100%; border-collapse:collapse; flex:1; font-size:1.2rem; }
+.lit-table th { background:var(--primary); color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.23rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; padding:.8rem 1rem; text-align:left; }
 .lit-table tr:nth-child(even) td { background:rgba(30,43,250,.04); }
-.lit-table td { padding:.75rem 1rem; border-bottom:1px solid rgba(30,43,250,.08); color:var(--text); vertical-align:top; line-height:1.45; font-size:.9rem; }
+.lit-table td { padding:.75rem 1rem; border-bottom:1px solid rgba(30,43,250,.08); color:var(--text); vertical-align:top; line-height:1.45; font-size:1.26rem; }
 .lit-table td:first-child { font-weight:600; color:var(--primary); font-family:'Space Grotesk',sans-serif; }
-.lit-table td:last-child { color:var(--text-muted); font-size:.82rem; }
+.lit-table td:last-child { color:var(--text-muted); font-size:1.23rem; }
 </style>
 </head>
 <body>
@@ -309,30 +309,30 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
   <h2>India's preventive healthcare is broken at three levels</h2>
   <div class="g3" style="flex:1;margin-top:1.2rem;align-items:stretch;">
     <div class="card-white" style="display:flex;flex-direction:column;gap:.8rem;">
-      <div style="font-size:2.8rem;">🏥</div>
+      <div style="font-size:3.22rem;">🏥</div>
       <div class="stat-val">63%</div>
       <div class="stat-label">Deaths caused by NCDs</div>
       <div class="stat-sub">Non-Communicable Diseases (diabetes, CVDs, COPD) are India's #1 killer. Yet preventive infrastructure is near-zero for 1.4B people.</div>
       <div class="card-accent" style="margin-top:auto;">
-        <p style="font-size:.95rem;font-weight:600;color:var(--text);">ICMR-INDIAB 2023: 26.4% urban diabetes prevalence · WEF: $4.58 Trillion projected economic loss by 2030</p>
+        <p style="font-size:1.33rem;font-weight:600;color:var(--text);">ICMR-INDIAB 2023: 26.4% urban diabetes prevalence · WEF: $4.58 Trillion projected economic loss by 2030</p>
       </div>
     </div>
     <div class="card-white" style="display:flex;flex-direction:column;gap:.8rem;">
-      <div style="font-size:2.8rem;">🌫️</div>
+      <div style="font-size:3.22rem;">🌫️</div>
       <div class="stat-val">4.2M</div>
       <div class="stat-label">Premature deaths from PM2.5</div>
       <div class="stat-sub">South Asia bears the world's highest pollution burden. Delhi residents lose 11.9 years of life expectancy due to particulate matter alone.</div>
       <div class="card-accent" style="margin-top:auto;">
-        <p style="font-size:.95rem;font-weight:600;color:var(--text);">AQLI 2024 · Lelieveld et al., Nature 2015 · 200K+ respiratory admissions linked to AQI events annually</p>
+        <p style="font-size:1.33rem;font-weight:600;color:var(--text);">AQLI 2024 · Lelieveld et al., Nature 2015 · 200K+ respiratory admissions linked to AQI events annually</p>
       </div>
     </div>
     <div class="card-white" style="display:flex;flex-direction:column;gap:.8rem;">
-      <div style="font-size:2.8rem;">🗣️</div>
+      <div style="font-size:3.22rem;">🗣️</div>
       <div class="stat-val">90%</div>
       <div class="stat-label">Excluded from AI health tools</div>
       <div class="stat-sub">Over 90% of Indians don't speak English as their primary language. All major AI health platforms — Practo, Ada Health, WebMD — are English-only.</div>
       <div class="card-accent" style="margin-top:auto;">
-        <p style="font-size:.95rem;font-weight:600;color:var(--text);">Census of India: 22 official languages · Health literacy gaps compound chronic disease outcomes</p>
+        <p style="font-size:1.33rem;font-weight:600;color:var(--text);">Census of India: 22 official languages · Health literacy gaps compound chronic disease outcomes</p>
       </div>
     </div>
   </div>
@@ -351,38 +351,38 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
   <div class="g2" style="flex:1;margin-top:1.2rem;align-items:stretch;gap:2rem;">
     <div style="display:flex;flex-direction:column;gap:1.2rem;">
       <div class="card-white" style="border-left:4px solid var(--primary);flex:1;">
-        <div style="font-size:1.6rem;margin-bottom:.6rem;">👨‍👩‍👦</div>
+        <div style="font-size:2.08rem;margin-bottom:.6rem;">👨‍👩‍👦</div>
         <h3 style="margin-bottom:.7rem;">Personal Motivation</h3>
-        <blockquote style="font-size:1rem;font-style:italic;color:var(--text);line-height:1.6;border:none;padding:0;">
+        <blockquote style="font-size:1.4rem;font-style:italic;color:var(--text);line-height:1.6;border:none;padding:0;">
           "My father has high cholesterol and constantly has small, everyday questions — what to eat, what to avoid, whether his headache is related to his BP. We realized the profound need for a simple, vernacular-first health companion that can answer these daily queries without requiring a doctor's visit for every small doubt."
         </blockquote>
-        <p style="margin-top:.8rem;font-size:.78rem;font-weight:600;color:var(--primary);">— Jayesh Patil, Team Lead</p>
+        <p style="margin-top:.8rem;font-size:1.17rem;font-weight:600;color:var(--primary);">— Jayesh Patil, Team Lead</p>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:1rem;">
       <div class="card" style="display:flex;gap:1rem;align-items:center;">
-        <div style="flex-shrink:0;background:var(--primary);color:#fff;width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;">14.3×</div>
+        <div style="flex-shrink:0;background:var(--primary);color:#fff;width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:1.43rem;font-weight:700;">14.3×</div>
         <div>
           <div class="stat-label">ROI of preventive health interventions</div>
           <div class="stat-sub">Masters et al. (JECH, 2017) — median return on investment for public health prevention</div>
         </div>
       </div>
       <div class="card" style="display:flex;gap:1rem;align-items:center;">
-        <div style="flex-shrink:0;background:var(--primary);color:#fff;width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:700;">$4.58T</div>
+        <div style="flex-shrink:0;background:var(--primary);color:#fff;width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:1.27rem;font-weight:700;">$4.58T</div>
         <div>
           <div class="stat-label">Projected NCD economic loss for India by 2030</div>
           <div class="stat-sub">World Economic Forum — NCDs threaten India's entire growth trajectory</div>
         </div>
       </div>
       <div class="card" style="display:flex;gap:1rem;align-items:center;">
-        <div style="flex-shrink:0;background:var(--primary);color:#fff;width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:700;">100M+</div>
+        <div style="flex-shrink:0;background:var(--primary);color:#fff;width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:1.27rem;font-weight:700;">100M+</div>
         <div>
           <div class="stat-label">eSanjeevani consultations — demand is proven</div>
           <div class="stat-sub">Ministry of Health & Family Welfare — digital health demand already exists at scale</div>
         </div>
       </div>
       <div class="card" style="display:flex;gap:1rem;align-items:center;">
-        <div style="flex-shrink:0;background:rgba(5,150,105,.12);color:var(--green);width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🎯</div>
+        <div style="flex-shrink:0;background:rgba(5,150,105,.12);color:var(--green);width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.95rem;">🎯</div>
         <div>
           <div class="stat-label">No existing solution combines all 6 required capabilities</div>
           <div class="stat-sub">AQI-aware + vernacular + ICMR-RAG + agentic + DPDP compliant + preventive</div>
@@ -404,38 +404,38 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
   <h2>Five measurable, bounded objectives</h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;flex:1;margin-top:1.2rem;align-items:stretch;">
     <div class="card-white" style="display:flex;gap:1rem;align-items:flex-start;">
-      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;flex-shrink:0;">O1</div>
+      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.26rem;flex-shrink:0;">O1</div>
       <div>
-        <h3 style="font-size:1rem;margin-bottom:.4rem;">Clinically-Safe AI Triage</h3>
-        <p style="font-size:.85rem;">Deploy a Digital Health Assistant that assesses user symptoms using <strong>strictly ICMR-grounded RAG</strong>, preventing hallucinated medical advice.</p>
+        <h3 style="font-size:1.4rem;margin-bottom:.4rem;">Clinically-Safe AI Triage</h3>
+        <p style="font-size:1.27rem;">Deploy a Digital Health Assistant that assesses user symptoms using <strong>strictly ICMR-grounded RAG</strong>, preventing hallucinated medical advice.</p>
       </div>
     </div>
     <div class="card-white" style="display:flex;gap:1rem;align-items:flex-start;">
-      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;flex-shrink:0;">O2</div>
+      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.26rem;flex-shrink:0;">O2</div>
       <div>
-        <h3 style="font-size:1rem;margin-bottom:.4rem;">Hyper-Local Environment Awareness</h3>
-        <p style="font-size:.85rem;">Integrate live WAQI pollution APIs to <strong>dynamically alter health advice</strong> based on real-time AQI — "stay indoors, high PM2.5 alert."</p>
+        <h3 style="font-size:1.4rem;margin-bottom:.4rem;">Hyper-Local Environment Awareness</h3>
+        <p style="font-size:1.27rem;">Integrate live WAQI pollution APIs to <strong>dynamically alter health advice</strong> based on real-time AQI — "stay indoors, high PM2.5 alert."</p>
       </div>
     </div>
     <div class="card-white" style="display:flex;gap:1rem;align-items:flex-start;">
-      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;flex-shrink:0;">O3</div>
+      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.26rem;flex-shrink:0;">O3</div>
       <div>
-        <h3 style="font-size:1rem;margin-bottom:.4rem;">Vernacular-First Delivery</h3>
-        <p style="font-size:.85rem;">Deliver health intelligence in <strong>22 official Indian languages</strong> via Bhashini + IndicTrans2, enabling truly inclusive access.</p>
+        <h3 style="font-size:1.4rem;margin-bottom:.4rem;">Vernacular-First Delivery</h3>
+        <p style="font-size:1.27rem;">Deliver health intelligence in <strong>22 official Indian languages</strong> via Bhashini + IndicTrans2, enabling truly inclusive access.</p>
       </div>
     </div>
     <div class="card-white" style="display:flex;gap:1rem;align-items:flex-start;">
-      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;flex-shrink:0;">O4</div>
+      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.26rem;flex-shrink:0;">O4</div>
       <div>
-        <h3 style="font-size:1rem;margin-bottom:.4rem;">Data Sovereignty Architecture</h3>
-        <p style="font-size:.85rem;">Build a <strong>100% Indian-hosted, DPDP Act (2023) compliant</strong> system where sensitive health data never crosses national borders.</p>
+        <h3 style="font-size:1.4rem;margin-bottom:.4rem;">Data Sovereignty Architecture</h3>
+        <p style="font-size:1.27rem;">Build a <strong>100% Indian-hosted, DPDP Act (2023) compliant</strong> system where sensitive health data never crosses national borders.</p>
       </div>
     </div>
     <div class="card-white" style="display:flex;gap:1rem;align-items:flex-start;grid-column:1/-1;">
-      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;flex-shrink:0;">O5</div>
+      <div style="background:var(--primary);color:#fff;min-width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.26rem;flex-shrink:0;">O5</div>
       <div>
-        <h3 style="font-size:1rem;margin-bottom:.4rem;">Validated Accuracy Benchmarking</h3>
-        <p style="font-size:.85rem;">Measure system accuracy against established medical AI benchmarks (MMed-RAG framework, CLINIC benchmark) before any user deployment.</p>
+        <h3 style="font-size:1.4rem;margin-bottom:.4rem;">Validated Accuracy Benchmarking</h3>
+        <p style="font-size:1.27rem;">Measure system accuracy against established medical AI benchmarks (MMed-RAG framework, CLINIC benchmark) before any user deployment.</p>
       </div>
     </div>
   </div>
@@ -470,8 +470,8 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
       <div class="scope-item out"><span class="scope-icon">🚑</span><span>Acute emergency triage or real-time teleconsultation</span></div>
       <div class="scope-item out"><span class="scope-icon">🍎</span><span>iOS production release in MVP phase (Android only)</span></div>
       <div style="margin-top:1rem;padding:1rem;background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.25);border-radius:10px;">
-        <p style="font-size:.75rem;font-weight:700;color:var(--orange);margin-bottom:.4rem;">📍 Target Users &amp; Geography</p>
-        <p style="font-size:.78rem;line-height:1.5;">Urban Indian adults (25–60) with chronic NCD conditions. Initial geo-focus: High-AQI metros — Delhi NCR, Mumbai, Pune, Bengaluru.</p>
+        <p style="font-size:1.12rem;font-weight:700;color:var(--orange);margin-bottom:.4rem;">📍 Target Users &amp; Geography</p>
+        <p style="font-size:1.17rem;line-height:1.5;">Urban Indian adults (25–60) with chronic NCD conditions. Initial geo-focus: High-AQI metros — Delhi NCR, Mumbai, Pune, Bengaluru.</p>
       </div>
     </div>
   </div>
@@ -555,7 +555,7 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
         <div class="arch-icon">👤</div>
         <div class="arch-title">User</div>
         <div class="arch-sub">Voice/Text Input<br>(Vernacular)</div>
-        <div class="arch-sub" style="margin-top:.3rem;font-size:.65rem;color:var(--primary);">Flutter App</div>
+        <div class="arch-sub" style="margin-top:.3rem;font-size:0.98rem;color:var(--primary);">Flutter App</div>
       </div>
     </div>
     <div class="arch-arrow">
@@ -567,7 +567,7 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
         <div class="arch-icon">🚪</div>
         <div class="arch-title">API Gateway</div>
         <div class="arch-sub">FastAPI<br>Auth &amp; Routing</div>
-        <div class="arch-sub" style="margin-top:.3rem;font-size:.65rem;color:var(--primary);">+ WAQI AQI Data</div>
+        <div class="arch-sub" style="margin-top:.3rem;font-size:0.98rem;color:var(--primary);">+ WAQI AQI Data</div>
       </div>
     </div>
     <div class="arch-arrow">
@@ -577,7 +577,7 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
     <div class="arch-node" style="flex:2;">
       <div class="arch-box main-engine">
         <div class="arch-icon">🧠</div>
-        <div class="arch-title" style="font-size:1rem;">AI Engine</div>
+        <div class="arch-title" style="font-size:1.4rem;">AI Engine</div>
         <div class="sub-modules">
           <div class="sub-mod">🔤 NLP/NLU Unit — Bhashini + IndicTrans2 (22 Languages)</div>
           <div class="sub-mod">📚 RAG Retrieval — Pinecone + ICMR Guidelines Embeddings</div>
@@ -595,7 +595,7 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
         <div class="arch-icon">🔒</div>
         <div class="arch-title">Sovereign DB</div>
         <div class="arch-sub">PostgreSQL<br>on E2E Networks</div>
-        <div class="arch-sub" style="margin-top:.3rem;font-size:.65rem;color:var(--green);">🇮🇳 Indian Cloud Only</div>
+        <div class="arch-sub" style="margin-top:.3rem;font-size:0.98rem;color:var(--green);">🇮🇳 Indian Cloud Only</div>
       </div>
     </div>
     <div class="arch-arrow">
@@ -607,14 +607,14 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
         <div class="arch-icon">🏛️</div>
         <div class="arch-title">Govt Dashboard</div>
         <div class="arch-sub">Anonymized<br>Analytics</div>
-        <div class="arch-sub" style="margin-top:.3rem;font-size:.65rem;color:var(--primary);">ABDM Compatible</div>
+        <div class="arch-sub" style="margin-top:.3rem;font-size:0.98rem;color:var(--primary);">ABDM Compatible</div>
       </div>
     </div>
   </div>
 
   <!-- 4-Step Flow -->
   <div style="margin-top:1.2rem;">
-    <p style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:.8rem;">Agentic Workflow — 4 Steps</p>
+    <p style="font-size:1.12rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:.8rem;">Agentic Workflow — 4 Steps</p>
     <div class="flow-diagram">
       <div class="flow-step">
         <div class="flow-circle">1</div>
@@ -693,8 +693,8 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;flex:1;margin-top:1.2rem;">
     <div class="card-white" style="display:flex;flex-direction:column;gap:.7rem;">
       <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.2rem;">
-        <div style="font-size:1.8rem;">💻</div>
-        <h3 style="font-size:1.05rem;color:var(--primary);">Technical Feasibility</h3>
+        <div style="font-size:2.07rem;">💻</div>
+        <h3 style="font-size:1.47rem;color:var(--primary);">Technical Feasibility</h3>
       </div>
       <ul class="blist">
         <li><strong>BioMistral 7B</strong> at 4-bit quantization runs on a single A100 GPU — available on E2E Networks India</li>
@@ -703,13 +703,13 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
         <li><strong>WAQI &amp; Bhashini APIs</strong> are public, stable, and well-documented — no training needed</li>
       </ul>
       <div class="card-accent" style="margin-top:auto;">
-        <p style="font-size:.95rem;font-weight:600;color:var(--text);">70% GPU cost reduction on E2E vs. AWS/GCP for equivalent compute</p>
+        <p style="font-size:1.33rem;font-weight:600;color:var(--text);">70% GPU cost reduction on E2E vs. AWS/GCP for equivalent compute</p>
       </div>
     </div>
     <div class="card-white" style="display:flex;flex-direction:column;gap:.7rem;">
       <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.2rem;">
-        <div style="font-size:1.8rem;">💰</div>
-        <h3 style="font-size:1.05rem;color:var(--primary);">Economic Feasibility</h3>
+        <div style="font-size:2.07rem;">💰</div>
+        <h3 style="font-size:1.47rem;color:var(--primary);">Economic Feasibility</h3>
       </div>
       <ul class="blist">
         <li>All core models are <strong>open-source</strong> — zero licensing fees vs. proprietary alternatives</li>
@@ -717,14 +717,14 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
         <li>India's digital health market projected at <strong>$372B by 2030</strong> (NITI Aayog)</li>
       </ul>
       <div style="display:flex;gap:1rem;margin-top:auto;">
-        <div class="card" style="flex:1;text-align:center;"><div class="stat-val" style="font-size:1.5rem;">₹0</div><div class="stat-sub">LLM licensing cost</div></div>
-        <div class="card" style="flex:1;text-align:center;"><div class="stat-val" style="font-size:1.5rem;">14.3×</div><div class="stat-sub">ROI on prevention</div></div>
+        <div class="card" style="flex:1;text-align:center;"><div class="stat-val" style="font-size:1.95rem;">₹0</div><div class="stat-sub">LLM licensing cost</div></div>
+        <div class="card" style="flex:1;text-align:center;"><div class="stat-val" style="font-size:1.95rem;">14.3×</div><div class="stat-sub">ROI on prevention</div></div>
       </div>
     </div>
     <div class="card-white" style="display:flex;flex-direction:column;gap:.7rem;">
       <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.2rem;">
-        <div style="font-size:1.8rem;">⚖️</div>
-        <h3 style="font-size:1.05rem;color:var(--primary);">Legal &amp; Regulatory Feasibility</h3>
+        <div style="font-size:2.07rem;">⚖️</div>
+        <h3 style="font-size:1.47rem;color:var(--primary);">Legal &amp; Regulatory Feasibility</h3>
       </div>
       <ul class="blist">
         <li>Zero-knowledge local inference ensures <strong>100% data residency</strong> within India</li>
@@ -735,8 +735,8 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
     </div>
     <div class="card-white" style="display:flex;flex-direction:column;gap:.7rem;">
       <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.2rem;">
-        <div style="font-size:1.8rem;">📋</div>
-        <h3 style="font-size:1.05rem;color:var(--primary);">Operational Feasibility</h3>
+        <div style="font-size:2.07rem;">📋</div>
+        <h3 style="font-size:1.47rem;color:var(--primary);">Operational Feasibility</h3>
       </div>
       <ul class="blist">
         <li>3-member team with complementary skills: AI/ML, Mobile Dev, Backend Engineering</li>
@@ -880,13 +880,13 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
     </div>
     <!-- Legend -->
     <div style="display:flex;gap:1.5rem;margin-top:1rem;flex-wrap:wrap;">
-      <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:var(--primary);"></div>Phase 1: Architecture</div>
-      <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#4f46e5;"></div>Phase 2: Frontend</div>
-      <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#7c3aed;"></div>Phase 3: Backend</div>
-      <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#9333ea;"></div>Phase 4: RAG/LLM</div>
-      <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#0284c7;"></div>Phase 5: Vernacular</div>
-      <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:var(--green);"></div>Phase 6: Testing</div>
-      <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#d97706;"></div>Phase 7: Docs</div>
+      <div style="display:flex;align-items:center;gap:.4rem;font-size:1.08rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:var(--primary);"></div>Phase 1: Architecture</div>
+      <div style="display:flex;align-items:center;gap:.4rem;font-size:1.08rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#4f46e5;"></div>Phase 2: Frontend</div>
+      <div style="display:flex;align-items:center;gap:.4rem;font-size:1.08rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#7c3aed;"></div>Phase 3: Backend</div>
+      <div style="display:flex;align-items:center;gap:.4rem;font-size:1.08rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#9333ea;"></div>Phase 4: RAG/LLM</div>
+      <div style="display:flex;align-items:center;gap:.4rem;font-size:1.08rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#0284c7;"></div>Phase 5: Vernacular</div>
+      <div style="display:flex;align-items:center;gap:.4rem;font-size:1.08rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:var(--green);"></div>Phase 6: Testing</div>
+      <div style="display:flex;align-items:center;gap:.4rem;font-size:1.08rem;color:var(--text-muted);"><div style="width:16px;height:10px;border-radius:3px;background:#d97706;"></div>Phase 7: Docs</div>
     </div>
   </div>
 </div>
@@ -915,7 +915,7 @@ p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-m
     <div class="ref-entry"><div class="ref-num">[11]</div><div class="ref-text">World Economic Forum, "The Global Economic Burden of Non-communicable Diseases," WEF/Harvard School of Public Health, 2011.</div></div>
     <div class="ref-entry"><div class="ref-num">[12]</div><div class="ref-text">L. Laranjo et al., "Conversational agents in healthcare: a systematic review," <strong>JAMIA</strong>, vol.25, no.9, 2018. doi: 10.1093/jamia/ocy072</div></div>
   </div>
-  <p style="margin-top:.8rem;font-size:.72rem;color:var(--text-muted);">Full 42-reference IEEE bibliography available at: <span style="color:var(--primary);font-weight:600;">research_materials/literature_review.md</span></p>
+  <p style="margin-top:.8rem;font-size:1.08rem;color:var(--text-muted);">Full 42-reference IEEE bibliography available at: <span style="color:var(--primary);font-weight:600;">research_materials/literature_review.md</span></p>
 </div>
 
 </div><!-- /deck -->
