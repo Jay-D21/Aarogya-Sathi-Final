@@ -1,3 +1,6 @@
+/// Snapshot of wearable sensor readings at a point in time.
+/// Includes raw values from Health Connect alongside computed metrics
+/// such as active calories derived from step cadence and user weight.
 class WearableDataModel {
   final int? todaySteps;
   final int? caloriesBurned;
