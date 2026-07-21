@@ -1,538 +1,1678 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aarogya Sathi · Capstone Presentation</title>
-<style>/* html-ppt :: shared webfonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
-</style>
-<style>/* base.css */
-:root {
-  --bg: #ffffff;
-  --bg-soft: #f7f7f8;
-  --surface: #ffffff;
-  --surface-2: #f4f6fb;
-  --border: rgba(0,0,0,.08);
-  --border-strong: rgba(0,0,0,.16);
-  --text-1: #111216;
-  --text-2: #4a5070;
-  --text-3: #8a90ad;
-  --accent: #1f6fed;
-  --accent-2: #09a1ed;
-  --accent-3: #4b2df2;
-  --grad: linear-gradient(135deg,#1f6fed,#09a1ed 55%,#4b2df2);
-  --grad-soft: linear-gradient(135deg,#e8f1ff,#e3f5ff 55%,#ebe8ff);
-  --radius: 18px;
-  --radius-sm: 12px;
-  --radius-lg: 26px;
-  --shadow: 0 10px 30px rgba(18,24,40,.08), 0 2px 6px rgba(18,24,40,.04);
-  --font-sans: 'Inter',sans-serif;
-  --letter-tight: -.03em;
-  --letter-normal: -.01em;
-  --ease: cubic-bezier(.4,0,.2,1);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aarogya Sathi Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-*,*::before,*::after{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text-1);
-  font-family:var(--font-sans);font-weight:400;line-height:1.6;
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  letter-spacing:var(--letter-normal)}
-img,svg,video{max-width:100%;display:block}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
+  <style>
+  <style>
+    :root {
+      --bg: #fdfae7;
+      --primary: #1e2bfa;
+      --text: #111111;
+      --text-muted: #6b6b6b;
+      --text-light: #9a9a9a;
+      --accent-light: rgba(30, 43, 250, 0.08);
+      --accent-medium: rgba(30, 43, 250, 0.15);
+      --border: rgba(30, 43, 250, 0.2);
+      --card-bg: rgba(30, 43, 250, 0.04);
+    }
 
-/* ================= SLIDE SYSTEM ================= */
-.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--bg)}
-.slide{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:72px 96px;
-  box-sizing:border-box;
-  opacity:0;pointer-events:none;
-  transition:opacity .5s var(--ease), transform .5s var(--ease);
-  transform:translateX(30px);
-  overflow:hidden;
-}
-.slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
-.slide.is-prev{transform:translateX(-30px)}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* ================= TYPOGRAPHY ================= */
-.kicker{font-size:16px;font-weight:700;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
-.h1{font-family:var(--font-sans);font-size:72px;line-height:1.05;font-weight:900;letter-spacing:var(--letter-tight);margin:0 0 18px;color:var(--text-1)}
-.h2{font-family:var(--font-sans);font-size:54px;line-height:1.1;font-weight:800;letter-spacing:var(--letter-tight);margin:0 0 14px}
-.h3{font-size:32px;line-height:1.2;font-weight:700;letter-spacing:var(--letter-normal);margin:0 0 10px}
-.h4{font-size:22px;line-height:1.3;font-weight:700;margin:0 0 8px;color:var(--accent)}
-.lede{font-size:22px;line-height:1.55;color:var(--text-2);font-weight:400;max-width:62ch}
-.dim{color:var(--text-2)}
-.gradient-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-/* ================= LAYOUT PRIMITIVES ================= */
-.row{display:flex;gap:24px;align-items:center}
-.grid{display:grid;gap:24px}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g4{grid-template-columns:repeat(4,1fr)}
-.center{display:flex;align-items:center;justify-content:center;text-align:center}
-.tc{text-align:center}
-.mt-s{margin-top:8px}.mt-m{margin-top:18px}.mt-l{margin-top:32px}
+    /* Slide container */
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
 
-/* ================= CARDS ================= */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  padding:32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.card-soft{background:var(--surface-2);border:none;}
-.card-accent{background:var(--surface);border-top:4px solid var(--accent)}
-.pill{display:inline-block;padding:6px 16px;border-radius:999px;font-size:14px;font-weight:600;
-  background:var(--surface-2);color:var(--text-2);border:1px solid var(--border)}
-.pill-accent{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* Asymmetric padding: extra bottom space to clear the fixed
+         slide-counter (left) and nav-controls (right). Without this,
+         cards/grids that fill slide-content overlap the nav chrome. */
+      padding: 3.5vw 4vw 8.5vh 4vw;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(40px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      overflow: hidden;
+    }
 
-/* ================= CHROME ================= */
-.deck-footer{position:absolute;bottom:24px;left:40px;right:40px;display:flex;align-items:center;justify-content:space-between;
-  font-size:14px;font-weight:600;color:var(--text-3);z-index:10;pointer-events:none}
-.slide-number::before{content:attr(data-current)}
-.slide-number::after{content:" / " attr(data-total)}
-.section-num{font-size:220px;font-weight:900;line-height:.9;color:var(--surface-2);position:absolute;right:72px;bottom:40px;z-index:-1;letter-spacing:-.05em}
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0);
+      z-index: 10;
+    }
 
-/* ================= ANIMATIONS ================= */
-@keyframes kf-fade-up{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
-.anim-fade-up{animation:kf-fade-up .7s cubic-bezier(.4,0,.2,1) both}
+    .slide.prev {
+      transform: translateX(-40px);
+    }
 
-/* ================= CUSTOM COMPONENTS ================= */
-.cover-bg{position:absolute;inset:0;background:var(--bg);z-index:-1}
-.cover-blob{position:absolute;right:-140px;top:-140px;width:560px;height:560px;border-radius:50%;background:var(--grad);filter:blur(8px);opacity:.15;z-index:-1}
-.metric .n{font-size:64px;font-weight:900;letter-spacing:-.035em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
-.metric .l{color:var(--text-2);font-size:18px;font-weight:500;margin-top:8px}
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
 
-ul.bullet-list { margin: 0; padding-left: 20px; }
-ul.bullet-list li { margin-bottom: 12px; font-size: 18px; color: var(--text-2); line-height: 1.5; }
+    h1 {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 700;
+    }
 
-/* Gantt Chart */
-.gantt {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 12px;
-  width: 100%;
-}
-.gantt-header { font-weight: 800; color: var(--text-3); font-size: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.1em; }
-.gantt-row { display: contents; }
-.gantt-task { padding: 16px 0; font-weight: 700; font-size: 18px; border-bottom: 1px dashed var(--border); display: flex; align-items: center; }
-.gantt-cell { padding: 16px 0; border-bottom: 1px dashed var(--border); position: relative; }
-.gantt-bar { position: absolute; top: 12px; bottom: 12px; background: var(--grad); border-radius: 6px; box-shadow: var(--shadow); display: flex; align-items: center; padding: 0 12px; color: white; font-weight: 600; font-size: 13px; z-index: 5; }
+    h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-bottom: 1.5rem;
+    }
 
-/* Architecture Diagram */
-.arch-container { display: flex; gap: 24px; align-items: stretch; margin-top: 24px; }
-.arch-block { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
-.arch-icon { font-size: 40px; margin-bottom: 16px; background: var(--grad); -webkit-background-clip: text; color: transparent; }
-.arch-title { font-weight: 800; font-size: 20px; margin-bottom: 8px; }
-.arch-desc { font-size: 14px; color: var(--text-2); line-height: 1.4; }
-.arch-arrow { display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--text-3); }
+    h3 {
+      font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+      font-weight: 500;
+      line-height: 1.3;
+    }
 
-/* Reference List */
-.ref-list { font-size: 16px; line-height: 1.6; color: var(--text-2); max-width: 900px; }
-.ref-list p { margin-bottom: 12px; padding-left: 32px; text-indent: -32px; }
-</style>
+    h4 {
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+    }
+
+    p, li {
+      font-size: clamp(0.85rem, 1.1vw, 1.05rem);
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    /* Slide header bar */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5vh;
+      flex-shrink: 0;
+    }
+
+    .slide-header h4 {
+      margin: 0;
+    }
+
+    .slide-header .tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--primary);
+      background: var(--accent-light);
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+    }
+
+    /* Slide content area */
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    /* Navigation */
+    .nav-controls {
+      position: fixed;
+      bottom: 2.5vh;
+      right: 3vw;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      color: var(--primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      font-size: 1.1rem;
+    }
+
+    .nav-btn:hover {
+      background: var(--primary);
+      color: var(--bg);
+      border-color: var(--primary);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .slide-counter {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      position: fixed;
+      bottom: 2.5vh;
+      left: 3vw;
+      z-index: 100;
+    }
+
+    .progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--primary);
+      transition: width 0.4s ease;
+      z-index: 100;
+    }
+
+    /* Decorative elements */
+    .accent-line {
+      width: 60px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .accent-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ============================================================
+       LAYOUT 1: Cover / Title Slide
+       ============================================================ */
+    .layout-cover {
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 8vw;
+    }
+
+    .layout-cover h1 {
+      max-width: 55vw;
+      margin-bottom: 1.5rem;
+      line-height: 1.05;
+    }
+
+    .layout-cover .subtitle {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 40vw;
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+
+    .layout-cover .meta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 0.05em;
+    }
+
+    .layout-cover .cover-decoration {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 35vw;
+      height: 100vh;
+      background: var(--accent-light);
+      clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .layout-cover .cover-dots {
+      position: absolute;
+      bottom: 12vh;
+      right: 8vw;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      opacity: 0.25;
+    }
+
+    .layout-cover .cover-dots .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* ============================================================
+       LAYOUT 2: Agenda / Table of Contents
+       ============================================================ */
+    .layout-agenda .agenda-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 1rem 3rem;
+      margin-top: 1rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .agenda-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      transition: background 0.2s ease;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .agenda-item:hover {
+      background: var(--card-bg);
+    }
+
+    .agenda-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      min-width: 36px;
+    }
+
+    .agenda-item h3 {
+      margin-bottom: 0.3rem;
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+    }
+
+    .agenda-item p {
+      font-size: clamp(0.8rem, 1vw, 0.95rem);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       LAYOUT 3: Key Metrics (3 large callouts)
+       Cards size to their content; the row centers vertically
+       inside the remaining slide-content area.
+       ============================================================ */
+    .layout-metrics .slide-content {
+      justify-content: flex-start;
+    }
+
+    .layout-metrics .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      align-items: stretch;
+    }
+
+    .metric-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      padding: 1.5rem 1.6rem;
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .metric-card .metric-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 3.4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .metric-card .metric-label {
+      font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .metric-card .metric-desc {
+      font-size: clamp(0.78rem, 0.95vw, 0.9rem);
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .metric-card .metric-supports {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin: 0.2rem 0 0;
+      padding: 0.7rem 0 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .metric-card .metric-supports li {
+      font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+      color: var(--text-muted);
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.45;
+    }
+
+    .metric-card .metric-supports li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--text-light);
+    }
+
+    .metric-card .metric-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 0.3rem;
+    }
+
+    .metric-change.positive { color: #059669; }
+    .metric-change.negative { color: #dc2626; }
+
+    /* ============================================================
+       LAYOUT 4: Data Dashboard (6 stat grid)
+       Cells have natural height with stat at top + name + small
+       context line. Grid is auto-sized; the row stays in the upper
+       portion of slide-content with the bottom-padding reserved
+       for nav chrome.
+       ============================================================ */
+    .layout-dashboard .slide-content {
+      justify-content: flex-start;
+    }
+
+    .layout-dashboard .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .stat-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.4rem 1.5rem;
+      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+
+    .stat-cell .stat-top {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .stat-cell .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .stat-cell .stat-unit {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .stat-cell .stat-name {
+      font-size: clamp(0.85rem, 1vw, 0.95rem);
+      color: var(--text);
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    .stat-cell .stat-context {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      line-height: 1.4;
+      padding-top: 0.4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ============================================================
+       LAYOUT 5: Two Column Split
+       Left = numbered insight list, Right = pull-quote + supporting
+       stats. Both columns size to their content with natural rhythm
+       (gap-based spacing, no forced height-distribution).
+       ============================================================ */
+    .layout-split .slide-content {
+      justify-content: flex-start;
+    }
+
+    .layout-split .split-body {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 3.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .split-left, .split-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .split-right {
+      padding-left: 2.5rem;
+      border-left: 2px solid var(--border);
+    }
+
+    .insight-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      margin: 0;
+      counter-reset: insight;
+    }
+
+    .insight-list li {
+      position: relative;
+      padding-left: 2.6rem;
+      font-size: clamp(0.88rem, 1.05vw, 1rem);
+      color: var(--text);
+      line-height: 1.55;
+      counter-increment: insight;
+    }
+
+    .insight-list li::before {
+      content: counter(insight, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+      line-height: 1.7;
+    }
+
+    .split-highlight {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.15rem, 1.55vw, 1.5rem);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+      padding: 1.3rem 1.5rem;
+      background: var(--accent-light);
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .split-highlight cite {
+      display: block;
+      margin-top: 0.7rem;
+      font-style: normal;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .mini-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding-top: 0.4rem;
+    }
+
+    .mini-stat {
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+
+    .mini-stat .mini-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .mini-stat .mini-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      line-height: 1.35;
+    }
+
+    /* ============================================================
+       LAYOUT 6: Horizontal Bar Ranking
+       ============================================================ */
+    .layout-bars .bars-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .bar-item {
+      display: grid;
+      grid-template-columns: minmax(180px, 30%) 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.6rem 0;
+    }
+
+    .bar-label {
+      font-size: clamp(0.8rem, 1.1vw, 1rem);
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .bar-track {
+      height: 28px;
+      background: var(--accent-light);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 6px;
+      transition: width 0.8s ease;
+    }
+
+    .bar-pct {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+      min-width: 45px;
+      text-align: right;
+    }
+
+    .bar-note {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 0.2rem;
+    }
+
+    /* ============================================================
+       LAYOUT 7: Quote / Highlight
+       ============================================================ */
+    .layout-quote {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .layout-quote .quote-mark {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 8rem;
+      font-weight: 700;
+      color: var(--primary);
+      opacity: 0.15;
+      line-height: 0.5;
+      margin-bottom: 1rem;
+    }
+
+    .layout-quote blockquote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--text);
+      max-width: 65vw;
+      margin-bottom: 2rem;
+    }
+
+    .layout-quote .quote-source {
+      font-size: clamp(0.85rem, 1.1vw, 1rem);
+      color: var(--text-muted);
+    }
+
+    .layout-quote .quote-source strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .layout-quote .quote-decoration {
+      position: absolute;
+      top: 10vh;
+      left: 5vw;
+      width: 80px;
+      height: 80px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+    }
+
+    .layout-quote .quote-decoration-2 {
+      position: absolute;
+      bottom: 12vh;
+      right: 6vw;
+      width: 60px;
+      height: 60px;
+      background: var(--accent-light);
+      border-radius: 50%;
+    }
+
+    /* ============================================================
+       LAYOUT 8: Timeline / Process Flow
+       ============================================================ */
+    .layout-timeline .timeline-track {
+      display: flex;
+      gap: 1.5rem;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .timeline-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .timeline-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 28px;
+      right: -0.75rem;
+      width: 1.5rem;
+      height: 2px;
+      background: var(--border);
+    }
+
+    .step-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .timeline-step:nth-child(2) .step-circle { opacity: 0.85; }
+    .timeline-step:nth-child(3) .step-circle { opacity: 0.7; }
+    .timeline-step:nth-child(4) .step-circle { opacity: 0.55; }
+
+    .step-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .step-desc {
+      font-size: clamp(0.75rem, 1vw, 0.9rem);
+      color: var(--text-muted);
+      line-height: 1.5;
+      max-width: 220px;
+    }
+
+    /* ============================================================
+       LAYOUT 9: Detailed Analysis (bullets with sub-items)
+       ============================================================ */
+    .layout-detail .detail-body {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 3rem;
+      flex: 1;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+
+    .detail-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .detail-block {
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+
+    .detail-block h3 {
+      font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+
+    .detail-block ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .detail-block ul li {
+      position: relative;
+      padding-left: 1.1rem;
+      padding-bottom: 0.4rem;
+      font-size: clamp(0.78rem, 1vw, 0.9rem);
+      line-height: 1.5;
+    }
+
+    .detail-block ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .detail-block ul li:last-child {
+      padding-bottom: 0;
+    }
+
+    /* ============================================================
+       LAYOUT 10: Closing / CTA
+       ============================================================ */
+    .layout-closing {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .layout-closing h1 {
+      margin-bottom: 1rem;
+    }
+
+    .layout-closing .closing-sub {
+      font-size: clamp(1rem, 1.5vw, 1.3rem);
+      color: var(--text-muted);
+      max-width: 45vw;
+      margin-bottom: 2.5rem;
+    }
+
+    .layout-closing .cta-btn {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--bg);
+      background: var(--primary);
+      padding: 0.9rem 2.2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .layout-closing .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(30, 43, 250, 0.25);
+    }
+
+    .layout-closing .closing-contact {
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .layout-closing .closing-decoration {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .layout-closing .closing-decoration-2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 360px;
+      height: 360px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* Keyboard hint */
+    .keyboard-hint {
+      position: fixed;
+      bottom: 2.5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      color: var(--text-light);
+      z-index: 100;
+      opacity: 0.6;
+    }
+
+    /* Responsive adjustments for very small heights */
+    @media (max-height: 700px) {
+      .slide { padding: 2.5vh 3vw; }
+      .layout-agenda .agenda-grid { gap: 0.8rem 2rem; }
+      .agenda-item { padding: 0.8rem; }
+      .metric-card { padding: 1rem; }
+      .layout-bars .bars-container { gap: 0.5rem; }
+      .bar-item { padding: 0.4rem 0; }
+      .detail-block { padding: 0.8rem 1rem; }
+    }
+  </style>
+
+    /* ============================================================
+       LAYOUT 14: Gantt Chart
+       ============================================================ */
+    .layout-gantt .slide-content {
+      justify-content: flex-start;
+    }
+
+    .layout-gantt .gantt-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      margin-top: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+
+    .gantt-header {
+      display: grid;
+      grid-template-columns: 200px repeat(12, 1fr);
+      gap: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .gantt-col-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text);
+      text-align: center;
+    }
+    .gantt-col-title.left {
+      text-align: left;
+    }
+
+    .gantt-row {
+      display: grid;
+      grid-template-columns: 200px repeat(12, 1fr);
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .gantt-task-name {
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .gantt-bar {
+      background: var(--primary);
+      height: 24px;
+      border-radius: 6px;
+      opacity: 0.9;
+    }
+  </style>
 </head>
 <body>
-<div class="deck">
 
-  <!-- 1. Title -->
-  <section class="slide is-active">
-    <div class="cover-bg"></div>
-    <div class="cover-blob"></div>
-    <p class="kicker">Capstone Project 1st Review</p>
-    <h1 class="h1 anim-fade-up">Aarogya Sathi: proactive<br><span class="gradient-text">"Virtual Nurse."</span></h1>
-    <p class="lede mt-m">A Sovereign, Agentic Digital Health Ecosystem for Urban India.</p>
-    <div class="deck-footer"><span>Aarogya Sathi Team</span><span class="slide-number" data-current="1" data-total="14"></span></div>
-  </section>
+  <div class="deck">
 
-  <!-- 2. Problem Statement -->
-  <section class="slide">
-    <span class="section-num">02</span>
-    <p class="kicker">PROBLEM STATEMENT</p>
-    <h2 class="h2 mt-s">The Crises of NCDs, Pollution & Language.</h2>
-    <div class="grid g3 mt-l">
-      <div class="card card-accent">
-        <h4>High Prevalence of NCDs</h4>
-        <ul class="bullet-list">
-          <li>Non-Communicable Diseases (NCDs) like diabetes and CVDs account for ~63% of all deaths in India.</li>
-          <li>The sheer volume of undiagnosed conditions severely overburdens the healthcare system.</li>
-        </ul>
+    <!-- SLIDE 1: Cover -->
+    <div class="slide layout-cover active">
+      <div class="cover-decoration"></div>
+      <div class="cover-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
-      <div class="card card-accent">
-        <h4>The "Pollution-Blind" Gap</h4>
-        <ul class="bullet-list">
-          <li>Standard algorithms ignore environmental toxicity.</li>
-          <li>Over 200,000+ emergency respiratory cases are linked directly to poor air quality in cities like Delhi.</li>
-        </ul>
-      </div>
-      <div class="card card-accent">
-        <h4>The Linguistic Divide</h4>
-        <ul class="bullet-list">
-          <li>Over 90% of health apps are English-only.</li>
-          <li>Massive exclusion of the non-English speaking population from preventive AI healthcare.</li>
-        </ul>
-      </div>
+      <h1>Aarogya Sathi</h1>
+      <p class="subtitle">A Sovereign, Agentic Digital Health Assistant for Preventive NCD Management in Urban India</p>
+      <div class="meta">Jayesh Patil (C233) &middot; Abhijit Patil (C263) &middot; Ritesh Pawar (C276)<br>Capstone Project &middot; 1st Review &middot; 2026</div>
     </div>
-  </section>
 
-  <!-- 3. Motivation & Need -->
-  <section class="slide">
-    <span class="section-num">03</span>
-    <p class="kicker">MOTIVATION & NEED</p>
-    <h2 class="h2 mt-s">From Personal Need to <span class="gradient-text">Macroeconomic Imperative</span>.</h2>
-    <div class="grid g2 mt-l">
-      <div class="card card-soft">
-        <h4>Personal Inspiration</h4>
-        <p class="dim" style="font-size:18px">My father has high cholesterol and constantly has small, everyday questions about his diet and routine. We realized the profound need for a personalized, vernacular "Virtual Nurse" that is easy for him to use, answering daily queries without requiring a doctor's visit for every small doubt.</p>
+    <!-- SLIDE 2: Agenda -->
+    <div class="slide layout-agenda">
+      <div class="slide-header">
+        <h4>Table of Contents</h4>
       </div>
-      <div class="card card-soft">
-        <h4>Macroeconomic Threat</h4>
-        <p class="dim" style="font-size:18px">NCDs project a <b>$4.58 Trillion economic loss</b> for India by 2030 (WEF). Preventative digital healthcare is no longer just a luxury; it is an absolute economic imperative to sustain national growth and workforce productivity.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. Project Objectives -->
-  <section class="slide">
-    <span class="section-num">04</span>
-    <p class="kicker">PROJECT OBJECTIVES</p>
-    <h2 class="h2 mt-s">Autonomous, Localized, Safe.</h2>
-    <div class="grid g3 mt-l">
-      <div class="card card-hover">
-        <h4>Agentic Triage</h4>
-        <p class="dim">Deploy an AI "Virtual Nurse" to assess symptoms based strictly on ICMR guidelines, specifically constrained to avoid unverified medical diagnosis.</p>
-      </div>
-      <div class="card card-hover">
-        <h4>Hyper-Local Logic</h4>
-        <p class="dim">Integrate live APIs (WAQI, OpenWeather) to dynamically alter health advice based on localized smog alerts and weather conditions.</p>
-      </div>
-      <div class="card card-hover">
-        <h4>Data Sovereignty</h4>
-        <p class="dim">Architect a 100% Indian-hosted, DPDP Act (2023) compliant ecosystem where sensitive health records never cross national borders.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Project Scope -->
-  <section class="slide">
-    <span class="section-num">05</span>
-    <p class="kicker">PROJECT SCOPE</p>
-    <h2 class="h2 mt-s">Defining boundaries for the MVP.</h2>
-    <div class="grid g2 mt-l">
-      <div class="card">
-        <h4>✓ In-Scope (Technical Deliverables)</h4>
-        <ul class="bullet-list">
-          <li>Cross-platform mobile app (Flutter) with offline caching.</li>
-          <li>FastAPI asynchronous microservices integration.</li>
-          <li>ICMR-grounded RAG pipeline (e.g. BioMistral / Llama).</li>
-          <li>OCR extraction for parsing physical lab reports.</li>
-          <li>Real-time environmental context via WAQI APIs.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h4 style="color:var(--bad)">✕ Out-of-Scope</h4>
-        <ul class="bullet-list">
-          <li>Medical Diagnoses or Prescriptions.</li>
-          <li>Hardware wearable integration (Apple Watch, etc).</li>
-          <li>Live ABDM production deployment (sandbox testing only).</li>
-          <li>Treatment of acute medical emergencies.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Literature Review (Part 1) -->
-  <section class="slide">
-    <span class="section-num">06</span>
-    <p class="kicker">LITERATURE REVIEW (1/2)</p>
-    <h2 class="h2 mt-s">Epidemiological & Economic Basis.</h2>
-    <p class="lede">Foundation built exclusively on peer-reviewed clinical and economic research.</p>
-    <div class="grid g2 mt-l">
-      <div class="card card-accent">
-        <h4>The Urban NCD Baseline</h4>
-        <ul class="bullet-list">
-          <li><b>ICMR-INDIAB Study (2023):</b> Establishes a massive 26.4% urban diabetes baseline, justifying the immediate focus on NCDs in metropolitan areas.</li>
-          <li><b>GBD 2019 (The Lancet):</b> Validates that NCDs account for ~63% of India's total mortality.</li>
-        </ul>
-      </div>
-      <div class="card card-accent">
-        <h4>Pollution & Preventive ROI</h4>
-        <ul class="bullet-list">
-          <li><b>AQLI Report (2024):</b> Quantifies the 11.9-year life expectancy loss in Delhi, providing absolute validation for an AQI-aware triage system.</li>
-          <li><b>Masters et al. (JECH, 2017):</b> Demonstrates a median 14.3:1 Return on Investment for preventive public health interventions.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. Literature Review (Part 2) -->
-  <section class="slide">
-    <span class="section-num">07</span>
-    <p class="kicker">LITERATURE REVIEW (2/2)</p>
-    <h2 class="h2 mt-s">Technical & Legal Validation.</h2>
-    <div class="grid g2 mt-l">
-      <div class="card card-accent">
-        <h4>Safe AI & Vernacular Tech</h4>
-        <ul class="bullet-list">
-          <li><b>Xia et al. (ICLR 2025):</b> MMed-RAG demonstrates a 43.8% factual accuracy gain over vanilla models, proving RAG is strictly necessary for clinical safety.</li>
-          <li><b>IndicTrans2 (2026):</b> Proves the feasibility and high fidelity of medical-domain translation across 22 official Indian languages.</li>
-        </ul>
-      </div>
-      <div class="card card-accent">
-        <h4>Data Sovereignty</h4>
-        <ul class="bullet-list">
-          <li><b>DPDP Act (2023):</b> The Digital Personal Data Protection Act acts as the strict legal blueprint for our sovereign database schema, enforcing local data residency and explicit consent models.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. Proposed Methodology: Architecture -->
-  <section class="slide">
-    <span class="section-num">08</span>
-    <p class="kicker">PROPOSED METHODOLOGY (1/2)</p>
-    <h2 class="h2 mt-s">System Architecture.</h2>
-    <div class="arch-container">
-      <div class="arch-block" style="flex:0.8">
-        <div class="arch-icon">📱</div>
-        <div class="arch-title">User (Flutter App)</div>
-        <div class="arch-desc">Voice & Text Input<br>(Vernacular)</div>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-block" style="flex:0.8">
-        <div class="arch-icon">🚪</div>
-        <div class="arch-title">API Gateway</div>
-        <div class="arch-desc">FastAPI Routing & Auth</div>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-block" style="flex:2; border-color:var(--accent); background:var(--surface)">
-        <div class="arch-icon">🧠</div>
-        <div class="arch-title">AI Engine</div>
-        <div class="arch-desc">
-          <b>NLP Unit:</b> Bhashini / IndicTrans2<br>
-          <b>Context Engine:</b> WAQI Pollution Data<br>
-          <b>RAG Pipeline:</b> ICMR Embeddings (Pinecone)
+      <h2>Agenda</h2>
+      <div class="agenda-grid">
+        <div class="agenda-item">
+          <div class="agenda-num">01</div>
+          <div>
+            <h3>Problem Statement</h3>
+            <p>The crises of NCDs, air pollution, and linguistic exclusion facing urban India</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <div class="agenda-num">02</div>
+          <div>
+            <h3>Motivation & Need</h3>
+            <p>From personal experience to macroeconomic imperative</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <div class="agenda-num">03</div>
+          <div>
+            <h3>Objectives</h3>
+            <p>What we aim to build and prove</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <div class="agenda-num">04</div>
+          <div>
+            <h3>Scope</h3>
+            <p>Boundaries and deliverables of the MVP</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <div class="agenda-num">05</div>
+          <div>
+            <h3>Literature Review</h3>
+            <p>Evidence base from peer-reviewed research</p>
+          </div>
+        </div>
+        <div class="agenda-item">
+          <div class="agenda-num">06</div>
+          <div>
+            <h3>Methodology, Tools & Timeline</h3>
+            <p>Architecture, technology stack, and Gantt chart</p>
+          </div>
         </div>
       </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-block" style="flex:1">
-        <div class="arch-icon">🔒</div>
-        <div class="arch-title">Sovereign DB</div>
-        <div class="arch-desc">PostgreSQL on E2E Networks</div>
+    </div>
+
+    <!-- SLIDE 3: Key Metrics -->
+    <div class="slide layout-metrics">
+      <div class="slide-header">
+        <h4>Problem Statement</h4>
+        <span class="tag">The Crisis</span>
+      </div>
+      <div class="slide-content">
+        <h2>India's preventive healthcare is broken at three levels</h2>
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="metric-value">63%</div>
+            <div class="metric-label">Deaths from NCDs</div>
+            <div class="metric-desc">Non-Communicable Diseases like diabetes, CVDs, and COPD cause 63% of all deaths in India — yet preventive infrastructure is near-zero.</div>
+            <ul class="metric-supports">
+              <li>ICMR-INDIAB: 26.4% urban diabetes prevalence</li>
+              <li>GBD 2019 (The Lancet): NCDs dominate India's mortality</li>
+              <li>WEF: $4.58 Trillion projected economic loss by 2030</li>
+            </ul>
+            <div class="metric-change negative">↑ Rising year over year</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">4.2M</div>
+            <div class="metric-label">Premature deaths from PM2.5</div>
+            <div class="metric-desc">Air pollution causes 4.2 million premature deaths globally. Indian cities consistently breach WHO safe limits by 10-15x.</div>
+            <ul class="metric-supports">
+              <li>AQLI 2024: Delhi residents lose 11.9 years of life expectancy</li>
+              <li>Lelieveld et al. (Nature 2015): South Asia bears highest burden</li>
+              <li>200K+ emergency respiratory admissions linked to AQI events</li>
+            </ul>
+            <div class="metric-change negative">↑ Worsening annually</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">90%</div>
+            <div class="metric-label">Excluded from AI health tools</div>
+            <div class="metric-desc">Over 90% of Indians don't speak English as a primary language. Virtually all AI health tools are English-only.</div>
+            <ul class="metric-supports">
+              <li>Census of India: 22 official languages</li>
+              <li>Existing apps (Practo, Ada Health) English-only</li>
+              <li>Health literacy gaps compound chronic disease outcomes</li>
+            </ul>
+            <div class="metric-change negative">Not improving</div>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- 9. Proposed Methodology: Flow -->
-  <section class="slide">
-    <span class="section-num">09</span>
-    <p class="kicker">PROPOSED METHODOLOGY (2/2)</p>
-    <h2 class="h2 mt-s">Agentic Workflow Execution.</h2>
-    <p class="lede">Replacing static decision trees with autonomous, context-aware reasoning.</p>
-    <div class="grid g4 mt-l">
-      <div class="card card-soft tc">
-        <h4 style="font-size:18px">1. Intercept (Input)</h4>
-        <p class="dim" style="font-size:14px">Fetch live GPS and WAQI environmental data continuously in the background alongside user symptoms.</p>
+    <!-- SLIDE 4: Quote -->
+    <div class="slide layout-quote">
+      <div class="quote-decoration"></div>
+      <div class="quote-decoration-2"></div>
+      <div class="quote-mark">"</div>
+      <blockquote>My father has high cholesterol and he constantly has small, everyday questions about his diet and routine. We realized someone needs to build a simple, vernacular health companion that can answer daily queries — without needing a doctor's visit for every small doubt.</blockquote>
+      <div class="quote-source"><strong>Jayesh Patil, Co-founder</strong> — Personal Motivation for Aarogya Sathi</div>
+    </div>
+
+    <!-- SLIDE 5: Dashboard -->
+    <div class="slide layout-dashboard">
+      <div class="slide-header">
+        <h4>Motivation & Need</h4>
+        <span class="tag">Evidence</span>
       </div>
-      <div class="card card-soft tc">
-        <h4 style="font-size:18px">2. Retrieve (Processing)</h4>
-        <p class="dim" style="font-size:14px">Query ICMR guidelines via Vector DB to ensure the context retrieved is strictly medically grounded.</p>
-      </div>
-      <div class="card card-soft tc">
-        <h4 style="font-size:18px">3. Reason (Analysis)</h4>
-        <p class="dim" style="font-size:14px">The Medical LLM correlates the reported symptoms directly with the retrieved context and smog alerts.</p>
-      </div>
-      <div class="card card-soft tc">
-        <h4 style="font-size:18px">4. Filter (Output)</h4>
-        <p class="dim" style="font-size:14px">A strict heuristic block scans output to remove diagnostic language before delivering advice.</p>
+      <div class="slide-content">
+        <h2>Macroeconomic & clinical evidence demanding a digital health assistant</h2>
+        <div class="stats-grid">
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">14.3:1</span>
+            </div>
+            <div class="stat-name">ROI of preventive health</div>
+            <div class="stat-context">Masters et al. (JECH 2017) — median return on investment for public health interventions</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">100M+</span>
+            </div>
+            <div class="stat-name">eSanjeevani consultations</div>
+            <div class="stat-context">Govt of India digital health milestone — proving demand for remote health</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">$4.58T</span>
+            </div>
+            <div class="stat-name">Projected NCD economic loss</div>
+            <div class="stat-context">World Economic Forum — India's NCD burden projected to 2030</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">26.4%</span>
+            </div>
+            <div class="stat-name">Urban diabetes prevalence</div>
+            <div class="stat-context">ICMR-INDIAB 2023 — metabolic NCD survey across Indian cities</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">11.9yr</span>
+            </div>
+            <div class="stat-name">Life expectancy lost in Delhi</div>
+            <div class="stat-context">AQLI 2024 — years lost due to particulate matter exposure</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">22</span>
+            </div>
+            <div class="stat-name">Official Indian languages</div>
+            <div class="stat-context">Census of India — languages that health AI must support for true access</div>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- 10. Tools & Technologies -->
-  <section class="slide">
-    <span class="section-num">10</span>
-    <p class="kicker">TOOLS & TECHNOLOGIES</p>
-    <h2 class="h2 mt-s">The Full-Stack Ecosystem.</h2>
-    <div class="grid g3 mt-l">
-      <div class="card">
-        <h4>Client & Backend</h4>
-        <ul class="bullet-list" style="font-size:15px">
-          <li><b>Flutter & SQLite:</b> Offline-first UI utilizing local caching.</li>
-          <li><b>FastAPI & PostgreSQL:</b> High-performance asynchronous backend.</li>
-          <li><b>Docker:</b> Containerized microservices.</li>
-        </ul>
+    <!-- SLIDE 6: Split -->
+    <div class="slide layout-split">
+      <div class="slide-header">
+        <h4>Objectives</h4>
+        <span class="tag">Goals</span>
       </div>
-      <div class="card">
-        <h4>AI & ML Stack</h4>
-        <ul class="bullet-list" style="font-size:15px">
-          <li><b>BioMistral / Llama 3:</b> Open-source, medically capable LLMs.</li>
-          <li><b>LangChain & Pinecone:</b> RAG orchestration and vector storage.</li>
-          <li><b>Bhashini & IndicTrans2:</b> Vernacular translation.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h4>Sovereign Cloud</h4>
-        <ul class="bullet-list" style="font-size:15px">
-          <li><b>E2E Networks:</b> Indian-based data centers providing GPUs.</li>
-          <li><b>GitHub Actions:</b> CI/CD pipelines.</li>
-          <li>Ensures strict DPDP Act compliance.</li>
-        </ul>
+      <div class="slide-content">
+        <h2>Agentic triage, localized intelligence, and data sovereignty</h2>
+        <div class="split-body">
+          <div class="split-left">
+            <ol class="insight-list">
+              <li>Build an AI-driven Digital Health Assistant that assesses symptoms using strictly ICMR-grounded clinical guidelines via RAG.</li>
+              <li>Integrate real-time environmental APIs (WAQI, OpenWeather) to dynamically alter health advice based on localized air quality.</li>
+              <li>Deliver health intelligence in 22 Indian languages using Bhashini and IndicTrans2 translation pipelines.</li>
+              <li>Architect a 100% Indian-hosted, DPDP Act (2023) compliant sovereign data ecosystem.</li>
+              <li>Validate the system's accuracy through established benchmarks (MMed-RAG, CLINIC) before deployment.</li>
+            </ol>
+          </div>
+          <div class="split-right">
+            <div class="split-highlight">
+              "The shift from reactive symptom-checking to proactive, environment-aware health management is the defining gap in India's digital health landscape."
+              <cite>Project Research Analysis</cite>
+            </div>
+            <div class="mini-stat-row">
+              <div class="mini-stat">
+                <div class="mini-val">43.8%</div>
+                <div class="mini-label">RAG accuracy improvement (MMed-RAG, ICLR 2025)</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-val">+6.2</div>
+                <div class="mini-label">chrF gain with IndicTrans2 for medical domain</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-val">₹250Cr</div>
+                <div class="mini-label">Max DPDP Act non-compliance penalty</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- 11. Feasibility of Implementation -->
-  <section class="slide">
-    <span class="section-num">11</span>
-    <p class="kicker">FEASIBILITY OF IMPLEMENTATION</p>
-    <h2 class="h2 mt-s">Scaling Sovereign AI Practically.</h2>
-    <div class="grid g2 mt-l">
-      <div class="card card-soft">
-        <h4>Economic & Compute Arbitrage</h4>
-        <p class="dim">High-parameter AI is cost-prohibitive. By utilizing domestic providers (E2E Networks) and 4-bit model quantization, we reduce H100 GPU inference costs by ~70% vs AWS/GCP, ensuring financial viability for real-world scaling.</p>
+    <!-- SLIDE 7: Detail -->
+    <div class="slide layout-detail">
+      <div class="slide-header">
+        <h4>Project Scope</h4>
+        <span class="tag">Boundaries</span>
       </div>
-      <div class="card card-soft">
-        <h4>Data Integration Viability</h4>
-        <p class="dim">APIs for environmental data (WAQI) and foundational language translation (Bhashini) are public, mature, and documented. This bypasses the need to train complex models from scratch.</p>
-      </div>
-      <div class="card card-soft">
-        <h4>Legal Compliance</h4>
-        <p class="dim">Zero-knowledge local inference ensures 100% data residency. The architecture inherently meets the strict consent and storage requirements of the DPDP Act (2023).</p>
-      </div>
-      <div class="card card-soft">
-        <h4>Technical Readiness</h4>
-        <p class="dim">Flutter provides a single-codebase solution for iOS/Android, drastically reducing UI development overhead, while FastAPI handles asynchronous LLM streaming efficiently.</p>
+      <div class="slide-content">
+        <h2>Defining the MVP's boundaries and deliverables</h2>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-block">
+              <h3>In-Scope (Technical Deliverables)</h3>
+              <ul>
+                <li>Cross-platform app (Flutter) with offline SQLite caching</li>
+                <li>FastAPI async microservices backend with PostgreSQL</li>
+                <li>ICMR-grounded RAG pipeline using BioMistral/Llama 3</li>
+                <li>Real-time WAQI pollution API integration for contextual alerts</li>
+                <li>OCR parsing for physical lab report extraction</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <h3>Functional Scope</h3>
+              <ul>
+                <li>NCD-focused triage: Diabetes, CVDs, Respiratory conditions</li>
+                <li>Target users: Urban Indian adults (25-60) with chronic conditions</li>
+                <li>Geo-focus: High-AQI metropolitan areas (Delhi, Mumbai, Pune)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="detail-col">
+            <div class="detail-block">
+              <h3>Out-of-Scope</h3>
+              <ul>
+                <li>Medical diagnoses or prescriptions (regulatory constraint)</li>
+                <li>Hardware wearable integration (Apple Watch, Fitbit)</li>
+                <li>Live ABDM production deployment (sandbox testing only)</li>
+                <li>Acute emergency triage or real-time teleconsultation</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <h3>Constraints & Assumptions</h3>
+              <ul>
+                <li>All LLM inference runs on Indian GPU cloud (E2E Networks)</li>
+                <li>User explicitly consents to data processing per DPDP Act</li>
+                <li>API dependencies (WAQI, Bhashini) assumed stable for MVP duration</li>
+                <li>Testing limited to Android platform for initial release</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- 12. Expected Outcomes -->
-  <section class="slide">
-    <span class="section-num">12</span>
-    <p class="kicker">EXPECTED OUTCOMES</p>
-    <h2 class="h2 mt-s">Impact beyond the code.</h2>
-    <div class="grid g2 mt-l">
-      <div class="card">
-        <h4>Technical Deliverables</h4>
-        <ul class="bullet-list">
-          <li><b>Functional MVP App:</b> Android delivery with vernacular voice onboarding and offline caching capability.</li>
-          <li><b>Context-Aware Triage:</b> Backend successfully correlating symptoms with live AQI > 300 to dynamically alter advice.</li>
-          <li><b>Sovereign Architecture PoC:</b> Validation of local inference without relying on external APIs (OpenAI/Google).</li>
-        </ul>
+    <!-- SLIDE 8: Metrics -->
+    <div class="slide layout-metrics">
+      <div class="slide-header">
+        <h4>Literature Review</h4>
+        <span class="tag">Evidence Base</span>
       </div>
-      <div class="card">
-        <h4>Academic & Public Impact</h4>
-        <ul class="bullet-list">
-          <li><b>Research Output:</b> Comprehensive architecture report and accuracy benchmarking for the RAG pipeline.</li>
-          <li><b>Reduced False Alarms:</b> Lowering unnecessary clinical visits by attributing symptoms to pollution instead of infection.</li>
-          <li><b>Digital Inclusion:</b> Bridging the health literacy gap for non-English speakers across urban India.</li>
-        </ul>
+      <div class="slide-content">
+        <h2>Peer-reviewed foundation across all project pillars</h2>
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="metric-value">42</div>
+            <div class="metric-label">IEEE-formatted references</div>
+            <div class="metric-desc">Comprehensive literature review spanning 7 research pillars — NCDs, pollution, digital health ROI, RAG safety, vernacular AI, agentic AI, and data sovereignty.</div>
+            <ul class="metric-supports">
+              <li>Sources from The Lancet, Nature, NEJM, JACC, BMJ, JAMIA, ICLR</li>
+              <li>Every claim traceable to a DOI or arXiv ID</li>
+              <li>No vague citations or unsourced assumptions</li>
+            </ul>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">43.8%</div>
+            <div class="metric-label">RAG accuracy gain (MMed-RAG)</div>
+            <div class="metric-desc">Xia et al. (ICLR 2025) demonstrated that domain-specific RAG systems improve factual accuracy by 43.8% over vanilla LLMs in medical applications.</div>
+            <ul class="metric-supports">
+              <li>Scope-matched KG-RAG outperforms generic RAG (Anuyah 2026)</li>
+              <li>RAG-end2end shows significant QA improvement (TACL 2022)</li>
+              <li>Clinical safety gaps documented in systematic reviews (JAMIA 2018)</li>
+            </ul>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">14.3:1</div>
+            <div class="metric-label">Preventive health ROI</div>
+            <div class="metric-desc">Masters et al. (JECH 2017) demonstrated a 14.3:1 median return on investment for public health preventive interventions.</div>
+            <ul class="metric-supports">
+              <li>MRC Framework (BMJ 2021) provides evaluation gold standard</li>
+              <li>eSanjeevani proves 100M+ teleconsultation demand</li>
+              <li>CONSORT-EHEALTH (JMIR 2011) sets digital health trial standards</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- 13. Timeline (Gantt) -->
-  <section class="slide">
-    <span class="section-num">13</span>
-    <p class="kicker">PROJECT TIMELINE (12 WEEKS)</p>
-    <h2 class="h2 mt-s">Execution Gantt Chart.</h2>
-    <div class="gantt mt-m">
-      <div class="gantt-header">Task Description</div>
-      <div class="gantt-header tc">Month 1 (W1-W4)</div>
-      <div class="gantt-header tc">Month 2 (W5-W8)</div>
-      <div class="gantt-header tc">Month 3 (W9-W12)</div>
-      
-      <div class="gantt-row">
-        <div class="gantt-task">1. DB & API Architecture</div>
-        <div class="gantt-cell"><div class="gantt-bar" style="left:10%; right:10%;">PostgreSQL, Schemas</div></div>
-        <div class="gantt-cell"></div>
-        <div class="gantt-cell"></div>
+    <!-- SLIDE 9: Bars -->
+    <div class="slide layout-bars">
+      <div class="slide-header">
+        <h4>Competitive Analysis</h4>
+        <span class="tag">Gap Analysis</span>
       </div>
-      
-      <div class="gantt-row">
-        <div class="gantt-task">2. Frontend & Offline SQLite</div>
-        <div class="gantt-cell"><div class="gantt-bar" style="left:50%; right:-10%;">Flutter UI</div></div>
-        <div class="gantt-cell"><div class="gantt-bar" style="left:-10%; right:20%;">Offline Sync Dev</div></div>
-        <div class="gantt-cell"></div>
-      </div>
-      
-      <div class="gantt-row">
-        <div class="gantt-task">3. Backend & APIs</div>
-        <div class="gantt-cell"></div>
-        <div class="gantt-cell"><div class="gantt-bar" style="left:10%; right:10%;">FastAPI, WAQI, Bhashini</div></div>
-        <div class="gantt-cell"></div>
-      </div>
-      
-      <div class="gantt-row">
-        <div class="gantt-task">4. LLM & RAG Pipeline</div>
-        <div class="gantt-cell"></div>
-        <div class="gantt-cell"><div class="gantt-bar" style="left:70%; right:-10%;">Embeddings</div></div>
-        <div class="gantt-cell"><div class="gantt-bar" style="left:-10%; right:20%;">BioMistral, RAG Triage</div></div>
-      </div>
-      
-      <div class="gantt-row">
-        <div class="gantt-task">5. Testing & Validation</div>
-        <div class="gantt-cell"></div>
-        <div class="gantt-cell"></div>
-        <div class="gantt-cell"><div class="gantt-bar" style="left:30%; right:10%;">Safety Benchmark & Report</div></div>
+      <div class="slide-content">
+        <h2>No existing solution combines all six capabilities</h2>
+        <div class="bars-container">
+          <div class="bar-item">
+            <div class="bar-label">Preventive NCD Management</div>
+            <div class="bar-track"><div class="bar-fill" style="width: 15%;"></div></div>
+            <div class="bar-pct">Aarogya Sathi ✓</div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Real-time AQI Integration</div>
+            <div class="bar-track"><div class="bar-fill" style="width: 5%;"></div></div>
+            <div class="bar-pct">Aarogya Sathi ✓</div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Vernacular-first (22 languages)</div>
+            <div class="bar-track"><div class="bar-fill" style="width: 10%;"></div></div>
+            <div class="bar-pct">Aarogya Sathi ✓</div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">ICMR-Grounded RAG</div>
+            <div class="bar-track"><div class="bar-fill" style="width: 5%;"></div></div>
+            <div class="bar-pct">Aarogya Sathi ✓</div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Agentic AI Architecture</div>
+            <div class="bar-track"><div class="bar-fill" style="width: 5%;"></div></div>
+            <div class="bar-pct">Aarogya Sathi ✓</div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">DPDP Act Compliance</div>
+            <div class="bar-track"><div class="bar-fill" style="width: 40%;"></div></div>
+            <div class="bar-pct">Aarogya Sathi ✓</div>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- 14. References -->
-  <section class="slide">
-    <span class="section-num">14</span>
-    <p class="kicker">CITATIONS & EVIDENCE</p>
-    <h2 class="h2 mt-s">Selected References (1/2)</h2>
-    <div class="ref-list mt-m">
-      <p><b>[1]</b> ICMR-INDIAB Collaborative Study Group, "Metabolic non-communicable disease health report of India: the ICMR-INDIAB national cross-sectional study (ICMR-INDIAB-17)," <i>The Lancet Diabetes & Endocrinology</i>, vol. 11, no. 7, pp. 474–489, 2023.</p>
-      <p><b>[2]</b> T. Vos et al., "Global burden of 369 diseases and injuries in 204 countries and territories, 1990–2019: a systematic analysis for the Global Burden of Disease Study 2019," <i>The Lancet</i>, vol. 396, no. 10258, pp. 1204–1222, 2020.</p>
-      <p><b>[3]</b> EPIC, "Air Quality Life Index (AQLI) - India Fact Sheet," Energy Policy Institute at the University of Chicago, 2024.</p>
-      <p><b>[4]</b> J. Lelieveld, J. S. Evans, M. Fnais, D. Giannadaki, and A. Pozzer, "The contribution of outdoor air pollution sources to premature mortality on a global scale," <i>Nature</i>, vol. 525, no. 7569, pp. 367–371, 2015.</p>
-      <p><b>[5]</b> R. Masters et al., "Return on investment of public health interventions: a systematic review," <i>J Epidemiol Community Health</i>, vol. 71, no. 8, pp. 827–834, 2017.</p>
+    <!-- SLIDE 10: Timeline -->
+    <div class="slide layout-timeline">
+      <div class="slide-header">
+        <h4>System Architecture</h4>
+        <span class="tag">Methodology</span>
+      </div>
+      <div class="slide-content">
+        <h2>Agentic RAG pipeline with sovereign data processing</h2>
+        <div class="timeline-track">
+          <div class="timeline-step">
+            <div class="step-circle">1</div>
+            <div class="step-title">Intercept</div>
+            <div class="step-desc">Flutter app captures user input (voice/text in vernacular) + fetches live GPS and WAQI environmental data.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-circle">2</div>
+            <div class="step-title">Retrieve</div>
+            <div class="step-desc">LangChain queries Pinecone vector DB containing ICMR guideline embeddings for medically grounded context.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-circle">3</div>
+            <div class="step-title">Reason</div>
+            <div class="step-desc">BioMistral/Llama 3 correlates symptoms with retrieved ICMR context and environmental alerts.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-circle">4</div>
+            <div class="step-title">Filter</div>
+            <div class="step-desc">Heuristic safety block scans output to remove diagnostic language before delivering advice to user.</div>
+          </div>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- 15. References & Ending -->
-  <section class="slide">
-    <span class="section-num">15</span>
-    <p class="kicker">CITATIONS & EVIDENCE</p>
-    <h2 class="h2 mt-s">Selected References (2/2)</h2>
-    <div class="ref-list mt-m">
-      <p><b>[6]</b> P. Xia et al., "MMed-RAG: Versatile Multimodal RAG System for Medical Applications," in <i>International Conference on Learning Representations (ICLR)</i>, 2025.</p>
-      <p><b>[7]</b> A. Labrak, A. Bazoge, E. Morin, P. A. Gourraud, M. Rouvier, and R. Dufour, "BioMistral: A Collection of Open-Source Pretrained Large Language Models for Medical Domains," arXiv preprint arXiv:2402.10373, 2024.</p>
-      <p><b>[8]</b> AI4Bharat, "Conversational Domain Adaptation of IndicTrans2 for Medical Translation," arXiv preprint arXiv:2606.29024, 2026.</p>
-      <p><b>[9]</b> Government of India, "The Digital Personal Data Protection Act, 2023," <i>The Gazette of India</i>, Aug. 2023.</p>
+    <!-- SLIDE 11: Detail -->
+    <div class="slide layout-detail">
+      <div class="slide-header">
+        <h4>Tools & Technologies</h4>
+        <span class="tag">Stack</span>
+      </div>
+      <div class="slide-content">
+        <h2>Full-stack ecosystem for the MVP</h2>
+        <div class="detail-body">
+          <div class="detail-col">
+            <div class="detail-block">
+              <h3>Client & Backend</h3>
+              <ul>
+                <li>Flutter + SQLite: Offline-first UI with local caching</li>
+                <li>FastAPI + PostgreSQL: High-performance async backend</li>
+                <li>Docker: Containerized microservices deployment</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <h3>AI & ML Stack</h3>
+              <ul>
+                <li>BioMistral / Llama 3: Open-source, medically capable LLMs</li>
+                <li>LangChain + Pinecone: RAG orchestration and vector storage</li>
+                <li>Bhashini + IndicTrans2: Vernacular NLP translation pipeline</li>
+              </ul>
+            </div>
+          </div>
+          <div class="detail-col">
+            <div class="detail-block">
+              <h3>Sovereign Cloud & Data</h3>
+              <ul>
+                <li>E2E Networks: Indian-hosted GPU cloud (DPDP compliant)</li>
+                <li>GitHub Actions: CI/CD pipelines</li>
+                <li>PostgreSQL on E2E: Health data never leaves Indian borders</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <h3>External APIs</h3>
+              <ul>
+                <li>WAQI API: Real-time global air quality index data</li>
+                <li>OpenWeatherMap: Weather context for health alerts</li>
+                <li>Bhashini API: Govt of India NLP translation service</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row mt-l" style="padding-top:40px; border-top:1px solid var(--border)">
-      <div class="h3" style="margin:0; color:var(--accent)">Thank you.</div>
-      <p class="dim" style="margin:0; margin-left:auto;">Aarogya Sathi Capstone Project</p>
+
+    <!-- SLIDE 12: Split -->
+    <div class="slide layout-split">
+      <div class="slide-header">
+        <h4>Feasibility</h4>
+        <span class="tag">Viability</span>
+      </div>
+      <div class="slide-content">
+        <h2>Scaling sovereign AI within practical constraints</h2>
+        <div class="split-body">
+          <div class="split-left">
+            <ol class="insight-list">
+              <li>Compute Cost: 4-bit model quantization on E2E Networks reduces GPU inference costs by ~70% vs AWS/GCP, ensuring financial viability.</li>
+              <li>Translation APIs: Bhashini and WAQI APIs are public, mature, and well-documented — no need to train from scratch.</li>
+              <li>Legal Compliance: Zero-knowledge local inference ensures 100% data residency. Architecture inherently meets DPDP Act consent requirements.</li>
+              <li>Platform: Flutter provides a single-codebase solution for iOS/Android, drastically reducing UI development overhead.</li>
+              <li>Testing: Established benchmarks (MMed-RAG, CLINIC) provide validated evaluation frameworks for clinical AI safety.</li>
+            </ol>
+          </div>
+          <div class="split-right">
+            <div class="split-highlight">
+              "By using domestic cloud providers and open-source LLMs, we bypass the cost and sovereignty issues of relying on OpenAI/Google APIs entirely."
+              <cite>Technical Feasibility Analysis</cite>
+            </div>
+            <div class="mini-stat-row">
+              <div class="mini-stat">
+                <div class="mini-val">70%</div>
+                <div class="mini-label">GPU cost reduction via E2E vs AWS</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-val">1</div>
+                <div class="mini-label">Codebase for iOS + Android (Flutter)</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-val">100%</div>
+                <div class="mini-label">Data residency within India</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </section>
 
-</div>
+    <!-- SLIDE 13: Dashboard -->
+    <div class="slide layout-dashboard">
+      <div class="slide-header">
+        <h4>Expected Outcomes</h4>
+        <span class="tag">Impact</span>
+      </div>
+      <div class="slide-content">
+        <h2>Measurable deliverables and anticipated impact</h2>
+        <div class="stats-grid">
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">MVP</span>
+            </div>
+            <div class="stat-name">Functional Android App</div>
+            <div class="stat-context">Vernacular voice onboarding with offline caching capability</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">AQI&gt;300</span>
+            </div>
+            <div class="stat-name">Context-Aware Triage</div>
+            <div class="stat-context">Backend correlating symptoms with live pollution alerts dynamically</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">100%</span>
+            </div>
+            <div class="stat-name">Sovereign Architecture PoC</div>
+            <div class="stat-context">Local inference validated without external API dependency</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">Report</span>
+            </div>
+            <div class="stat-name">Research Output</div>
+            <div class="stat-context">Architecture documentation + RAG accuracy benchmarking paper</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">↓</span>
+            </div>
+            <div class="stat-name">Reduced False Alarms</div>
+            <div class="stat-context">Attributing symptoms to pollution instead of infection, lowering unnecessary visits</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-top">
+              <span class="stat-num">22+</span>
+            </div>
+            <div class="stat-name">Language Coverage</div>
+            <div class="stat-context">Bridging health literacy gap for non-English speakers</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<script>
-// Presentation Runtime
-document.addEventListener('keydown', (e) => {
-  const slides = document.querySelectorAll('.slide');
-  let activeIdx = Array.from(slides).findIndex(s => s.classList.contains('is-active'));
-  
-  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
-    if (activeIdx < slides.length - 1) {
-      slides[activeIdx].classList.remove('is-active');
-      slides[activeIdx].classList.add('is-prev');
-      slides[activeIdx + 1].classList.add('is-active');
+    <!-- SLIDE 14: Gantt Chart -->
+    <div class="slide layout-gantt">
+      <div class="slide-header">
+        <h4>Timeline</h4>
+        <span class="tag">12 Weeks</span>
+      </div>
+      <div class="slide-content">
+        <h2>Execution Gantt Chart (3-Month Sprint)</h2>
+        <div class="gantt-container">
+          <div class="gantt-header">
+            <div class="gantt-col-title left">Task</div>
+            <div class="gantt-col-title">W1</div>
+            <div class="gantt-col-title">W2</div>
+            <div class="gantt-col-title">W3</div>
+            <div class="gantt-col-title">W4</div>
+            <div class="gantt-col-title">W5</div>
+            <div class="gantt-col-title">W6</div>
+            <div class="gantt-col-title">W7</div>
+            <div class="gantt-col-title">W8</div>
+            <div class="gantt-col-title">W9</div>
+            <div class="gantt-col-title">W10</div>
+            <div class="gantt-col-title">W11</div>
+            <div class="gantt-col-title">W12</div>
+          </div>
+          
+          <div class="gantt-row">
+            <div class="gantt-task-name">1. DB & API Architecture</div>
+            <div class="gantt-bar" style="grid-column: 2 / 6;"></div>
+          </div>
+          <div class="gantt-row">
+            <div class="gantt-task-name">2. Flutter UI & Offline</div>
+            <div class="gantt-bar" style="grid-column: 3 / 9;"></div>
+          </div>
+          <div class="gantt-row">
+            <div class="gantt-task-name">3. Backend APIs (FastAPI, WAQI)</div>
+            <div class="gantt-bar" style="grid-column: 5 / 10;"></div>
+          </div>
+          <div class="gantt-row">
+            <div class="gantt-task-name">4. LLM & RAG Pipeline</div>
+            <div class="gantt-bar" style="grid-column: 7 / 12;"></div>
+          </div>
+          <div class="gantt-row">
+            <div class="gantt-task-name">5. Vernacular (Bhashini)</div>
+            <div class="gantt-bar" style="grid-column: 8 / 12;"></div>
+          </div>
+          <div class="gantt-row">
+            <div class="gantt-task-name">6. Testing & Validation</div>
+            <div class="gantt-bar" style="grid-column: 10 / 14;"></div>
+          </div>
+          <div class="gantt-row">
+            <div class="gantt-task-name">7. Documentation & Report</div>
+            <div class="gantt-bar" style="grid-column: 11 / 14;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 15: Closing -->
+    <div class="slide layout-closing">
+      <div class="closing-decoration"></div>
+      <div class="closing-decoration-2"></div>
+      <h1>Thank You</h1>
+      <p class="closing-sub">For further discussion, please reach out to the team.</p>
+      <p class="closing-contact">Jayesh Patil (C233) &middot; Abhijit Patil (C263) &middot; Ritesh Pawar (C276) &nbsp;&middot;&nbsp; Capstone 1st Review &middot; July 2026</p>
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+  <div class="slide-counter"><span id="current">1</span> / <span id="total">10</span></div>
+  <div class="keyboard-hint">Use arrow keys to navigate</div>
+  <div class="progress-bar" id="progress"></div>
+  <div class="nav-controls">
+    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" aria-label="Previous slide">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)" aria-label="Next slide">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const currentEl = document.getElementById('current');
+    const totalEl = document.getElementById('total');
+    const progressEl = document.getElementById('progress');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let current = 0;
+    const total = slides.length;
+    totalEl.textContent = total;
+
+    function updateSlide() {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active', 'prev');
+        if (i === current) {
+          slide.classList.add('active');
+        } else if (i < current) {
+          slide.classList.add('prev');
+        }
+      });
+      currentEl.textContent = current + 1;
+      progressEl.style.width = ((current + 1) / total * 100) + '%';
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
     }
-  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-    if (activeIdx > 0) {
-      slides[activeIdx].classList.remove('is-active');
-      slides[activeIdx].classList.remove('is-prev');
-      slides[activeIdx - 1].classList.remove('is-prev');
-      slides[activeIdx - 1].classList.add('is-active');
+
+    function changeSlide(dir) {
+      const next = current + dir;
+      if (next >= 0 && next < total) {
+        current = next;
+        updateSlide();
+      }
     }
-  }
-});
-</script>
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        changeSlide(-1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        current = 0;
+        updateSlide();
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        current = total - 1;
+        updateSlide();
+      }
+    });
+
+    // Touch support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        changeSlide(diff > 0 ? 1 : -1);
+      }
+    }, { passive: true });
+
+    updateSlide();
+  </script>
+
+
 </body>
 </html>
