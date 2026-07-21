@@ -43,11 +43,11 @@ html, body { width:100%; height:100%; overflow:hidden; font-family:'Inter',sans-
 
 /* ── TYPOGRAPHY ── */
 h1,h2,h3,h4 { font-family:'Space Grotesk',sans-serif; line-height:1.1; }
-h1 { font-size:clamp(2.6rem,4.5vw,4rem); font-weight:700; letter-spacing:-.03em; }
-h2 { font-size:clamp(1.9rem,3.2vw,2.8rem); font-weight:700; letter-spacing:-.02em; margin-bottom:.6rem; }
-h3 { font-size:clamp(1.1rem,1.7vw,1.45rem); font-weight:600; }
-h4 { font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--primary); }
-p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text-muted); }
+h1 { font-size:clamp(3.2rem,5.5vw,5rem); font-weight:700; letter-spacing:-.03em; }
+h2 { font-size:clamp(1.9rem,2.8vw,2.6rem); font-weight:700; letter-spacing:-.02em; margin-bottom:.6rem; }
+h3 { font-size:clamp(1.05rem,1.5vw,1.35rem); font-weight:600; }
+h4 { font-size:.82rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--primary); }
+p,li { font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.62; color:var(--text-muted); }
 
 /* ── HEADER BAR ── */
 .slide-header {
@@ -86,18 +86,18 @@ p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text
 .g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
 
 /* ── BIG STAT ── */
-.stat-val { font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,3.2vw,2.8rem); font-weight:700; color:var(--primary); line-height:1; }
-.stat-label { font-size:.8rem; font-weight:600; color:var(--text); margin:.35rem 0 .25rem; }
-.stat-sub { font-size:.72rem; color:var(--text-muted); line-height:1.45; }
+.stat-val { font-family:'Space Grotesk',sans-serif; font-size:clamp(2.4rem,3.8vw,3.4rem); font-weight:700; color:var(--primary); line-height:1; }
+.stat-label { font-size:.95rem; font-weight:600; color:var(--text); margin:.35rem 0 .25rem; }
+.stat-sub { font-size:.88rem; color:var(--text-muted); line-height:1.45; }
 
 /* ── NUMBERED LIST ── */
 .num-list { list-style:none; counter-reset:nl; display:flex; flex-direction:column; gap:.85rem; }
-.num-list li { counter-increment:nl; position:relative; padding-left:2.4rem; font-size:clamp(.88rem,1.1vw,1rem); line-height:1.55; color:var(--text); }
-.num-list li::before { content:counter(nl,decimal-leading-zero); position:absolute; left:0; font-family:'Space Grotesk',sans-serif; font-size:.72rem; font-weight:700; color:var(--primary); line-height:1.8; }
+.num-list li { counter-increment:nl; position:relative; padding-left:2.4rem; font-size:clamp(1rem,1.25vw,1.18rem); line-height:1.55; color:var(--text); }
+.num-list li::before { content:counter(nl,decimal-leading-zero); position:absolute; left:0; font-family:'Space Grotesk',sans-serif; font-size:.8rem; font-weight:700; color:var(--primary); line-height:1.8; }
 
 /* ── BULLET LIST ── */
 .blist { list-style:none; display:flex; flex-direction:column; gap:.55rem; }
-.blist li { position:relative; padding-left:1.1rem; font-size:clamp(.8rem,1vw,.95rem); line-height:1.5; }
+.blist li { position:relative; padding-left:1.1rem; font-size:clamp(.95rem,1.2vw,1.12rem); line-height:1.5; }
 .blist li::before { content:''; position:absolute; left:0; top:.55rem; width:5px; height:5px; border-radius:50%; background:var(--primary); }
 
 /* ────────────────────────────────────
@@ -153,8 +153,8 @@ p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text
   margin-bottom:1rem; flex-shrink:0;
   box-shadow:0 6px 20px rgba(30,43,250,.3);
 }
-.flow-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(.95rem,1.3vw,1.15rem); font-weight:700; margin-bottom:.5rem; color:var(--text); }
-.flow-desc { font-size:clamp(.75rem,.95vw,.9rem); color:var(--text-muted); line-height:1.5; max-width:180px; }
+.flow-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(1.05rem,1.4vw,1.25rem); font-weight:700; margin-bottom:.5rem; color:var(--text); }
+.flow-desc { font-size:clamp(.88rem,1.05vw,1rem); color:var(--text-muted); line-height:1.5; max-width:200px; }
 
 /* ────────────────────────────────────
    ARCHITECTURE DIAGRAM
@@ -178,14 +178,14 @@ p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text
   border:2.5px solid var(--primary); background:var(--accent-light);
   padding:1.2rem .9rem;
 }
-.arch-icon { font-size:2.2rem; line-height:1; }
-.arch-title { font-family:'Space Grotesk',sans-serif; font-size:.92rem; font-weight:700; color:var(--text); }
-.arch-sub { font-size:.72rem; color:var(--text-muted); line-height:1.4; }
+.arch-icon { font-size:2.4rem; line-height:1; }
+.arch-title { font-family:'Space Grotesk',sans-serif; font-size:1rem; font-weight:700; color:var(--text); }
+.arch-sub { font-size:.82rem; color:var(--text-muted); line-height:1.4; }
 .arch-arrow { flex:0 0 40px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:.3rem; }
 .arch-arrow-line { display:flex; align-items:center; color:var(--primary); font-size:1.4rem; font-weight:700; }
 .arch-arrow-label { font-size:.62rem; color:var(--text-muted); text-align:center; }
 .sub-modules { display:flex; flex-direction:column; gap:.5rem; margin-top:.5rem; width:100%; }
-.sub-mod { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:.4rem .6rem; font-size:.7rem; color:var(--text); font-weight:500; text-align:center; }
+.sub-mod { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:.5rem .7rem; font-size:.82rem; color:var(--text); font-weight:500; text-align:center; }
 
 /* ────────────────────────────────────
    GANTT CHART
@@ -197,10 +197,10 @@ p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text
   gap:3px 4px;
   align-items:center;
 }
-.gantt-head-task { font-family:'Space Grotesk',sans-serif; font-size:.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; padding-bottom:.6rem; border-bottom:2px solid var(--border); }
-.gantt-head-week { font-family:'Space Grotesk',sans-serif; font-size:.68rem; font-weight:600; color:var(--primary); text-align:center; padding-bottom:.6rem; border-bottom:2px solid var(--border); }
-.gantt-task { font-size:.82rem; font-weight:600; color:var(--text); padding:.5rem 0; border-bottom:1px dashed rgba(30,43,250,.12); }
-.gantt-cell { height:32px; border-bottom:1px dashed rgba(30,43,250,.12); position:relative; }
+.gantt-head-task { font-family:'Space Grotesk',sans-serif; font-size:.82rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.08em; padding-bottom:.6rem; border-bottom:2px solid var(--border); }
+.gantt-head-week { font-family:'Space Grotesk',sans-serif; font-size:.78rem; font-weight:600; color:var(--primary); text-align:center; padding-bottom:.6rem; border-bottom:2px solid var(--border); }
+.gantt-task { font-size:.9rem; font-weight:600; color:var(--text); padding:.5rem 0; border-bottom:1px dashed rgba(30,43,250,.12); }
+.gantt-cell { height:36px; border-bottom:1px dashed rgba(30,43,250,.12); position:relative; }
 .gantt-bar {
   position:absolute; inset:4px 0;
   background:var(--primary); border-radius:6px;
@@ -217,11 +217,11 @@ p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text
    TECH STACK GRID
 ──────────────────────────────────── */
 .tech-category { display:flex; flex-direction:column; gap:.6rem; }
-.tech-cat-title { font-family:'Space Grotesk',sans-serif; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--primary); margin-bottom:.3rem; padding-bottom:.4rem; border-bottom:2px solid var(--primary); }
-.tech-item { background:var(--white); border:1.5px solid var(--border); border-radius:10px; padding:.65rem 1rem; display:flex; align-items:center; gap:.7rem; box-shadow:0 2px 8px rgba(30,43,250,.05); }
-.tech-icon { font-size:1.4rem; flex-shrink:0; }
-.tech-name { font-family:'Space Grotesk',sans-serif; font-size:.82rem; font-weight:700; color:var(--text); }
-.tech-desc { font-size:.7rem; color:var(--text-muted); }
+.tech-cat-title { font-family:'Space Grotesk',sans-serif; font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--primary); margin-bottom:.3rem; padding-bottom:.4rem; border-bottom:2px solid var(--primary); }
+.tech-item { background:var(--white); border:1.5px solid var(--border); border-radius:10px; padding:.75rem 1rem; display:flex; align-items:center; gap:.7rem; box-shadow:0 2px 8px rgba(30,43,250,.05); }
+.tech-icon { font-size:1.5rem; flex-shrink:0; }
+.tech-name { font-family:'Space Grotesk',sans-serif; font-size:.92rem; font-weight:700; color:var(--text); }
+.tech-desc { font-size:.8rem; color:var(--text-muted); }
 
 /* ────────────────────────────────────
    SCOPE TABLE
@@ -231,7 +231,7 @@ p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text
 .scope-col h3 .badge { font-size:.68rem; padding:.2rem .6rem; border-radius:100px; font-weight:700; }
 .in-scope .badge { background:rgba(5,150,105,.12); color:var(--green); }
 .out-scope .badge { background:rgba(220,38,38,.1); color:var(--red); }
-.scope-item { display:flex; align-items:flex-start; gap:.6rem; padding:.6rem .8rem; border-radius:9px; margin-bottom:.45rem; font-size:.82rem; line-height:1.45; }
+.scope-item { display:flex; align-items:flex-start; gap:.6rem; padding:.65rem .9rem; border-radius:9px; margin-bottom:.45rem; font-size:.92rem; line-height:1.45; }
 .scope-item.in { background:rgba(5,150,105,.06); border-left:3px solid var(--green); color:var(--text); }
 .scope-item.out { background:rgba(220,38,38,.05); border-left:3px solid var(--red); color:var(--text); }
 .scope-icon { font-size:.9rem; flex-shrink:0; margin-top:.1rem; }
@@ -242,16 +242,16 @@ p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text
 .outcome-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; flex:1; }
 .outcome-card { background:var(--card-bg); border:1.5px solid var(--border); border-radius:14px; padding:1.3rem; display:flex; flex-direction:column; gap:.6rem; }
 .outcome-card .icon { font-size:2rem; }
-.outcome-card h3 { font-size:1rem; font-weight:700; color:var(--text); }
-.outcome-card p { font-size:.82rem; color:var(--text-muted); line-height:1.5; }
-.outcome-metric { font-family:'Space Grotesk',sans-serif; font-size:1.6rem; font-weight:700; color:var(--primary); margin-top:auto; }
+.outcome-card h3 { font-size:1.1rem; font-weight:700; color:var(--text); }
+.outcome-card p { font-size:.95rem; color:var(--text-muted); line-height:1.5; }
+.outcome-metric { font-family:'Space Grotesk',sans-serif; font-size:1.8rem; font-weight:700; color:var(--primary); margin-top:auto; }
 
 /* ────────────────────────────────────
    REFERENCES
 ──────────────────────────────────── */
 .ref-entry { display:flex; gap:.8rem; padding:.7rem .9rem; border-radius:9px; background:var(--card-bg); border-left:3px solid var(--primary); margin-bottom:.55rem; }
-.ref-num { font-family:'Space Grotesk',sans-serif; font-size:.8rem; font-weight:700; color:var(--primary); flex-shrink:0; min-width:28px; }
-.ref-text { font-size:.78rem; line-height:1.55; color:var(--text-muted); }
+.ref-num { font-family:'Space Grotesk',sans-serif; font-size:.9rem; font-weight:700; color:var(--primary); flex-shrink:0; min-width:28px; }
+.ref-text { font-size:.88rem; line-height:1.55; color:var(--text-muted); }
 .ref-text strong { color:var(--text); font-weight:600; }
 
 /* ────────────────────────────────────
@@ -265,11 +265,11 @@ p,li { font-size:clamp(.85rem,1.1vw,1.05rem); line-height:1.62; color:var(--text
    LIT REVIEW TABLE
 ──────────────────────────────────── */
 .lit-table { width:100%; border-collapse:collapse; flex:1; font-size:.8rem; }
-.lit-table th { background:var(--primary); color:#fff; font-family:'Space Grotesk',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; padding:.7rem 1rem; text-align:left; }
+.lit-table th { background:var(--primary); color:#fff; font-family:'Space Grotesk',sans-serif; font-size:.82rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; padding:.8rem 1rem; text-align:left; }
 .lit-table tr:nth-child(even) td { background:rgba(30,43,250,.04); }
-.lit-table td { padding:.65rem 1rem; border-bottom:1px solid rgba(30,43,250,.08); color:var(--text); vertical-align:top; line-height:1.4; }
+.lit-table td { padding:.75rem 1rem; border-bottom:1px solid rgba(30,43,250,.08); color:var(--text); vertical-align:top; line-height:1.45; font-size:.9rem; }
 .lit-table td:first-child { font-weight:600; color:var(--primary); font-family:'Space Grotesk',sans-serif; }
-.lit-table td:last-child { color:var(--text-muted); font-size:.73rem; }
+.lit-table td:last-child { color:var(--text-muted); font-size:.82rem; }
 </style>
 </head>
 <body>
