@@ -2,45 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aarogya Sathi · 1st Review Presentation</title>
+<title>Aarogya Sathi · Capstone Presentation</title>
 <style>/* html-ppt :: shared webfonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200;300;400;500;600;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 </style>
-<style>/* html-ppt :: base.css — reset + shared tokens + layout primitives */
+<style>/* base.css */
 :root {
   --bg: #ffffff;
   --bg-soft: #f7f7f8;
   --surface: #ffffff;
-  --surface-2: #f2f2f4;
+  --surface-2: #f4f6fb;
   --border: rgba(0,0,0,.08);
   --border-strong: rgba(0,0,0,.16);
   --text-1: #111216;
-  --text-2: #55596a;
-  --text-3: #8a8f9e;
-  --accent: #3b6cff;
-  --accent-2: #7a5cff;
-  --accent-3: #ff5c8a;
-  --good: #1aaf6c;
-  --warn: #f5a524;
-  --bad:  #e0445a;
-  --grad: linear-gradient(135deg,#3b6cff,#7a5cff 55%,#ff5c8a);
-  --grad-soft: linear-gradient(135deg,#eef2ff,#f5ecff 55%,#ffeef5);
+  --text-2: #4a5070;
+  --text-3: #8a90ad;
+  --accent: #1f6fed;
+  --accent-2: #09a1ed;
+  --accent-3: #4b2df2;
+  --grad: linear-gradient(135deg,#1f6fed,#09a1ed 55%,#4b2df2);
+  --grad-soft: linear-gradient(135deg,#e8f1ff,#e3f5ff 55%,#ebe8ff);
   --radius: 18px;
   --radius-sm: 12px;
   --radius-lg: 26px;
   --shadow: 0 10px 30px rgba(18,24,40,.08), 0 2px 6px rgba(18,24,40,.04);
-  --shadow-lg: 0 24px 60px rgba(18,24,40,.14), 0 6px 16px rgba(18,24,40,.06);
-  --font-sans: 'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
-  --font-serif: 'Playfair Display','Noto Serif SC',Georgia,serif;
-  --font-mono: 'JetBrains Mono','IBM Plex Mono',SFMono-Regular,Menlo,monospace;
-  --font-display: var(--font-sans);
+  --font-sans: 'Inter',sans-serif;
   --letter-tight: -.03em;
   --letter-normal: -.01em;
   --ease: cubic-bezier(.4,0,.2,1);
@@ -54,7 +40,6 @@ html,body{margin:0;padding:0;background:var(--bg);color:var(--text-1);
 img,svg,video{max-width:100%;display:block}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
-code,kbd,pre,samp{font-family:var(--font-mono)}
 
 /* ================= SLIDE SYSTEM ================= */
 .deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--bg)}
@@ -70,299 +55,476 @@ code,kbd,pre,samp{font-family:var(--font-mono)}
 }
 .slide.is-active{opacity:1;pointer-events:auto;transform:translateX(0);z-index:2}
 .slide.is-prev{transform:translateX(-30px)}
-body.single .slide{position:relative;width:100vw;height:100vh;opacity:1;transform:none;pointer-events:auto}
 
 /* ================= TYPOGRAPHY ================= */
-.eyebrow{font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3)}
-.kicker{font-size:14px;font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
-h1.title,.h1{font-family:var(--font-display);font-size:72px;line-height:1.05;font-weight:800;letter-spacing:var(--letter-tight);margin:0 0 18px;color:var(--text-1)}
-h2.title,.h2{font-family:var(--font-display);font-size:54px;line-height:1.1;font-weight:700;letter-spacing:var(--letter-tight);margin:0 0 14px}
-h3,.h3{font-size:32px;line-height:1.2;font-weight:600;letter-spacing:var(--letter-normal);margin:0 0 10px}
-h4,.h4{font-size:22px;line-height:1.3;font-weight:600;margin:0 0 8px}
-.lede{font-size:22px;line-height:1.55;color:var(--text-2);font-weight:300;max-width:62ch}
+.kicker{font-size:16px;font-weight:700;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+.h1{font-family:var(--font-sans);font-size:72px;line-height:1.05;font-weight:900;letter-spacing:var(--letter-tight);margin:0 0 18px;color:var(--text-1)}
+.h2{font-family:var(--font-sans);font-size:54px;line-height:1.1;font-weight:800;letter-spacing:var(--letter-tight);margin:0 0 14px}
+.h3{font-size:32px;line-height:1.2;font-weight:700;letter-spacing:var(--letter-normal);margin:0 0 10px}
+.h4{font-size:22px;line-height:1.3;font-weight:700;margin:0 0 8px;color:var(--accent)}
+.lede{font-size:22px;line-height:1.55;color:var(--text-2);font-weight:400;max-width:62ch}
 .dim{color:var(--text-2)}
-.dim2{color:var(--text-3)}
-.mono{font-family:var(--font-mono)}
-.serif{font-family:var(--font-serif)}
 .gradient-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 
 /* ================= LAYOUT PRIMITIVES ================= */
-.stack>*+*{margin-top:14px}
 .row{display:flex;gap:24px;align-items:center}
-.row.wrap{flex-wrap:wrap}
 .grid{display:grid;gap:24px}
 .g2{grid-template-columns:repeat(2,1fr)}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
 .center{display:flex;align-items:center;justify-content:center;text-align:center}
-.fill{flex:1}
-.sp-t{padding-top:24px}.sp-b{padding-bottom:24px}
+.tc{text-align:center}
 .mt-s{margin-top:8px}.mt-m{margin-top:18px}.mt-l{margin-top:32px}
-.mb-s{margin-bottom:8px}.mb-m{margin-bottom:18px}.mb-l{margin-bottom:32px}
 
 /* ================= CARDS ================= */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  padding:26px 28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.card-soft{background:var(--surface-2);border:1px solid var(--border)}
-.card-outline{background:transparent;border:1.5px solid var(--border-strong);box-shadow:none}
-.card-accent{background:var(--surface);border-top:3px solid var(--accent)}
-.card-hover{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.card-hover:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:500;
+  padding:32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card-soft{background:var(--surface-2);border:none;}
+.card-accent{background:var(--surface);border-top:4px solid var(--accent)}
+.pill{display:inline-block;padding:6px 16px;border-radius:999px;font-size:14px;font-weight:600;
   background:var(--surface-2);color:var(--text-2);border:1px solid var(--border)}
 .pill-accent{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
 
-/* ================= BARS / DIVIDERS ================= */
-.divider{height:1px;background:var(--border);width:100%}
-.divider-accent{height:3px;width:72px;background:var(--accent);border-radius:2px}
-
 /* ================= CHROME ================= */
-.deck-header{position:absolute;top:24px;left:40px;right:40px;display:flex;align-items:center;justify-content:space-between;
-  font-size:12px;color:var(--text-3);letter-spacing:.12em;text-transform:uppercase;z-index:10;pointer-events:none}
 .deck-footer{position:absolute;bottom:24px;left:40px;right:40px;display:flex;align-items:center;justify-content:space-between;
-  font-size:12px;color:var(--text-3);z-index:10;pointer-events:none}
+  font-size:14px;font-weight:600;color:var(--text-3);z-index:10;pointer-events:none}
 .slide-number::before{content:attr(data-current)}
 .slide-number::after{content:" / " attr(data-total)}
-.progress-bar{position:fixed;left:0;right:0;bottom:0;height:3px;background:transparent;z-index:20}
-.progress-bar > span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s var(--ease)}
+.section-num{font-size:220px;font-weight:900;line-height:.9;color:var(--surface-2);position:absolute;right:72px;bottom:40px;z-index:-1;letter-spacing:-.05em}
 
-/* ================= UTILITY ================= */
-.hidden{display:none!important}
-.nowrap{white-space:nowrap}
-.tr{text-align:right}.tc{text-align:center}.tl{text-align:left}
-.uppercase{text-transform:uppercase;letter-spacing:.12em}
-</style>
-<style>/* html-ppt :: animations.css */
-:root{--anim-dur:.7s;--anim-ease:cubic-bezier(.4,0,.2,1)}
+/* ================= ANIMATIONS ================= */
 @keyframes kf-fade-up{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
-.anim-fade-up{animation:kf-fade-up var(--anim-dur) var(--anim-ease) both}
-</style>
-<style>/* pitch-deck — classic YC/VC pitch */
-.tpl-pitch-deck{
-  --bg:#ffffff;--bg-soft:#f6f7fb;--surface:#ffffff;--surface-2:#f2f4fa;
-  --border:rgba(20,25,60,.08);--border-strong:rgba(20,25,60,.18);
-  --text-1:#0d1130;--text-2:#4a5070;--text-3:#8a90ad;
-  --accent:#3b5bff;--accent-2:#7a46ff;--accent-3:#d94cff;
-  --grad:linear-gradient(135deg,#3b5bff 0%,#7a46ff 55%,#d94cff 100%);
-  --grad-soft:linear-gradient(135deg,#eef1ff,#f4edff 55%,#fbedff);
-  --radius:20px;--radius-lg:28px;
-  --shadow:0 14px 40px rgba(20,25,60,.08),0 2px 8px rgba(20,25,60,.04);
-  font-family:'Inter','Noto Sans SC',sans-serif;
+.anim-fade-up{animation:kf-fade-up .7s cubic-bezier(.4,0,.2,1) both}
+
+/* ================= CUSTOM COMPONENTS ================= */
+.cover-bg{position:absolute;inset:0;background:var(--bg);z-index:-1}
+.cover-blob{position:absolute;right:-140px;top:-140px;width:560px;height:560px;border-radius:50%;background:var(--grad);filter:blur(8px);opacity:.15;z-index:-1}
+.metric .n{font-size:64px;font-weight:900;letter-spacing:-.035em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.metric .l{color:var(--text-2);font-size:18px;font-weight:500;margin-top:8px}
+
+ul.bullet-list { margin: 0; padding-left: 20px; }
+ul.bullet-list li { margin-bottom: 12px; font-size: 18px; color: var(--text-2); line-height: 1.5; }
+
+/* Gantt Chart */
+.gantt {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  width: 100%;
 }
-.tpl-pitch-deck .slide{padding:88px 112px}
-.tpl-pitch-deck .kicker{color:var(--accent);font-weight:700}
-.tpl-pitch-deck .h1{font-size:86px;line-height:1.02;font-weight:900;letter-spacing:-.035em}
-.tpl-pitch-deck .h2{font-size:62px;font-weight:800;letter-spacing:-.03em}
-.tpl-pitch-deck .mega{font-size:180px;font-weight:900;line-height:.95;letter-spacing:-.05em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.tpl-pitch-deck .mega-sub{font-size:28px;color:var(--text-2);margin-top:18px}
-.tpl-pitch-deck .cover-bg{position:absolute;inset:0;background:var(--grad-soft);z-index:-1}
-.tpl-pitch-deck .cover-blob{position:absolute;right:-140px;top:-140px;width:560px;height:560px;border-radius:50%;background:var(--grad);filter:blur(8px);opacity:.35;z-index:-1}
-.tpl-pitch-deck .brand-dot{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--grad);margin-right:10px;vertical-align:middle}
-.tpl-pitch-deck .brand{font-weight:800;font-size:22px;letter-spacing:-.02em}
-.tpl-pitch-deck .card{border-radius:var(--radius)}
-.tpl-pitch-deck .num-tag{font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:var(--accent);letter-spacing:.12em}
-.tpl-pitch-deck .metric{display:flex;flex-direction:column;gap:6px}
-.tpl-pitch-deck .metric .n{font-size:72px;font-weight:900;letter-spacing:-.035em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
-.tpl-pitch-deck .metric .l{color:var(--text-2);font-size:16px}
-.tpl-pitch-deck .traction-bar{display:flex;align-items:flex-end;gap:14px;height:240px;margin-top:24px}
-.tpl-pitch-deck .traction-bar .bar{flex:1;background:var(--grad);border-radius:8px 8px 0 0;position:relative;min-height:20px}
-.tpl-pitch-deck .traction-bar .bar span{position:absolute;bottom:-28px;left:0;right:0;text-align:center;font-size:13px;color:var(--text-3)}
-.tpl-pitch-deck .traction-bar .bar em{position:absolute;top:-28px;left:0;right:0;text-align:center;font-size:14px;font-weight:700;font-style:normal;color:var(--text-1)}
-.tpl-pitch-deck .section-num{font-size:220px;font-weight:900;line-height:.9;color:var(--surface-2);position:absolute;right:72px;bottom:40px;z-index:0;letter-spacing:-.05em}
-.tpl-pitch-deck .slide > *{position:relative;z-index:1}
-.tpl-pitch-deck .deck-footer{color:var(--text-3)}
+.gantt-header { font-weight: 800; color: var(--text-3); font-size: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.1em; }
+.gantt-row { display: contents; }
+.gantt-task { padding: 16px 0; font-weight: 700; font-size: 18px; border-bottom: 1px dashed var(--border); display: flex; align-items: center; }
+.gantt-cell { padding: 16px 0; border-bottom: 1px dashed var(--border); position: relative; }
+.gantt-bar { position: absolute; top: 12px; bottom: 12px; background: var(--grad); border-radius: 6px; box-shadow: var(--shadow); display: flex; align-items: center; padding: 0 12px; color: white; font-weight: 600; font-size: 13px; z-index: 5; }
+
+/* Architecture Diagram */
+.arch-container { display: flex; gap: 24px; align-items: stretch; margin-top: 24px; }
+.arch-block { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; flex: 1; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+.arch-icon { font-size: 40px; margin-bottom: 16px; background: var(--grad); -webkit-background-clip: text; color: transparent; }
+.arch-title { font-weight: 800; font-size: 20px; margin-bottom: 8px; }
+.arch-desc { font-size: 14px; color: var(--text-2); line-height: 1.4; }
+.arch-arrow { display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--text-3); }
+
+/* Reference List */
+.ref-list { font-size: 16px; line-height: 1.6; color: var(--text-2); max-width: 900px; }
+.ref-list p { margin-bottom: 12px; padding-left: 32px; text-indent: -32px; }
 </style>
-<style>
-/* Static-preview fallback */
-.deck{height:auto;min-height:100vh;overflow:visible}
-.slide{position:relative;inset:auto;opacity:1;pointer-events:auto;transform:none;height:100vh;page-break-after:always}
-.deck-header,.deck-footer,.slide-number,.progress-bar,.notes-overlay,.overview{pointer-events:none}
-.notes{display:none!important}
-</style></head>
-<body class="tpl-pitch-deck">
+</head>
+<body>
 <div class="deck">
 
-  <!-- 1. Project Title -->
-  <section class="slide" data-title="Title">
+  <!-- 1. Title -->
+  <section class="slide is-active">
     <div class="cover-bg"></div>
     <div class="cover-blob"></div>
-    <div style="position:absolute;top:56px;left:112px"><span class="brand-dot"></span><span class="brand">Aarogya Sathi</span></div>
     <p class="kicker">Capstone Project 1st Review</p>
-    <h1 class="h1 anim-fade-up" data-anim="fade-up">Preventive health,<br><span class="gradient-text">for everyone.</span></h1>
-    <p class="lede mt-m">An AI-driven, vernacular-first, environment-aware health assistant for NCD management in Urban India.</p>
-    <div class="deck-footer"><span>Aarogya Sathi Team</span></div>
+    <h1 class="h1 anim-fade-up">Aarogya Sathi: proactive<br><span class="gradient-text">"Virtual Nurse."</span></h1>
+    <p class="lede mt-m">A Sovereign, Agentic Digital Health Ecosystem for Urban India.</p>
+    <div class="deck-footer"><span>Aarogya Sathi Team</span><span class="slide-number" data-current="1" data-total="14"></span></div>
   </section>
 
   <!-- 2. Problem Statement -->
-  <section class="slide" data-title="Problem">
+  <section class="slide">
     <span class="section-num">02</span>
-    <p class="num-tag">PROBLEM STATEMENT</p>
-    <h2 class="h2 mt-s">NCDs + Pollution + Language Barrier.</h2>
+    <p class="kicker">PROBLEM STATEMENT</p>
+    <h2 class="h2 mt-s">The Crises of NCDs, Pollution & Language.</h2>
     <div class="grid g3 mt-l">
-      <div class="card"><h4>63% Mortality</h4><p class="dim">Non-Communicable Diseases (NCDs) cause 63% of all deaths in India.</p></div>
-      <div class="card"><h4>4.2M Deaths</h4><p class="dim">Premature deaths globally from PM2.5 air pollution (South Asia bears the brunt).</p></div>
-      <div class="card"><h4>90% Excluded</h4><p class="dim">Of India doesn't speak English as a primary language, failing to access AI health tools.</p></div>
-    </div>
-  </section>
-
-  <!-- 3. Motivation and Need -->
-  <section class="slide" data-title="Motivation">
-    <span class="section-num">03</span>
-    <p class="num-tag">MOTIVATION AND NEED</p>
-    <h2 class="h2 mt-s">Existing apps <span class="gradient-text">don't talk</span><br>to the most vulnerable.</h2>
-    <p class="lede mt-m">Platforms like Practo and eSanjeevani focus on reactive care. AI symptom checkers lack India-specific guidelines (ICMR), hyper-local AQI awareness, and true vernacular capability.</p>
-    <div class="row mt-l">
-      <span class="pill pill-accent">No AQI Integration</span>
-      <span class="pill pill-accent">English-Centric</span>
-      <span class="pill pill-accent">Reactive, Not Preventive</span>
-    </div>
-  </section>
-
-  <!-- 4. Objectives -->
-  <section class="slide" data-title="Objectives">
-    <span class="section-num">04</span>
-    <p class="num-tag">OBJECTIVES OF THE PROJECT</p>
-    <h2 class="h2 mt-s">Proactive. Localized. Safe.</h2>
-    <div class="grid g2 mt-l">
-      <div class="card card-hover"><h4>Proactive NCD Management</h4><p class="dim">Delay onset and severity through continuous health tracking and dietary advice.</p></div>
-      <div class="card card-hover"><h4>Hyper-Local Alerts</h4><p class="dim">Correlate real-time CPCB AQI data with personal health profiles (e.g., COPD).</p></div>
-      <div class="card card-hover"><h4>Vernacular First</h4><p class="dim">Provide medical intelligence in 22 official Indian languages using Indic NLP.</p></div>
-      <div class="card card-hover"><h4>Clinically Safe AI</h4><p class="dim">Eliminate LLM hallucinations using ICMR-grounded Retrieval-Augmented Generation (RAG).</p></div>
-    </div>
-  </section>
-
-  <!-- 5. Scope -->
-  <section class="slide" data-title="Scope">
-    <span class="section-num">05</span>
-    <p class="num-tag">SCOPE OF THE PROJECT</p>
-    <h2 class="h2 mt-s">Targeting the urban health crisis.</h2>
-    <div class="grid g3 mt-l">
-      <div class="metric"><div class="n">Urban</div><div class="l">Focusing on high-AQI cities</div></div>
-      <div class="metric"><div class="n">NCDs</div><div class="l">Diabetes, CVDs, Respiratory</div></div>
-      <div class="metric"><div class="n">App/Web</div><div class="l">Cross-platform accessibility</div></div>
-    </div>
-    <p class="lede mt-l">Initial scope covers integration with major pollution APIs and ICMR guidelines for the top 3 lifestyle diseases in India.</p>
-  </section>
-
-  <!-- 6. Literature Review -->
-  <section class="slide" data-title="Literature Review">
-    <span class="section-num">06</span>
-    <p class="num-tag">LITERATURE REVIEW (BRIEF)</p>
-    <h2 class="h2 mt-s">Backed by rigorous science.</h2>
-    <div class="grid g3 mt-l">
-      <div class="card card-accent"><h4>14.3:1 ROI</h4><p class="dim">Median ROI for preventive health interventions (Masters et al., JECH 2017).</p></div>
-      <div class="card"><h4>+43.8% Accuracy</h4><p class="dim">Factual accuracy gain using MMed-RAG over vanilla models (Xia et al., ICLR 2025).</p></div>
-      <div class="card"><h4>Agentic Safety</h4><p class="dim">Human-guided agents outperform fully autonomous in clinical settings (AgentDS, 2026).</p></div>
-    </div>
-    <p class="dim mt-l">Based on 42 IEEE-formatted references from The Lancet, Nature, JACC, and arXiv.</p>
-  </section>
-
-  <!-- 7. Proposed Methodology -->
-  <section class="slide" data-title="Methodology">
-    <span class="section-num">07</span>
-    <p class="num-tag">PROPOSED METHODOLOGY</p>
-    <h2 class="h2 mt-s">Agentic RAG Pipeline.</h2>
-    <div class="traction-bar mt-l">
-      <div class="bar" style="height:40%"><em>Step 1</em><span>Data Ingestion (ICMR/CPCB)</span></div>
-      <div class="bar" style="height:60%"><em>Step 2</em><span>Vector Embeddings</span></div>
-      <div class="bar" style="height:80%"><em>Step 3</em><span>RAG Retrieval Engine</span></div>
-      <div class="bar" style="height:100%"><em>Step 4</em><span>Indic Multilingual Generation</span></div>
-    </div>
-    <p class="dim mt-l" style="margin-top:48px">Zero Trust Architecture · DPDP Act Compliant · On-Device Parsing</p>
-  </section>
-
-  <!-- 8. Tools & Tech -->
-  <section class="slide" data-title="Tools">
-    <span class="section-num">08</span>
-    <p class="num-tag">TOOLS & TECHNOLOGIES</p>
-    <h2 class="h2 mt-s">Modern AI Stack.</h2>
-    <div class="grid g4 mt-l">
-      <div class="card tc"><h4>Llama 3 / Gemma 2</h4><p class="dim">Base LLMs</p></div>
-      <div class="card tc"><h4>Pinecone</h4><p class="dim">Vector Database</p></div>
-      <div class="card tc"><h4>LangChain</h4><p class="dim">Orchestration</p></div>
-      <div class="card tc"><h4>IndicTrans2</h4><p class="dim">Translation</p></div>
-      <div class="card tc"><h4>React Native</h4><p class="dim">Frontend</p></div>
-      <div class="card tc"><h4>FastAPI</h4><p class="dim">Backend</p></div>
-      <div class="card tc"><h4>Open Design</h4><p class="dim">UI System</p></div>
-      <div class="card tc"><h4>GitHub</h4><p class="dim">Version Control</p></div>
-    </div>
-  </section>
-
-  <!-- 9. Feasibility -->
-  <section class="slide" data-title="Feasibility">
-    <span class="section-num">09</span>
-    <p class="num-tag">FEASIBILITY OF IMPLEMENTATION</p>
-    <h2 class="h2 mt-s">Technically and Legally Viable.</h2>
-    <div class="grid g2 mt-l">
-      <div class="card"><h4>Technical Constraints</h4><p class="dim">Indic NLP models are now highly accurate (e.g. IndicTrans2). Costs are optimized by using open-source LLMs and local embedding models.</p></div>
-      <div class="card card-accent"><h4>Legal & Compliance</h4><p class="dim">Architected to comply with India's DPDP Act (2023). Uses explicit consent and processes high-risk health data securely.</p></div>
-    </div>
-  </section>
-
-  <!-- 10. Expected Outcomes -->
-  <section class="slide" data-title="Outcomes">
-    <span class="section-num">10</span>
-    <p class="num-tag">EXPECTED OUTCOMES</p>
-    <h2 class="h2 mt-s">Measurable health impact.</h2>
-    <div class="grid g3 mt-l">
-      <div class="metric"><div class="n" style="font-size:56px">Decrease</div><div class="l">in preventable exacerbations</div></div>
-      <div class="metric"><div class="n" style="font-size:56px">Increase</div><div class="l">in health literacy (vernacular)</div></div>
-      <div class="metric"><div class="n" style="font-size:56px">Zero</div><div class="l">LLM hallucinations on advice</div></div>
-    </div>
-  </section>
-
-  <!-- 11. Timeline -->
-  <section class="slide" data-title="Timeline">
-    <span class="section-num">11</span>
-    <p class="num-tag">PROJECT DEVELOPMENT TIMELINE</p>
-    <h2 class="h2 mt-s">Gantt Overview.</h2>
-    <div class="grid g2 mt-l">
-      <div class="card"><h4>Months 1-2: Research & Design</h4><p class="dim">Literature review, architecture planning, UI/UX mockups.</p></div>
-      <div class="card"><h4>Months 3-4: Backend & RAG</h4><p class="dim">Vector database setup, ICMR data ingestion, LLM tuning.</p></div>
-      <div class="card"><h4>Months 5-6: Frontend & Indic</h4><p class="dim">React Native dev, IndicTrans2 integration, API wiring.</p></div>
-      <div class="card card-accent"><h4>Months 7-8: Test & Deploy</h4><p class="dim">Safety red-teaming (CLINIC benchmark), final presentation.</p></div>
-    </div>
-  </section>
-
-  <!-- 12. References -->
-  <section class="slide center tc" data-title="References">
-    <div class="cover-bg"></div>
-    <div>
-      <h2 class="h2">Selected References</h2>
-      <p class="lede" style="font-size:16px;text-align:left;max-width:800px;margin:24px auto;">
-        [1] T. Vos et al., "Global burden of 369 diseases... GBD 2019," The Lancet, 2020. <br>
-        [2] J. Lelieveld et al., "The contribution of outdoor air pollution sources to premature mortality," Nature, 2015.<br>
-        [3] R. Masters et al., "Return on investment of public health interventions," JECH, 2017.<br>
-        [4] P. Xia et al., "MMed-RAG: Versatile Multimodal RAG System," ICLR 2025.<br>
-        [5] "Conversational Domain Adaptation of IndicTrans2," arXiv:2606.29024, 2026.<br>
-        [6] Government of India, "The Digital Personal Data Protection Act, 2023."
-      </p>
-      <div class="row mt-l" style="justify-content:center;gap:24px">
-        <span class="pill pill-accent">Full references in literature_review.md</span>
+      <div class="card card-accent">
+        <h4>High Prevalence of NCDs</h4>
+        <ul class="bullet-list">
+          <li>Non-Communicable Diseases (NCDs) like diabetes and CVDs account for ~63% of all deaths in India.</li>
+          <li>The sheer volume of undiagnosed conditions severely overburdens the healthcare system.</li>
+        </ul>
       </div>
+      <div class="card card-accent">
+        <h4>The "Pollution-Blind" Gap</h4>
+        <ul class="bullet-list">
+          <li>Standard algorithms ignore environmental toxicity.</li>
+          <li>Over 200,000+ emergency respiratory cases are linked directly to poor air quality in cities like Delhi.</li>
+        </ul>
+      </div>
+      <div class="card card-accent">
+        <h4>The Linguistic Divide</h4>
+        <ul class="bullet-list">
+          <li>Over 90% of health apps are English-only.</li>
+          <li>Massive exclusion of the non-English speaking population from preventive AI healthcare.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Motivation & Need -->
+  <section class="slide">
+    <span class="section-num">03</span>
+    <p class="kicker">MOTIVATION & NEED</p>
+    <h2 class="h2 mt-s">From Personal Need to <span class="gradient-text">Macroeconomic Imperative</span>.</h2>
+    <div class="grid g2 mt-l">
+      <div class="card card-soft">
+        <h4>Personal Inspiration</h4>
+        <p class="dim" style="font-size:18px">My father has high cholesterol and constantly has small, everyday questions about his diet and routine. We realized the profound need for a personalized, vernacular "Virtual Nurse" that is easy for him to use, answering daily queries without requiring a doctor's visit for every small doubt.</p>
+      </div>
+      <div class="card card-soft">
+        <h4>Macroeconomic Threat</h4>
+        <p class="dim" style="font-size:18px">NCDs project a <b>$4.58 Trillion economic loss</b> for India by 2030 (WEF). Preventative digital healthcare is no longer just a luxury; it is an absolute economic imperative to sustain national growth and workforce productivity.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Project Objectives -->
+  <section class="slide">
+    <span class="section-num">04</span>
+    <p class="kicker">PROJECT OBJECTIVES</p>
+    <h2 class="h2 mt-s">Autonomous, Localized, Safe.</h2>
+    <div class="grid g3 mt-l">
+      <div class="card card-hover">
+        <h4>Agentic Triage</h4>
+        <p class="dim">Deploy an AI "Virtual Nurse" to assess symptoms based strictly on ICMR guidelines, specifically constrained to avoid unverified medical diagnosis.</p>
+      </div>
+      <div class="card card-hover">
+        <h4>Hyper-Local Logic</h4>
+        <p class="dim">Integrate live APIs (WAQI, OpenWeather) to dynamically alter health advice based on localized smog alerts and weather conditions.</p>
+      </div>
+      <div class="card card-hover">
+        <h4>Data Sovereignty</h4>
+        <p class="dim">Architect a 100% Indian-hosted, DPDP Act (2023) compliant ecosystem where sensitive health records never cross national borders.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Project Scope -->
+  <section class="slide">
+    <span class="section-num">05</span>
+    <p class="kicker">PROJECT SCOPE</p>
+    <h2 class="h2 mt-s">Defining boundaries for the MVP.</h2>
+    <div class="grid g2 mt-l">
+      <div class="card">
+        <h4>✓ In-Scope (Technical Deliverables)</h4>
+        <ul class="bullet-list">
+          <li>Cross-platform mobile app (Flutter) with offline caching.</li>
+          <li>FastAPI asynchronous microservices integration.</li>
+          <li>ICMR-grounded RAG pipeline (e.g. BioMistral / Llama).</li>
+          <li>OCR extraction for parsing physical lab reports.</li>
+          <li>Real-time environmental context via WAQI APIs.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--bad)">✕ Out-of-Scope</h4>
+        <ul class="bullet-list">
+          <li>Medical Diagnoses or Prescriptions.</li>
+          <li>Hardware wearable integration (Apple Watch, etc).</li>
+          <li>Live ABDM production deployment (sandbox testing only).</li>
+          <li>Treatment of acute medical emergencies.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Literature Review (Part 1) -->
+  <section class="slide">
+    <span class="section-num">06</span>
+    <p class="kicker">LITERATURE REVIEW (1/2)</p>
+    <h2 class="h2 mt-s">Epidemiological & Economic Basis.</h2>
+    <p class="lede">Foundation built exclusively on peer-reviewed clinical and economic research.</p>
+    <div class="grid g2 mt-l">
+      <div class="card card-accent">
+        <h4>The Urban NCD Baseline</h4>
+        <ul class="bullet-list">
+          <li><b>ICMR-INDIAB Study (2023):</b> Establishes a massive 26.4% urban diabetes baseline, justifying the immediate focus on NCDs in metropolitan areas.</li>
+          <li><b>GBD 2019 (The Lancet):</b> Validates that NCDs account for ~63% of India's total mortality.</li>
+        </ul>
+      </div>
+      <div class="card card-accent">
+        <h4>Pollution & Preventive ROI</h4>
+        <ul class="bullet-list">
+          <li><b>AQLI Report (2024):</b> Quantifies the 11.9-year life expectancy loss in Delhi, providing absolute validation for an AQI-aware triage system.</li>
+          <li><b>Masters et al. (JECH, 2017):</b> Demonstrates a median 14.3:1 Return on Investment for preventive public health interventions.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Literature Review (Part 2) -->
+  <section class="slide">
+    <span class="section-num">07</span>
+    <p class="kicker">LITERATURE REVIEW (2/2)</p>
+    <h2 class="h2 mt-s">Technical & Legal Validation.</h2>
+    <div class="grid g2 mt-l">
+      <div class="card card-accent">
+        <h4>Safe AI & Vernacular Tech</h4>
+        <ul class="bullet-list">
+          <li><b>Xia et al. (ICLR 2025):</b> MMed-RAG demonstrates a 43.8% factual accuracy gain over vanilla models, proving RAG is strictly necessary for clinical safety.</li>
+          <li><b>IndicTrans2 (2026):</b> Proves the feasibility and high fidelity of medical-domain translation across 22 official Indian languages.</li>
+        </ul>
+      </div>
+      <div class="card card-accent">
+        <h4>Data Sovereignty</h4>
+        <ul class="bullet-list">
+          <li><b>DPDP Act (2023):</b> The Digital Personal Data Protection Act acts as the strict legal blueprint for our sovereign database schema, enforcing local data residency and explicit consent models.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Proposed Methodology: Architecture -->
+  <section class="slide">
+    <span class="section-num">08</span>
+    <p class="kicker">PROPOSED METHODOLOGY (1/2)</p>
+    <h2 class="h2 mt-s">System Architecture.</h2>
+    <div class="arch-container">
+      <div class="arch-block" style="flex:0.8">
+        <div class="arch-icon">📱</div>
+        <div class="arch-title">User (Flutter App)</div>
+        <div class="arch-desc">Voice & Text Input<br>(Vernacular)</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block" style="flex:0.8">
+        <div class="arch-icon">🚪</div>
+        <div class="arch-title">API Gateway</div>
+        <div class="arch-desc">FastAPI Routing & Auth</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block" style="flex:2; border-color:var(--accent); background:var(--surface)">
+        <div class="arch-icon">🧠</div>
+        <div class="arch-title">AI Engine</div>
+        <div class="arch-desc">
+          <b>NLP Unit:</b> Bhashini / IndicTrans2<br>
+          <b>Context Engine:</b> WAQI Pollution Data<br>
+          <b>RAG Pipeline:</b> ICMR Embeddings (Pinecone)
+        </div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-block" style="flex:1">
+        <div class="arch-icon">🔒</div>
+        <div class="arch-title">Sovereign DB</div>
+        <div class="arch-desc">PostgreSQL on E2E Networks</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Proposed Methodology: Flow -->
+  <section class="slide">
+    <span class="section-num">09</span>
+    <p class="kicker">PROPOSED METHODOLOGY (2/2)</p>
+    <h2 class="h2 mt-s">Agentic Workflow Execution.</h2>
+    <p class="lede">Replacing static decision trees with autonomous, context-aware reasoning.</p>
+    <div class="grid g4 mt-l">
+      <div class="card card-soft tc">
+        <h4 style="font-size:18px">1. Intercept (Input)</h4>
+        <p class="dim" style="font-size:14px">Fetch live GPS and WAQI environmental data continuously in the background alongside user symptoms.</p>
+      </div>
+      <div class="card card-soft tc">
+        <h4 style="font-size:18px">2. Retrieve (Processing)</h4>
+        <p class="dim" style="font-size:14px">Query ICMR guidelines via Vector DB to ensure the context retrieved is strictly medically grounded.</p>
+      </div>
+      <div class="card card-soft tc">
+        <h4 style="font-size:18px">3. Reason (Analysis)</h4>
+        <p class="dim" style="font-size:14px">The Medical LLM correlates the reported symptoms directly with the retrieved context and smog alerts.</p>
+      </div>
+      <div class="card card-soft tc">
+        <h4 style="font-size:18px">4. Filter (Output)</h4>
+        <p class="dim" style="font-size:14px">A strict heuristic block scans output to remove diagnostic language before delivering advice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Tools & Technologies -->
+  <section class="slide">
+    <span class="section-num">10</span>
+    <p class="kicker">TOOLS & TECHNOLOGIES</p>
+    <h2 class="h2 mt-s">The Full-Stack Ecosystem.</h2>
+    <div class="grid g3 mt-l">
+      <div class="card">
+        <h4>Client & Backend</h4>
+        <ul class="bullet-list" style="font-size:15px">
+          <li><b>Flutter & SQLite:</b> Offline-first UI utilizing local caching.</li>
+          <li><b>FastAPI & PostgreSQL:</b> High-performance asynchronous backend.</li>
+          <li><b>Docker:</b> Containerized microservices.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>AI & ML Stack</h4>
+        <ul class="bullet-list" style="font-size:15px">
+          <li><b>BioMistral / Llama 3:</b> Open-source, medically capable LLMs.</li>
+          <li><b>LangChain & Pinecone:</b> RAG orchestration and vector storage.</li>
+          <li><b>Bhashini & IndicTrans2:</b> Vernacular translation.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Sovereign Cloud</h4>
+        <ul class="bullet-list" style="font-size:15px">
+          <li><b>E2E Networks:</b> Indian-based data centers providing GPUs.</li>
+          <li><b>GitHub Actions:</b> CI/CD pipelines.</li>
+          <li>Ensures strict DPDP Act compliance.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Feasibility of Implementation -->
+  <section class="slide">
+    <span class="section-num">11</span>
+    <p class="kicker">FEASIBILITY OF IMPLEMENTATION</p>
+    <h2 class="h2 mt-s">Scaling Sovereign AI Practically.</h2>
+    <div class="grid g2 mt-l">
+      <div class="card card-soft">
+        <h4>Economic & Compute Arbitrage</h4>
+        <p class="dim">High-parameter AI is cost-prohibitive. By utilizing domestic providers (E2E Networks) and 4-bit model quantization, we reduce H100 GPU inference costs by ~70% vs AWS/GCP, ensuring financial viability for real-world scaling.</p>
+      </div>
+      <div class="card card-soft">
+        <h4>Data Integration Viability</h4>
+        <p class="dim">APIs for environmental data (WAQI) and foundational language translation (Bhashini) are public, mature, and documented. This bypasses the need to train complex models from scratch.</p>
+      </div>
+      <div class="card card-soft">
+        <h4>Legal Compliance</h4>
+        <p class="dim">Zero-knowledge local inference ensures 100% data residency. The architecture inherently meets the strict consent and storage requirements of the DPDP Act (2023).</p>
+      </div>
+      <div class="card card-soft">
+        <h4>Technical Readiness</h4>
+        <p class="dim">Flutter provides a single-codebase solution for iOS/Android, drastically reducing UI development overhead, while FastAPI handles asynchronous LLM streaming efficiently.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. Expected Outcomes -->
+  <section class="slide">
+    <span class="section-num">12</span>
+    <p class="kicker">EXPECTED OUTCOMES</p>
+    <h2 class="h2 mt-s">Impact beyond the code.</h2>
+    <div class="grid g2 mt-l">
+      <div class="card">
+        <h4>Technical Deliverables</h4>
+        <ul class="bullet-list">
+          <li><b>Functional MVP App:</b> Android delivery with vernacular voice onboarding and offline caching capability.</li>
+          <li><b>Context-Aware Triage:</b> Backend successfully correlating symptoms with live AQI > 300 to dynamically alter advice.</li>
+          <li><b>Sovereign Architecture PoC:</b> Validation of local inference without relying on external APIs (OpenAI/Google).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Academic & Public Impact</h4>
+        <ul class="bullet-list">
+          <li><b>Research Output:</b> Comprehensive architecture report and accuracy benchmarking for the RAG pipeline.</li>
+          <li><b>Reduced False Alarms:</b> Lowering unnecessary clinical visits by attributing symptoms to pollution instead of infection.</li>
+          <li><b>Digital Inclusion:</b> Bridging the health literacy gap for non-English speakers across urban India.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. Timeline (Gantt) -->
+  <section class="slide">
+    <span class="section-num">13</span>
+    <p class="kicker">PROJECT TIMELINE (12 WEEKS)</p>
+    <h2 class="h2 mt-s">Execution Gantt Chart.</h2>
+    <div class="gantt mt-m">
+      <div class="gantt-header">Task Description</div>
+      <div class="gantt-header tc">Month 1 (W1-W4)</div>
+      <div class="gantt-header tc">Month 2 (W5-W8)</div>
+      <div class="gantt-header tc">Month 3 (W9-W12)</div>
+      
+      <div class="gantt-row">
+        <div class="gantt-task">1. DB & API Architecture</div>
+        <div class="gantt-cell"><div class="gantt-bar" style="left:10%; right:10%;">PostgreSQL, Schemas</div></div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"></div>
+      </div>
+      
+      <div class="gantt-row">
+        <div class="gantt-task">2. Frontend & Offline SQLite</div>
+        <div class="gantt-cell"><div class="gantt-bar" style="left:50%; right:-10%;">Flutter UI</div></div>
+        <div class="gantt-cell"><div class="gantt-bar" style="left:-10%; right:20%;">Offline Sync Dev</div></div>
+        <div class="gantt-cell"></div>
+      </div>
+      
+      <div class="gantt-row">
+        <div class="gantt-task">3. Backend & APIs</div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar" style="left:10%; right:10%;">FastAPI, WAQI, Bhashini</div></div>
+        <div class="gantt-cell"></div>
+      </div>
+      
+      <div class="gantt-row">
+        <div class="gantt-task">4. LLM & RAG Pipeline</div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar" style="left:70%; right:-10%;">Embeddings</div></div>
+        <div class="gantt-cell"><div class="gantt-bar" style="left:-10%; right:20%;">BioMistral, RAG Triage</div></div>
+      </div>
+      
+      <div class="gantt-row">
+        <div class="gantt-task">5. Testing & Validation</div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"></div>
+        <div class="gantt-cell"><div class="gantt-bar" style="left:30%; right:10%;">Safety Benchmark & Report</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. References -->
+  <section class="slide">
+    <span class="section-num">14</span>
+    <p class="kicker">CITATIONS & EVIDENCE</p>
+    <h2 class="h2 mt-s">Selected References (1/2)</h2>
+    <div class="ref-list mt-m">
+      <p><b>[1]</b> ICMR-INDIAB Collaborative Study Group, "Metabolic non-communicable disease health report of India: the ICMR-INDIAB national cross-sectional study (ICMR-INDIAB-17)," <i>The Lancet Diabetes & Endocrinology</i>, vol. 11, no. 7, pp. 474–489, 2023.</p>
+      <p><b>[2]</b> T. Vos et al., "Global burden of 369 diseases and injuries in 204 countries and territories, 1990–2019: a systematic analysis for the Global Burden of Disease Study 2019," <i>The Lancet</i>, vol. 396, no. 10258, pp. 1204–1222, 2020.</p>
+      <p><b>[3]</b> EPIC, "Air Quality Life Index (AQLI) - India Fact Sheet," Energy Policy Institute at the University of Chicago, 2024.</p>
+      <p><b>[4]</b> J. Lelieveld, J. S. Evans, M. Fnais, D. Giannadaki, and A. Pozzer, "The contribution of outdoor air pollution sources to premature mortality on a global scale," <i>Nature</i>, vol. 525, no. 7569, pp. 367–371, 2015.</p>
+      <p><b>[5]</b> R. Masters et al., "Return on investment of public health interventions: a systematic review," <i>J Epidemiol Community Health</i>, vol. 71, no. 8, pp. 827–834, 2017.</p>
+    </div>
+  </section>
+
+  <!-- 15. References & Ending -->
+  <section class="slide">
+    <span class="section-num">15</span>
+    <p class="kicker">CITATIONS & EVIDENCE</p>
+    <h2 class="h2 mt-s">Selected References (2/2)</h2>
+    <div class="ref-list mt-m">
+      <p><b>[6]</b> P. Xia et al., "MMed-RAG: Versatile Multimodal RAG System for Medical Applications," in <i>International Conference on Learning Representations (ICLR)</i>, 2025.</p>
+      <p><b>[7]</b> A. Labrak, A. Bazoge, E. Morin, P. A. Gourraud, M. Rouvier, and R. Dufour, "BioMistral: A Collection of Open-Source Pretrained Large Language Models for Medical Domains," arXiv preprint arXiv:2402.10373, 2024.</p>
+      <p><b>[8]</b> AI4Bharat, "Conversational Domain Adaptation of IndicTrans2 for Medical Translation," arXiv preprint arXiv:2606.29024, 2026.</p>
+      <p><b>[9]</b> Government of India, "The Digital Personal Data Protection Act, 2023," <i>The Gazette of India</i>, Aug. 2023.</p>
+    </div>
+    <div class="row mt-l" style="padding-top:40px; border-top:1px solid var(--border)">
+      <div class="h3" style="margin:0; color:var(--accent)">Thank you.</div>
+      <p class="dim" style="margin:0; margin-left:auto;">Aarogya Sathi Capstone Project</p>
     </div>
   </section>
 
 </div>
 
 <script>
-// Minimal interactive logic for presentation mode if opened in modern browser
+// Presentation Runtime
 document.addEventListener('keydown', (e) => {
   const slides = document.querySelectorAll('.slide');
   let activeIdx = Array.from(slides).findIndex(s => s.classList.contains('is-active'));
-  if (activeIdx === -1) {
-    slides.forEach(s => s.classList.remove('is-active', 'is-prev'));
-    slides[0].classList.add('is-active');
-    return;
-  }
   
-  if (e.key === 'ArrowRight' || e.key === ' ') {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
     if (activeIdx < slides.length - 1) {
       slides[activeIdx].classList.remove('is-active');
       slides[activeIdx].classList.add('is-prev');
       slides[activeIdx + 1].classList.add('is-active');
     }
-  } else if (e.key === 'ArrowLeft') {
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
     if (activeIdx > 0) {
       slides[activeIdx].classList.remove('is-active');
       slides[activeIdx].classList.remove('is-prev');
