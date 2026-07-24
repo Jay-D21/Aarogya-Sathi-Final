@@ -25,6 +25,9 @@ import '../health/health_dashboard.dart';
 import '../../services/location_service.dart';
 import '../../services/health_alert_service.dart';
 
+/// Root scaffold for authenticated users. Hosts the daily health
+/// score ring, key metric bento grid, AQI banner, and quick-action
+/// chips. Loads data lazily via [HealthProvider] and [FitnessProvider].
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
