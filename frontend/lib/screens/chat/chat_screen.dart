@@ -8,6 +8,9 @@ import '../../providers/auth_provider.dart';
 import '../../providers/health_provider.dart';
 import '../../providers/fitness_provider.dart';
 
+/// ICMR-guided AI health assistant powered by Gemini. Supports
+/// multi-turn conversation with context awareness of the user's logged
+/// vitals, AQI, and recent health records.
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
