@@ -9,6 +9,9 @@ import '../../widgets/section_header.dart';
 import '../../widgets/premium_metric_card.dart';
 
 
+/// Displays a chronological list of logged health records (BP,
+/// blood glucose, SpO2, weight) with trend sparklines and status
+/// badges colour-coded to ICMR classification ranges.
 class HealthDashboard extends StatefulWidget {
   const HealthDashboard({super.key});
 
