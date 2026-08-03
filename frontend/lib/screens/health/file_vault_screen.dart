@@ -12,6 +12,9 @@ import '../../providers/file_vault_provider.dart';
 import '../../widgets/category_folder_card.dart';
 import '../../widgets/section_header.dart';
 
+/// Secure medical document vault. Displays encrypted files grouped
+/// by category (Prescriptions, Lab Reports, Scans, Insurance).
+/// All files are AES-256 encrypted before writing to device storage.
 class FileVaultScreen extends StatefulWidget {
   const FileVaultScreen({super.key});
 
