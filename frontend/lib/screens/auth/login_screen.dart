@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
 
+/// Entry point for returning users. Authenticates via JWT with
+/// automatic token refresh. Offers biometric unlock when previously
+/// enabled in profile settings.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
