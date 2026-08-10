@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
 
+/// Registration flow for new users. Collects email, password, and
+/// basic demographic data required for personalised ICMR-guided tips.
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
