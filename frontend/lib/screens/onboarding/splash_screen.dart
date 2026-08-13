@@ -13,6 +13,9 @@ import '../../providers/auth_provider.dart';
 //   Phase 3 (900–1800ms): App name, subtitle, and loading bar fade+slide in.
 //   Phase 4 (3000ms): Navigate to home/login.
 
+/// Animated splash screen shown on cold app launch. Checks for
+/// a persisted auth token and routes to HomeScreen or LoginScreen
+/// accordingly after the brand animation completes.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
