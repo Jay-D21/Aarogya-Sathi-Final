@@ -5,6 +5,9 @@ import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/location_service.dart';
 
+/// Multi-step onboarding form for first-time users. Collects
+/// name, age, gender, height, weight, and primary health goals
+/// to personalise the AI assistant context.
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({super.key});
 
