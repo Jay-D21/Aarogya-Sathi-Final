@@ -6,6 +6,8 @@ import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/location_service.dart';
 
+/// Allows users to update their personal health profile including
+/// height, weight, health goals, and notification preferences.
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
