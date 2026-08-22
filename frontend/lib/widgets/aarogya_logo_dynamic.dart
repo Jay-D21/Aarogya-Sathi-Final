@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 // Used in Login, Register, and any other screen that needs the brand logo.
 // The [animate] flag adds a soft golden glow pulse effect when true.
 
+/// Animated pulsing logo widget used on the splash and login screens.
+/// Displays the ASLogo with a layered ambient glow effect using
+/// BoxShadow pulses in Google Health cyan and periwinkle tones.
 class AarogyaLogoDynamic extends StatefulWidget {
   final double size;
   final bool animate;
