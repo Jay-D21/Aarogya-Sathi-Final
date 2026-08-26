@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 /// Google Fit–style arc ring showing health score, steps, calories, and heart rate.
+/// Animated arc ring displaying the user's composite daily health score
+/// (0–100). Score is computed from step goal, sleep quality, vital
+/// readings, and AQI exposure. Animates on first render using a Tween.
 class HealthScoreRing extends StatelessWidget {
   final double score;   // 0–100
   final int steps;
