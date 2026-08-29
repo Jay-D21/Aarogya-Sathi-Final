@@ -5,6 +5,9 @@ import '../config/theme.dart';
 /// Tiny inline sparkline chart for metric cards.
 /// Renders the last N data points as a smooth line with optional gradient fill.
 /// Inspired by Google Health heart rate / weight trend mini-charts.
+/// Compact sparkline chart rendered with CustomPainter. Accepts a
+/// list of double values and paints a smooth cubic Bezier trend line
+/// with a subtle gradient fill beneath it.
 class MiniSparkline extends StatelessWidget {
   final List<double> data;
   final Color lineColor;
