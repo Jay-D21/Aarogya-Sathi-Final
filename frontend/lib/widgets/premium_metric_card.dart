@@ -9,6 +9,9 @@ import 'mini_sparkline.dart';
 /// Two sizes:
 /// - `PremiumMetricCard.large()` — Hero card (takes full width)
 /// - Default — Compact card for 2-column grid layout
+/// Material 3 metric card used in the 2x2 bento grid on HomeScreen.
+/// Displays a primary value, unit label, trend indicator, and a
+/// 48-hour sparkline. Wrapped in SpringPressable for tactile feedback.
 class PremiumMetricCard extends StatelessWidget {
   final String label;
   final String value;
