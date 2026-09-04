@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../config/theme.dart';
 
 /// Compact animated metric card with gradient icon, arc progress, and value.
+/// Health Dashboard card that animates its numeric value in on first
+/// render using a TweenAnimationBuilder. Colour-codes the value badge
+/// to the ICMR status (normal, elevated, critical).
 class AnimatedMetricCard extends StatefulWidget {
   final LinearGradient gradient;
   final IconData icon;
