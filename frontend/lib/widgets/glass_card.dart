@@ -3,6 +3,9 @@ import '../config/theme.dart';
 
 /// A surface card — clean solid background with optional border and gradient accent.
 /// Theme-aware: adapts to dark/light mode automatically.
+/// Semi-transparent frosted-glass card container using BackdropFilter.
+/// Used for overlay elements like the AQI badge and chat context pill
+/// where depth layering improves information hierarchy.
 class GlassCard extends StatelessWidget {
   final Widget child;
   final double? width;
