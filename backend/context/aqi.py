@@ -3,8 +3,12 @@ import httpx
 import logging
 from typing import Any, Dict
 from dotenv import load_dotenv
+from pathlib import Path
 
-load_dotenv()
+# Load from backend/.env specifically, not just current working directory
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(dotenv_path=env_path)
+
 logger = logging.getLogger(__name__)
 
 WAQI_TOKEN = os.getenv("WAQI_API_TOKEN")

@@ -2,8 +2,10 @@ import os
 import httpx
 import logging
 from dotenv import load_dotenv
+from pathlib import Path
 
-load_dotenv()
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(dotenv_path=env_path)
 logger = logging.getLogger(__name__)
 
 BHASHINI_URL = os.getenv("BHASHINI_PIPELINE_URL")
