@@ -5,12 +5,21 @@ __pycache__/
 qdrant_data/
 *.egg-info/
 
-# Mobile
+# Mobile (legacy)
 mobile/build/
 mobile/.dart_tool/
 mobile/.packages
 mobile/.flutter-plugins
 mobile/.flutter-plugins-dependencies
+
+# Flutter Frontend
+frontend/build/
+frontend/.dart_tool/
+frontend/.packages
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/android/.gradle/
+frontend/android/app/build/
 
 # IDE
 .idea/

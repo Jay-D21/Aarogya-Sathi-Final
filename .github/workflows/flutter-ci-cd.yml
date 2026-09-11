@@ -1,0 +1,122 @@
+# Flutter CI/CD — Analyze, Build APK, Upload to GitHub Releases
+# Triggers on pushes to main that touch frontend/
+
+name: Flutter CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+    tags:
+      - 'v*'  # Also trigger on version tags like v1.0.0
+  pull_request:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+
+jobs:
+  # ─── Step 1: Analyze ───
+  analyze:
+    name: Flutter Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: flutter pub get
+
+      - name: Run Flutter analyze
+        working-directory: frontend
+        run: flutter analyze --no-fatal-infos
+
+  # ─── Step 2: Build Release APK ───
+  build-apk:
+    name: Build Release APK
+    runs-on: ubuntu-latest
+    needs: analyze
+    # Build on pushes to main or version tags
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: flutter pub get
+
+      - name: Build release APK
+        working-directory: frontend
+        run: flutter build apk --release
+
+      - name: Rename APK with version info
+        run: |
+          VERSION=$(echo "${{ github.ref_name }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
+          cp frontend/build/app/outputs/flutter-apk/app-release.apk \
+             frontend/build/app/outputs/flutter-apk/aarogya-sathi-${VERSION}.apk
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aarogya-sathi-apk
+          path: frontend/build/app/outputs/flutter-apk/aarogya-sathi-*.apk
+          retention-days: 30
+
+  # ─── Step 3: Create GitHub Release (on version tags only) ───
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build-apk
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: aarogya-sathi-apk
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Aarogya Sathi ${{ github.ref_name }}"
+          body: |
+            ## Aarogya Sathi ${{ github.ref_name }}
+
+            ### What's New
+            - See [commit history](https://github.com/${{ github.repository }}/commits/${{ github.ref_name }}) for details
+
+            ### Install
+            1. Download the APK below
+            2. Enable "Install from unknown sources" on your Android device
+            3. Install and open the app
+            4. Make sure Health Connect is installed for Fitbit/Google Fit integration
+          files: aarogya-sathi-*.apk
+          draft: false
+          prerelease: false

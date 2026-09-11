@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/dashboard/presentation/screens/hybrid_dashboard.dart';
 import 'features/chat/presentation/screens/chat_screen.dart';
-import 'features/auth/presentation/screens/register_screen.dart';
+import 'features/profile/presentation/screens/health_profile_screen.dart';
 import 'features/reports/presentation/screens/upload_report_screen.dart';
 
 void main() {
@@ -20,8 +20,8 @@ final _router = GoRouter(
     ),
     GoRoute(path: '/chat', builder: (context, state) => const ChatScreen()),
     GoRoute(
-      path: '/register',
-      builder: (context, state) => const RegisterScreen(),
+      path: '/profile',
+      builder: (context, state) => const HealthProfileScreen(),
     ),
     GoRoute(
       path: '/reports/upload',
@@ -36,7 +36,7 @@ class ArogyaSathiApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: 'Arogya Sathi',
+      title: 'Aarogya Sathi',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

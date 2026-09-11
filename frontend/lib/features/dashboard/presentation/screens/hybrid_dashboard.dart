@@ -5,10 +5,25 @@ import 'package:frontend/core/theme/app_theme.dart';
 import 'package:frontend/features/dashboard/presentation/widgets/activity_ring.dart';
 import 'package:frontend/features/dashboard/presentation/providers/dashboard_providers.dart';
 import 'package:frontend/features/dashboard/data/environment_repository.dart';
+import 'package:frontend/core/services/profile_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+/// Provider to load user name from SharedPreferences for greeting
+final userNameProvider = FutureProvider<String>((ref) async {
+  final profileService = ProfileService();
+  final profile = await profileService.loadProfile();
+  return profile?.name ?? 'there';
+});
 
 class HybridDashboardScreen extends ConsumerWidget {
   const HybridDashboardScreen({super.key});
+
+  String _greeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,6 +32,15 @@ class HybridDashboardScreen extends ConsumerWidget {
     // Watch Providers
     final fitnessState = ref.watch(fitnessProvider);
     final stepStream = ref.watch(stepCountStreamProvider);
+    final wearableAsync = ref.watch(wearableDataProvider);
+    final userName = ref.watch(userNameProvider);
+
+    // Update fitness state from Health Connect when data arrives
+    wearableAsync.whenData((data) {
+      Future.microtask(() {
+        ref.read(fitnessProvider.notifier).updateFromWearable(data);
+      });
+    });
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -24,7 +48,7 @@ class HybridDashboardScreen extends ConsumerWidget {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            // 1. Top Bar / App Bar
+            // 1. Top Bar / App Bar with dynamic greeting
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               sliver: SliverToBoxAdapter(
@@ -35,22 +59,33 @@ class HybridDashboardScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Good Morning,",
+                          '${_greeting()},',
                           style: Theme.of(context).textTheme.bodyLarge
                               ?.copyWith(color: colorScheme.onSurfaceVariant),
                         ),
-                        Text(
-                          "Jay", // Dynamic User Name later
-                          style: Theme.of(context).textTheme.headlineMedium
-                              ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: colorScheme.onSurface,
-                              ),
+                        userName.when(
+                          data: (name) => Text(
+                            name,
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.onSurface,
+                                ),
+                          ),
+                          loading: () => const SizedBox(height: 32),
+                          error: (_, __) => Text(
+                            'there',
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.onSurface,
+                                ),
+                          ),
                         ),
                       ],
                     ),
                     GestureDetector(
-                      onTap: () => context.push('/register'),
+                      onTap: () => context.push('/profile'),
                       child: CircleAvatar(
                         backgroundColor: colorScheme.primaryContainer,
                         child: Icon(
@@ -64,17 +99,50 @@ class HybridDashboardScreen extends ConsumerWidget {
               ),
             ),
 
-            // 2. Hero Section: Activity Rings (Google Fit Style)
+            // 2. Health Connect status banner (if no wearable data)
+            wearableAsync.when(
+              data: (data) {
+                if (data.heartRateBpm == null && data.todaySteps == null) {
+                  return SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: colorScheme.tertiaryContainer,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.watch, color: colorScheme.onTertiaryContainer),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                'Connect a Fitbit or Google Fit via Health Connect for live health data',
+                                style: TextStyle(
+                                  color: colorScheme.onTertiaryContainer,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return const SliverToBoxAdapter(child: SizedBox.shrink());
+              },
+              loading: () => const SliverToBoxAdapter(child: SizedBox.shrink()),
+              error: (_, __) => const SliverToBoxAdapter(child: SizedBox.shrink()),
+            ),
+
+            // 3. Hero Section: Activity Rings
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: stepStream.when(
                   data: (stepCount) {
-                    // Update State Logic
-                    // Ideally handled in a better place, but for MVP doing it here
-                    // to reflect stream updates in the UI state
-                    // This is a bit of a side-effect in build, careful.
-                    // Better to use ref.listen in real app.
                     Future.microtask(() {
                       ref
                           .read(fitnessProvider.notifier)
@@ -84,14 +152,14 @@ class HybridDashboardScreen extends ConsumerWidget {
                     return _buildRings(context, fitnessState);
                   },
                   error: (err, stack) =>
-                      _buildRings(context, fitnessState), // Fallback/Error
+                      _buildRings(context, fitnessState),
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
                 ),
               ),
             ),
 
-            // 3. Environmental Context Strip (Dynamic)
+            // 4. Environmental Context Strip (Dynamic)
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -99,7 +167,7 @@ class HybridDashboardScreen extends ConsumerWidget {
                   builder: (context, ref, child) {
                     final envAsync = ref.watch(
                       currentEnvironmentProvider((lat: 19.07, lon: 72.87)),
-                    ); // Mumbai coords or dynamic
+                    );
 
                     return envAsync.when(
                       data: (data) => Container(
@@ -144,7 +212,7 @@ class HybridDashboardScreen extends ConsumerWidget {
                                           fontWeight: FontWeight.bold,
                                           color: _parseColor(
                                             data.colorCode,
-                                          ), // Dynamic Color
+                                          ),
                                         ),
                                   ),
                                   const SizedBox(height: 4),
@@ -169,7 +237,7 @@ class HybridDashboardScreen extends ConsumerWidget {
               ),
             ),
 
-            // 4. Vitals GridProvider
+            // 5. Vitals Grid — live data from Health Connect
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               sliver: SliverGrid.count(
@@ -179,8 +247,10 @@ class HybridDashboardScreen extends ConsumerWidget {
                 childAspectRatio: 1.5,
                 children: [
                   _MetricCard(
-                    title: "Heart Points",
-                    value: "${fitnessState.heartPoints}",
+                    title: "Heart Rate",
+                    value: fitnessState.heartRateBpm != null
+                        ? "${fitnessState.heartRateBpm!.toInt()} bpm"
+                        : "-- bpm",
                     icon: Icons.favorite,
                     color: Colors.redAccent,
                   ),
@@ -192,14 +262,18 @@ class HybridDashboardScreen extends ConsumerWidget {
                   ),
                   _MetricCard(
                     title: "Sleep",
-                    value: "7h 12m",
+                    value: fitnessState.sleepTotalHours != null
+                        ? _formatSleep(fitnessState.sleepTotalHours!)
+                        : "-- h",
                     icon: Icons.bedtime,
                     color: Colors.deepPurpleAccent,
                   ),
                   _MetricCard(
-                    title: "Water",
-                    value: "1.2 L",
-                    icon: Icons.water_drop,
+                    title: "SpO2",
+                    value: fitnessState.spo2Percent != null
+                        ? "${fitnessState.spo2Percent!.toInt()}%"
+                        : "--%",
+                    icon: Icons.air,
                     color: Colors.blueAccent,
                   ),
                   _MetricCard(
@@ -230,11 +304,19 @@ class HybridDashboardScreen extends ConsumerWidget {
     );
   }
 
+  String _formatSleep(double hours) {
+    final h = hours.floor();
+    final m = ((hours - h) * 60).round();
+    return '${h}h ${m}m';
+  }
+
   Widget _buildRings(BuildContext context, FitnessState state) {
     // Dynamic progress calc (Goal: 10000 steps)
     double stepProgress = (state.steps / 10000).clamp(0.0, 1.0);
     double calProgress = (state.calories / 500).clamp(0.0, 1.0);
-    double heartProgress = (state.heartPoints / 100).clamp(0.0, 1.0);
+    double heartProgress = state.heartRateBpm != null
+        ? ((state.heartRateBpm! - 40) / 120).clamp(0.0, 1.0)
+        : (state.heartPoints / 100).clamp(0.0, 1.0);
 
     return Center(
       child: Stack(
@@ -254,7 +336,7 @@ class HybridDashboardScreen extends ConsumerWidget {
             progress: calProgress,
             color: AppTheme.secondaryColor,
           ),
-          // Heart Points Ring (Inner)
+          // Heart Rate Ring (Inner)
           ActivityRing(
             size: 120,
             thickness: 20,

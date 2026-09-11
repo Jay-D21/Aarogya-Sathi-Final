@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-09-11 (Jayesh — Session 5: Deployment & CI/CD)
+- [Jayesh] Created multi-stage Dockerfile for backend (Python 3.11 slim, copies icmr-knowledge-bundle)
+- [Jayesh] Created render.yaml blueprint for one-click Render deployment (Singapore region, free tier)
+- [Jayesh] Created `.github/workflows/backend-ci-cd.yml` — lint (Ruff), test (pytest), Docker build + verify, deploy to Render
+- [Jayesh] Created `.github/workflows/flutter-ci-cd.yml` — flutter analyze, build release APK, GitHub Releases on version tags
+- [Jayesh] Updated `api_config.dart` to support 3 environments (emulator/physical/production)
+- [Jayesh] Updated `.gitignore` with Flutter build artifacts and Docker ignores
+- [Jayesh] Created `.dockerignore` to keep image lean
+
+## 2026-09-11 (Jayesh — Session 4: Full App Integration)
+- [Jayesh] Phase 1: Created centralized API config (`api_config.dart`), fixed AQI endpoint URL from `/api/v1/environment/current` → `/api/aqi`
+- [Jayesh] Phase 2: Built real SSE chat — `chat_service.dart` with Dio streaming, `chat_request_model.dart`, rewrote `chat_screen.dart` with Riverpod + streaming tokens + typing indicator
+- [Jayesh] Phase 3: Health profile system — `user_profile_model.dart`, `profile_service.dart` (SharedPreferences), `health_profile_screen.dart` with ICMR BP/sugar classifications + BMI calc
+- [Jayesh] Phase 4: Health Connect integration — `health_connect_service.dart` reads from Fitbit/Google Fit/Samsung Health via Android Health Connect, `wearable_data_model.dart` matching backend
+- [Jayesh] Phase 5: Dashboard shows live Heart Rate, Sleep, SpO2, Calories from Health Connect instead of hardcoded values
+- [Jayesh] Phase 6: Chat sends real profile + wearable data + GPS location with every message — AI knows your HR, steps, conditions when answering
+- [Jayesh] Phase 7: Removed register screen (no auth for now), replaced with `/profile` route for health profile
+- [Jayesh] Phase 8: Fixed backend `context_builder.py` wearable field mismatch, dynamic greeting, Health Connect setup banner
+- [Jayesh] Added `health: ^11.0.0` to pubspec, Health Connect permissions to AndroidManifest.xml
+
 ## 2026-09-11 (Jayesh — Session 3)
 - [Jayesh] OKF bundle expanded 13→34 concept files (21 new: 8 conditions, 6 drugs, 4 lifestyle, 5 emergency, 3 environmental)
 - [Jayesh] Rebuilt root index.md to list all 34 files with descriptions (fixed navigator empty response)

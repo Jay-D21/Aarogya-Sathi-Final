@@ -127,14 +127,32 @@ def build_context(
     wearable_block = ""
     if wearable:
         w_lines = []
-        if wearable.get("steps") is not None:
-            w_lines.append(f"Steps today: {wearable['steps']}")
-        if wearable.get("heart_rate"):
-            w_lines.append(f"Heart Rate: {wearable['heart_rate']} bpm")
-        if wearable.get("spo2"):
-            w_lines.append(f"SpO2: {wearable['spo2']}%")
-        if wearable.get("sleep_hours"):
-            w_lines.append(f"Sleep: {wearable['sleep_hours']} hours")
+        if wearable.get("today_steps") is not None:
+            w_lines.append(f"Steps today: {wearable['today_steps']}")
+        if wearable.get("calories_burned") is not None:
+            w_lines.append(f"Calories burned: {wearable['calories_burned']} kcal")
+        if wearable.get("heart_rate_bpm") is not None:
+            w_lines.append(f"Heart Rate: {wearable['heart_rate_bpm']} bpm")
+        if wearable.get("resting_heart_rate") is not None:
+            w_lines.append(f"Resting Heart Rate: {wearable['resting_heart_rate']} bpm")
+        if wearable.get("spo2_percent") is not None:
+            w_lines.append(f"SpO2: {wearable['spo2_percent']}%")
+        if wearable.get("blood_glucose_mg_dl") is not None:
+            w_lines.append(f"Blood Glucose: {wearable['blood_glucose_mg_dl']} mg/dL")
+        if wearable.get("bp_systolic") is not None and wearable.get("bp_diastolic") is not None:
+            w_lines.append(f"Wearable BP: {wearable['bp_systolic']}/{wearable['bp_diastolic']} mmHg")
+        if wearable.get("body_temp_celsius") is not None:
+            w_lines.append(f"Body Temperature: {wearable['body_temp_celsius']}°C")
+        if wearable.get("sleep_total_hours") is not None:
+            w_lines.append(f"Total Sleep: {wearable['sleep_total_hours']:.1f} hours")
+        if wearable.get("sleep_deep_hours") is not None:
+            w_lines.append(f"Deep Sleep: {wearable['sleep_deep_hours']:.1f} hours")
+        if wearable.get("sleep_rem_hours") is not None:
+            w_lines.append(f"REM Sleep: {wearable['sleep_rem_hours']:.1f} hours")
+        if wearable.get("sleep_light_hours") is not None:
+            w_lines.append(f"Light Sleep: {wearable['sleep_light_hours']:.1f} hours")
+        if wearable.get("weight_kg") is not None:
+            w_lines.append(f"Weight: {wearable['weight_kg']} kg")
         wearable_block = "\n".join(w_lines)
 
     # --- Assemble full user message ---

@@ -17,7 +17,7 @@
 | **Safety** | Keyword-based router | 🟡 Semantic-router upgrade pending |
 | **AQI** | WAQI API + Open-Meteo | 🟡 WAQI mock, weather live |
 | **Backend** | FastAPI + SSE streaming | ✅ Working |
-| **Frontend** | Flutter (Android) — Riverpod + Material3 | 🟡 UI done, backend not connected |
+| **Frontend** | Flutter (Android) — Riverpod + Material3 | ✅ Connected — SSE chat, Health Connect, profile |
 | **Evaluation** | RAGAS + Gemini API | 🔴 Not started |
 
 ## Compute
