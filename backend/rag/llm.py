@@ -27,8 +27,9 @@ _PROVIDERS = [
         "url": "https://api.groq.com/openai/v1/chat/completions",
         "key_env": "GROQ_API_KEY",
         "models": {
-            "8b": "llama-3.1-8b-instant",
-            "70b": "llama-3.3-70b-versatile",
+            # Groq model roster changes frequently — these are verified available
+            "8b": "openai/gpt-oss-20b",
+            "70b": "qwen/qwen3.8-27b",
         },
     },
     {
