@@ -11,9 +11,8 @@
 /* ─── MODERN MINIMALIST LIGHT THEME ─── */
 :root {
   --bg-app: #f8fafc;
-  --bg-grid: #edf2f7;
+  --bg-grid: #e2e8f0;
   --bg-card: #ffffff;
-  --bg-card-hover: #ffffff;
   --border-subtle: #e2e8f0;
   --border-strong: #cbd5e1;
   --text-main: #0f172a;
@@ -29,10 +28,10 @@
   --c-external: #ea580c;
   --c-data: #d97706;
   
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.03);
   --shadow-lg: 0 12px 24px -4px rgba(15,23,42,0.08), 0 4px 8px -2px rgba(15,23,42,0.03);
-  --shadow-popup: 0 20px 35px -5px rgba(15,23,42,0.15), 0 10px 15px -5px rgba(15,23,42,0.05);
+  --shadow-popup: 0 24px 48px -8px rgba(15,23,42,0.18), 0 12px 20px -6px rgba(15,23,42,0.06);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -96,7 +95,7 @@ header {
 #viewport {
   width: 100%; height: 100%; position: relative; overflow: auto;
   cursor: grab; padding-top: 68px;
-  background-image: radial-gradient(var(--border-subtle) 1.2px, transparent 1.2px);
+  background-image: radial-gradient(var(--bg-grid) 1.3px, transparent 1.3px);
   background-size: 24px 24px;
 }
 #viewport:active { cursor: grabbing; }
@@ -126,7 +125,7 @@ marker { overflow: visible; }
 /* ─── ARCHITECTURAL NODES ─── */
 .arch-node {
   position: absolute; border-radius: var(--radius-md); background: var(--bg-card);
-  border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm);
+  border: 1.2px solid var(--border-subtle); box-shadow: var(--shadow-sm);
   cursor: pointer; transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s, border-color 0.18s;
   z-index: 10; user-select: none;
 }
@@ -138,7 +137,7 @@ marker { overflow: visible; }
 }
 .arch-node.selected {
   border-color: var(--c-flutter);
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18), var(--shadow-lg);
+  box-shadow: 0 0 0 3.5px rgba(2, 132, 199, 0.18), var(--shadow-lg);
   z-index: 30;
 }
 
@@ -146,7 +145,7 @@ marker { overflow: visible; }
   padding: 14px 18px; display: flex; align-items: center; gap: 14px;
 }
 .node-avatar {
-  width: 42px; height: 42px; border-radius: 10px; display: flex;
+  width: 44px; height: 44px; border-radius: 10px; display: flex;
   align-items: center; justify-content: center; flex-shrink: 0;
   box-shadow: var(--shadow-sm);
 }
@@ -178,8 +177,7 @@ marker { overflow: visible; }
 /* Subsystem Cluster Group Box */
 .subsystem-group {
   position: absolute; border: 1.5px dashed #cbd5e1; border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.5); z-index: 2; pointer-events: none;
-  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.55); z-index: 2; pointer-events: none;
 }
 .subsystem-label {
   position: absolute; top: -13px; left: 22px; background: #ffffff;
@@ -188,24 +186,38 @@ marker { overflow: visible; }
   letter-spacing: 0.6px; color: #475569; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
-/* ─── IN-CANVAS INTERACTIVE MODAL / INSPECTOR ─── */
+/* ─── IN-CANVAS ADAPTIVE MODAL / INSPECTOR ─── */
 #in-situ-inspector {
-  position: absolute; width: 440px; background: #ffffff;
+  position: absolute; width: 460px; background: #ffffff;
   border-radius: var(--radius-lg); border: 1px solid var(--border-strong);
   box-shadow: var(--shadow-popup); z-index: 1000;
-  display: none; transform: translate(-50%, -100%);
-  margin-top: -16px; animation: popoverIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: none; animation: popoverFade 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
-@keyframes popoverIn {
-  from { opacity: 0; transform: translate(-50%, -95%) scale(0.96); }
-  to { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+@keyframes popoverFade {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
 }
-/* Downward pointer triangle */
-#in-situ-inspector::after {
+
+/* When placed ABOVE node */
+#in-situ-inspector.popover-above {
+  transform: translate(-50%, -100%);
+}
+#in-situ-inspector.popover-above::after {
   content: ""; position: absolute; bottom: -8px; left: 50%;
   transform: translateX(-50%) rotate(45deg); width: 16px; height: 16px;
   background: #ffffff; border-right: 1px solid var(--border-strong);
   border-bottom: 1px solid var(--border-strong);
+}
+
+/* When placed BELOW node */
+#in-situ-inspector.popover-below {
+  transform: translate(-50%, 0);
+}
+#in-situ-inspector.popover-below::after {
+  content: ""; position: absolute; top: -8px; left: 50%;
+  transform: translateX(-50%) rotate(45deg); width: 16px; height: 16px;
+  background: #ffffff; border-left: 1px solid var(--border-strong);
+  border-top: 1px solid var(--border-strong);
 }
 
 .inspector-header {
@@ -216,20 +228,20 @@ marker { overflow: visible; }
   font-size: 10px; font-weight: 800; text-transform: uppercase;
   padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px;
 }
-.ins-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin-top: 4px; }
+.ins-title { font-size: 16.5px; font-weight: 800; color: var(--text-main); margin-top: 4px; }
 .ins-file {
   font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted);
   background: #f1f5f9; padding: 2px 7px; border-radius: 4px; margin-top: 4px; width: fit-content;
 }
 .ins-close {
-  background: none; border: none; font-size: 20px; color: var(--text-dim);
+  background: none; border: none; font-size: 22px; color: var(--text-dim);
   cursor: pointer; padding: 2px; line-height: 1; transition: color 0.15s;
 }
 .ins-close:hover { color: var(--text-main); }
 
 .inspector-body {
-  padding: 18px 20px; max-height: 380px; overflow-y: auto;
-  display: flex; flex-direction: column; gap: 14px; font-size: 13px; line-height: 1.65;
+  padding: 18px 20px; max-height: 400px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 15px; font-size: 13px; line-height: 1.65;
 }
 .ins-sec-title {
   font-size: 11px; font-weight: 800; text-transform: uppercase;
@@ -239,7 +251,7 @@ marker { overflow: visible; }
 .ins-paragraph { color: #334155; }
 .ins-highlight-box {
   background: #f8fafc; border: 1px solid var(--border-subtle);
-  border-left: 3px solid var(--c-flutter); padding: 10px 12px;
+  border-left: 3.5px solid var(--c-flutter); padding: 10px 12px;
   border-radius: 6px; font-size: 12px; color: #1e293b;
 }
 
@@ -250,7 +262,7 @@ marker { overflow: visible; }
 }
 .ins-cta-btn {
   background: #0284c7; color: #fff; font-size: 12px; font-weight: 700;
-  padding: 6px 14px; border-radius: 6px; border: none; cursor: pointer;
+  padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer;
   display: inline-flex; align-items: center; gap: 6px; transition: background 0.15s;
 }
 .ins-cta-btn:hover { background: #0369a1; }
@@ -364,7 +376,7 @@ marker { overflow: visible; }
     <div id="nodes-container"></div>
 
     <!-- In-Architecture Interactive Modal / Popover -->
-    <div id="in-situ-inspector">
+    <div id="in-situ-inspector" class="popover-below">
       <div class="inspector-header">
         <div>
           <span class="ins-badge" id="ins-category">Component</span>
@@ -712,9 +724,9 @@ const ARCHITECTURE_DATA = {
   rag_pipeline: {
     clusters: [
       { id: "c_input", label: "Query Ingestion & Intent Stage", x: 100, y: 140, w: 460, h: 620 },
-      { id: "c_okf", label: "Google OKF Knowledge Graph Traversal Engine", x: 640, y: 140, w: 780, h: 620 },
-      { id: "c_grading", label: "Corrective Evaluation & Fallback Loop", x: 1500, y: 140, w: 760, h: 620 },
-      { id: "c_synthesis", label: "Context Assembly & Generative Output", x: 2340, y: 140, w: 580, h: 620 }
+      { id: "c_okf", label: "Google OKF Knowledge Graph Traversal Engine", x: 640, y: 140, w: 840, h: 620 },
+      { id: "c_grading", label: "Corrective Evaluation & Fallback Loop", x: 1560, y: 140, w: 760, h: 620 },
+      { id: "c_synthesis", label: "Context Assembly & Generative Output", x: 2400, y: 140, w: 580, h: 620 }
     ],
     nodes: [
       {
@@ -753,7 +765,7 @@ const ARCHITECTURE_DATA = {
         title: "Link Traversal Agent",
         desc: "Navigates hyperlinks: index → condition → drugs → lifestyle",
         subtag: "LLM-Guided Agent",
-        x: 1040, y: 240,
+        x: 1100, y: 240,
         icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>`,
         what: "The traversal mechanism inside `OKFNavigator.navigate()`. Prompts an 8B model to choose candidate files, opens them, and parses relative Markdown links (`[metformin](../drugs/metformin.md)`).",
         why: "Medical conditions have interdependent relationships. A diabetes inquiry requires not just the diagnosis file, but cross-references to metformin dosage, diabetic diet guidelines, and hypoglycemia warning signs.",
@@ -768,7 +780,7 @@ const ARCHITECTURE_DATA = {
         title: "Relevance Gatekeeper",
         desc: "Binary check: Does document contain verifiable answer?",
         subtag: "LLM-as-a-Judge",
-        x: 1540, y: 240,
+        x: 1600, y: 240,
         icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
         what: "The CRAG grading function `grade_documents()` executing concurrent evaluations across all retrieved files.",
         why: "Eliminates distractor documents that mention the condition keyword but fail to answer the specific question (e.g. general obesity advice when asking about metformin dose).",
@@ -783,7 +795,7 @@ const ARCHITECTURE_DATA = {
         title: "Qdrant + BGE-M3 Fallback",
         desc: "Secondary vector search for ambiguous or colloquial queries",
         subtag: "Dense/Sparse Hybrid",
-        x: 1540, y: 500,
+        x: 1600, y: 500,
         icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
         what: "The secondary retrieval tier activated ONLY when OKF link traversal yields zero relevant documents (`needs_fallback = True`).",
         why: "Handles fuzzy, non-standard medical inquiries where users describe vague symptoms without mentioning disease keywords that map to catalog links.",
@@ -798,7 +810,7 @@ const ARCHITECTURE_DATA = {
         title: "Grounded Synthesis",
         desc: "Generates clinical answer with explicit [ICMR Chapter] citations",
         subtag: "Llama 3.1 8B Instruct",
-        x: 2380, y: 240,
+        x: 2440, y: 240,
         icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
         what: "The final generation node yielding the clinically verified response. Enforces strict factual grounding in the verified ICMR documents.",
         why: "Ensures every medical number (e.g. fasting sugar < 100 mg/dL, systolic target < 130 mmHg) cites its source file so patients and doctors can audit the recommendation.",
@@ -1147,25 +1159,37 @@ function drawArrowEdge(fromEl, toEl, color, markerId, labelText) {
   }
   svgEdges.appendChild(path);
 
-  // Label along edge midpoint
+  // Clean pill badge behind label text
   if (labelText) {
     const midX = (startX + endX) / 2;
     const midY = (startY + endY) / 2 - 8;
+    const padW = Math.max(60, labelText.length * 7.4 + 16);
 
     const bgRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    bgRect.setAttribute("x", midX - padW / 2);
+    bgRect.setAttribute("y", midY - 10);
+    bgRect.setAttribute("width", padW);
+    bgRect.setAttribute("height", "18");
+    bgRect.setAttribute("rx", "5");
+    bgRect.setAttribute("fill", "#ffffff");
+    bgRect.setAttribute("stroke", "#e2e8f0");
+    bgRect.setAttribute("stroke-width", "1");
+    bgRect.setAttribute("box-shadow", "0 1px 2px rgba(0,0,0,0.05)");
+    svgEdges.appendChild(bgRect);
+
     const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
     textEl.setAttribute("x", midX);
-    textEl.setAttribute("y", midY);
+    textEl.setAttribute("y", midY + 3);
     textEl.setAttribute("text-anchor", "middle");
-    textEl.setAttribute("font-size", "10.5");
-    textEl.setAttribute("font-weight", "600");
-    textEl.setAttribute("fill", "#475569");
+    textEl.setAttribute("font-size", "10");
+    textEl.setAttribute("font-weight", "700");
+    textEl.setAttribute("fill", "#334155");
     textEl.textContent = labelText;
     svgEdges.appendChild(textEl);
   }
 }
 
-// Node Selection & In-Situ Popover Logic
+// Node Selection & Adaptive In-Situ Popover Logic
 function selectNode(nodeId) {
   activeNodeId = nodeId;
   const data = ARCHITECTURE_DATA[currentViewKey];
@@ -1198,14 +1222,23 @@ function selectNode(nodeId) {
     drillBtn.style.display = "none";
   }
 
-  // Position In-Situ Popover right above the clicked component card
+  // Adaptive positioning: If node is near top (< 420px), place popover BELOW the card
+  // If node is further down, place popover ABOVE the card
   const cX = targetCard.offsetLeft + targetCard.offsetWidth / 2;
-  const cY = targetCard.offsetTop;
-  inspector.style.left = cX + "px";
-  inspector.style.top = cY + "px";
+  
+  if (targetCard.offsetTop < 420) {
+    inspector.className = "popover-below";
+    inspector.style.left = cX + "px";
+    inspector.style.top = (targetCard.offsetTop + targetCard.offsetHeight + 18) + "px";
+  } else {
+    inspector.className = "popover-above";
+    inspector.style.left = cX + "px";
+    inspector.style.top = (targetCard.offsetTop - 16) + "px";
+  }
+  
   inspector.style.display = "block";
 
-  // Auto-scroll into view if needed
+  // Auto-scroll into view smoothly
   targetCard.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
 }
 
