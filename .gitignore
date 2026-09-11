@@ -19,6 +19,7 @@ frontend/.packages
 frontend/.flutter-plugins
 frontend/.flutter-plugins-dependencies
 frontend/android/.gradle/
+frontend/android/.kotlin/
 frontend/android/app/build/
 
 # IDE
