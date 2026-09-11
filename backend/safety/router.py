@@ -40,12 +40,16 @@ _router = None
 _use_keyword_fallback = False
 
 try:
-    from semantic_router import RouteLayer
+    from semantic_router import SemanticRouter
+    from semantic_router.encoders import HuggingFaceEncoder
     from backend.safety.routes import emergency, prescription, non_medical, ROUTES_AVAILABLE
 
     if ROUTES_AVAILABLE:
-        _router = RouteLayer(routes=[emergency, prescription, non_medical])
-        logger.info("✅ Semantic Router initialized successfully.")
+        # We use HuggingFaceEncoder for fast, local, free embeddings
+        # MiniLM is tiny (~80MB), fast, and very accurate for sentence similarity
+        encoder = HuggingFaceEncoder(name="sentence-transformers/all-MiniLM-L6-v2")
+        _router = SemanticRouter(encoder=encoder, routes=[emergency, prescription, non_medical])
+        logger.info("✅ Semantic Router initialized successfully with HuggingFaceEncoder.")
     else:
         _use_keyword_fallback = True
         logger.warning("⚠️ semantic-router routes unavailable. Using keyword fallback.")
