@@ -19,6 +19,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    """Root endpoint — confirms the API is running."""
+    return {"success": True, "data": {"service": "Aarogya Sathi API", "version": "1.0.0", "docs": "/docs"}}
+
 
 @app.get("/api/health")
 async def health_check():

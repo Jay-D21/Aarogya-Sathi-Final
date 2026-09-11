@@ -19,7 +19,7 @@ jobs:
       - name: Ping Render backend
         run: |
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
-            "${{ secrets.RENDER_API_URL }}/api/health" \
+            "${{ secrets.RENDER_API_URL }}" \
             --max-time 30)
           echo "Health check response: $RESPONSE"
           if [ "$RESPONSE" != "200" ]; then
