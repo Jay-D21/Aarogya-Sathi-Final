@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-11 (Jayesh — Session 3)
+- [Jayesh] OKF bundle expanded 13→34 concept files (21 new: 8 conditions, 6 drugs, 4 lifestyle, 5 emergency, 3 environmental)
+- [Jayesh] Rebuilt root index.md to list all 34 files with descriptions (fixed navigator empty response)
+- [Jayesh] Expanded keyword fallback from 12→80+ keywords covering all categories
+- [Jayesh] Built RAGAS evaluation pipeline: `evaluation/evaluate.py` + 32 gold Q&A pairs in `gold_qa.json`
+- [Jayesh] Tested E2E pipeline: correct doc retrieval + medically accurate responses verified
+
 ## 2026-09-11 (Jayesh — Session 2)
 - [Jayesh] Fixed Groq model names (API changed): openai/gpt-oss-20b + qwen/qwen3.8-27b
 - [Jayesh] Merged Flutter app from Aarogya Sathi Antigravity into `frontend/` (11 Dart files, 4 screens)
