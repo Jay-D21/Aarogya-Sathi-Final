@@ -1,0 +1,199 @@
+[
+  {
+    "question": "I have type 2 diabetes. What should my fasting blood sugar be?",
+    "expected_answer": "According to ICMR guidelines, normal fasting blood sugar is 70-100 mg/dL. Values between 100-125 mg/dL indicate pre-diabetes, and 126 mg/dL or above indicates diabetes.",
+    "category": "conditions",
+    "profile": {"age": 50, "conditions": ["diabetes"]}
+  },
+  {
+    "question": "My blood pressure reading is 145/95. Is that dangerous?",
+    "expected_answer": "A reading of 145/95 falls under Stage 2 Hypertension per ICMR guidelines. You should consult your doctor promptly. Lifestyle modifications including reducing salt, regular exercise, and stress management are recommended.",
+    "category": "conditions",
+    "profile": {"age": 55, "systolic": 145, "diastolic": 95}
+  },
+  {
+    "question": "I have asthma and the pollution is very bad today. What should I do?",
+    "expected_answer": "With poor AQI, stay indoors and keep windows closed. Use your reliever inhaler if wheezing starts. Avoid outdoor exercise. Wear an N95 mask if you must go outside. If breathlessness is severe, call 112.",
+    "category": "conditions",
+    "profile": {"age": 30, "conditions": ["asthma"]},
+    "aqi_data": {"aqi": 300, "temperature": 28}
+  },
+  {
+    "question": "What is the normal BMI for an Indian person?",
+    "expected_answer": "ICMR uses Asian-specific BMI cutoffs: Normal is 18.5-22.9 (not 25 like Western standards). Overweight is 23-27.4, and Obese is 27.5 or above. Indians develop metabolic risk at lower BMI values.",
+    "category": "conditions",
+    "profile": {}
+  },
+  {
+    "question": "My mother has COPD and uses a chulha for cooking. Is that making it worse?",
+    "expected_answer": "Yes, biomass fuel smoke from chulhas is a major cause and aggravator of COPD in India, especially among rural women. ICMR recommends switching to LPG or improved cookstoves and ensuring proper kitchen ventilation.",
+    "category": "conditions",
+    "profile": {"age": 60, "conditions": ["copd"]}
+  },
+  {
+    "question": "I am anemic. What Indian foods can help increase my iron levels?",
+    "expected_answer": "Iron-rich Indian foods include: green leafy vegetables (palak, methi), jaggery (gud), dates (khajoor), beetroot, pomegranate, ragi, rajma, chana, and sesame seeds (til). Pair with vitamin C foods (amla, lemon) for better absorption. Avoid tea/coffee with meals.",
+    "category": "conditions",
+    "profile": {"age": 28, "gender": "female", "conditions": ["anemia"]}
+  },
+  {
+    "question": "What are the warning signs of a heart attack I should watch for?",
+    "expected_answer": "Warning signs include: chest pain/pressure (may feel like heaviness or squeezing), pain spreading to left arm/jaw/back, breathlessness, cold sweat, nausea. Indians have higher genetic risk for coronary artery disease. Call 112 immediately if you experience these.",
+    "category": "conditions",
+    "profile": {"age": 55}
+  },
+  {
+    "question": "My child has dengue fever. When should I take him to the hospital?",
+    "expected_answer": "Warning signs requiring immediate hospitalization: persistent vomiting, abdominal pain, bleeding from gums/nose, rapid drop in platelet count below 50,000, difficulty breathing, restlessness, or cold/clammy skin. Monitor platelet count daily during fever.",
+    "category": "conditions",
+    "profile": {"age": 10}
+  },
+  {
+    "question": "I have thyroid problems. What should I know about my medication?",
+    "expected_answer": "Take thyroid medication on an empty stomach, 30-60 minutes before breakfast. Do not skip doses. Get TSH tested every 6-8 weeks when adjusting dose, then every 6 months once stable. Iodine deficiency is common in India — use iodized salt.",
+    "category": "conditions",
+    "profile": {"age": 35, "conditions": ["hypothyroidism"]}
+  },
+  {
+    "question": "My kidney function report shows GFR of 45. What does that mean?",
+    "expected_answer": "A GFR of 45 mL/min indicates Stage 3b Chronic Kidney Disease (moderately to severely decreased function). Diabetes and hypertension are the leading causes. Consult a nephrologist. Reduce protein and salt intake, control BP and blood sugar strictly.",
+    "category": "conditions",
+    "profile": {"age": 58, "conditions": ["diabetes", "hypertension"]}
+  },
+  {
+    "question": "I take metformin for diabetes. What side effects should I watch for?",
+    "expected_answer": "Common side effects include nausea, diarrhea, and stomach upset — usually reduce over time. Take with food to minimize GI issues. Rare but serious: lactic acidosis (symptoms: muscle pain, weakness, difficulty breathing). Report any unusual symptoms to your doctor.",
+    "category": "drugs",
+    "profile": {"age": 48, "conditions": ["diabetes"], "medications": ["metformin"]}
+  },
+  {
+    "question": "My doctor prescribed amlodipine for high BP. What should I know?",
+    "expected_answer": "Amlodipine is a calcium channel blocker commonly used in India. Take it at the same time daily. Common side effects: ankle swelling, dizziness, flushing. Do not stop suddenly. Avoid grapefruit. It may take 1-2 weeks to show full effect.",
+    "category": "drugs",
+    "profile": {"age": 52, "conditions": ["hypertension"], "medications": ["amlodipine"]}
+  },
+  {
+    "question": "How should I store insulin in Indian summer when it's 45 degrees outside?",
+    "expected_answer": "Insulin must be stored at 2-8°C in a refrigerator. Never freeze it. In-use insulin pens can be kept at room temperature below 30°C for up to 28 days. In extreme Indian summer heat, use a clay pot cooler or insulated bag when traveling. Never leave insulin in a parked car.",
+    "category": "drugs",
+    "profile": {"age": 45, "conditions": ["diabetes"], "medications": ["insulin"]}
+  },
+  {
+    "question": "Can I take aspirin daily for heart protection without asking my doctor?",
+    "expected_answer": "No. Daily aspirin is NOT recommended for self-medication. It carries bleeding risks (stomach, brain). Only take if your doctor specifically prescribes it after evaluating your cardiovascular risk. Never start aspirin on your own.",
+    "category": "drugs",
+    "profile": {"age": 60}
+  },
+  {
+    "question": "I have a fever. How much paracetamol can I safely take?",
+    "expected_answer": "Discuss with your doctor about the right dosage. Generally, paracetamol should not exceed the limit prescribed by your doctor in 24 hours. Never combine multiple paracetamol-containing products. Avoid with alcohol. If fever persists beyond 3 days, see a doctor.",
+    "category": "drugs",
+    "profile": {"age": 30}
+  },
+  {
+    "question": "I'm taking glimepiride for diabetes. Why do I feel shaky before lunch?",
+    "expected_answer": "Shakiness before lunch suggests hypoglycemia (low blood sugar), a known side effect of glimepiride. Always take it with breakfast, not on an empty stomach. Carry glucose biscuits or sugar cubes. Check blood sugar when symptoms occur. Report frequent episodes to your doctor.",
+    "category": "drugs",
+    "profile": {"age": 55, "conditions": ["diabetes"], "medications": ["glimepiride"]}
+  },
+  {
+    "question": "What is a good Indian diet for someone with diabetes?",
+    "expected_answer": "ICMR recommends: millets (ragi, jowar, bajra) over white rice, whole wheat roti, dal with vegetables, curd, seasonal fruits in moderation (avoid mango, banana in excess). Eat at regular intervals. Avoid refined flour (maida), sugary drinks, and fried snacks.",
+    "category": "lifestyle",
+    "profile": {"age": 45, "conditions": ["diabetes"]}
+  },
+  {
+    "question": "I only sleep 5 hours a night. Is that enough?",
+    "expected_answer": "No. ICMR recommends 7-8 hours of sleep for adults. Poor sleep increases risk of diabetes, hypertension, obesity, and mental health issues. Tips: fixed sleep schedule, reduce screen time 1 hour before bed, keep room cool and dark, avoid chai/coffee after 4 PM.",
+    "category": "lifestyle",
+    "profile": {"age": 35}
+  },
+  {
+    "question": "I want to quit smoking gutka. Where can I get help?",
+    "expected_answer": "Call the National Tobacco Quitline: 1800-112-356 (toll-free, 24/7). Gutka/paan masala significantly increases risk of oral cancer. Your doctor can discuss nicotine replacement options. Support groups and counseling improve quit rates. Every day without tobacco is a health gain.",
+    "category": "lifestyle",
+    "profile": {"age": 40}
+  },
+  {
+    "question": "How much water should I drink in Indian summer?",
+    "expected_answer": "In Indian summer heat, drink 3-4 liters per day. Don't wait until thirsty. ORS or nimbu pani with salt helps replace electrolytes. Avoid ice-cold water (can cause cramps). People with kidney disease should consult their doctor about fluid limits.",
+    "category": "lifestyle",
+    "profile": {},
+    "aqi_data": {"temperature": 42}
+  },
+  {
+    "question": "Is yoga good for managing stress and blood pressure?",
+    "expected_answer": "Yes. ICMR recognizes yoga and pranayama as effective for stress management and BP reduction. Regular practice (30 min/day) can lower systolic BP by 5-10 mmHg. Shavasana and anulom-vilom are particularly effective. Always combine with prescribed medication, not as replacement.",
+    "category": "lifestyle",
+    "profile": {"age": 45, "conditions": ["hypertension"]}
+  },
+  {
+    "question": "I'm having severe chest pain and difficulty breathing. What should I do?",
+    "expected_answer": "CALL 112 IMMEDIATELY. This could be a heart attack. While waiting: sit upright, loosen tight clothing, chew an aspirin ONLY if your doctor has previously advised it. Do NOT drive yourself to the hospital. Do NOT ignore chest pain — every minute matters.",
+    "category": "emergency",
+    "profile": {"age": 58}
+  },
+  {
+    "question": "My grandmother's face is drooping on one side and she can't lift her arm. What's happening?",
+    "expected_answer": "These are signs of a STROKE. Use the FAST test: Face drooping, Arm weakness, Speech difficulty, Time to call 112. Get to a hospital within the golden hour (first 60 minutes) for best outcomes. Do NOT give food or water. Note the time symptoms started.",
+    "category": "emergency",
+    "profile": {"age": 72}
+  },
+  {
+    "question": "My child was stung by a bee and is having trouble breathing and swelling all over.",
+    "expected_answer": "This sounds like ANAPHYLAXIS — a severe allergic reaction. CALL 112 IMMEDIATELY. If an epinephrine auto-injector is available, use it. Lay the child flat with legs elevated (unless breathing difficulty prevents this). Do NOT give oral medications. This is life-threatening.",
+    "category": "emergency",
+    "profile": {"age": 8}
+  },
+  {
+    "question": "A laborer working outside in 46°C heat has collapsed and is not sweating. What do I do?",
+    "expected_answer": "This is likely HEATSTROKE — a medical emergency. Call 112. Move the person to shade immediately. Pour cool water over their body, fan them aggressively. Apply ice packs to neck, armpits, groin. Do NOT give water if unconscious. Heatstroke can be fatal without treatment.",
+    "category": "emergency",
+    "profile": {}
+  },
+  {
+    "question": "Someone was bitten by a snake in the field. Should we tie a tourniquet?",
+    "expected_answer": "Do NOT tie a tourniquet. Do NOT try to suck out venom. Do NOT cut the wound. Instead: keep the person calm and still, immobilize the bitten limb below heart level, remove jewelry near the bite, and get to the nearest hospital with anti-venom IMMEDIATELY. Note what the snake looked like.",
+    "category": "emergency",
+    "profile": {}
+  },
+  {
+    "question": "My blood sugar dropped to 50 mg/dL and I'm feeling dizzy and sweating.",
+    "expected_answer": "This is HYPOGLYCEMIA. Immediately eat/drink something sugary: 3-4 glucose tablets, half a glass of fruit juice, a tablespoon of sugar, or honey. Recheck sugar after 15 minutes. If below 70, repeat. If you lose consciousness, someone should call 112. Do not inject insulin.",
+    "category": "emergency",
+    "profile": {"age": 45, "conditions": ["diabetes"], "blood_sugar": 50, "sugar_type": "random"}
+  },
+  {
+    "question": "The AQI in my city is 350. Is it safe to go for a morning walk?",
+    "expected_answer": "No. AQI 350 falls in the 'Severe' category on the Indian NAQI scale. Avoid ALL outdoor exercise. Stay indoors with windows closed. Use an air purifier if available. Wear an N95 mask if you must go outside. People with asthma, COPD, or heart disease are at highest risk.",
+    "category": "environmental",
+    "profile": {"age": 40},
+    "aqi_data": {"aqi": 350}
+  },
+  {
+    "question": "It's monsoon season and there's waterlogging near my house. What diseases should I watch for?",
+    "expected_answer": "Monsoon waterlogging increases risk of: dengue (mosquito-borne), malaria, leptospirosis (from contaminated water), typhoid, cholera, and hepatitis A. Prevent mosquito breeding, use mosquito nets, drink boiled/filtered water, avoid wading in stagnant water, and watch for fever with body aches.",
+    "category": "environmental",
+    "profile": {}
+  },
+  {
+    "question": "Delhi's winter smog is terrible this year. How can I protect my family's lungs?",
+    "expected_answer": "During Delhi/NCR winter smog: keep windows closed, use HEPA air purifiers indoors, wear N95 masks outdoors, avoid morning walks (pollution peaks 6-9 AM), keep asthma/COPD medications handy. Children and elderly are most vulnerable. If breathing difficulty occurs, consult a doctor.",
+    "category": "environmental",
+    "aqi_data": {"aqi": 400}
+  },
+  {
+    "question": "There's a heatwave warning in my area. How should I protect elderly family members?",
+    "expected_answer": "During heatwave: keep elderly indoors in the coolest room, ensure adequate hydration (ORS, nimbu pani, buttermilk), use wet cloth on forehead and neck, avoid 11 AM-4 PM outdoor exposure. Watch for heatstroke signs: confusion, no sweating, hot dry skin. Call 112 if these occur.",
+    "category": "environmental",
+    "profile": {"age": 75},
+    "aqi_data": {"temperature": 46}
+  },
+  {
+    "question": "I have diabetes and high BP. The AQI is 200 and temperature is 38°C. Should I exercise today?",
+    "expected_answer": "With AQI 200 (Moderately Polluted) and 38°C heat, exercise indoors only. Avoid outdoor activity. Check blood sugar before exercising — postpone if below 80 or above 250 mg/dL. Monitor BP. Stay hydrated with water/ORS. Exercise in cooled indoor space during morning or evening.",
+    "category": "environmental",
+    "profile": {"age": 52, "conditions": ["diabetes", "hypertension"], "blood_sugar": 140, "sugar_type": "fasting"},
+    "aqi_data": {"aqi": 200, "temperature": 38}
+  }
+]
