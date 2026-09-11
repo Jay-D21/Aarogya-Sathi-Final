@@ -5,6 +5,8 @@ from backend.context.weather import get_weather
 from backend.safety.router import check_safety
 from backend.translation.bhashini import translate
 from backend.api.models import ChatRequest
+from backend.rag.pipeline import CRAGPipeline
+import os
 import json
 import asyncio
 import logging
@@ -12,6 +14,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
+
+# Initialize once at import time — the pipeline is stateless and reusable
+_pipeline = CRAGPipeline(
+    bundle_path=os.getenv("OKF_BUNDLE_PATH", "./icmr-knowledge-bundle")
+)
 
 
 @router.get("/aqi")
@@ -123,7 +130,7 @@ async def chat_endpoint(req: ChatRequest):
 
     async def generate():
         full_response = ""
-        async for token in _mock_pipeline(query_en, profile_dict, aqi_data):
+        async for token in _pipeline.run(query_en, profile_dict, aqi_data, req.wearable.model_dump()):
             full_response += token
             yield {
                 "event": "message",

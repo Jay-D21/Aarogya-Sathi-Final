@@ -9,27 +9,37 @@
 ## Responsibilities
 1. Convert ICMR guidelines → OKF Markdown bundle (50+ concept files)
 2. Build OKF Navigator agent (Python class that reads/traverses files)
-3. Implement CRAG pipeline in LangChain LCEL
-4. Set up Ollama + Llama 3.1 8B serving
-5. Integrate BGE-M3 + Qdrant as fallback retrieval
-6. Build RAGAS evaluation pipeline
-7. Create 100 gold-standard test questions
+3. Implement CRAG pipeline (LangGraph state machine)
+4. Set up multi-provider LLM cascade (Groq → SambaNova → Cerebras)
+5. Build RAGAS evaluation pipeline
+6. Create 100 gold-standard test questions
 
 ## Weekly Plan
 | Week | Task | Deliverable |
 |------|------|-------------|
 | W1-2 | ICMR PDFs → OKF Markdown bundle | 50+ concept files in Git |
-| W3-4 | OKF Navigator + basic LCEL pipeline | Working query → response |
-| W5-6 | CRAG relevance grading + Qdrant fallback | Corrective RAG working |
-| W7-8 | Integration with Abhijit's backend | Full pipeline E2E |
-| W9-10 | RAGAS evaluation + 100 test questions | Evaluation report |
-| W11-12 | Polish, edge cases, final demo | Submission-ready |
+| W3-4 | OKF Navigator + CRAG pipeline | Working query → response |
+| W5-6 | Integration with Abhijit's backend | Full pipeline E2E |
+| W7-8 | RAGAS evaluation + 100 test questions | Evaluation report |
+| W9-10 | Polish, edge cases, final demo | Submission-ready |
 
-## Recent Activity
-_No activity yet._
+## Session: 2026-09-11
+- Built complete CRAG pipeline: OKF Navigator → Grader → Context Builder → 70B Generation
+- Created `backend/rag/llm.py` — multi-provider cascade (Groq → SambaNova → Cerebras)
+- Created `backend/rag/okf_navigator.py` — LLM-driven file traversal with keyword fallback
+- Created `backend/rag/grader.py` — CRAG relevance grading (parallel, 8B model)
+- Created `backend/rag/context_builder.py` — prompt assembly (system prompt + docs + profile + AQI + wearable)
+- Created `backend/rag/pipeline.py` — CRAGPipeline main class (replaces Abhijit's mock)
+- Created `backend/utils/icmr.py` — ICMR threshold classifiers (BP, sugar, BMI, AQI — Asian cutoffs)
+- Updated `backend/api/routes.py` — swapped mock pipeline for real CRAGPipeline
+- Updated `backend/requirements.txt` — replaced langchain-ollama with langchain-groq + langgraph
+- Updated `backend/.env.example` — added GROQ/SambaNova/Cerebras key slots
+- Added OKF files: `conditions/asthma.md`, `lifestyle/exercise-guidelines.md`
+- Created GitHub issue #5 for Ritesh (7 architecture diagrams)
+- Architecture plan updated with OmniRoute/freellmapi analysis
 
 ## Files I Own
 - `icmr-knowledge-bundle/` (entire OKF bundle)
 - `backend/rag/` (RAG pipeline code)
-- `backend/rag/okf_navigator.py`
+- `backend/utils/icmr.py`
 - `evaluation/`
