@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../config/theme.dart';
 
-/// Google Fit–style arc ring showing health score, steps, and calories.
+/// Google Fit–style arc ring showing health score, steps, calories, and heart rate.
 class HealthScoreRing extends StatefulWidget {
   final double score;   // 0–100
   final int steps;
   final int calories;
+  final int? heartRate;
 
   const HealthScoreRing({
     super.key,
     required this.score,
     required this.steps,
     required this.calories,
+    this.heartRate,
   });
 
   @override
@@ -132,7 +134,9 @@ class _HealthScoreRingState extends State<HealthScoreRing>
                   _Stat(
                     icon: Icons.favorite_rounded,
                     color: AppTheme.accentRed,
-                    value: '--',
+                    value: widget.heartRate != null && widget.heartRate! > 0
+                        ? '${widget.heartRate}'
+                        : '--',
                     label: 'BPM',
                     textPri: textPri,
                     textSec: textSec,

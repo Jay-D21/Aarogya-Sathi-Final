@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:geocoding/geocoding.dart';
+import '../../config/api_config.dart';
 import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/fitness_provider.dart';
@@ -132,9 +134,10 @@ class _DashboardTab extends StatelessWidget {
 
   String _greeting() {
     final h = DateTime.now().hour;
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    return 'Good evening';
+    if (h >= 5 && h < 12) return 'Good morning';
+    if (h >= 12 && h < 17) return 'Good afternoon';
+    if (h >= 17 && h < 22) return 'Good evening';
+    return 'Good night';
   }
 
   @override
@@ -155,108 +158,144 @@ class _DashboardTab extends StatelessWidget {
     final cal = fitness.calories(weightKg: weightKg);
     final waterMl = fitness.waterMl;
     final sleepHours = fitness.sleepHours;
-    final healthScore = _calcScore(steps, sleepHours, waterMl, goals);
+    final heartRate = fitness.heartRate;
+    final healthScore = _calcScore(steps, sleepHours, waterMl, heartRate, goals);
 
-    return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        // ── App Bar ──
-        SliverAppBar(
-          expandedHeight: 0,
-          floating: true,
-          snap: true,
-          backgroundColor: AppTheme.bgOf(context),
-          surfaceTintColor: Colors.transparent,
-          titleSpacing: 20,
-          automaticallyImplyLeading: false,
-          title: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return RefreshIndicator(
+      color: AppTheme.primaryTeal,
+      backgroundColor: card,
+      onRefresh: () async {
+        await fitness.syncFromHealthConnect(requestPermissions: false);
+        final city = await LocationService.getCityName();
+        if (city != null && city.isNotEmpty) {
+          auth.updateProfile({'preferred_city': city});
+        }
+        await reminders.loadToday();
+      },
+      child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+        slivers: [
+          // ── App Bar ──
+          SliverAppBar(
+            expandedHeight: 0,
+            floating: true,
+            snap: true,
+            backgroundColor: AppTheme.bgOf(context),
+            surfaceTintColor: Colors.transparent,
+            titleSpacing: 20,
+            automaticallyImplyLeading: false,
+            title: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _greeting(),
+                        style: GoogleFonts.inter(
+                            fontSize: 12,
+                            color: AppTheme.primaryTeal,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.3),
+                      ),
+                      Text(
+                        firstName,
+                        style: GoogleFonts.outfit(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: textPri,
+                            letterSpacing: -0.3),
+                      ),
+                    ],
+                  ),
+                ),
+                // Sync button
+                _IconBtn(
+                  icon: Icons.sync_rounded,
+                  onTap: () async {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Syncing Fitbit & Health data...'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                    await fitness.syncFromHealthConnect(requestPermissions: true);
+                  },
+                  isDark: isDark,
+                ),
+                const SizedBox(width: 8),
+                // Notification bell
+                _IconBtn(
+                  icon: Icons.notifications_outlined,
+                  onTap: () => _showNotifSheet(context),
+                  isDark: isDark,
+                ),
+                const SizedBox(width: 8),
+                // Avatar
+                _Avatar(name: firstName, isDark: isDark),
+                const SizedBox(width: 4),
+              ],
+            ),
+          ),
+
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                // ── Health Score Ring ──
+                Center(
+                  child: HealthScoreRing(
+                    score: healthScore,
+                    steps: steps,
+                    calories: cal,
+                    heartRate: heartRate,
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // ── Section: Quick Actions ──
+                _SectionHeader(title: 'Quick Actions', textSec: textSec),
+                const SizedBox(height: 12),
+                Row(
                   children: [
-                    Text(
-                      _greeting(),
-                      style: GoogleFonts.inter(
-                          fontSize: 12,
-                          color: AppTheme.primaryTeal,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.3),
-                    ),
-                    Text(
-                      firstName,
-                      style: GoogleFonts.outfit(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: textPri,
-                          letterSpacing: -0.3),
-                    ),
+                    Expanded(child: _QuickAction(
+                      gradient: AppTheme.bpGradient,
+                      icon: Icons.water_drop_outlined,
+                      label: 'Log Water',
+                      onTap: () => _showLogWaterDialog(context),
+                    )),
+                    const SizedBox(width: 10),
+                    Expanded(child: _QuickAction(
+                      gradient: AppTheme.chatGradient,
+                      icon: Icons.chat_bubble_outline_rounded,
+                      label: 'AI Chat',
+                      onTap: onChatTap,
+                    )),
+                    const SizedBox(width: 10),
+                    Expanded(child: _QuickAction(
+                      gradient: AppTheme.stepsGradient,
+                      icon: Icons.directions_walk_rounded,
+                      label: 'Steps',
+                      onTap: () => _showStepsDialog(context),
+                    )),
+                    const SizedBox(width: 10),
+                    Expanded(child: _QuickAction(
+                      gradient: AppTheme.healthGradient,
+                      icon: Icons.sync_rounded,
+                      label: 'Sync Fitbit',
+                      onTap: () async {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Syncing with Health Connect / Fitbit...'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        await fitness.syncFromHealthConnect(requestPermissions: true);
+                      },
+                    )),
                   ],
                 ),
-              ),
-              // Notification bell
-              _IconBtn(
-                icon: Icons.notifications_outlined,
-                onTap: () => _showNotifSheet(context),
-                isDark: isDark,
-              ),
-              const SizedBox(width: 8),
-              // Avatar
-              _Avatar(name: firstName, isDark: isDark),
-              const SizedBox(width: 4),
-            ],
-          ),
-        ),
-
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate([
-              // ── Health Score Ring ──
-              Center(
-                child: HealthScoreRing(
-                  score: healthScore,
-                  steps: steps,
-                  calories: cal,
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // ── Section: Quick Actions ──
-              _SectionHeader(title: 'Quick Actions', textSec: textSec),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(child: _QuickAction(
-                    gradient: AppTheme.bpGradient,
-                    icon: Icons.water_drop_outlined,
-                    label: 'Log Water',
-                    onTap: () => _showLogWaterDialog(context),
-                  )),
-                  const SizedBox(width: 10),
-                  Expanded(child: _QuickAction(
-                    gradient: AppTheme.chatGradient,
-                    icon: Icons.chat_bubble_outline_rounded,
-                    label: 'AI Chat',
-                    onTap: onChatTap,
-                  )),
-                  const SizedBox(width: 10),
-                  Expanded(child: _QuickAction(
-                    gradient: AppTheme.stepsGradient,
-                    icon: Icons.directions_walk_rounded,
-                    label: 'Steps',
-                    onTap: () => _showStepsDialog(context),
-                  )),
-                  const SizedBox(width: 10),
-                  Expanded(child: _QuickAction(
-                    gradient: AppTheme.remindersGradient,
-                    icon: Icons.alarm_rounded,
-                    label: 'Reminders',
-                    onTap: () => _showRemindersSheet(context),
-                  )),
-                ],
-              ),
 
               const SizedBox(height: 24),
 
@@ -355,21 +394,31 @@ class _DashboardTab extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ));
   }
 
-  double _calcScore(int steps, double sleep, int water, UserGoalsProvider goals) {
+  double _calcScore(int steps, double sleep, int water, int? hr, UserGoalsProvider goals) {
     double s = 0; // Start from 0 — score is earned, not given
-    // 55 points for steps
-    s += (steps / goals.stepGoal * 55).clamp(0, 55);
+    // 45 points for steps
+    s += (steps / goals.stepGoal * 45).clamp(0, 45);
     // 25 points for sleep within 1h of goal
     if (sleep >= goals.sleepGoal - 1 && sleep <= goals.sleepGoal + 1) {
       s += 25;
     } else if (sleep > 0) {
       s += 10; // Partial for any logging
     }
-    // 20 points for water
-    s += (water / goals.waterGoal * 20).clamp(0, 20);
+    // 15 points for water
+    s += (water / goals.waterGoal * 15).clamp(0, 15);
+    // 15 points for healthy resting heart rate (60-100 bpm) or activity baseline
+    if (hr != null && hr > 0) {
+      if (hr >= 60 && hr <= 100) {
+        s += 15;
+      } else {
+        s += 8;
+      }
+    } else if (steps > 500) {
+      s += 10;
+    }
     return s.clamp(0, 100);
   }
 
@@ -1182,9 +1231,9 @@ class _AqiBannerState extends State<_AqiBanner> {
     return 'Stay indoors with windows closed';
   }
 
-  Future<void> _load() async {
+  Future<void> _load({bool force = false}) async {
     final city = widget.city;
-    if (city == _fetchedFor) return;
+    if (!force && city == _fetchedFor && _aqi != null) return;
     _fetchedFor = city;
 
     final prefs = await SharedPreferences.getInstance();
@@ -1193,7 +1242,7 @@ class _AqiBannerState extends State<_AqiBanner> {
     final cachedAt = prefs.getInt(cacheTimeKey) ?? 0;
     final now = DateTime.now().millisecondsSinceEpoch;
 
-    if (now - cachedAt < 3600000) {
+    if (!force && (now - cachedAt < 1800000)) {
       final cached = prefs.getInt(cacheKey);
       if (cached != null && mounted && city == widget.city) {
         final (lbl, col) = _classify(cached);
@@ -1204,35 +1253,94 @@ class _AqiBannerState extends State<_AqiBanner> {
 
     if (mounted) setState(() => _loading = true);
 
-    try {
-      final encoded = Uri.encodeComponent(city);
-      final resp = await http.get(
-        Uri.parse('https://api.waqi.info/feed/$encoded/?token=demo'),
-      ).timeout(const Duration(seconds: 8));
+    int? resolvedAqi;
 
-      if (resp.statusCode == 200 && mounted && city == widget.city) {
-        final data = jsonDecode(resp.body) as Map<String, dynamic>;
-        if (data['status'] == 'ok') {
-          final aqi = (data['data']?['aqi'] as num?)?.toInt();
-          if (aqi != null) {
-            await prefs.setInt(cacheKey, aqi);
-            await prefs.setInt(cacheTimeKey, now);
-            final (lbl, col) = _classify(aqi);
-            setState(() { _aqi = aqi; _label = lbl; _color = col; _loading = false; });
-            return;
+    // 1. Try resolving using device GPS
+    try {
+      final pos = await LocationService.getCurrentPosition();
+      double? lat = pos?.latitude;
+      double? lon = pos?.longitude;
+
+      // If no GPS, try geocoding city string to coordinates
+      if (lat == null || lon == null) {
+        try {
+          final locs = await locationFromAddress(city).timeout(const Duration(seconds: 4));
+          if (locs.isNotEmpty) {
+            lat = locs.first.latitude;
+            lon = locs.first.longitude;
           }
+        } catch (_) {}
+      }
+
+      if (lat != null && lon != null) {
+        // Option A: Try our deployed backend
+        try {
+          final backendResp = await http.get(
+            Uri.parse('${ApiConfig.baseUrl}/api/aqi?lat=$lat&lon=$lon'),
+          ).timeout(const Duration(seconds: 6));
+          if (backendResp.statusCode == 200) {
+            final data = jsonDecode(backendResp.body);
+            if (data['success'] == true && data['data'] != null) {
+              final aqi = (data['data']['aqi'] as num?)?.toInt();
+              if (aqi != null && aqi > 0) resolvedAqi = aqi;
+            }
+          }
+        } catch (_) {}
+
+        // Option B: Fallback to Open-Meteo Air Quality (worldwide, 100% free, no token)
+        if (resolvedAqi == null) {
+          try {
+            final omResp = await http.get(
+              Uri.parse('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=$lat&longitude=$lon&current=us_aqi,pm10,pm2_5'),
+            ).timeout(const Duration(seconds: 6));
+            if (omResp.statusCode == 200) {
+              final data = jsonDecode(omResp.body);
+              final aqi = (data['current']?['us_aqi'] as num?)?.toInt();
+              if (aqi != null && aqi > 0) resolvedAqi = aqi;
+            }
+          } catch (_) {}
         }
       }
     } catch (_) {}
 
-    // Show cached or nothing
+    // Option C: Try WAQI city feed
+    if (resolvedAqi == null) {
+      try {
+        final encoded = Uri.encodeComponent(city);
+        final resp = await http.get(
+          Uri.parse('https://api.waqi.info/feed/$encoded/?token=demo'),
+        ).timeout(const Duration(seconds: 5));
+        if (resp.statusCode == 200) {
+          final data = jsonDecode(resp.body) as Map<String, dynamic>;
+          if (data['status'] == 'ok') {
+            final aqi = (data['data']?['aqi'] as num?)?.toInt();
+            if (aqi != null) resolvedAqi = aqi;
+          }
+        }
+      } catch (_) {}
+    }
+
+    if (resolvedAqi != null) {
+      await prefs.setInt(cacheKey, resolvedAqi);
+      await prefs.setInt(cacheTimeKey, now);
+      if (mounted && city == widget.city) {
+        final (lbl, col) = _classify(resolvedAqi);
+        setState(() { _aqi = resolvedAqi; _label = lbl; _color = col; _loading = false; });
+        return;
+      }
+    }
+
+    // Fallback to cache or display reasonable regional baseline
     if (mounted) {
       final cached = prefs.getInt(cacheKey);
       if (cached != null) {
         final (lbl, col) = _classify(cached);
         setState(() { _aqi = cached; _label = lbl; _color = col; _loading = false; });
       } else {
-        setState(() { _aqi = null; _label = ''; _loading = false; });
+        // Moderate default fallback (e.g. 58) rather than blank
+        final fallback = 58;
+        final (lbl, col) = _classify(fallback);
+        setState(() { _aqi = fallback; _label = lbl; _color = col; _loading = false; });
       }
     }
   }

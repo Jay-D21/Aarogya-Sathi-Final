@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_service.dart';
+import '../services/health_connect_service.dart';
+import '../models/wearable_data_model.dart';
 
 class FitnessProvider extends ChangeNotifier {
   // ── SharedPreferences keys ──────────────────────────────────────────────────
@@ -12,37 +15,55 @@ class FitnessProvider extends ChangeNotifier {
   static const _kSteps      = 'fit_steps';          // int: today's steps
   static const _kWater      = 'fit_water_ml';       // int: ml logged today
   static const _kSleep      = 'fit_sleep_h';        // double: hours slept
+  static const _kHeartRate  = 'fit_heart_rate';     // int: latest bpm
+  static const _kCalories   = 'fit_calories';       // int: calories burned
+  static const _kSpo2       = 'fit_spo2';           // double: SpO2 %
   static const _kPedoOffset = 'fit_pedo_offset';    // int: pedometer baseline
   static const _kPedoDate   = 'fit_pedo_date';      // String: date offset was set
 
   // ── Internal state ──────────────────────────────────────────────────────────
-  // ignore: prefer_final_fields
   bool _loading = false;
+  bool _isSyncing = false;
+  bool _healthConnectAuthorized = false;
   StreamSubscription<StepCount>? _stepSub;
+  final HealthConnectService _healthConnect = HealthConnectService();
 
   int    _localSteps = 0;
   int    _localWater = 0;
   double _localSleep = 0.0;
+  int?   _heartRate;
+  int?   _wearableCalories;
+  double? _spo2;
 
   // ── Public getters ──────────────────────────────────────────────────────────
   bool   get isLoading   => _loading;
+  bool   get isSyncing   => _isSyncing;
+  bool   get isHealthConnectAuthorized => _healthConnectAuthorized;
   int    get steps       => _localSteps;
   int    get waterMl     => _localWater;
   double get sleepHours  => _localSleep;
+  int?   get heartRate   => _heartRate;
+  double? get spo2       => _spo2;
 
-  /// Weight-aware calorie estimate.
-  /// Uses simplified MET formula: steps × weight(kg) × 0.000516
-  /// Falls back to steps × 0.04 if weight is not provided.
-  int calories({double weightKg = 70.0}) =>
-      (steps * weightKg * 0.000516).toInt();
+  /// Calorie estimate: uses wearable synced calories if available,
+  /// otherwise weight-aware MET formula: steps × weight(kg) × 0.000516.
+  int calories({double weightKg = 70.0}) {
+    if (_wearableCalories != null && _wearableCalories! > 0) {
+      return _wearableCalories!;
+    }
+    return (steps * weightKg * 0.000516).toInt();
+  }
 
   // ── Initialisation ──────────────────────────────────────────────────────────
 
   /// Single init entry-point called from HomeScreen.
-  /// Loads local data, starts pedometer, then tries to sync from backend.
+  /// Loads local data, syncs Health Connect/Fitbit, starts pedometer, then syncs backend.
   Future<void> init() async {
     await _loadLocalDay();
     notifyListeners();
+
+    // Auto-sync Health Connect / Fitbit if available
+    unawaited(syncFromHealthConnect());
     unawaited(initPedometer());
     unawaited(_syncFromBackend());
   }
@@ -60,15 +81,92 @@ class FitnessProvider extends ChangeNotifier {
       await prefs.setInt(_kSteps, 0);
       await prefs.setInt(_kWater, 0);
       await prefs.setDouble(_kSleep, 0.0);
+      await prefs.remove(_kHeartRate);
+      await prefs.remove(_kCalories);
+      await prefs.remove(_kSpo2);
       _localSteps = 0;
       _localWater = 0;
       _localSleep = 0.0;
+      _heartRate = null;
+      _wearableCalories = null;
+      _spo2 = null;
     } else {
       _localSteps = prefs.getInt(_kSteps) ?? 0;
       _localWater = prefs.getInt(_kWater) ?? 0;
       _localSleep = prefs.getDouble(_kSleep) ?? 0.0;
+      _heartRate = prefs.getInt(_kHeartRate);
+      _wearableCalories = prefs.getInt(_kCalories);
+      _spo2 = prefs.getDouble(_kSpo2);
     }
   }
+
+  // ── Health Connect / Fitbit Synchronization ──────────────────────────────────
+
+  /// Syncs data from Android Health Connect (which bridges Fitbit, Google Fit, Samsung Health, etc.)
+  Future<void> syncFromHealthConnect({bool requestPermissions = false}) async {
+    _isSyncing = true;
+    notifyListeners();
+
+    try {
+      if (requestPermissions) {
+        final ok = await _healthConnect.requestPermissions();
+        _healthConnectAuthorized = ok;
+      } else {
+        _healthConnectAuthorized = await _healthConnect.hasPermissions();
+      }
+
+      if (_healthConnectAuthorized) {
+        final WearableDataModel data = await _healthConnect.fetchTodayData();
+        final prefs = await SharedPreferences.getInstance();
+
+        bool changed = false;
+
+        // Steps from wearable
+        if (data.todaySteps != null && data.todaySteps! > 0) {
+          _localSteps = max(_localSteps, data.todaySteps!);
+          await prefs.setInt(_kSteps, _localSteps);
+          changed = true;
+        }
+
+        // Calories from wearable
+        if (data.caloriesBurned != null && data.caloriesBurned! > 0) {
+          _wearableCalories = data.caloriesBurned;
+          await prefs.setInt(_kCalories, _wearableCalories!);
+          changed = true;
+        }
+
+        // Heart rate from wearable
+        if (data.heartRateBpm != null && data.heartRateBpm! > 0) {
+          _heartRate = data.heartRateBpm!.toInt();
+          await prefs.setInt(_kHeartRate, _heartRate!);
+          changed = true;
+        }
+
+        // Sleep from wearable
+        if (data.sleepTotalHours != null && data.sleepTotalHours! > 0) {
+          _localSleep = max(_localSleep, data.sleepTotalHours!);
+          await prefs.setDouble(_kSleep, _localSleep);
+          changed = true;
+        }
+
+        // SpO2 from wearable
+        if (data.spo2Percent != null && data.spo2Percent! > 0) {
+          _spo2 = data.spo2Percent;
+          await prefs.setDouble(_kSpo2, _spo2!);
+          changed = true;
+        }
+
+        if (changed) notifyListeners();
+      }
+    } catch (e) {
+      debugPrint('[HealthConnectSync] $e');
+    } finally {
+      _isSyncing = false;
+      notifyListeners();
+    }
+  }
+
+  // ── Hardware Pedometer Step Tracking ─────────────────────────────────────────
 
   /// Start listening to the hardware step counter.
   /// Handles the cumulative-count daily offset correctly:
@@ -100,7 +198,8 @@ class FitnessProvider extends ChangeNotifier {
 
         final todaySteps = (event.steps - offset).clamp(0, 999999);
 
-        if (todaySteps != _localSteps) {
+        // Don't overwrite if wearable reported higher
+        if (todaySteps > _localSteps) {
           _localSteps = todaySteps;
           await prefs.setInt(_kSteps, _localSteps);
           notifyListeners();
@@ -139,6 +238,16 @@ class FitnessProvider extends ChangeNotifier {
           'sleep_hours': hours,
           'sleep_quality': quality,
         }));
+  }
+
+  /// Manually trigger a full sync across Health Connect, Pedometer, and backend
+  Future<void> syncAll() async {
+    _loading = true;
+    notifyListeners();
+    await syncFromHealthConnect(requestPermissions: true);
+    await _syncFromBackend();
+    _loading = false;
+    notifyListeners();
   }
 
   // ── Backward-compat alias ───────────────────────────────────────────────────

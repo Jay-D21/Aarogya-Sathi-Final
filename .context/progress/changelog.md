@@ -10,6 +10,10 @@
 - [Jayesh] Connected ChatProvider to deployed Render backend (/api/chat) with SSE streaming + direct Groq fallback + emergency 108 detection
 - [Jayesh] Integrated Health Connect & Fitbit wearable model alongside pedometer and local trackers
 - [Jayesh] Restored SplashScreen with glowing ring animation, Login/Register with Guest Explore mode, and ProfileSetupScreen
+- [Jayesh] Fixed greeting time boundaries to correctly show 'Good night' from 22:00 to 04:59 (e.g. at 00:42)
+- [Jayesh] Upgraded AQI loading to use real GPS coordinates with backend /api/aqi and Open-Meteo fallback (resolves small cities like Shirpur-Warwade)
+- [Jayesh] Connected Health Connect & Fitbit sync into FitnessProvider and added sync action & pull-to-refresh
+- [Jayesh] Added live BPM to HealthScoreRing and included heart rate in dynamic score calculation
 - [Jayesh] Clean Flutter build with zero errors, zero warnings
 
 ## 2026-09-11 (Jayesh — Session 5: Deployment & CI/CD)
