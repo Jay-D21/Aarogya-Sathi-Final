@@ -9,6 +9,27 @@ import '../services/api_service.dart';
 import '../services/health_connect_service.dart';
 import '../models/wearable_data_model.dart';
 
+enum SyncStatus {
+  success,
+  noData,
+  permissionDenied,
+  permissionRequired,
+  unavailable,
+  error,
+}
+
+class SyncResult {
+  final SyncStatus status;
+  final String message;
+  final int dataCount;
+
+  const SyncResult({
+    required this.status,
+    required this.message,
+    this.dataCount = 0,
+  });
+}
+
 class FitnessProvider extends ChangeNotifier {
   // ── SharedPreferences keys ──────────────────────────────────────────────────
   static const _kDate       = 'fit_date';          // 'YYYY-MM-DD'
@@ -103,63 +124,121 @@ class FitnessProvider extends ChangeNotifier {
   // ── Health Connect / Fitbit Synchronization ──────────────────────────────────
 
   /// Syncs data from Android Health Connect (which bridges Fitbit, Google Fit, Samsung Health, etc.)
-  Future<void> syncFromHealthConnect({bool requestPermissions = false}) async {
+  Future<SyncResult> syncFromHealthConnect({bool requestPermissions = false}) async {
     _isSyncing = true;
     notifyListeners();
 
     try {
+      final available = await _healthConnect.isHealthConnectAvailable();
+      if (!available) {
+        debugPrint('[HealthConnectSync] Health Connect is not available on this device');
+        return const SyncResult(
+          status: SyncStatus.unavailable,
+          message: 'Health Connect is not available or not installed on this device.',
+        );
+      }
+
       if (requestPermissions) {
         final ok = await _healthConnect.requestPermissions();
         _healthConnectAuthorized = ok;
+        if (!ok) {
+          return const SyncResult(
+            status: SyncStatus.permissionDenied,
+            message: 'Health Connect permissions were not granted. Please allow access to sync your wearable data.',
+          );
+        }
       } else {
         _healthConnectAuthorized = await _healthConnect.hasPermissions();
+        if (!_healthConnectAuthorized) {
+          return const SyncResult(
+            status: SyncStatus.permissionRequired,
+            message: 'Health Connect permissions required.',
+          );
+        }
       }
 
-      if (_healthConnectAuthorized) {
-        final WearableDataModel data = await _healthConnect.fetchTodayData();
-        final prefs = await SharedPreferences.getInstance();
+      final WearableDataModel data = await _healthConnect.fetchTodayData();
+      final prefs = await SharedPreferences.getInstance();
 
-        bool changed = false;
+      bool changed = false;
+      int dataCount = 0;
 
-        // Steps from wearable
+      // Steps from wearable
+      if (data.todaySteps != null && data.todaySteps! > 0) {
+        _localSteps = max(_localSteps, data.todaySteps!);
+        await prefs.setInt(_kSteps, _localSteps);
+        changed = true;
+        dataCount++;
+      }
+
+      // Calories from wearable
+      if (data.caloriesBurned != null && data.caloriesBurned! > 0) {
+        _wearableCalories = data.caloriesBurned;
+        await prefs.setInt(_kCalories, _wearableCalories!);
+        changed = true;
+        dataCount++;
+      }
+
+      // Heart rate from wearable
+      final hr = data.heartRateBpm ?? data.restingHeartRate;
+      if (hr != null && hr > 0) {
+        _heartRate = hr.toInt();
+        await prefs.setInt(_kHeartRate, _heartRate!);
+        changed = true;
+        dataCount++;
+      }
+
+      // Sleep from wearable
+      if (data.sleepTotalHours != null && data.sleepTotalHours! > 0) {
+        _localSleep = max(_localSleep, data.sleepTotalHours!);
+        await prefs.setDouble(_kSleep, _localSleep);
+        changed = true;
+        dataCount++;
+      }
+
+      // SpO2 from wearable
+      if (data.spo2Percent != null && data.spo2Percent! > 0) {
+        _spo2 = data.spo2Percent;
+        await prefs.setDouble(_kSpo2, _spo2!);
+        changed = true;
+        dataCount++;
+      }
+
+      if (changed) notifyListeners();
+
+      if (dataCount > 0) {
+        final List<String> summaryParts = [];
         if (data.todaySteps != null && data.todaySteps! > 0) {
-          _localSteps = max(_localSteps, data.todaySteps!);
-          await prefs.setInt(_kSteps, _localSteps);
-          changed = true;
+          summaryParts.add('${data.todaySteps} steps');
         }
-
-        // Calories from wearable
-        if (data.caloriesBurned != null && data.caloriesBurned! > 0) {
-          _wearableCalories = data.caloriesBurned;
-          await prefs.setInt(_kCalories, _wearableCalories!);
-          changed = true;
+        if (_heartRate != null) {
+          summaryParts.add('$_heartRate bpm');
         }
-
-        // Heart rate from wearable
-        if (data.heartRateBpm != null && data.heartRateBpm! > 0) {
-          _heartRate = data.heartRateBpm!.toInt();
-          await prefs.setInt(_kHeartRate, _heartRate!);
-          changed = true;
-        }
-
-        // Sleep from wearable
         if (data.sleepTotalHours != null && data.sleepTotalHours! > 0) {
-          _localSleep = max(_localSleep, data.sleepTotalHours!);
-          await prefs.setDouble(_kSleep, _localSleep);
-          changed = true;
+          summaryParts.add('${data.sleepTotalHours}h sleep');
         }
-
-        // SpO2 from wearable
-        if (data.spo2Percent != null && data.spo2Percent! > 0) {
-          _spo2 = data.spo2Percent;
-          await prefs.setDouble(_kSpo2, _spo2!);
-          changed = true;
+        if (_wearableCalories != null) {
+          summaryParts.add('$_wearableCalories kcal');
         }
-
-        if (changed) notifyListeners();
+        final summary = summaryParts.join(' • ');
+        return SyncResult(
+          status: SyncStatus.success,
+          message: summary.isNotEmpty ? summary : 'Health data synced successfully!',
+          dataCount: dataCount,
+        );
+      } else {
+        return const SyncResult(
+          status: SyncStatus.noData,
+          message: 'Connected to Health Connect, but no Fitbit data was found yet. In the Fitbit app, go to Settings → Health Connect and turn sync ON.',
+          dataCount: 0,
+        );
       }
     } catch (e) {
-      debugPrint('[HealthConnectSync] $e');
+      debugPrint('[HealthConnectSync] Error: $e');
+      return SyncResult(
+        status: SyncStatus.error,
+        message: 'Sync error: $e',
+      );
     } finally {
       _isSyncing = false;
       notifyListeners();

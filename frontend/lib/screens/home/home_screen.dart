@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../config/api_config.dart';
 import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
@@ -212,15 +213,7 @@ class _DashboardTab extends StatelessWidget {
                 // Sync button
                 _IconBtn(
                   icon: Icons.sync_rounded,
-                  onTap: () async {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Syncing Fitbit & Health data...'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                    await fitness.syncFromHealthConnect(requestPermissions: true);
-                  },
+                  onTap: () => _handleFitbitSync(context, fitness),
                   isDark: isDark,
                 ),
                 const SizedBox(width: 8),
@@ -284,15 +277,7 @@ class _DashboardTab extends StatelessWidget {
                       gradient: AppTheme.healthGradient,
                       icon: Icons.sync_rounded,
                       label: 'Sync Fitbit',
-                      onTap: () async {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Syncing with Health Connect / Fitbit...'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                        await fitness.syncFromHealthConnect(requestPermissions: true);
-                      },
+                      onTap: () => _handleFitbitSync(context, fitness),
                     )),
                   ],
                 ),
@@ -424,6 +409,221 @@ class _DashboardTab extends StatelessWidget {
 
   String _fmt(int v) =>
       v > 999 ? '${(v / 1000).toStringAsFixed(1)}k' : '$v';
+
+  Future<void> _handleFitbitSync(BuildContext context, FitnessProvider fitness) async {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Row(
+          children: [
+            SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+            ),
+            SizedBox(width: 12),
+            Text('Connecting to Health Connect & Fitbit...'),
+          ],
+        ),
+        duration: Duration(seconds: 4),
+      ),
+    );
+
+    final result = await fitness.syncFromHealthConnect(requestPermissions: true);
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    switch (result.status) {
+      case SyncStatus.success:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: const Color(0xFF10B981),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            content: Row(
+              children: [
+                const Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    result.message,
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ],
+            ),
+            duration: const Duration(seconds: 4),
+          ),
+        );
+        break;
+
+      case SyncStatus.noData:
+        _showFitbitHelpDialog(context);
+        break;
+
+      case SyncStatus.permissionDenied:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: const Color(0xFFF59E0B),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            content: const Text(
+              'Health Connect permissions required to read Fitbit vitals.',
+              style: TextStyle(color: Colors.white),
+            ),
+            action: SnackBarAction(
+              label: 'Settings',
+              textColor: Colors.white,
+              onPressed: () => openAppSettings(),
+            ),
+            duration: const Duration(seconds: 5),
+          ),
+        );
+        break;
+
+      case SyncStatus.unavailable:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            content: Text(result.message),
+            duration: const Duration(seconds: 4),
+          ),
+        );
+        break;
+
+      case SyncStatus.permissionRequired:
+      case SyncStatus.error:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            content: Text(result.message),
+            duration: const Duration(seconds: 3),
+          ),
+        );
+        break;
+    }
+  }
+
+  void _showFitbitHelpDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (ctx) => Container(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+        decoration: BoxDecoration(
+          color: AppTheme.cardBg(ctx),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          border: Border.all(color: AppTheme.borderColor(ctx)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryTeal.withValues(alpha: 0.15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.sync_problem_rounded, color: AppTheme.primaryTeal, size: 24),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Text(
+                    'No Fitbit Data Found Yet',
+                    style: GoogleFonts.outfit(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.textPrimaryOf(ctx),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Health Connect is linked, but Fitbit hasn\'t written any recent vitals or steps into Health Connect yet.',
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                color: AppTheme.textSecondaryOf(ctx),
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'How to connect Fitbit:',
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: AppTheme.textPrimaryOf(ctx),
+              ),
+            ),
+            const SizedBox(height: 10),
+            _guideStep(ctx, '1', 'Open the Fitbit App on your phone'),
+            _guideStep(ctx, '2', 'Tap your Profile icon (top right) or App Settings'),
+            _guideStep(ctx, '3', 'Tap "Health Connect"'),
+            _guideStep(ctx, '4', 'Turn ON "Allow all" so Fitbit syncs steps, heart rate & sleep'),
+            _guideStep(ctx, '5', 'Return to Aarogya Sathi and tap "Sync Fitbit"'),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primaryTeal,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Got It', style: TextStyle(fontWeight: FontWeight.w600)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _guideStep(BuildContext ctx, String num, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 22,
+            height: 22,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppTheme.primaryTeal.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: Text(
+              num,
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppTheme.primaryTeal),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              text,
+              style: GoogleFonts.inter(
+                fontSize: 13,
+                color: AppTheme.textPrimaryOf(ctx),
+                height: 1.3,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   void _showLogWaterDialog(BuildContext context) {
     showModalBottomSheet(
