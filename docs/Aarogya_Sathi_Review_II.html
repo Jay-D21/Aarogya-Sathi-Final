@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aarogya Sathi — Review II</title>
+<style>
+/* ─── RESET & BASE ─── */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;background:#0a0f1e;color:#e0e0e0}
+
+/* ─── SLIDE SYSTEM ─── */
+.slide{display:none;width:100vw;height:100vh;padding:50px 70px;position:relative;flex-direction:column}
+.slide.active{display:flex}
+.slide-num{position:absolute;bottom:18px;right:40px;font-size:13px;color:#556;font-family:monospace}
+.footer{position:absolute;bottom:0;left:0;right:0;height:36px;background:#080c18;display:flex;align-items:center;padding:0 40px;font-size:11px;color:#556}
+
+/* ─── TYPOGRAPHY ─── */
+h1{font-size:38px;font-weight:700;color:#fff;margin-bottom:12px;line-height:1.2}
+h2{font-size:26px;font-weight:600;color:#00b4d8;margin-bottom:20px}
+h3{font-size:18px;font-weight:600;color:#ffb347;margin-bottom:10px}
+p,.desc{font-size:16px;line-height:1.65;color:#b8c4ce}
+.accent{color:#00b4d8}.green{color:#2ecc71}.orange{color:#f39c12}.red{color:#e74c3c}.yellow{color:#ffd93d}.white{color:#fff}
+.bold{font-weight:700}
+.small{font-size:13px}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;margin:2px}
+.tag-done{background:#1a3d2a;color:#2ecc71}
+.tag-wip{background:#3d3a1a;color:#f39c12}
+.tag-todo{background:#3d1a1a;color:#e74c3c}
+
+/* ─── LAYOUT ─── */
+.row{display:flex;gap:24px;flex-wrap:wrap}
+.col{flex:1;min-width:0}
+.col-2{flex:2}
+.gap-sm{gap:12px}
+.mt{margin-top:20px}.mt-sm{margin-top:10px}
+
+/* ─── CARDS ─── */
+.card{background:#141e33;border-radius:12px;padding:20px;border:1px solid #1e2d48}
+.card-sm{padding:14px}
+.card-accent{border-left:3px solid #00b4d8}
+.card-green{border-left:3px solid #2ecc71}
+.card-orange{border-left:3px solid #f39c12}
+.card-red{border-left:3px solid #e74c3c}
+.stat-card{text-align:center;padding:24px 16px}
+.stat-num{font-size:42px;font-weight:800;line-height:1}
+.stat-label{font-size:13px;color:#8899aa;margin-top:8px}
+
+/* ─── TABLES ─── */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:#1a2740;color:#00b4d8;padding:10px 14px;text-align:left;font-weight:600;border-bottom:2px solid #253555}
+td{padding:9px 14px;border-bottom:1px solid #1a2540}
+tr:hover td{background:#141e33}
+.yes{color:#2ecc71;font-weight:700}
+.no{color:#e74c3c;font-weight:700}
+.partial{color:#f39c12;font-weight:600}
+
+/* ─── DIAGRAMS ─── */
+.pipe-step{display:flex;flex-direction:column;align-items:center;text-align:center;flex:1}
+.pipe-box{width:130px;padding:14px 10px;background:#1a2740;border-radius:10px;border:2px solid #253555;font-size:13px;line-height:1.4}
+.pipe-arrow{font-size:24px;color:#556;margin:0 -8px;align-self:center}
+.pipe-label{font-size:10px;color:#667;margin-top:4px}
+
+/* ─── BULLET POINTS ─── */
+ul.clean{list-style:none;padding:0}
+ul.clean li{padding:6px 0;padding-left:20px;position:relative;font-size:15px;line-height:1.55;color:#ccd6dd}
+ul.clean li::before{content:"▸";position:absolute;left:0;color:#00b4d8;font-weight:700}
+ul.num li::before{content:counter(item)".";counter-increment:item;color:#00b4d8;font-weight:700;font-size:14px}
+ul.num{counter-reset:item}
+
+/* ─── CODE ─── */
+pre{background:#0d1420;border:1px solid #1a2540;border-radius:8px;padding:14px 18px;font-family:'Cascadia Code','Fira Code',monospace;font-size:12.5px;line-height:1.5;overflow-x:auto;color:#b8c4ce}
+.kw{color:#c678dd}.fn{color:#61afef}.str{color:#98c379}.cm{color:#5c6370;font-style:italic}.num{color:#d19a66;font-weight:normal}
+
+/* ─── PROGRESS BAR ─── */
+.progress-track{background:#1a2540;border-radius:8px;height:32px;position:relative;overflow:hidden}
+.progress-fill{height:100%;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;font-weight:700;font-size:14px}
+
+/* ─── NAVIGATION ─── */
+.nav-hint{position:fixed;bottom:50px;right:50px;font-size:12px;color:#334;z-index:99;font-family:monospace}
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 1 — TITLE                                          ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s1">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+    <p class="small accent bold" style="letter-spacing:2px;margin-bottom:10px">PROJECT REVIEW-II PRESENTATION</p>
+    <h1 style="font-size:52px;margin-bottom:6px">Aarogya Sathi <span style="color:#667">(आरोग्य साथी)</span></h1>
+    <p style="font-size:22px;color:#8899aa;margin-bottom:40px">AI-Powered, Vernacular-First, Environment-Aware Health Assistant<br>for Preventive NCD Management in Urban India</p>
+    
+    <div class="row gap-sm" style="max-width:700px">
+      <div class="card card-sm card-accent"><span class="accent bold">Jayesh Patil</span> <span class="small" style="color:#889">(C233)</span><br><span class="small" style="color:#889">RAG Pipeline &amp; Knowledge Base</span></div>
+      <div class="card card-sm card-orange"><span class="orange bold">Abhijit Patil</span> <span class="small" style="color:#889">(C263)</span><br><span class="small" style="color:#889">Backend API &amp; Safety</span></div>
+      <div class="card card-sm card-green"><span class="green bold">Ritesh Pawar</span> <span class="small" style="color:#889">(C276)</span><br><span class="small" style="color:#889">Mobile App &amp; Wearables</span></div>
+    </div>
+    <p class="mt" style="font-size:15px;color:#667">Guide: <span class="white">Dr. Atul V. Dusane</span> &nbsp;|&nbsp; Dept. of IT/AIML, MPSTME, SVKM's NMIMS Shirpur Campus &nbsp;|&nbsp; 2026-27</p>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">1 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 2 — OUTLINE                                        ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s2">
+  <h1>Outline</h1>
+  <div class="row mt">
+    <div class="col">
+      <ul class="clean num" style="font-size:19px">
+        <li>Introduction &amp; Why This Matters</li>
+        <li>Literature Review — 42 papers, 7 research areas</li>
+        <li>Comparison with Existing Solutions</li>
+        <li>Problem Statement &amp; SDGs</li>
+        <li>Objectives</li>
+        <li>System Architecture — OKF + CRAG Pipeline</li>
+        <li>How OKF Retrieval Differs from Vector RAG</li>
+        <li>Technology Stack</li>
+        <li>Implementation — 55% done, what's working</li>
+      </ul>
+    </div>
+    <div class="col">
+      <ul class="clean num" style="font-size:19px;counter-reset:item 9">
+        <li>Actual Code — Pipeline &amp; Safety Router</li>
+        <li>Individual Contributions</li>
+        <li>Results So Far</li>
+        <li>Health Connect — Wearable Data Integration</li>
+        <li>What's Left Before Final Review</li>
+        <li>References</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">2 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 3 — INTRODUCTION                                    ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s3">
+  <h1>Why Build This?</h1>
+  <div class="row mt">
+    <div class="card stat-card" style="flex:1"><div class="stat-num accent">63%</div><div class="stat-label">of all Indian deaths<br>caused by NCDs [1]</div></div>
+    <div class="card stat-card" style="flex:1"><div class="stat-num orange">4.2M</div><div class="stat-label">premature deaths/year<br>from air pollution [9]</div></div>
+    <div class="card stat-card" style="flex:1"><div class="stat-num red">1:1,400</div><div class="stat-label">doctor-to-patient ratio<br>in rural India [WHO]</div></div>
+    <div class="card stat-card" style="flex:1"><div class="stat-num green">14.3:1</div><div class="stat-label">ROI on preventive<br>health programs [18]</div></div>
+  </div>
+  <div class="card mt" style="background:#0d1a2a;border-color:#1a3555">
+    <h3 style="color:#fff;margin-bottom:8px">What's missing in India's health app market?</h3>
+    <ul class="clean">
+      <li>Practo and 1mg help you book appointments — they don't give you health advice between visits</li>
+      <li>ChatGPT and Ada Health give generic answers that aren't based on Indian guidelines (ICMR)</li>
+      <li>No app connects your air quality data with your chronic conditions to warn you before problems hit</li>
+      <li>90% of Indians don't speak English as their first language — most health AI only works in English [Census 2011]</li>
+      <li>Standard LLMs make up medical facts. A 2022 Nature Medicine study found this happens often enough to be dangerous [19]</li>
+    </ul>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">3 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 4 — LITERATURE REVIEW                               ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s4">
+  <h1>Literature Review — 42 Papers Across 7 Research Areas</h1>
+  <table class="mt-sm">
+    <tr><th style="width:170px">Research Area</th><th style="width:200px">Key Sources</th><th>What the Evidence Says</th></tr>
+    <tr><td class="accent bold">NCD Burden</td><td class="small">GBD 2019, Lancet [1–7]</td><td>NCDs kill 63% of Indians. Diabetes alone projected to affect 134M by 2050 [5]. CVD causes 28% of Indian mortality [4].</td></tr>
+    <tr><td class="orange bold">Air Pollution</td><td class="small">Nature, GBD [8–11]</td><td>South Asia has the worst PM2.5 exposure globally [11]. Lelieveld et al. measured 4.2M premature deaths from outdoor PM2.5 [9].</td></tr>
+    <tr><td class="green bold">Digital Health ROI</td><td class="small">BMJ, JMIR [14–18]</td><td>Masters et al. found ₹14.3 saved for every ₹1 spent on preventive health [18]. eSanjeevani hit 100M teleconsults [24].</td></tr>
+    <tr><td class="red bold">RAG &amp; LLM Safety</td><td class="small">ICLR, TACL [13–16]</td><td>MMed-RAG gave 43.8% better accuracy than base LLMs [15]. Domain-specific KG-RAG outperforms generic setups [14].</td></tr>
+    <tr><td class="yellow bold">Multilingual AI</td><td class="small">arXiv [17–18]</td><td>IndicTrans2 covers 22 Indian languages [17]. CLINIC benchmark showed English-only eval overestimates multilingual safety [18].</td></tr>
+    <tr><td class="accent bold">Agentic AI</td><td class="small">arXiv [19–21]</td><td>Human-guided agents beat fully autonomous ones for clinical prediction [19]. Zero Trust security is necessary when agents can access data [21].</td></tr>
+    <tr><td class="orange bold">Data Privacy</td><td class="small">DPDP Act [22–23]</td><td>Health data = high-risk under DPDP Act 2023. Violations carry penalties up to ₹250 Cr. ABDM sets interoperability standards [23].</td></tr>
+  </table>
+  <p class="mt small" style="color:#667">Full bibliography with DOIs and arXiv IDs in the interim report. All 42 references follow IEEE format.</p>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">4 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 5 — COMPARISON TABLE                                ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s5">
+  <h1>How We Compare — Research Gap</h1>
+  <table class="mt">
+    <tr><th>Feature</th><th>Practo / 1mg</th><th>Ada Health</th><th>eSanjeevani</th><th style="background:#0d2a1a;color:#2ecc71">Aarogya Sathi</th></tr>
+    <tr><td>ICMR-grounded retrieval</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓ OKF + CRAG</td></tr>
+    <tr><td>Hindi &amp; Marathi support</td><td class="partial">English only</td><td class="no">✗</td><td class="partial">Limited</td><td class="yes">✓ Bhashini API</td></tr>
+    <tr><td>Real-time AQI correlation</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓ WAQI + Meteo</td></tr>
+    <tr><td>Wearable data (HR, BP, glucose)</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓ Health Connect</td></tr>
+    <tr><td>On-device storage (DPDP safe)</td><td class="no">✗ (cloud)</td><td class="no">✗ (cloud)</td><td class="partial">Partial</td><td class="yes">✓ SQLite</td></tr>
+    <tr><td>Preventive NCD management</td><td class="no">✗</td><td class="partial">Generic only</td><td class="no">✗</td><td class="yes">✓ 12 NCDs covered</td></tr>
+    <tr><td>Hallucination safeguards</td><td class="partial">N/A (no AI)</td><td class="partial">Proprietary</td><td class="partial">N/A (no AI)</td><td class="yes">✓ CRAG grading</td></tr>
+  </table>
+  <div class="card mt" style="background:#1a2a10;border-color:#3a5520">
+    <p class="yellow bold" style="font-size:15px">⚡ Gap: No Indian health platform combines ICMR-grounded retrieval + environment awareness + vernacular access + wearable tracking + privacy compliance. That's what we built.</p>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">5 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 6 — PROBLEM STATEMENT + SDGs                        ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s6">
+  <h1>Problem Statement</h1>
+  <div class="card mt" style="background:#0d1a2e;border:2px solid #1a3555;padding:28px">
+    <p style="font-size:18px;color:#e0e8f0;line-height:1.7">
+      Build a mobile health assistant that connects a person's chronic conditions (diabetes, hypertension, asthma) with their local air quality and weather — and gives them advice grounded in ICMR guidelines, not made-up facts. The system must work in Hindi, Marathi, and English. It must run without paid cloud APIs. It must not store health data on external servers.
+    </p>
+  </div>
+  
+  <h2 class="mt" style="font-size:20px">Objectives</h2>
+  <div class="row gap-sm">
+    <div class="card card-sm card-accent" style="flex:1"><span class="accent bold">1.</span> Use Google OKF + CRAG to pull answers from ICMR guidelines without hallucination</div>
+    <div class="card card-sm card-orange" style="flex:1"><span class="orange bold">2.</span> Correlate live AQI (PM2.5, ozone, UV) with the user's conditions for proactive warnings</div>
+    <div class="card card-sm card-green" style="flex:1"><span class="green bold">3.</span> Support Hindi/Marathi via Bhashini — free, government-backed translation</div>
+  </div>
+  <div class="row gap-sm mt-sm">
+    <div class="card card-sm card-red" style="flex:1"><span class="red bold">4.</span> Read 23 wearable metrics (steps, HR, BP, glucose, sleep) via Health Connect SDK</div>
+    <div class="card card-sm card-accent" style="flex:1"><span class="accent bold">5.</span> Keep all health data on-device in SQLite — zero cloud storage, DPDP Act compliant</div>
+    <div class="card card-sm card-orange" style="flex:1"><span class="orange bold">6.</span> Block emergencies, prescriptions, off-topic queries with a safety router (&lt;100ms)</div>
+  </div>
+  
+  <div class="row mt gap-sm">
+    <div class="card card-sm" style="border-left:3px solid #2ecc71"><span class="green bold">SDG 3</span> — Good Health. Preventive NCD guidance in local languages.</div>
+    <div class="card card-sm" style="border-left:3px solid #f39c12"><span class="orange bold">SDG 11</span> — Sustainable Cities. AQI-linked health warnings for urban areas.</div>
+    <div class="card card-sm" style="border-left:3px solid #e74c3c"><span class="red bold">SDG 10</span> — Reduced Inequalities. Works in Hindi/Marathi, not just English.</div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">6 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 7 — SYSTEM ARCHITECTURE (PIPELINE DIAGRAM)          ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s7">
+  <h1>System Architecture — Full Query Pipeline</h1>
+  <p class="desc" style="margin-bottom:14px">Every user query passes through this 7-step pipeline. Each step has a single job.</p>
+  
+  <div style="display:flex;align-items:center;gap:4px;margin-top:10px">
+    <div class="pipe-step">
+      <div class="pipe-box" style="border-color:#e74c3c"><span class="red bold">Safety<br>Router</span><br><span class="small" style="color:#889">Semantic Router<br>&lt;100ms</span></div>
+      <div class="pipe-label">Block emergencies,<br>prescriptions, off-topic</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box" style="border-color:#f39c12"><span class="orange bold">Bhashini<br>Translate</span><br><span class="small" style="color:#889">HI/MR → EN</span></div>
+      <div class="pipe-label">Query to English<br>for retrieval</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box" style="border-color:#00b4d8"><span class="accent bold">OKF<br>Navigator</span><br><span class="small" style="color:#889">385 lines Python</span></div>
+      <div class="pipe-label">Read index.md →<br>follow links → get docs</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box" style="border-color:#ffd93d"><span class="yellow bold">CRAG<br>Grader</span><br><span class="small" style="color:#889">Relevance Y/N</span></div>
+      <div class="pipe-label">Filter irrelevant docs.<br>If all fail → fallback</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box" style="border-color:#2ecc71"><span class="green bold">Context<br>Builder</span><br><span class="small" style="color:#889">Profile+AQI+Docs</span></div>
+      <div class="pipe-label">Assemble XML prompt<br>with wearable data</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box" style="border-color:#9b59b6"><span style="color:#9b59b6" class="bold">Llama 3.1<br>8B</span><br><span class="small" style="color:#889">Ollama / Groq</span></div>
+      <div class="pipe-label">Generate answer<br>from docs only</div>
+    </div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">
+      <div class="pipe-box" style="border-color:#f39c12"><span class="orange bold">Bhashini<br>Translate</span><br><span class="small" style="color:#889">EN → HI/MR</span></div>
+      <div class="pipe-label">Response back to<br>user's language</div>
+    </div>
+  </div>
+
+  <div class="row mt gap-sm">
+    <div class="card card-sm" style="flex:1">
+      <h3 style="font-size:14px;color:#00b4d8">Data Source 1: OKF Bundle</h3>
+      <p class="small">45 Markdown files · 12 conditions · 7 drugs · 7 lifestyle · 5 environmental · 7 emergency · 1,545 lines of medical content</p>
+    </div>
+    <div class="card card-sm" style="flex:1">
+      <h3 style="font-size:14px;color:#2ecc71">Data Source 2: Health Connect</h3>
+      <p class="small">23 data types · Steps, HR, HRV, SpO2, BP, glucose, sleep phases, weight, temperature, respiratory rate</p>
+    </div>
+    <div class="card card-sm" style="flex:1">
+      <h3 style="font-size:14px;color:#f39c12">Data Source 3: WAQI + Open-Meteo</h3>
+      <p class="small">PM2.5, PM10, NO2, O3, SO2, CO + temperature, humidity, UV index. Updated hourly, free tier.</p>
+    </div>
+    <div class="card card-sm" style="flex:1">
+      <h3 style="font-size:14px;color:#e74c3c">Data Source 4: User Profile</h3>
+      <p class="small">SQLite on-device. Age, gender, conditions, medications, language. Never leaves the phone.</p>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">7 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 8 — OKF vs VECTOR RAG                               ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s8">
+  <h1>What Makes Our Retrieval Different — OKF vs Vector RAG</h1>
+  <div class="row mt">
+    <div class="col">
+      <div class="card" style="background:#2a1515;border-color:#5a2020;height:100%">
+        <h3 style="color:#e74c3c">❌ Traditional Vector RAG</h3>
+        <ul class="clean">
+          <li>Take a medical PDF, split it into 500-token chunks</li>
+          <li>Run each chunk through an embedding model</li>
+          <li>Store 1,024-dim vectors in Qdrant or Pinecone</li>
+          <li>At query time, embed the question and find nearest vectors</li>
+          <li><span class="red bold">Problem:</span> "metformin dosage" might match a chunk about "medication adherence" instead of the actual dosage table</li>
+          <li><span class="red bold">Problem:</span> Tables and numbered lists get broken across chunk boundaries</li>
+          <li><span class="red bold">Problem:</span> No way to audit why a particular chunk was retrieved</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="background:#0a2a15;border-color:#1a5a30;height:100%">
+        <h3 style="color:#2ecc71">✓ Google OKF (What We Use)</h3>
+        <ul class="clean">
+          <li>Write each concept as one Markdown file with YAML metadata</li>
+          <li>Link files together with standard <code>[hyperlinks](path)</code></li>
+          <li>An agent reads <code>index.md</code> and picks which files to open</li>
+          <li>It then reads those files and follows any relevant links inside them</li>
+          <li><span class="green bold">Result:</span> "metformin dosage" → agent opens <code>drugs/metformin.md</code> directly — the whole file, not a random chunk</li>
+          <li><span class="green bold">Result:</span> Tables, dosage charts, cross-references stay intact</li>
+          <li><span class="green bold">Result:</span> Every retrieval is auditable — you can see which files were opened</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card mt" style="background:#1a1a30;border-color:#2a2a50;text-align:center;padding:14px">
+    <p><span class="yellow bold">Google released OKF in June 2026 [3].</span> We are among the first projects to apply it in a medical AI system. Our bundle has 45 files with 150+ cross-links.</p>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">8 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 9 — CRAG FLOW DIAGRAM                               ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s9">
+  <h1>CRAG Decision Flow — How We Prevent Hallucination</h1>
+  <p class="desc">Corrective RAG (Yan et al., 2024 [2]) adds a grading step between retrieval and generation. If retrieved docs aren't relevant, the system tries harder before giving up.</p>
+  
+  <!-- CRAG flowchart using CSS -->
+  <div style="display:flex;align-items:flex-start;gap:20px;margin-top:20px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#00b4d8"><span class="accent bold">User Query</span><br><span class="small">"diabetes diet in Hindi"</span></div>
+      <span style="font-size:20px;color:#556">↓</span>
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#00b4d8"><span class="accent bold">OKF Navigate</span><br><span class="small">Opens conditions/diabetes-type2.md + lifestyle/diet-diabetes.md</span></div>
+      <span style="font-size:20px;color:#556">↓</span>
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#ffd93d"><span class="yellow bold">Grade Each Doc</span><br><span class="small">LLM asks: "Does this doc answer the query?"</span></div>
+    </div>
+    
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:center;padding-top:160px">
+      <span style="font-size:16px;color:#2ecc71;font-weight:700">YES →</span>
+    </div>
+    
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:center;padding-top:120px">
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#2ecc71;background:#0a2a15"><span class="green bold">Build Context</span><br><span class="small">Docs + profile + AQI + wearable data</span></div>
+      <span style="font-size:20px;color:#556">↓</span>
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#9b59b6"><span style="color:#9b59b6" class="bold">Generate</span><br><span class="small">Llama 3.1 8B answers using ONLY the docs</span></div>
+      <span style="font-size:20px;color:#556">↓</span>
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#2ecc71"><span class="green bold">Stream via SSE</span><br><span class="small">Token-by-token to Flutter</span></div>
+    </div>
+    
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:center;padding-top:160px">
+      <span style="font-size:16px;color:#e74c3c;font-weight:700">← NO</span>
+    </div>
+    
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:center;padding-top:100px">
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#f39c12;background:#2a1a0a"><span class="orange bold">Fallback #1</span><br><span class="small">Qdrant + BGE-M3 vector search</span></div>
+      <span style="font-size:20px;color:#556">↓ still no?</span>
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#e74c3c;background:#2a0a0a"><span class="red bold">Fallback #2</span><br><span class="small">Google Search (last resort)</span></div>
+      <span style="font-size:20px;color:#556">↓ still nothing?</span>
+      <div class="card card-sm" style="width:200px;text-align:center;border-color:#667"><span class="bold" style="color:#889">Honest "I don't know"</span><br><span class="small">"Consult your doctor"</span></div>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">9 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 10 — TECH STACK                                     ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s10">
+  <h1>Technology Stack</h1>
+  <div class="row mt">
+    <div class="col">
+      <table>
+        <tr><th>Component</th><th>Choice</th><th>Why This One</th></tr>
+        <tr><td class="accent bold">LLM</td><td>Llama 3.1 8B Instruct</td><td>Fits in 5GB VRAM (Q4), 128K context, open weights</td></tr>
+        <tr><td class="accent bold">Inference</td><td>Ollama + Groq fallback</td><td>Ollama for offline; Groq gives 240 RPM free tier</td></tr>
+        <tr><td class="green bold">Primary Retrieval</td><td>Google OKF v0.2</td><td>Deterministic file navigation, no embedding cost</td></tr>
+        <tr><td class="green bold">Fallback Retrieval</td><td>BGE-M3 + Qdrant</td><td>Hybrid dense+sparse, 1,024-dim, runs on CPU</td></tr>
+        <tr><td class="orange bold">Translation</td><td>Bhashini API</td><td>Free, govt-backed, covers HI/MR/EN with NMT</td></tr>
+        <tr><td class="red bold">Safety</td><td>Semantic Router</td><td>MiniLM encoder, 80MB, &lt;100ms classification</td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <table>
+        <tr><th>Component</th><th>Choice</th><th>Why This One</th></tr>
+        <tr><td class="accent bold">AQI Data</td><td>WAQI + Open-Meteo</td><td>1K + 10K requests/day free. PM2.5, UV, temp</td></tr>
+        <tr><td class="green bold">Wearable</td><td>Health Connect SDK</td><td>Reads from Fitbit, Garmin, Samsung — one API</td></tr>
+        <tr><td class="orange bold">Backend</td><td>FastAPI + SSE</td><td>Async Python, token streaming, 4 endpoints</td></tr>
+        <tr><td class="orange bold">Mobile</td><td>Flutter (Android)</td><td>One codebase, Health Connect plugin, fast UI</td></tr>
+        <tr><td class="red bold">Storage</td><td>SQLite (on-device)</td><td>No cloud DB = no DPDP compliance headaches</td></tr>
+        <tr><td class="accent bold">Evaluation</td><td>RAGAS</td><td>Faithfulness, relevancy, precision — all automated</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card mt-sm" style="padding:12px;text-align:center">
+    <p class="small" style="color:#889">Total VRAM needed: ~5GB (Llama Q4) + optional 1GB (BGE-M3 on GPU) = fits on Google Colab T4 (16GB) or a laptop RTX 3050</p>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">10 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 11 — IMPLEMENTATION PROGRESS                        ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s11">
+  <h1>Implementation — 55% Complete</h1>
+  <div class="progress-track mt-sm">
+    <div class="progress-fill" style="width:55%;background:linear-gradient(90deg,#0d6e3e,#2ecc71)">55%</div>
+  </div>
+  <p class="small mt-sm" style="color:#667">Codebase: 2,505 lines Python · 8,963 lines Dart · 1,545 lines OKF Markdown = 13,013 total lines of code</p>
+  
+  <div class="row mt-sm">
+    <div class="col">
+      <table>
+        <tr><th>Module</th><th>Status</th><th>Lines</th></tr>
+        <tr><td>OKF Knowledge Bundle (45 files)</td><td><span class="tag tag-done">Done</span></td><td>1,545</td></tr>
+        <tr><td>OKF Navigator Agent</td><td><span class="tag tag-done">Done</span></td><td>385</td></tr>
+        <tr><td>CRAG Pipeline (LangGraph)</td><td><span class="tag tag-done">Done</span></td><td>135</td></tr>
+        <tr><td>Relevance Grader</td><td><span class="tag tag-done">Done</span></td><td>72</td></tr>
+        <tr><td>Context Builder (XML template)</td><td><span class="tag tag-done">Done</span></td><td>245</td></tr>
+        <tr><td>LLM Caller (Groq/Ollama cascade)</td><td><span class="tag tag-done">Done</span></td><td>108</td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <table>
+        <tr><th>Module</th><th>Status</th><th>Lines</th></tr>
+        <tr><td>FastAPI + SSE endpoints</td><td><span class="tag tag-done">Done</span></td><td>280</td></tr>
+        <tr><td>Safety Router (Semantic)</td><td><span class="tag tag-done">Done</span></td><td>134</td></tr>
+        <tr><td>Bhashini Translation</td><td><span class="tag tag-done">Done</span></td><td>112</td></tr>
+        <tr><td>AQI + Weather Service</td><td><span class="tag tag-done">Done</span></td><td>150</td></tr>
+        <tr><td>Flutter App (5 screens)</td><td><span class="tag tag-done">Done</span></td><td>8,963</td></tr>
+        <tr><td>Health Connect Service</td><td><span class="tag tag-wip">WIP</span></td><td>180</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="row mt-sm gap-sm">
+    <div class="card card-sm card-red" style="flex:1"><span class="red bold">Pending:</span> Contextual memory for multi-turn chat</div>
+    <div class="card card-sm card-red" style="flex:1"><span class="red bold">Pending:</span> Qdrant vector fallback with BGE-M3</div>
+    <div class="card card-sm card-orange" style="flex:1"><span class="orange bold">WIP:</span> RAGAS evaluation (50/100 gold QA pairs done)</div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">11 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 12 — ACTUAL CODE                                    ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s12">
+  <h1>Actual Code — CRAG Pipeline (pipeline.py)</h1>
+  <div class="row mt-sm">
+    <div class="col col-2">
+<pre><span class="kw">class</span> <span class="fn">CRAGPipeline</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, bundle_path: str):
+        self.navigator = OKFNavigator(bundle_path)
+
+    <span class="kw">async def</span> <span class="fn">run</span>(self, query, profile, aqi_data, wearable):
+        state = PipelineState(query=query, profile=profile,
+                              aqi_data=aqi_data, wearable=wearable)
+
+        <span class="cm"># Node 1: Navigate OKF bundle</span>
+        state.retrieved_docs = <span class="kw">await</span> self.navigator.navigate(query)
+
+        <span class="cm"># Node 2: Grade documents (CRAG)</span>
+        state.relevant_docs, state.needs_fallback = \
+            <span class="kw">await</span> grade_documents(query, state.retrieved_docs)
+
+        <span class="cm"># Node 3: Build context prompt</span>
+        state.messages = build_context(
+            query=query, docs=state.relevant_docs,
+            profile=profile, aqi_data=aqi_data, wearable=wearable)
+
+        <span class="cm"># Node 4: Generate with LLM</span>
+        full_response = <span class="kw">await</span> call_llm(state.messages, size=<span class="str">"70b"</span>)
+
+        <span class="cm"># Stream tokens word-by-word</span>
+        <span class="kw">for</span> word <span class="kw">in</span> full_response.split(<span class="str">" "</span>):
+            <span class="kw">yield</span> word
+            <span class="kw">await</span> asyncio.sleep(<span class="num">0.02</span>)</pre>
+    </div>
+    <div class="col">
+      <div class="card card-accent" style="margin-bottom:12px">
+        <h3 style="font-size:14px;color:#00b4d8">What This Code Does</h3>
+        <ul class="clean" style="font-size:13px">
+          <li>Takes a user query + health profile + AQI data + wearable readings</li>
+          <li>Navigates the OKF bundle to find relevant ICMR guideline files</li>
+          <li>Grades each file — throws away irrelevant ones (that's the "Corrective" in CRAG)</li>
+          <li>Builds a system prompt with docs, profile, AQI, and wearable context</li>
+          <li>Calls the LLM and streams words one at a time for real-time display</li>
+        </ul>
+      </div>
+      <div class="card card-orange">
+        <h3 style="font-size:14px;color:#f39c12">File: backend/rag/pipeline.py</h3>
+        <p class="small" style="color:#889">135 lines · Uses dataclass for state, async generator for streaming. This is the actual code in our repository, not pseudocode.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">12 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 13 — SAFETY ROUTER CODE                             ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s13">
+  <h1>Safety Router — How We Block Dangerous Queries</h1>
+  <div class="row mt-sm">
+    <div class="col">
+<pre><span class="cm"># backend/safety/router.py (134 lines)</span>
+
+EMERGENCY_RESPONSE = (
+    <span class="str">"🚨 EMERGENCY DETECTED 🚨\n"
+    "Call 112 (India Emergency) immediately.\n"
+    "📞 Emergency: 112\n"
+    "🏥 Ambulance: 102\n"
+    "☠️ Poison Control: 1800-11-6117"</span>
+)
+
+PRESCRIPTION_RESPONSE = (
+    <span class="str">"I cannot prescribe medication.\n"
+    "Only a licensed doctor can prescribe\n"
+    "after examining you."</span>
+)
+
+<span class="cm"># Semantic Router with 3 routes, 45+ sample utterances</span>
+<span class="kw">from</span> semantic_router <span class="kw">import</span> SemanticRouter
+encoder = HuggingFaceEncoder(<span class="str">"all-MiniLM-L6-v2"</span>)
+router = SemanticRouter(encoder=encoder,
+                        routes=[emergency, prescription,
+                                non_medical])</pre>
+    </div>
+    <div class="col">
+      <h3 style="font-size:16px;color:#e74c3c">Test Scenarios</h3>
+      <table>
+        <tr><th>Query</th><th>Route</th><th>Result</th></tr>
+        <tr><td>"I'm having chest pain"</td><td class="red bold">Emergency</td><td class="yes">Call 112</td></tr>
+        <tr><td>"prescribe me medicine for cold"</td><td class="orange bold">Rx Block</td><td class="yes">Blocked</td></tr>
+        <tr><td>"tell me a joke"</td><td class="yellow bold">Non-medical</td><td class="yes">Redirected</td></tr>
+        <tr><td>"sugar control tips for diabetes"</td><td class="green bold">Pass-through</td><td class="yes">→ RAG</td></tr>
+        <tr><td>"mere seene mein dard hai"</td><td class="red bold">Emergency</td><td class="yes">Call 112</td></tr>
+        <tr><td>"give me metformin dose"</td><td class="orange bold">Rx Block</td><td class="yes">Blocked</td></tr>
+      </table>
+      <div class="card card-sm mt-sm" style="border-color:#556">
+        <p class="small">The router uses <code>all-MiniLM-L6-v2</code> (80MB) to encode queries into vectors and match them against pre-defined route embeddings. Classification happens in under 100ms — before any LLM call.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">13 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 14 — INDIVIDUAL CONTRIBUTIONS                       ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s14">
+  <h1>Who Did What</h1>
+  <div class="row mt">
+    <div class="col">
+      <div class="card card-accent" style="height:100%">
+        <h3 style="color:#00b4d8;font-size:20px">Jayesh Patil (C233)</h3>
+        <p class="small" style="color:#889;margin-bottom:10px">RAG Pipeline &amp; Knowledge Base</p>
+        <ul class="clean" style="font-size:14px">
+          <li>Converted ICMR PDFs into 45 structured OKF Markdown files with YAML frontmatter and cross-links</li>
+          <li>Wrote the OKF Navigator — 385 lines of Python that reads index.md and follows links to find relevant files</li>
+          <li>Built the CRAG pipeline with 4 nodes: navigate → grade → build_context → generate</li>
+          <li>Set up Ollama + Groq cascade for LLM inference (local + cloud fallback)</li>
+          <li>Created 50 gold-standard QA pairs for RAGAS evaluation</li>
+        </ul>
+        <p class="mt-sm small" style="color:#556">Key files: okf_navigator.py, pipeline.py, grader.py, context_builder.py, llm.py</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card card-orange" style="height:100%">
+        <h3 style="color:#f39c12;font-size:20px">Abhijit Patil (C263)</h3>
+        <p class="small" style="color:#889;margin-bottom:10px">Backend API &amp; Integration</p>
+        <ul class="clean" style="font-size:14px">
+          <li>Built FastAPI server with SSE streaming — responses arrive token-by-token, like ChatGPT</li>
+          <li>Integrated Bhashini API: HI→EN and MR→EN translation for both input queries and output responses</li>
+          <li>Built the Semantic Router with 45+ utterances across 3 safety categories</li>
+          <li>Wrote WAQI wrapper (PM2.5, NO2, O3) and Open-Meteo wrapper (temp, humidity, UV)</li>
+          <li>Designed the XML context template that combines docs + profile + AQI + wearable data for the LLM</li>
+        </ul>
+        <p class="mt-sm small" style="color:#556">Key files: routes.py, bhashini.py, router.py, aqi.py, weather.py</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card card-green" style="height:100%">
+        <h3 style="color:#2ecc71;font-size:20px">Ritesh Pawar (C276)</h3>
+        <p class="small" style="color:#889;margin-bottom:10px">Mobile App &amp; Wearables</p>
+        <ul class="clean" style="font-size:14px">
+          <li>Built the Flutter app — 5 screens (Home, Chat, Health Dashboard, Profile Setup, Settings)</li>
+          <li>Implemented SSE streaming in the chat: responses appear word-by-word as the backend generates them</li>
+          <li>Built Health Connect service to read 23 metrics from any wearable connected to Android</li>
+          <li>Created animated UI widgets: health score ring, AQI indicator, metric cards</li>
+          <li>Integrated GPS-based location for automatic AQI fetching</li>
+        </ul>
+        <p class="mt-sm small" style="color:#556">Key files: chat_screen.dart, health_connect_service.dart, api_service.dart, home_screen.dart</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">14 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 15 — RESULTS                                        ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s15">
+  <h1>Results So Far</h1>
+  <div class="row mt">
+    <div class="col">
+      <div class="card card-accent" style="margin-bottom:14px">
+        <h3 style="color:#00b4d8;font-size:16px">OKF Retrieval</h3>
+        <ul class="clean" style="font-size:14px">
+          <li>45 files across 5 categories, 150+ cross-links</li>
+          <li>Query "diabetes diet" → opens <code>conditions/diabetes-type2.md</code> + <code>lifestyle/diet-diabetes.md</code></li>
+          <li>Query "metformin side effects" → opens <code>drugs/metformin.md</code> directly</li>
+          <li>Same query always returns the same files — fully deterministic</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <h3 style="color:#2ecc71;font-size:16px">Safety Router</h3>
+        <ul class="clean" style="font-size:14px">
+          <li>6/6 emergency test cases caught (including Hindi: "seene mein dard")</li>
+          <li>4/4 prescription attempts blocked</li>
+          <li>3/3 off-topic queries redirected</li>
+          <li>0 false positives on legitimate health queries</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card card-orange" style="margin-bottom:14px">
+        <h3 style="color:#f39c12;font-size:16px">End-to-End Pipeline</h3>
+        <ul class="clean" style="font-size:14px">
+          <li>Full pipeline works: query → safety → translate → OKF → grade → LLM → stream</li>
+          <li>Responses cite source documents (e.g., "[From: conditions/diabetes-type2.md]")</li>
+          <li>Disclaimer appended automatically: "I am an AI assistant, not a doctor"</li>
+          <li>SSE streaming works in Flutter — tokens appear word-by-word</li>
+        </ul>
+      </div>
+      <div class="card card-red">
+        <h3 style="color:#e74c3c;font-size:16px">Honest Weak Points</h3>
+        <ul class="clean" style="font-size:14px">
+          <li>No quantitative RAGAS scores yet — evaluation script exists but hasn't run the full 100-pair test</li>
+          <li>Multi-turn memory missing — each query is independent right now</li>
+          <li>Health Connect tested on emulator only, not physical wearable</li>
+          <li>Qdrant fallback coded but not yet deployed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">15 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 16 — HEALTH CONNECT                                 ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s16">
+  <h1>Health Connect — Wearable Data Integration</h1>
+  <p class="desc">Health Connect is Android's unified health API. It reads from Fitbit, Google Fit, Samsung Health, Garmin — all through one SDK.</p>
+  <div class="row mt">
+    <div class="col">
+      <table>
+        <tr><th>Category</th><th>Data Types We Read</th></tr>
+        <tr><td class="accent bold">🏃 Activity</td><td>Steps, Calories, Distance, Exercise</td></tr>
+        <tr><td style="color:#9b59b6" class="bold">😴 Sleep</td><td>Total, REM, Deep, Light, Awake phases</td></tr>
+        <tr><td class="red bold">❤️ Vitals</td><td>HR, Resting HR, HRV, SpO2, BP, Body Temp, Respiratory Rate</td></tr>
+        <tr><td class="orange bold">🩸 Body</td><td>Blood Glucose, Weight, Height, Body Fat %, BMI</td></tr>
+        <tr><td class="green bold">🍎 Nutrition</td><td>Calories, Macronutrients</td></tr>
+      </table>
+      <div class="card card-sm mt-sm" style="border-color:#556">
+        <p class="small"><strong>23 data types</strong> total. Users without a wearable can manually log BP, glucose, and weight — the app writes these back to Health Connect too.</p>
+      </div>
+    </div>
+    <div class="col">
+      <h3 style="font-size:16px;color:#fff">How It Flows Into AI Context</h3>
+      <div style="font-family:monospace;font-size:12px;background:#0d1420;border:1px solid #1a2540;border-radius:8px;padding:14px;line-height:1.6;color:#b8c4ce">
+        <span class="cm">&lt;wearable_data&gt;</span><br>
+        Steps today: <span class="num">7,342</span> | Calories: <span class="num">285</span><br>
+        Heart Rate: <span class="num">78</span> bpm | Resting: <span class="num">62</span> bpm<br>
+        SpO2: <span class="num">97</span>% | BP: <span class="num">128/84</span> mmHg<br>
+        Blood Glucose: <span class="num">142</span> mg/dL<br>
+        Sleep: <span class="num">6.2</span>h (Deep: <span class="num">1.1</span>h, REM: <span class="num">1.4</span>h)<br>
+        Weight: <span class="num">72.5</span> kg | Temp: <span class="num">36.8</span>°C<br>
+        <span class="cm">&lt;/wearable_data&gt;</span>
+      </div>
+      <p class="small mt-sm" style="color:#889">This block goes inside the LLM prompt alongside the user's profile and AQI data. The model can then say: "Your glucose reading of 142 mg/dL is above the 126 threshold per ICMR guidelines."</p>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">16 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 17 — FUTURE WORK                                    ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s17">
+  <h1>What's Left</h1>
+  <div class="row mt">
+    <div class="col">
+      <h2 style="font-size:18px">Before Final Review (Review III)</h2>
+      <table>
+        <tr><th>Task</th><th>Owner</th><th>Target</th></tr>
+        <tr><td>Contextual memory — store conversation history in SQLite for multi-turn chat</td><td>Jayesh</td><td>Oct</td></tr>
+        <tr><td>Qdrant fallback — index OKF with BGE-M3 for fuzzy queries</td><td>Jayesh</td><td>Oct</td></tr>
+        <tr><td>RAGAS evaluation — full 100-pair run, target faithfulness ≥ 0.80</td><td>Jayesh</td><td>Oct</td></tr>
+        <tr><td>Pydantic models — accept all 23 wearable fields in ChatRequest</td><td>Abhijit</td><td>Oct</td></tr>
+        <tr><td>Health Connect — test on physical devices (Fitbit, Samsung Galaxy Watch)</td><td>Ritesh</td><td>Oct</td></tr>
+        <tr><td>OKF expansion — add 15 more condition files + drug interactions</td><td>Jayesh</td><td>Nov</td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <h2 style="font-size:18px">Future Extensions (Beyond Capstone)</h2>
+      <ul class="clean" style="font-size:15px">
+        <li><span class="accent bold">ABDM:</span> Connect to Ayushman Bharat Health Account for centralized medical records [23]</li>
+        <li><span class="orange bold">OCR Reports:</span> Camera-based lab report parsing using multimodal RAG (following MMed-RAG approach [15])</li>
+        <li><span class="green bold">QLoRA:</span> Fine-tune Llama 3.1 on 2,000 ICMR Q&amp;A pairs — compare RAG-only vs RAG+fine-tune</li>
+        <li><span class="red bold">iOS:</span> Extend to iPhone with Apple HealthKit</li>
+        <li><span class="yellow bold">Languages:</span> Add Bengali, Tamil, Telugu via Bhashini</li>
+      </ul>
+      <div class="card card-sm mt" style="border-color:#556">
+        <p class="small" style="color:#889">The architecture already separates retrieval, generation, and translation. Adding new languages or data sources only requires plugging in new modules — the pipeline doesn't change.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">17 / 18</div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SLIDE 18 — REFERENCES + THANK YOU                         ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div class="slide" id="s18">
+  <h1>References</h1>
+  <div class="row mt-sm" style="font-size:12px;color:#8899aa;line-height:1.7">
+    <div class="col">
+      <p>[1] T. Vos et al., "Global burden of 369 diseases, 1990–2019," <em>Lancet</em>, vol. 396, 2020. doi: 10.1016/S0140-6736(20)30925-9</p>
+      <p>[2] S. Yan et al., "Corrective Retrieval Augmented Generation," arXiv:2401.15884, 2024.</p>
+      <p>[3] Google Cloud, "Open Knowledge Format Spec v0.2," GitHub, Jun. 2026.</p>
+      <p>[4] G. Roth et al., "Global Burden of CVD, 1990–2019," <em>JACC</em>, vol. 76, 2020. doi: 10.1016/j.jacc.2020.11.010</p>
+      <p>[5] GBD 2021 Diabetes Collaborators, "Global burden of diabetes with projections to 2050," <em>Lancet</em>, vol. 402, 2023.</p>
+      <p>[8] GBD 2019 Risk Factors, "87 risk factors in 204 countries," <em>Lancet</em>, vol. 396, 2020.</p>
+      <p>[9] J. Lelieveld et al., "Outdoor air pollution and premature mortality," <em>Nature</em>, vol. 525, 2015.</p>
+      <p>[13] S. Siriwardhana et al., "RAG-end2end domain adaptation," <em>TACL</em>, 2022. arXiv: 2210.02627</p>
+    </div>
+    <div class="col">
+      <p>[14] S. Anuyah et al., "Domain-Specific KGs in Healthcare RAG," arXiv:2601.15429, 2026.</p>
+      <p>[15] P. Xia et al., "MMed-RAG for Medical Vision-Language Models," <em>ICLR</em>, 2025. arXiv:2410.13085</p>
+      <p>[17] AI4Bharat, "IndicTrans2: 22 Indian Languages," arXiv:2305.16307, 2023.</p>
+      <p>[18] R. Masters et al., "ROI of public health interventions," <em>J. Epi. Comm. Health</em>, 2017.</p>
+      <p>[19] A. Acosta et al., "Multimodal biomedical AI," <em>Nature Medicine</em>, vol. 28, 2022.</p>
+      <p>[21] "Zero Trust Security for Autonomous AI in Healthcare," arXiv:2603.17419, 2026.</p>
+      <p>[22] Govt. of India, "Digital Personal Data Protection Act, 2023," <em>Gazette</em>, Aug. 2023.</p>
+      <p>[23] National Health Authority, "Ayushman Bharat Digital Mission," abdm.gov.in, 2024.</p>
+      <p class="mt" style="color:#556">Full list of 42 references with DOIs in the interim report.</p>
+    </div>
+  </div>
+  
+  <div style="text-align:center;margin-top:30px">
+    <h2 style="font-size:36px;color:#fff">Thank You</h2>
+    <p style="font-size:16px;color:#889;margin-top:8px">Jayesh Patil &nbsp;•&nbsp; Abhijit Patil &nbsp;•&nbsp; Ritesh Pawar</p>
+    <p style="font-size:14px;color:#556;margin-top:4px">github.com/Jay-D21/Aarogya-Sathi-Final</p>
+  </div>
+  <div class="footer">MPSTME, SVKM's NMIMS Shirpur &nbsp;|&nbsp; B.Tech AI/ML &nbsp;|&nbsp; 2026-27</div>
+  <div class="slide-num">18 / 18</div>
+</div>
+
+<!-- ─── NAVIGATION ─── -->
+<div class="nav-hint">← → Arrow keys or click to navigate</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+function show(n) {
+  slides.forEach(s => s.classList.remove('active'));
+  current = ((n % total) + total) % total;
+  slides[current].classList.add('active');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+  if (e.key === 'Home') show(0);
+  if (e.key === 'End') show(total - 1);
+  if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+document.addEventListener('click', e => {
+  if (e.clientX > window.innerWidth / 2) show(current + 1);
+  else show(current - 1);
+});
+
+show(0);
+</script>
+</body>
+</html>
