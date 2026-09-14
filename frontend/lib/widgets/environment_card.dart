@@ -4,6 +4,9 @@ import '../config/theme.dart';
 
 /// Google Health-style environment card showing AQI + Weather in one card.
 /// Displays AQI value with CPCB color coding, temperature, and humidity.
+/// Displays real-time environmental health data including AQI index,
+/// pollen count, UV index, and humidity. Colour-coded to CPCB/WHO
+/// standard ranges with actionable advice at each level.
 class EnvironmentCard extends StatelessWidget {
   final int? aqi;
   final String? aqiStatus;
