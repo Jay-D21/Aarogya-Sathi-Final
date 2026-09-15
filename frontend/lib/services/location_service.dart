@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,17 +54,38 @@ class LocationService {
       String? city;
       if (placemarks.isNotEmpty) {
         final p = placemarks.first;
-        // In India, subAdministrativeArea is typically the Taluka/Tehsil/City (e.g. Shirpur, Dhule)
-        // whereas locality is often a rural village or sub-locality (e.g. Babulde).
-        // We prefer subAdministrativeArea when present for a recognized city name.
-        final subAdmin = p.subAdministrativeArea;
         final locality = p.locality;
-        if (subAdmin != null && subAdmin.isNotEmpty) {
-          city = subAdmin;
-        } else if (locality != null && locality.isNotEmpty) {
+        final subAdmin = p.subAdministrativeArea;
+        final admin = p.administrativeArea;
+
+        debugPrint('[LocationService] Geocode: locality=$locality, '
+            'subAdmin=$subAdmin, admin=$admin');
+
+        // Geocoding result hierarchy varies by region. We try multiple fields
+        // and pick the most city-like result:
+        // - locality is usually the city/town/village name
+        // - subAdministrativeArea can be Taluka (e.g. "Shirpur") or Division (e.g. "Nashik Division")
+        // - administrativeArea is the state
+        // Pick locality unless it looks like a rural sub-village, in which case
+        // prefer subAdmin if it doesn't contain "Division" or "District".
+        if (locality != null && locality.isNotEmpty) {
           city = locality;
+          // If locality is a known rural/small village AND subAdmin is a real city, upgrade
+          if (subAdmin != null &&
+              subAdmin.isNotEmpty &&
+              !subAdmin.toLowerCase().contains('division') &&
+              !subAdmin.toLowerCase().contains('district') &&
+              subAdmin.length < locality.length) {
+            // subAdmin is shorter and cleaner — likely the taluka city name
+            city = subAdmin;
+          }
+        } else if (subAdmin != null &&
+            subAdmin.isNotEmpty &&
+            !subAdmin.toLowerCase().contains('division') &&
+            !subAdmin.toLowerCase().contains('district')) {
+          city = subAdmin;
         } else {
-          city = p.administrativeArea;
+          city = admin;
         }
       }
 

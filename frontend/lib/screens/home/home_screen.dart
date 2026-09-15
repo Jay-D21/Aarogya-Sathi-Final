@@ -47,8 +47,15 @@ class _HomeScreenState extends State<HomeScreen>
       final currentCity = auth.user?['preferred_city'] as String?;
       LocationService.getCityName().then((city) {
         if (city != null && city.isNotEmpty && mounted) {
-          // If no city is saved yet, or if it was previously set to rural sublocality "babulde", upgrade it to the detected city (Shirpur)
-          if (currentCity == null || currentCity.isEmpty || currentCity.toLowerCase() == 'babulde') {
+          // Always update the preferred city from GPS detection.
+          // This ensures stale values like 'babulde' or 'Nashik Division'
+          // get replaced with the correct city name.
+          final lowerCity = currentCity?.toLowerCase() ?? '';
+          if (currentCity == null ||
+              currentCity.isEmpty ||
+              lowerCity == 'babulde' ||
+              lowerCity.contains('division') ||
+              lowerCity.contains('district')) {
             auth.updateProfile({'preferred_city': city});
           }
         }

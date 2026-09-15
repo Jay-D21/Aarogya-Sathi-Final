@@ -80,14 +80,21 @@ class FitnessProvider extends ChangeNotifier {
   // ── Initialisation ──────────────────────────────────────────────────────────
 
   /// Single init entry-point called from HomeScreen.
-  /// Loads local data, syncs Health Connect/Fitbit, starts pedometer, then syncs backend.
+  /// Loads local data, syncs Health Connect/Fitbit FIRST (awaited so its values
+  /// are authoritative), then starts pedometer as a fallback only if HC didn't sync.
   Future<void> init() async {
     await _loadLocalDay();
     notifyListeners();
 
-    // Auto-sync Health Connect / Fitbit if available
-    unawaited(syncFromHealthConnect());
-    unawaited(initPedometer());
+    // Health Connect sync MUST complete before pedometer starts.
+    // This way, if HC provides steps/calories, the pedometer won't overwrite them.
+    await syncFromHealthConnect();
+
+    // Only start pedometer as fallback if Health Connect didn't provide step data
+    if (!_isHealthConnectSynced) {
+      unawaited(initPedometer());
+    }
+
     unawaited(_syncFromBackend());
   }
 
@@ -345,6 +352,8 @@ class FitnessProvider extends ChangeNotifier {
 
   /// Pull today's summary from backend. Takes the higher of server vs. local
   /// so data is never lost even when offline periods occur.
+  /// EXCEPTION: if Health Connect has already synced today, its step/calorie
+  /// counts are authoritative and must not be overwritten by stale backend data.
   Future<void> _syncFromBackend() async {
     try {
       final resp = await ApiService.get('/fitness/summary');
@@ -356,7 +365,11 @@ class FitnessProvider extends ChangeNotifier {
       final sSleep = (data['sleep_hours'] as num?)?.toDouble() ?? 0.0;
 
       bool changed = false;
-      if (sSteps > _localSteps) { _localSteps = sSteps; changed = true; }
+      // Only accept backend steps if HC hasn't already synced authoritative data
+      if (!_isHealthConnectSynced && sSteps > _localSteps) {
+        _localSteps = sSteps;
+        changed = true;
+      }
       if (sWater > _localWater) { _localWater = sWater; changed = true; }
       if (sSleep > _localSleep) { _localSleep = sSleep; changed = true; }
       if (changed) notifyListeners();

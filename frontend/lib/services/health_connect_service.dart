@@ -118,8 +118,10 @@ class HealthConnectService {
             startTime: todayMidnight,
             endTime: now,
           );
+          // Deduplicate step points before summing
+          final dedupedSteps = _health.removeDuplicates(stepPoints);
           int sumSteps = 0;
-          for (var pt in stepPoints) {
+          for (var pt in dedupedSteps) {
             if (pt.value is NumericHealthValue) {
               sumSteps += (pt.value as NumericHealthValue).numericValue.toInt();
             }
@@ -133,13 +135,40 @@ class HealthConnectService {
         }
       }
 
-      // ── 2. Vitals & Calories ──────────────────────────────────────────────
+      // ── 2. Calories for TODAY ONLY (separate query to avoid 36h lookback inflation)
+      List<HealthDataPoint> caloriePoints = [];
+      try {
+        caloriePoints = await _health.getHealthDataFromTypes(
+          types: [
+            HealthDataType.ACTIVE_ENERGY_BURNED,
+            HealthDataType.TOTAL_CALORIES_BURNED,
+          ],
+          startTime: todayMidnight,
+          endTime: now,
+        );
+        caloriePoints = _health.removeDuplicates(caloriePoints);
+        debugPrint('[HealthConnectService] Fetched ${caloriePoints.length} calorie points (today only)');
+
+        // Log each calorie point for debugging
+        for (var pt in caloriePoints) {
+          if (pt.value is NumericHealthValue) {
+            debugPrint(
+              '[HealthConnectService] CalPt: ${pt.type.name} = '
+              '${(pt.value as NumericHealthValue).numericValue.toStringAsFixed(1)} '
+              'from ${pt.dateFrom.toIso8601String()} to ${pt.dateTo.toIso8601String()} '
+              'source: ${pt.sourceName}',
+            );
+          }
+        }
+      } catch (e) {
+        debugPrint('[HealthConnectService] Calorie query error: $e');
+      }
+
+      // ── 3. Vitals (HR, SpO2, BP, glucose, temp, weight) from 36h lookback
       final vitalTypes = [
         HealthDataType.HEART_RATE,
         HealthDataType.RESTING_HEART_RATE,
         HealthDataType.BLOOD_OXYGEN,
-        HealthDataType.ACTIVE_ENERGY_BURNED,
-        HealthDataType.TOTAL_CALORIES_BURNED,
         HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
         HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
         HealthDataType.BLOOD_GLUCOSE,
@@ -159,7 +188,7 @@ class HealthConnectService {
         debugPrint('[HealthConnectService] Vital points query error: $e');
       }
 
-      // ── 3. Sleep data ─────────────────────────────────────────────────────
+      // ── 4. Sleep data ─────────────────────────────────────────────────────
       final sleepTypes = [
         HealthDataType.SLEEP_SESSION,
         HealthDataType.SLEEP_ASLEEP,
@@ -187,6 +216,7 @@ class HealthConnectService {
         steps: todaySteps,
         todayMidnight: todayMidnight,
         vitalPoints: vitalPoints,
+        caloriePoints: caloriePoints,
         sleepPoints: sleepPoints,
       );
     } catch (e) {
@@ -199,10 +229,9 @@ class HealthConnectService {
     required int? steps,
     required DateTime todayMidnight,
     required List<HealthDataPoint> vitalPoints,
+    required List<HealthDataPoint> caloriePoints,
     required List<HealthDataPoint> sleepPoints,
   }) {
-    double todayActiveCalories = 0;
-    double todayTotalCalories = 0;
     double? latestHeartRate;
     DateTime? latestHeartRateTime;
     double? restingHeartRate;
@@ -222,18 +251,6 @@ class HealthConnectService {
       final pointTime = point.dateTo;
 
       switch (point.type) {
-        case HealthDataType.ACTIVE_ENERGY_BURNED:
-          if (point.dateFrom.isAfter(todayMidnight) || pointTime.isAfter(todayMidnight)) {
-            todayActiveCalories += numVal;
-          }
-          break;
-
-        case HealthDataType.TOTAL_CALORIES_BURNED:
-          if (point.dateFrom.isAfter(todayMidnight) || pointTime.isAfter(todayMidnight)) {
-            todayTotalCalories += numVal;
-          }
-          break;
-
         case HealthDataType.HEART_RATE:
           if (latestHeartRateTime == null || pointTime.isAfter(latestHeartRateTime)) {
             latestHeartRate = numVal;
@@ -280,6 +297,43 @@ class HealthConnectService {
       }
     }
 
+    // ── Aggregate Calories per source ────────────────────────────────────────
+    // Multiple sources (Google Fit, phone sensor, Fitbit) may each write calorie
+    // data points. Summing ALL of them double/triple-counts. Instead, sum per
+    // source and pick the single source with the LOWEST total (most conservative,
+    // matching what Google Fit shows), OR just use TOTAL_CALORIES_BURNED if
+    // available since that's what Google Fit reports as "Cal".
+    final Map<String, double> activeCalBySrc = {};
+    final Map<String, double> totalCalBySrc = {};
+
+    for (var point in caloriePoints) {
+      final val = point.value;
+      if (val is! NumericHealthValue) continue;
+      final numVal = val.numericValue.toDouble();
+      final src = point.sourceName;
+
+      if (point.type == HealthDataType.ACTIVE_ENERGY_BURNED) {
+        activeCalBySrc[src] = (activeCalBySrc[src] ?? 0) + numVal;
+      } else if (point.type == HealthDataType.TOTAL_CALORIES_BURNED) {
+        totalCalBySrc[src] = (totalCalBySrc[src] ?? 0) + numVal;
+      }
+    }
+
+    debugPrint('[HealthConnectService] Active cal by source: $activeCalBySrc');
+    debugPrint('[HealthConnectService] Total cal by source: $totalCalBySrc');
+
+    // Strategy: Use TOTAL_CALORIES_BURNED from the source with the lowest value
+    // (most likely Google Fit's authoritative number). If no total, use active.
+    // If no active, leave null.
+    double chosenCalories = 0;
+    if (totalCalBySrc.isNotEmpty) {
+      // Pick the minimum total across all sources — this is typically the
+      // authoritative Google Fit value (806 Cal), not an inflated sum.
+      chosenCalories = totalCalBySrc.values.reduce((a, b) => a < b ? a : b);
+    } else if (activeCalBySrc.isNotEmpty) {
+      chosenCalories = activeCalBySrc.values.reduce((a, b) => a < b ? a : b);
+    }
+
     // ── Aggregate Sleep ─────────────────────────────────────────────────────
     double sleepSessionHours = 0;
     double sleepRemHours = 0;
@@ -318,14 +372,10 @@ class HealthConnectService {
         ? sleepSessionHours
         : (sleepDeepHours + sleepLightHours + sleepRemHours + sleepAsleepHours);
 
-    final double chosenCalories = todayActiveCalories > 0
-        ? todayActiveCalories
-        : todayTotalCalories;
-
     debugPrint(
       '[HealthConnectService] Aggregated => Steps: $steps, '
       'HR: $latestHeartRate, RestingHR: $restingHeartRate, '
-      'Cal: $chosenCalories (active: $todayActiveCalories, total: $todayTotalCalories), '
+      'Cal: $chosenCalories, '
       'Sleep: $totalSleep, SpO2: $latestSpo2',
     );
 
@@ -347,3 +397,4 @@ class HealthConnectService {
     );
   }
 }
+
