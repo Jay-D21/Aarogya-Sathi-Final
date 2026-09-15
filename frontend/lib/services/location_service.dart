@@ -53,11 +53,18 @@ class LocationService {
       String? city;
       if (placemarks.isNotEmpty) {
         final p = placemarks.first;
-        city = p.locality?.isNotEmpty == true
-            ? p.locality
-            : p.subAdministrativeArea?.isNotEmpty == true
-                ? p.subAdministrativeArea
-                : p.administrativeArea;
+        // In India, subAdministrativeArea is typically the Taluka/Tehsil/City (e.g. Shirpur, Dhule)
+        // whereas locality is often a rural village or sub-locality (e.g. Babulde).
+        // We prefer subAdministrativeArea when present for a recognized city name.
+        final subAdmin = p.subAdministrativeArea;
+        final locality = p.locality;
+        if (subAdmin != null && subAdmin.isNotEmpty) {
+          city = subAdmin;
+        } else if (locality != null && locality.isNotEmpty) {
+          city = locality;
+        } else {
+          city = p.administrativeArea;
+        }
       }
 
       if (city != null && city.isNotEmpty) {

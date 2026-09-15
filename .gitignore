@@ -34,3 +34,7 @@ Thumbs.db
 # Logs
 *.log
 evaluation/results*.json
+
+# Scratch & temporary files
+scratch/
+

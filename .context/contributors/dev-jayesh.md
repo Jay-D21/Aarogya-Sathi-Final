@@ -38,6 +38,17 @@
 
 ## Session Log
 
+### Session 7 — 2026-09-15 (Health Connect & Google Fit Sync Precision + Indian CPCB NAQI Air Quality Engine)
+- Upgraded MainActivity.kt to FlutterFragmentActivity for Android 14+ Health Connect registerForActivityResult support
+- Added Health Connect permissions (READ_RESTING_HEART_RATE, READ_TOTAL_CALORIES_BURNED, READ_DISTANCE) and rationale intent filter to AndroidManifest.xml
+- Eliminated double calorie accumulation bug in health_connect_service.dart (separated active vs total calories, matching Google Fit's 738 kcal)
+- Widened Health Connect historical window to 36 hours for seamless retrieval of previous evening/night heart rate, SpO2, and sleep records
+- Fixed pedometer clobbering bug in fitness_provider.dart: verified Health Connect data is protected from uncalibrated accelerometer noise
+- Enhanced LocationService reverse-geocoding to prioritize subAdministrativeArea (Taluka/City e.g. Shirpur) over rural census sub-localities (Babulde)
+- Implemented official Indian National Air Quality Index (CPCB NAQI) calculation with direct Open-Meteo coordinates fallback
+- Added interactive AQI detail bottom sheet with PM2.5/PM10 pollutant breakdown, GPS refresh, and city chips
+- Verified 0 flutter analyze errors and confirmed clean Android assembleDebug APK build
+
 ### Session 6 — 2026-09-12 (early morning, Complete UI & Feature Restoration)
 - Restored the complete, premium Aarogya Sathi app from the full original repository:
   - 4-tab bottom navigation (Home Dashboard, AI Chat, Health Tracking, Profile)

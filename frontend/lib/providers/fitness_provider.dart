@@ -46,6 +46,7 @@ class FitnessProvider extends ChangeNotifier {
   bool _loading = false;
   bool _isSyncing = false;
   bool _healthConnectAuthorized = false;
+  bool _isHealthConnectSynced = false;
   StreamSubscription<StepCount>? _stepSub;
   final HealthConnectService _healthConnect = HealthConnectService();
 
@@ -60,6 +61,7 @@ class FitnessProvider extends ChangeNotifier {
   bool   get isLoading   => _loading;
   bool   get isSyncing   => _isSyncing;
   bool   get isHealthConnectAuthorized => _healthConnectAuthorized;
+  bool   get isHealthConnectSynced => _isHealthConnectSynced;
   int    get steps       => _localSteps;
   int    get waterMl     => _localWater;
   double get sleepHours  => _localSleep;
@@ -165,7 +167,8 @@ class FitnessProvider extends ChangeNotifier {
 
       // Steps from wearable
       if (data.todaySteps != null && data.todaySteps! > 0) {
-        _localSteps = max(_localSteps, data.todaySteps!);
+        _localSteps = data.todaySteps!;
+        _isHealthConnectSynced = true;
         await prefs.setInt(_kSteps, _localSteps);
         changed = true;
         dataCount++;
@@ -275,9 +278,15 @@ class FitnessProvider extends ChangeNotifier {
           offset = prefs.getInt(_kPedoOffset) ?? event.steps;
         }
 
+        // If Health Connect / Google Fit is authorized and has already synced today,
+        // we respect the wearable/Google Fit authoritative count.
+        if (_healthConnectAuthorized && _isHealthConnectSynced) {
+          return;
+        }
+
         final todaySteps = (event.steps - offset).clamp(0, 999999);
 
-        // Don't overwrite if wearable reported higher
+        // Don't overwrite if wearable reported
         if (todaySteps > _localSteps) {
           _localSteps = todaySteps;
           await prefs.setInt(_kSteps, _localSteps);

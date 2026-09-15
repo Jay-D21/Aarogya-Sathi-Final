@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:intl/intl.dart';
 import '../../config/api_config.dart';
 import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
@@ -42,9 +43,14 @@ class _HomeScreenState extends State<HomeScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<FitnessProvider>().init();
       context.read<ReminderProvider>().loadToday();
+      final auth = context.read<AuthProvider>();
+      final currentCity = auth.user?['preferred_city'] as String?;
       LocationService.getCityName().then((city) {
         if (city != null && city.isNotEmpty && mounted) {
-          context.read<AuthProvider>().updateProfile({'preferred_city': city});
+          // If no city is saved yet, or if it was previously set to rural sublocality "babulde", upgrade it to the detected city (Shirpur)
+          if (currentCity == null || currentCity.isEmpty || currentCity.toLowerCase() == 'babulde') {
+            auth.updateProfile({'preferred_city': city});
+          }
         }
       });
     });
@@ -407,8 +413,12 @@ class _DashboardTab extends StatelessWidget {
     return s.clamp(0, 100);
   }
 
-  String _fmt(int v) =>
-      v > 999 ? '${(v / 1000).toStringAsFixed(1)}k' : '$v';
+  String _fmt(int v) {
+    if (v >= 10000) {
+      return '${(v / 1000).toStringAsFixed(1)}k';
+    }
+    return NumberFormat.decimalPattern().format(v);
+  }
 
   Future<void> _handleFitbitSync(BuildContext context, FitnessProvider fitness) async {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -1400,13 +1410,18 @@ class _AqiBanner extends StatefulWidget {
 
 class _AqiBannerState extends State<_AqiBanner> {
   int? _aqi;
+  double? _pm25;
+  double? _pm10;
   String _label = '';
   Color _color = AppTheme.accentGreen;
   bool _loading = true;
   String _fetchedFor = '';
 
   @override
-  void initState() { super.initState(); _load(); }
+  void initState() {
+    super.initState();
+    _load();
+  }
 
   @override
   void didUpdateWidget(_AqiBanner old) {
@@ -1414,21 +1429,61 @@ class _AqiBannerState extends State<_AqiBanner> {
     if (old.city != widget.city) _load();
   }
 
-  (String, Color) _classify(int aqi) {
-    if (aqi <= 50)  return ('Good',           AppTheme.accentGreen);
-    if (aqi <= 100) return ('Moderate',        AppTheme.accentYellow);
-    if (aqi <= 150) return ('Unhealthy*',       AppTheme.accentOrange);
-    if (aqi <= 200) return ('Unhealthy',        AppTheme.accentRed);
-    if (aqi <= 300) return ('Very Unhealthy',   const Color(0xFF7E22CE));
-    return           ('Hazardous',              const Color(0xFF991B1B));
+  /// Calculates the official Central Pollution Control Board (CPCB) Indian National AQI (NAQI)
+  /// from PM2.5 and PM10 concentrations (µg/m³).
+  int _calcIndianAqi(double pm25, double pm10) {
+    double aqiPm25;
+    if (pm25 <= 30) {
+      aqiPm25 = (pm25 / 30) * 50;
+    } else if (pm25 <= 60) {
+      aqiPm25 = 50 + ((pm25 - 30) / 30) * 50;
+    } else if (pm25 <= 90) {
+      aqiPm25 = 100 + ((pm25 - 60) / 30) * 100;
+    } else if (pm25 <= 120) {
+      aqiPm25 = 200 + ((pm25 - 90) / 30) * 100;
+    } else if (pm25 <= 250) {
+      aqiPm25 = 300 + ((pm25 - 120) / 130) * 100;
+    } else {
+      aqiPm25 = 400 + ((pm25 - 250) / 130) * 100;
+    }
+
+    double aqiPm10;
+    if (pm10 <= 50) {
+      aqiPm10 = (pm10 / 50) * 50;
+    } else if (pm10 <= 100) {
+      aqiPm10 = 50 + ((pm10 - 50) / 50) * 50;
+    } else if (pm10 <= 250) {
+      aqiPm10 = 100 + ((pm10 - 100) / 150) * 100;
+    } else if (pm10 <= 350) {
+      aqiPm10 = 200 + ((pm10 - 250) / 100) * 100;
+    } else if (pm10 <= 430) {
+      aqiPm10 = 300 + ((pm10 - 350) / 80) * 100;
+    } else {
+      aqiPm10 = 400 + ((pm10 - 430) / 70) * 100;
+    }
+
+    final maxVal = aqiPm25 > aqiPm10 ? aqiPm25 : aqiPm10;
+    return maxVal.round().clamp(1, 500);
   }
 
+  /// Indian CPCB NAQI Categories & Colors
+  (String, Color) _classify(int aqi) {
+    if (aqi <= 50)  return ('Good',           const Color(0xFF10B981));
+    if (aqi <= 100) return ('Satisfactory',   const Color(0xFF22C55E));
+    if (aqi <= 200) return ('Moderate',       const Color(0xFFEAB308));
+    if (aqi <= 300) return ('Poor',           const Color(0xFFF97316));
+    if (aqi <= 400) return ('Very Poor',      const Color(0xFFEF4444));
+    return           ('Severe',              const Color(0xFF991B1B));
+  }
+
+  /// Indian CPCB NAQI Health Recommendations
   String _advice(int aqi) {
-    if (aqi <= 50)  return 'Safe for all outdoor activities';
-    if (aqi <= 100) return 'Sensitive groups: reduce outdoor time';
-    if (aqi <= 150) return 'Reduce prolonged outdoor exertion';
-    if (aqi <= 200) return 'Avoid outdoor activity — wear a mask';
-    return 'Stay indoors with windows closed';
+    if (aqi <= 50)  return 'Clean air • Ideal for all outdoor activities';
+    if (aqi <= 100) return 'Satisfactory air quality • Safe for outdoor activity';
+    if (aqi <= 200) return 'Acceptable • Sensitive groups take precautions';
+    if (aqi <= 300) return 'Poor air • Avoid prolonged outdoor exertion';
+    if (aqi <= 400) return 'Very poor air • Wear an N95 mask outdoors';
+    return 'Severe air • Stay indoors with windows shut';
   }
 
   Future<void> _load({bool force = false}) async {
@@ -1446,7 +1501,12 @@ class _AqiBannerState extends State<_AqiBanner> {
       final cached = prefs.getInt(cacheKey);
       if (cached != null && mounted && city == widget.city) {
         final (lbl, col) = _classify(cached);
-        setState(() { _aqi = cached; _label = lbl; _color = col; _loading = false; });
+        setState(() {
+          _aqi = cached;
+          _label = lbl;
+          _color = col;
+          _loading = false;
+        });
         return;
       }
     }
@@ -1454,15 +1514,17 @@ class _AqiBannerState extends State<_AqiBanner> {
     if (mounted) setState(() => _loading = true);
 
     int? resolvedAqi;
+    double? resolvedPm25;
+    double? resolvedPm10;
 
-    // 1. Try resolving using device GPS
+    // 1. First try resolving using high-precision GPS coordinates
     try {
       final pos = await LocationService.getCurrentPosition();
       double? lat = pos?.latitude;
       double? lon = pos?.longitude;
 
-      // If no GPS, try geocoding city string to coordinates
-      if (lat == null || lon == null) {
+      // If no GPS or city is custom-selected, geocode the city name
+      if (lat == null || lon == null || (city.isNotEmpty && city.toLowerCase() != 'shirpur' && city.toLowerCase() != 'babulde')) {
         try {
           final locs = await locationFromAddress(city).timeout(const Duration(seconds: 4));
           if (locs.isNotEmpty) {
@@ -1472,12 +1534,41 @@ class _AqiBannerState extends State<_AqiBanner> {
         } catch (_) {}
       }
 
-      if (lat != null && lon != null) {
-        // Option A: Try our deployed backend
+      // Default fallback coordinates: Shirpur (21.35, 74.88)
+      lat ??= 21.35;
+      lon ??= 74.88;
+
+      // Priority 1: Open-Meteo High-Resolution Air Quality (100% free, coordinate-level accuracy)
+      try {
+        final omResp = await http.get(
+          Uri.parse('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=$lat&longitude=$lon&current=us_aqi,european_aqi,pm10,pm2_5'),
+        ).timeout(const Duration(seconds: 5));
+        if (omResp.statusCode == 200) {
+          final data = jsonDecode(omResp.body);
+          final cur = data['current'];
+          if (cur != null) {
+            final pm25Val = (cur['pm2_5'] as num?)?.toDouble();
+            final pm10Val = (cur['pm10'] as num?)?.toDouble();
+            if (pm25Val != null && pm10Val != null) {
+              resolvedPm25 = pm25Val;
+              resolvedPm10 = pm10Val;
+              resolvedAqi = _calcIndianAqi(pm25Val, pm10Val);
+              debugPrint('[AQI] Resolved Open-Meteo NAQI: $resolvedAqi (PM2.5: $pm25Val, PM10: $pm10Val)');
+            } else if (cur['us_aqi'] != null) {
+              resolvedAqi = (cur['us_aqi'] as num).toInt();
+            }
+          }
+        }
+      } catch (e) {
+        debugPrint('[AQI] Open-Meteo error: $e');
+      }
+
+      // Priority 2: Fallback to Backend AQI
+      if (resolvedAqi == null) {
         try {
           final backendResp = await http.get(
             Uri.parse('${ApiConfig.baseUrl}/api/aqi?lat=$lat&lon=$lon'),
-          ).timeout(const Duration(seconds: 6));
+          ).timeout(const Duration(seconds: 5));
           if (backendResp.statusCode == 200) {
             final data = jsonDecode(backendResp.body);
             if (data['success'] == true && data['data'] != null) {
@@ -1486,30 +1577,16 @@ class _AqiBannerState extends State<_AqiBanner> {
             }
           }
         } catch (_) {}
-
-        // Option B: Fallback to Open-Meteo Air Quality (worldwide, 100% free, no token)
-        if (resolvedAqi == null) {
-          try {
-            final omResp = await http.get(
-              Uri.parse('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=$lat&longitude=$lon&current=us_aqi,pm10,pm2_5'),
-            ).timeout(const Duration(seconds: 6));
-            if (omResp.statusCode == 200) {
-              final data = jsonDecode(omResp.body);
-              final aqi = (data['current']?['us_aqi'] as num?)?.toInt();
-              if (aqi != null && aqi > 0) resolvedAqi = aqi;
-            }
-          } catch (_) {}
-        }
       }
     } catch (_) {}
 
-    // Option C: Try WAQI city feed
+    // Priority 3: Try WAQI city feed
     if (resolvedAqi == null) {
       try {
         final encoded = Uri.encodeComponent(city);
         final resp = await http.get(
           Uri.parse('https://api.waqi.info/feed/$encoded/?token=demo'),
-        ).timeout(const Duration(seconds: 5));
+        ).timeout(const Duration(seconds: 4));
         if (resp.statusCode == 200) {
           final data = jsonDecode(resp.body) as Map<String, dynamic>;
           if (data['status'] == 'ok') {
@@ -1523,87 +1600,448 @@ class _AqiBannerState extends State<_AqiBanner> {
     if (resolvedAqi != null) {
       await prefs.setInt(cacheKey, resolvedAqi);
       await prefs.setInt(cacheTimeKey, now);
-      if (mounted && city == widget.city) {
+      if (mounted) {
         final (lbl, col) = _classify(resolvedAqi);
-        setState(() { _aqi = resolvedAqi; _label = lbl; _color = col; _loading = false; });
+        setState(() {
+          _aqi = resolvedAqi;
+          _pm25 = resolvedPm25;
+          _pm10 = resolvedPm10;
+          _label = lbl;
+          _color = col;
+          _loading = false;
+        });
         return;
       }
     }
 
-    // Fallback to cache or display reasonable regional baseline
+    // Baseline fallback if all network requests fail
     if (mounted) {
       final cached = prefs.getInt(cacheKey);
-      if (cached != null) {
-        final (lbl, col) = _classify(cached);
-        setState(() { _aqi = cached; _label = lbl; _color = col; _loading = false; });
-      } else {
-        // Moderate default fallback (e.g. 58) rather than blank
-        final fallback = 58;
-        final (lbl, col) = _classify(fallback);
-        setState(() { _aqi = fallback; _label = lbl; _color = col; _loading = false; });
+      final fallback = cached ?? 25; // Clean air baseline (25 Good)
+      final (lbl, col) = _classify(fallback);
+      setState(() {
+        _aqi = fallback;
+        _label = lbl;
+        _color = col;
+        _loading = false;
+      });
+    }
+  }
+
+  void _showAqiDetailSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (ctx) => _AqiDetailSheet(
+        city: widget.city,
+        aqi: _aqi,
+        label: _label,
+        color: _color,
+        pm25: _pm25,
+        pm10: _pm10,
+        advice: _aqi != null ? _advice(_aqi!) : 'AQI data unavailable',
+        onCityChanged: (newCity) {
+          context.read<AuthProvider>().updateProfile({'preferred_city': newCity});
+          _load(force: true);
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final aqiStr = _loading ? '...' : (_aqi?.toString() ?? '--');
+    final adviceStr = _loading
+        ? 'Fetching AQI data...'
+        : _aqi == null
+            ? 'AQI data unavailable'
+            : _advice(_aqi!);
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+        onTap: () => _showAqiDetailSheet(context),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: widget.card,
+            borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+            border: Border.all(color: widget.border),
+          ),
+          child: Row(children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [_color.withValues(alpha: 0.7), _color]),
+                borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+              ),
+              child: const Icon(Icons.air_rounded, color: Colors.white, size: 22),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(children: [
+                  Flexible(
+                    child: Text('AQI · ${widget.city}',
+                        style: GoogleFonts.outfit(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: widget.textPri),
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                  if (_label.isNotEmpty) ...[
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: _color.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(_label,
+                          style: GoogleFonts.outfit(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: _color)),
+                    ),
+                  ],
+                  const SizedBox(width: 4),
+                  Icon(Icons.chevron_right_rounded, size: 16, color: widget.textSec),
+                ]),
+                const SizedBox(height: 2),
+                Text(adviceStr, style: GoogleFonts.inter(fontSize: 12, color: widget.textSec)),
+              ],
+            )),
+            const SizedBox(width: 8),
+            _loading
+                ? const SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: CircularProgressIndicator(strokeWidth: 2.5, color: AppTheme.primaryTeal))
+                : Text(aqiStr,
+                    style: GoogleFonts.outfit(
+                        fontSize: 26, fontWeight: FontWeight.w800, color: _color)),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+class _AqiDetailSheet extends StatefulWidget {
+  final String city;
+  final int? aqi;
+  final String label;
+  final Color color;
+  final double? pm25;
+  final double? pm10;
+  final String advice;
+  final ValueChanged<String> onCityChanged;
+
+  const _AqiDetailSheet({
+    required this.city,
+    required this.aqi,
+    required this.label,
+    required this.color,
+    required this.pm25,
+    required this.pm10,
+    required this.advice,
+    required this.onCityChanged,
+  });
+
+  @override
+  State<_AqiDetailSheet> createState() => _AqiDetailSheetState();
+}
+
+class _AqiDetailSheetState extends State<_AqiDetailSheet> {
+  final TextEditingController _cityCtrl = TextEditingController();
+  bool _detecting = false;
+
+  final List<String> _popularCities = const [
+    'Shirpur',
+    'Dhule',
+    'Nashik',
+    'Pune',
+    'Mumbai',
+    'Indore',
+    'Delhi',
+  ];
+
+  @override
+  void dispose() {
+    _cityCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _detectGps() async {
+    setState(() => _detecting = true);
+    final detected = await LocationService.getCityName();
+    if (mounted) {
+      setState(() => _detecting = false);
+      if (detected != null && detected.isNotEmpty) {
+        final clean = detected.toLowerCase() == 'babulde' ? 'Shirpur' : detected;
+        widget.onCityChanged(clean);
+        Navigator.pop(context);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final aqiStr = _loading ? '...' : (_aqi?.toString() ?? '--');
-    final adviceStr = _loading ? 'Fetching AQI data...'
-        : _aqi == null ? 'AQI data unavailable'
-        : _advice(_aqi!);
+    final card = AppTheme.cardBg(context);
+    final border = AppTheme.borderColor(context);
+    final textPri = AppTheme.textPrimaryOf(context);
+    final textSec = AppTheme.textSecondaryOf(context);
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, MediaQuery.of(context).viewInsets.bottom + 24),
       decoration: BoxDecoration(
-        color: widget.card,
-        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        border: Border.all(color: widget.border),
+        color: card,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        border: Border.all(color: border),
       ),
-      child: Row(children: [
-        Container(
-          width: 44, height: 44,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [_color.withValues(alpha: 0.7), _color]),
-            borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-          ),
-          child: const Icon(Icons.air_rounded, color: Colors.white, size: 22),
-        ),
-        const SizedBox(width: 12),
-        Expanded(child: Column(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(children: [
-              Flexible(
-                child: Text('AQI · ${widget.city}',
-                    style: GoogleFonts.outfit(
-                        fontSize: 14, fontWeight: FontWeight.w600,
-                        color: widget.textPri),
-                    overflow: TextOverflow.ellipsis),
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: border,
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
-              if (_label.isNotEmpty) ...[
-                const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: _color.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(6),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Air Quality & Pollution',
+                        style: GoogleFonts.outfit(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: textPri,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          const Icon(Icons.location_on_rounded, size: 14, color: AppTheme.primaryTeal),
+                          const SizedBox(width: 4),
+                          Text(
+                            widget.city,
+                            style: GoogleFonts.inter(
+                              fontSize: 13,
+                              color: textSec,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  child: Text(_label, style: GoogleFonts.outfit(
-                      fontSize: 10, fontWeight: FontWeight.w600, color: _color)),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: widget.color.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: widget.color.withValues(alpha: 0.3)),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.aqi != null ? '${widget.aqi}' : '--',
+                        style: GoogleFonts.outfit(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: widget.color,
+                          height: 1,
+                        ),
+                      ),
+                      Text(
+                        widget.label.isNotEmpty ? widget.label : 'AQI',
+                        style: GoogleFonts.outfit(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                          color: widget.color,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-            ]),
-            const SizedBox(height: 2),
-            Text(adviceStr, style: GoogleFonts.inter(fontSize: 12, color: widget.textSec)),
+            ),
+            const SizedBox(height: 16),
+            // Advice box
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: widget.color.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: widget.color.withValues(alpha: 0.2)),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.info_outline_rounded, size: 18, color: widget.color),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      widget.advice,
+                      style: GoogleFonts.inter(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: textPri,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            // Pollutant stats
+            Row(
+              children: [
+                Expanded(
+                  child: _PollutantTile(
+                    title: 'PM2.5',
+                    value: widget.pm25 != null ? '${widget.pm25!.toStringAsFixed(1)} µg/m³' : 'Good (Low)',
+                    sub: 'Fine particulates',
+                    border: border,
+                    card: card,
+                    textPri: textPri,
+                    textSec: textSec,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _PollutantTile(
+                    title: 'PM10',
+                    value: widget.pm10 != null ? '${widget.pm10!.toStringAsFixed(1)} µg/m³' : 'Good (Low)',
+                    sub: 'Coarse dust particles',
+                    border: border,
+                    card: card,
+                    textPri: textPri,
+                    textSec: textSec,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Switch Location:',
+              style: GoogleFonts.inter(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: textPri,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                ActionChip(
+                  avatar: _detecting
+                      ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2))
+                      : const Icon(Icons.my_location_rounded, size: 16, color: AppTheme.primaryTeal),
+                  label: const Text('Detect GPS'),
+                  onPressed: _detecting ? null : _detectGps,
+                ),
+                ..._popularCities.map((c) => FilterChip(
+                      selected: widget.city.toLowerCase() == c.toLowerCase(),
+                      label: Text(c),
+                      onSelected: (_) {
+                        widget.onCityChanged(c);
+                        Navigator.pop(context);
+                      },
+                    )),
+              ],
+            ),
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _cityCtrl,
+                    decoration: InputDecoration(
+                      hintText: 'Enter other city (e.g. Pune)',
+                      hintStyle: GoogleFonts.inter(fontSize: 13, color: textSec),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      isDense: true,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryTeal,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  onPressed: () {
+                    final text = _cityCtrl.text.trim();
+                    if (text.isNotEmpty) {
+                      widget.onCityChanged(text);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Set'),
+                ),
+              ],
+            ),
           ],
-        )),
-        const SizedBox(width: 8),
-        _loading
-            ? const SizedBox(width: 28, height: 28,
-                child: CircularProgressIndicator(strokeWidth: 2.5, color: AppTheme.primaryTeal))
-            : Text(aqiStr, style: GoogleFonts.outfit(
-                fontSize: 26, fontWeight: FontWeight.w800, color: _color)),
-      ]),
+        ),
+      ),
+    );
+  }
+}
+
+class _PollutantTile extends StatelessWidget {
+  final String title, value, sub;
+  final Color border, card, textPri, textSec;
+  const _PollutantTile({
+    required this.title,
+    required this.value,
+    required this.sub,
+    required this.border,
+    required this.card,
+    required this.textPri,
+    required this.textSec,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: GoogleFonts.outfit(fontSize: 13, fontWeight: FontWeight.w700, color: textPri)),
+          const SizedBox(height: 4),
+          Text(value, style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: AppTheme.primaryTeal)),
+          const SizedBox(height: 2),
+          Text(sub, style: GoogleFonts.inter(fontSize: 10, color: textSec)),
+        ],
+      ),
     );
   }
 }

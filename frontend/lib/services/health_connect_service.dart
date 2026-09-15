@@ -202,6 +202,7 @@ class HealthConnectService {
     required List<HealthDataPoint> sleepPoints,
   }) {
     double todayActiveCalories = 0;
+    double todayTotalCalories = 0;
     double? latestHeartRate;
     DateTime? latestHeartRateTime;
     double? restingHeartRate;
@@ -222,10 +223,14 @@ class HealthConnectService {
 
       switch (point.type) {
         case HealthDataType.ACTIVE_ENERGY_BURNED:
-        case HealthDataType.TOTAL_CALORIES_BURNED:
-          // Calories burned today only
           if (point.dateFrom.isAfter(todayMidnight) || pointTime.isAfter(todayMidnight)) {
             todayActiveCalories += numVal;
+          }
+          break;
+
+        case HealthDataType.TOTAL_CALORIES_BURNED:
+          if (point.dateFrom.isAfter(todayMidnight) || pointTime.isAfter(todayMidnight)) {
+            todayTotalCalories += numVal;
           }
           break;
 
@@ -313,15 +318,20 @@ class HealthConnectService {
         ? sleepSessionHours
         : (sleepDeepHours + sleepLightHours + sleepRemHours + sleepAsleepHours);
 
+    final double chosenCalories = todayActiveCalories > 0
+        ? todayActiveCalories
+        : todayTotalCalories;
+
     debugPrint(
       '[HealthConnectService] Aggregated => Steps: $steps, '
       'HR: $latestHeartRate, RestingHR: $restingHeartRate, '
-      'Cal: $todayActiveCalories, Sleep: $totalSleep, SpO2: $latestSpo2',
+      'Cal: $chosenCalories (active: $todayActiveCalories, total: $todayTotalCalories), '
+      'Sleep: $totalSleep, SpO2: $latestSpo2',
     );
 
     return WearableDataModel(
       todaySteps: (steps != null && steps > 0) ? steps : null,
-      caloriesBurned: todayActiveCalories > 0 ? todayActiveCalories.toInt() : null,
+      caloriesBurned: chosenCalories > 0 ? chosenCalories.toInt() : null,
       heartRateBpm: latestHeartRate ?? restingHeartRate,
       restingHeartRate: restingHeartRate,
       spo2Percent: latestSpo2,

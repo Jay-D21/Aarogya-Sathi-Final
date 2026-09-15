@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../config/theme.dart';
 
 /// Google Fit–style arc ring showing health score, steps, calories, and heart rate.
@@ -150,8 +151,12 @@ class _HealthScoreRingState extends State<HealthScoreRing>
     );
   }
 
-  String _fmt(int v) =>
-      v > 999 ? '${(v / 1000).toStringAsFixed(1)}k' : '$v';
+  String _fmt(int v) {
+    if (v >= 10000) {
+      return '${(v / 1000).toStringAsFixed(1)}k';
+    }
+    return NumberFormat.decimalPattern().format(v);
+  }
 }
 
 class _Stat extends StatelessWidget {
