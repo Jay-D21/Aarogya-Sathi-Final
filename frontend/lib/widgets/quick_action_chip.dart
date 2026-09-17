@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// Pill-shaped quick action chip button (e.g. '+ Log', 'AI Chat', 'Scan Prescriptions')
 /// Styled after Google Health / Fit action chips.
+/// Horizontally scrollable Material 3 ActionChip used in HomeScreen
+/// to surface common tasks: Log BP, Log Sugar, Log Weight, View Report.
+/// Tapping navigates directly to the relevant logging bottom sheet.
 class QuickActionChip extends StatelessWidget {
   final String label;
   final IconData icon;
