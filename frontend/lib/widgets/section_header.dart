@@ -4,6 +4,9 @@ import '../config/theme.dart';
 
 /// Google Health-style section header with title and optional trailing action.
 /// Usage: SectionHeader(title: 'Key metrics', trailing: 'Customize', onTrailingTap: () {})
+/// Consistent section title widget used throughout the app.
+/// Renders a bold M3 titleMedium label with an optional action
+/// button (e.g. 'See all') aligned to the trailing edge.
 class SectionHeader extends StatelessWidget {
   final String title;
   final String? trailing;
