@@ -119,8 +119,8 @@ def build_context(
         env_lines.append(f"Temperature: {aqi_data['temperature']}°C")
     if aqi_data.get("humidity"):
         env_lines.append(f"Humidity: {aqi_data['humidity']}%")
-    if aqi_data.get("city"):
-        env_lines.append(f"Location: {aqi_data['city']}")
+    if aqi_data.get("station"):
+        env_lines.append(f"Station: {aqi_data['station']}")
 
     env_block = "\n".join(env_lines) if env_lines else "Environmental data not available."
 

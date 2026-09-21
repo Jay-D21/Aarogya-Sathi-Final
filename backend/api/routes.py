@@ -82,27 +82,54 @@ async def chat_endpoint(req: ChatRequest):
 
     # Step 5: Run pipeline and stream response
     async def generate():
-        full_response = ""
-        async for token in _pipeline.run(query_en, profile_dict, aqi_data, req.wearable.model_dump(), req.chat_history):
-            full_response += token
-            yield {
-                "event": "message",
-                "data": json.dumps({"token": token, "done": False})
-            }
-
-        # Step 6: Translate full response back to user's language
-        if req.language != "en":
-            translated = await translate(full_response, "en", req.language)
-            yield {
-                "event": "message",
-                "data": json.dumps({
-                    "token": translated, "done": True, "translated": True
-                })
-            }
-        else:
+        if req.language == "en":
+            async for token in _pipeline.run(query_en, profile_dict, aqi_data, req.wearable.model_dump(), req.chat_history):
+                yield {
+                    "event": "message",
+                    "data": json.dumps({"token": token, "done": False})
+                }
             yield {
                 "event": "message",
                 "data": json.dumps({"token": "", "done": True})
+            }
+        else:
+            full_response = ""
+            async for token in _pipeline.run(query_en, profile_dict, aqi_data, req.wearable.model_dump(), req.chat_history):
+                full_response += token
+            
+            # Translate full response, chunking if it exceeds the 1000 char limit
+            if len(full_response) > 900:
+                import re
+                sentences = re.split(r'(?<=[.!?\n])\s+', full_response)
+                translated = ""
+                current_chunk = ""
+                for s in sentences:
+                    if len(current_chunk) + len(s) > 900:
+                        if current_chunk:
+                            translated += await translate(current_chunk.strip(), "en", req.language) + " "
+                        current_chunk = s + " "
+                    else:
+                        current_chunk += s + " "
+                if current_chunk.strip():
+                    translated += await translate(current_chunk.strip(), "en", req.language)
+            else:
+                translated = await translate(full_response, "en", req.language)
+            
+            # Stream translated text word-by-word
+            words = translated.split(" ")
+            for i, word in enumerate(words):
+                token = word + (" " if i < len(words) - 1 else "")
+                yield {
+                    "event": "message",
+                    "data": json.dumps({"token": token, "done": False})
+                }
+                await asyncio.sleep(0.01)
+                
+            yield {
+                "event": "message",
+                "data": json.dumps({
+                    "token": "", "done": True, "translated": True
+                })
             }
 
     return EventSourceResponse(generate())

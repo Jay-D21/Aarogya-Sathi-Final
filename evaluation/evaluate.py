@@ -25,7 +25,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 os.environ.setdefault("OKF_BUNDLE_PATH", "./icmr-knowledge-bundle")
 
 from backend.rag.pipeline import CRAGPipeline
-from backend.rag.okf_navigator import OKFNavigator
 from backend.rag.grader import grade_documents
 from backend.rag.context_builder import build_context
 from backend.rag.llm import call_llm
@@ -51,10 +50,9 @@ async def run_single_query(pipeline: CRAGPipeline, qa: dict) -> dict:
     retrieved_docs = await pipeline.navigator.navigate(query)
     relevant_docs, _ = await grade_documents(query, retrieved_docs)
 
-    # Collect the full streamed response
-    full_response = ""
-    async for token in pipeline.run(query, profile, aqi_data, wearable, chat_history=[]):
-        full_response += token
+    # Call build_context and call_llm directly
+    messages = build_context(query, relevant_docs, profile, aqi_data, wearable, chat_history=[])
+    full_response = await call_llm(messages=messages, size="70b", temperature=0.3)
 
     elapsed = round(time.time() - start, 2)
 

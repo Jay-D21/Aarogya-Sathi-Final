@@ -59,6 +59,7 @@ class ChatProvider extends ChangeNotifier {
 
   Future<void> sendMessage(
     String text, {
+    String language = 'en',
     Map<String, dynamic>? profile,
     Map<String, dynamic>? wearable,
     double? lat,
@@ -106,7 +107,7 @@ class ChatProvider extends ChangeNotifier {
 
       request.body = jsonEncode({
         'query': text,
-        'language': 'en',
+        'language': language,
         if (profile != null) 'profile': profile,
         if (wearable != null) 'wearable': wearable,
         if (lat != null) 'lat': lat,

@@ -88,6 +88,7 @@ class _ChatScreenState extends State<ChatScreen>
 
     await context.read<ChatProvider>().sendMessage(
       msg,
+      language: auth.user?['language'] ?? 'en',
       profile: profile,
       wearable: wearable,
     );
