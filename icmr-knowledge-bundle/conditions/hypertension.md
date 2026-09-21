@@ -30,6 +30,8 @@ Persistently elevated arterial blood pressure.
 - ACE inhibitors or ARBs for most patients
 - Calcium channel blockers as alternative
 
+See also: [Atenolol](../drugs/atenolol.md), [Amlodipine](../drugs/amlodipine.md)
+
 ## Monitoring
 - BP check at every visit
 - Home BP monitoring recommended

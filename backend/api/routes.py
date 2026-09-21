@@ -37,49 +37,6 @@ async def aqi_endpoint(lat: float = Query(...), lon: float = Query(...)):
         return {"success": False, "error": str(e)}
 
 
-async def _mock_pipeline(query: str, profile: dict, aqi_data: dict):
-    """Temporary mock pipeline until Jayesh completes CRAGPipeline.
-
-    Generates a realistic-looking streamed response to test SSE streaming,
-    safety routing, and translation integration end-to-end.
-    """
-    mock_response = (
-        f"Based on ICMR guidelines, here is information related to your query "
-        f"about '{query}':\n\n"
-        "**General Guidance** [Doc 1]:\n"
-        "For managing chronic conditions, ICMR recommends regular monitoring, "
-        "adherence to prescribed medication, and lifestyle modifications including "
-        "a balanced diet and regular physical activity.\n\n"
-        "**Environmental Considerations** [Doc 2]:\n"
-    )
-
-    # Inject AQI-aware advice when environmental data is available
-    aqi_val = aqi_data.get("aqi", "N/A")
-    if aqi_val != "N/A" and isinstance(aqi_val, (int, float)) and aqi_val > 100:
-        mock_response += (
-            f"Current AQI in your area is {aqi_val} (Unhealthy). "
-            "ICMR advises reducing outdoor physical activity and exercising indoors "
-            "when air quality is poor, especially for patients with respiratory or "
-            "cardiovascular conditions.\n\n"
-        )
-    else:
-        mock_response += (
-            f"Current AQI in your area is {aqi_val}. "
-            "Air quality is acceptable for moderate outdoor activities.\n\n"
-        )
-
-    mock_response += (
-        "\n⚕️ I am an AI health assistant, not a doctor. "
-        "For emergencies, call 112."
-    )
-
-    # Stream word by word to simulate real LLM token generation
-    words = mock_response.split(" ")
-    for i, word in enumerate(words):
-        token = word + (" " if i < len(words) - 1 else "")
-        yield token
-        await asyncio.sleep(0.03)  # ~30ms delay mimics LLM token latency
-
 
 @router.post("/chat")
 async def chat_endpoint(req: ChatRequest):
@@ -124,13 +81,9 @@ async def chat_endpoint(req: ChatRequest):
     profile_dict["wearable"] = req.wearable.model_dump()
 
     # Step 5: Run pipeline and stream response
-    # TODO: Replace _mock_pipeline with Jayesh's CRAGPipeline when ready:
-    #   from backend.rag.pipeline import CRAGPipeline
-    #   pipeline = CRAGPipeline("./icmr-knowledge-bundle")
-
     async def generate():
         full_response = ""
-        async for token in _pipeline.run(query_en, profile_dict, aqi_data, req.wearable.model_dump()):
+        async for token in _pipeline.run(query_en, profile_dict, aqi_data, req.wearable.model_dump(), req.chat_history):
             full_response += token
             yield {
                 "event": "message",

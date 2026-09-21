@@ -32,7 +32,7 @@ async def get_weather(lat: float, lon: float) -> Dict[str, Any]:
 
         current = data.get("current", {})
         return {
-            "temp": current.get("temperature_2m", "N/A"),
+            "temperature": current.get("temperature_2m", "N/A"),
             "humidity": current.get("relative_humidity_2m", "N/A"),
             "feels_like": current.get("apparent_temperature", "N/A"),
             "uv_index": current.get("uv_index", "N/A"),
@@ -43,7 +43,7 @@ async def get_weather(lat: float, lon: float) -> Dict[str, Any]:
         # Graceful fallback ensures upstream LLM prompt synthesis continues even if weather service fails
         logger.error(f"Open-Meteo API failed: {e}")
         return {
-            "temp": "N/A",
+            "temperature": "N/A",
             "humidity": "N/A",
             "feels_like": "N/A",
             "uv_index": "N/A",

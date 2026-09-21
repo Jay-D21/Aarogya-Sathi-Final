@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/theme.dart';
 import '../../providers/chat_provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/health_provider.dart';
+import '../../providers/fitness_provider.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -56,7 +59,38 @@ class _ChatScreenState extends State<ChatScreen>
     if (msg.isEmpty) return;
     _inputCtrl.clear();
     setState(() => _inputEmpty = true);
-    await context.read<ChatProvider>().sendMessage(msg);
+    
+    final auth = context.read<AuthProvider>();
+    final health = context.read<HealthProvider>();
+    final fitness = context.read<FitnessProvider>();
+    
+    final Map<String, dynamic> profile = {
+      if (auth.user?['age'] != null) 'age': auth.user!['age'],
+      if (auth.user?['gender'] != null) 'gender': auth.user!['gender'],
+      'conditions': [],
+      'medications': [],
+    };
+    
+    for (var r in health.records) {
+      if (r['record_type'] == 'condition') {
+         final c = r['data']?['condition_name'];
+         if (c != null) (profile['conditions'] as List).add(c);
+      }
+    }
+
+    final Map<String, dynamic> wearable = {
+      if (fitness.steps > 0) 'today_steps': fitness.steps,
+      if (fitness.heartRate != null) 'heart_rate_bpm': fitness.heartRate,
+      if (fitness.spo2 != null) 'spo2_percent': fitness.spo2,
+      if (fitness.sleepHours > 0) 'sleep_total_hours': fitness.sleepHours,
+      'calories_burned': fitness.calories(),
+    };
+
+    await context.read<ChatProvider>().sendMessage(
+      msg,
+      profile: profile,
+      wearable: wearable,
+    );
     _scrollToBottom();
   }
 

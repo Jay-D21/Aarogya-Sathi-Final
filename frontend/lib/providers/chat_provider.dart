@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../config/api_config.dart';
 import '../services/api_service.dart';
+import '../services/location_service.dart';
 
 class ChatMessage {
   final String id;
@@ -56,7 +57,13 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> sendMessage(String text) async {
+  Future<void> sendMessage(
+    String text, {
+    Map<String, dynamic>? profile,
+    Map<String, dynamic>? wearable,
+    double? lat,
+    double? lon,
+  }) async {
     final tempMsg = ChatMessage(
       id: 'temp',
       userMessage: text,
@@ -71,13 +78,40 @@ class ChatProvider extends ChangeNotifier {
     bool isEmergency = _detectEmergency(text);
 
     try {
+      // Fetch location if not provided
+      if (lat == null || lon == null) {
+        final pos = await LocationService.getCurrentPosition();
+        if (pos != null) {
+          lat = pos.latitude;
+          lon = pos.longitude;
+        }
+      }
+
       // 1. First try our deployed FastAPI backend with SSE streaming
       final client = http.Client();
       final request = http.Request('POST', Uri.parse(ApiConfig.chatEndpoint));
       request.headers['Content-Type'] = 'application/json';
+      
+      final chatHistory = <Map<String, dynamic>>[];
+      final pastMessages = _messages.where((m) => m.id != 'temp').toList();
+      final last5 = pastMessages.reversed.take(5).toList().reversed;
+      for (final m in last5) {
+        if (m.userMessage.isNotEmpty) {
+          chatHistory.add({'role': 'user', 'content': m.userMessage});
+        }
+        if (m.aiResponse.isNotEmpty) {
+          chatHistory.add({'role': 'assistant', 'content': m.aiResponse});
+        }
+      }
+
       request.body = jsonEncode({
         'query': text,
         'language': 'en',
+        if (profile != null) 'profile': profile,
+        if (wearable != null) 'wearable': wearable,
+        if (lat != null) 'lat': lat,
+        if (lon != null) 'lon': lon,
+        'chat_history': chatHistory,
       });
 
       final streamedResponse = await client.send(request).timeout(const Duration(seconds: 25));
@@ -153,8 +187,8 @@ class ChatProvider extends ChangeNotifier {
   /// Uses llama-3.1-8b-instant which is fast and free-tier friendly.
   static Future<String?> _callGroqDirectly(String userMessage) async {
     try {
-      const apiKey =
-          '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';
+      const apiKey = String.fromEnvironment('GROQ_API_KEY', defaultValue: '');
+      if (apiKey.isEmpty) return null;
       const url = 'https://api.groq.com/openai/v1/chat/completions';
 
       final resp = await http

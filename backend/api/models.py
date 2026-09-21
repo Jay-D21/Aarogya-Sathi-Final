@@ -44,6 +44,7 @@ class ChatRequest(BaseModel):
     wearable: WearableData = WearableData()
     lat: float | None = None
     lon: float | None = None
+    chat_history: list[dict] = []
 
 
 class AQIResponse(BaseModel):

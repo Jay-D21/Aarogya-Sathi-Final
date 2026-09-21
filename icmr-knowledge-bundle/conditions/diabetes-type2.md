@@ -50,4 +50,4 @@ resulting from defects in insulin secretion, insulin action, or both.
 
 ## Environmental Considerations
 High AQI (>150) increases insulin resistance. Advise indoor exercise
-when AQI is unhealthy. See [Pollution & Respiratory](../environmental/pollution-respiratory.md).
+when AQI is unhealthy. See [Pollution & Respiratory](../environmental/aqi-health-impact.md).

@@ -15,8 +15,8 @@ The XML structure helps the 70B model clearly separate the knowledge sources:
 
 from backend.utils.icmr import classify_bp, classify_sugar, classify_bmi, classify_aqi
 
-# The 740-line ICMR system prompt — embedded directly so it's always available
-# regardless of file system state. Updated from GEMINI_SYSTEM_PROMPT_740_LINES.md
+# The 21-line ICMR system prompt — embedded directly so it's always available
+# regardless of file system state. Updated from previous drafts.
 SYSTEM_PROMPT = """=== AROGYA SATHI: VIRTUAL HEALTH ASSISTANT ===
 
 ROLE: You are Arogya Sathi (आरोग्य साथी), India's trusted digital health assistant.
@@ -47,6 +47,7 @@ def build_context(
     profile: dict,
     aqi_data: dict,
     wearable: dict | None = None,
+    chat_history: list[dict] | None = None,
 ) -> list[dict]:
     """
     Assemble the full prompt as an OpenAI-format messages list.
@@ -185,7 +186,9 @@ End your response with: "⚕️ I am an AI health assistant, not a doctor."
 
 User Query: {query}"""
 
-    return [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": user_content},
-    ]
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    if chat_history:
+        messages.extend(chat_history)
+    messages.append({"role": "user", "content": user_content})
+
+    return messages

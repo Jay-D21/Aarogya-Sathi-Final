@@ -13,12 +13,18 @@ logger = logging.getLogger(__name__)
 
 WAQI_TOKEN = os.getenv("WAQI_API_TOKEN")
 
-# Warn developers early so missing configuration does not silently cause confusion during testing
-if not WAQI_TOKEN or WAQI_TOKEN == "your_waqi_token_here":
+_USE_MOCK = (
+    not WAQI_TOKEN
+    or WAQI_TOKEN == "your_waqi_token_here"
+)
+
+if _USE_MOCK:
     logger.warning(
         "⚠️ WAQI_API_TOKEN not configured. AQI endpoint will return mock data. "
         "Get your free token at https://aqicn.org/data-platform/token/"
     )
+else:
+    logger.info("✅ WAQI_API_TOKEN found. Using real AQI data.")
 
 
 async def get_aqi(lat: float, lon: float) -> Dict[str, Any]:
@@ -36,7 +42,7 @@ async def get_aqi(lat: float, lon: float) -> Dict[str, Any]:
         Dict with AQI, PM2.5, PM10, NO2, SO2, O3, CO, station name
     """
     # Fallback to mock data when token is absent to allow offline development and testing
-    if not WAQI_TOKEN or WAQI_TOKEN == "your_waqi_token_here":
+    if _USE_MOCK:
         return _mock_aqi(lat, lon)
 
     # WAQI geo endpoint: returns nearest station to coordinates

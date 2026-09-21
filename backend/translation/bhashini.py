@@ -8,50 +8,40 @@ env_path = Path(__file__).parent.parent / ".env"
 load_dotenv(dotenv_path=env_path)
 logger = logging.getLogger(__name__)
 
-BHASHINI_URL = os.getenv("BHASHINI_PIPELINE_URL")
-BHASHINI_USER_ID = os.getenv("BHASHINI_USER_ID")
-BHASHINI_API_KEY = os.getenv("BHASHINI_API_KEY")
+SARVAM_API_KEY = os.getenv("SARVAM_API_KEY")
 
 # Check if real credentials are available
 _USE_MOCK = (
-    not BHASHINI_USER_ID
-    or not BHASHINI_API_KEY
-    or BHASHINI_USER_ID == "your_user_id_here"
-    or BHASHINI_API_KEY == "your_api_key_here"
+    not SARVAM_API_KEY
+    or SARVAM_API_KEY == "your_sarvam_api_key_here"
 )
 
 if _USE_MOCK:
     logger.warning(
-        "⚠️ Bhashini API credentials not found. Running in MOCK translation mode. "
-        "Set BHASHINI_USER_ID and BHASHINI_API_KEY in backend/.env for real translation."
+        "⚠️ Sarvam API credentials not found. Running in MOCK translation mode. "
+        "Set SARVAM_API_KEY in backend/.env for real translation."
     )
 else:
-    logger.info("✅ Bhashini API credentials found. Using real translation.")
+    logger.info("✅ Sarvam API credentials found. Using real translation.")
 
-HEADERS = {
-    "Content-Type": "application/json",
-    "userID": BHASHINI_USER_ID or "",
-    "ulcaApiKey": BHASHINI_API_KEY or "",
-}
-
-# Bhashini uses AI4Bharat IndicTrans v2 for all Indian language pairs
-TRANSLATION_MODELS = {
-    ("hi", "en"): "ai4bharat/indictrans-v2-all-gpu--t4",
-    ("en", "hi"): "ai4bharat/indictrans-v2-all-gpu--t4",
-    ("mr", "en"): "ai4bharat/indictrans-v2-all-gpu--t4",
-    ("en", "mr"): "ai4bharat/indictrans-v2-all-gpu--t4",
-}
-
+def _map_lang_code(lang: str) -> str:
+    """Map internal lang codes to Sarvam format."""
+    if lang == "hi":
+        return "hi-IN"
+    if lang == "mr":
+        return "mr-IN"
+    if lang == "en":
+        return "en-IN"
+    return f"{lang}-IN"
 
 def _mock_translate(text: str, source_lang: str, target_lang: str) -> str:
     """Returns the original text with a language tag prefix.
-    This is a placeholder until real Bhashini API credentials are available.
-    The mock clearly marks output so developers can see translation points."""
+    This is a placeholder until real Sarvam API credentials are available."""
     return f"[{source_lang}→{target_lang}] {text}"
 
 
 async def translate(text: str, source_lang: str, target_lang: str) -> str:
-    """Translate text using Bhashini API (Government of India).
+    """Translate text using Sarvam AI.
     
     Falls back to mock translation if:
     - API credentials are not configured
@@ -73,37 +63,32 @@ async def translate(text: str, source_lang: str, target_lang: str) -> str:
     if _USE_MOCK:
         return _mock_translate(text, source_lang, target_lang)
 
-    # Validate language pair is supported
-    model_id = TRANSLATION_MODELS.get((source_lang, target_lang))
-    if not model_id:
-        logger.warning(f"Unsupported language pair: {source_lang}→{target_lang}. Using mock.")
-        return _mock_translate(text, source_lang, target_lang)
+    # Mayura has a 1000 char limit
+    if len(text) > 1000:
+        logger.warning("Text exceeds Sarvam 1000 char limit. Truncating for safety.")
+        text = text[:1000]
 
+    url = "https://api.sarvam.ai/translate"
+    headers = {
+        "Content-Type": "application/json",
+        "api-subscription-key": SARVAM_API_KEY or "",
+    }
     payload = {
-        "pipelineTasks": [{
-            "taskType": "translation",
-            "config": {
-                "language": {
-                    "sourceLanguage": source_lang,
-                    "targetLanguage": target_lang
-                },
-                "serviceId": model_id
-            }
-        }],
-        "inputData": {
-            "input": [{"source": text}]
-        }
+        "input": text,
+        "source_language_code": _map_lang_code(source_lang),
+        "target_language_code": _map_lang_code(target_lang),
+        "model": "mayura:v1"
     }
 
     try:
         async with httpx.AsyncClient(timeout=30) as client:
-            response = await client.post(BHASHINI_URL, json=payload, headers=HEADERS)
+            response = await client.post(url, json=payload, headers=headers)
             response.raise_for_status()
             result = response.json()
-            translated = result["pipelineResponse"][0]["output"][0]["target"]
-            logger.info(f"Bhashini translation: {source_lang}→{target_lang} successful")
+            translated = result.get("translated_text", text)
+            logger.info(f"Sarvam translation: {source_lang}→{target_lang} successful")
             return translated
     except Exception as e:
-        # Graceful degradation: return mock if Bhashini fails
-        logger.error(f"Bhashini API failed ({e}). Falling back to mock translation.")
+        # Graceful degradation: return mock if Sarvam fails
+        logger.error(f"Sarvam API failed ({e}). Falling back to mock translation.")
         return _mock_translate(text, source_lang, target_lang)
