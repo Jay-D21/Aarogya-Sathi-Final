@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-09-21 (Jayesh — Session 9: Sarvam AI + Evaluation + AQI Cleanup)
+- [Jayesh] Replaced Bhashini translation with Sarvam AI (mayura:v1, Hindi+Marathi+English, ₹100 free credits)
+- [Jayesh] Fixed evaluation pipeline: honest "LLM-as-Judge" docstring, retrieved context passed to judge, robust JSON parsing, removed survivorship bias filter
+- [Jayesh] Added hypertension→drug cross-links (Atenolol, Amlodipine) in knowledge bundle
+- [Jayesh] Cleaned up AQI module with proper _USE_MOCK env var fallback pattern
+- [Jayesh] Updated .env.example: removed Bhashini vars, added SARVAM_API_KEY
+- [Jayesh] Created HANDOFF.md with task assignments for Abhijit + Ritesh
+
+## 2026-09-20 (Jayesh — Session 8: Brutal Audit + Context Wiring)
+- [Jayesh] Ran LLM Council (5 advisors + peer review + chairman) to validate fix plan
+- [Jayesh] Removed leaked Groq API key from chat_provider.dart (security fix)
+- [Jayesh] Removed real API key from .env.example (security fix)
+- [Jayesh] Fixed temp→temperature key mismatch between weather.py and context_builder.py
+- [Jayesh] Fixed broken cross-link: pollution-respiratory.md → aqi-health-impact.md
+- [Jayesh] Deleted dead _mock_pipeline() code (40+ lines) from routes.py
+- [Jayesh] Fixed lying "740-line prompt" comment → honest "21-line"
+- [Jayesh] CRITICAL: Wired profile + wearable + location + chat_history from Flutter to backend
+- [Jayesh] Added chat_history field to ChatRequest Pydantic model
+- [Jayesh] Propagated chat_history through pipeline → context_builder → LLM prompt
+- [Jayesh] Updated chat_screen.dart to pull from AuthProvider/HealthProvider/FitnessProvider
+- [Jayesh] Built last-5-messages chat history in chat_provider.dart
+
 ## 2026-09-15 (Jayesh — Session 7: Health Connect & Google Fit Sync Precision + Indian CPCB NAQI Air Quality Engine)
 - [Jayesh] Upgraded MainActivity.kt to FlutterFragmentActivity for Android 14+ Health Connect registerForActivityResult support
 - [Jayesh] Added Health Connect permissions (READ_RESTING_HEART_RATE, READ_TOTAL_CALORIES_BURNED, READ_DISTANCE) and rationale intent filter to AndroidManifest.xml
