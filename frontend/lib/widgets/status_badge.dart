@@ -4,6 +4,9 @@ import '../config/theme.dart';
 
 /// Google Health-style status badge — "In range", "Elevated", "Critical" etc.
 /// Pill-shaped with color-coded background tint.
+/// Colour-coded badge that displays a health status string such as
+/// 'Normal', 'Elevated', or 'Critical'. Colour mapping follows the
+/// ICMR and WHO classification guidelines for each vital type.
 class StatusBadge extends StatelessWidget {
   final String label;
   final Color color;
