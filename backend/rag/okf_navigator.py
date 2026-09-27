@@ -115,7 +115,7 @@ Return ONLY the file paths (relative to the bundle root), one per line, most rel
         try:
             response = await call_llm(
                 messages=[{"role": "user", "content": prompt}],
-                size="8b",
+                size="70b",
                 temperature=0.0,   # deterministic — same query → same files
                 max_tokens=150,
             )

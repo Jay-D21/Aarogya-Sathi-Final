@@ -34,7 +34,7 @@ Answer with ONLY "yes" or "no"."""
     try:
         answer = await call_llm(
             messages=[{"role": "user", "content": prompt}],
-            size="8b",
+            size="70b",
             temperature=0.0,
             max_tokens=5,
         )
@@ -60,8 +60,12 @@ async def grade_documents(
     if not docs:
         return [], True
 
-    # Grade all docs concurrently — Groq handles parallel requests fine
-    results = await asyncio.gather(*[_grade_one(query, doc) for doc in docs])
+    # Grade docs sequentially with a small delay to respect rate limits
+    results = []
+    for doc in docs:
+        result = await _grade_one(query, doc)
+        results.append(result)
+        await asyncio.sleep(0.3)  # respect Groq free-tier rate limit
 
     relevant_docs = [doc for doc, is_relevant in results if is_relevant]
     needs_fallback = len(relevant_docs) == 0

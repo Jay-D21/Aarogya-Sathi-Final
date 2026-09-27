@@ -97,7 +97,7 @@ Return ONLY a JSON object with keys: faithfulness, relevancy, completeness, safe
     try:
         response = await call_llm(
             messages=[{"role": "user", "content": prompt}],
-            size="8b",
+            size="70b",
             temperature=0.0,
             max_tokens=100,
         )
