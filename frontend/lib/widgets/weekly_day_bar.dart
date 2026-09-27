@@ -4,6 +4,9 @@ import '../config/theme.dart';
 
 /// Weekly day bar showing M T W T F S S with completion indicators.
 /// Inspired by Google Health & Google Fit activity/sleep day-by-day trackers.
+/// 7-day horizontal step progress bar. Each day circle is filled
+/// proportionally to the daily step goal and highlighted in primary
+/// colour for the current day with a dot indicator beneath it.
 class WeeklyDayBar extends StatelessWidget {
   final List<bool> completedDays; // 7 days: Mon..Sun
   final int todayIndex; // 0..6 (0=Mon, 6=Sun)
