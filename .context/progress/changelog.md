@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-27 (Jayesh — Session 10: Audit + Cleanup + Honest README)
+- [Jayesh] Full project state audit — discovered 0 commits from team since Sep 21
+- [Jayesh] Rewrote README.md to match reality (removed false claims: Ollama, Qdrant, BGE-M3, LangChain, Bhashini, RAGAS)
+- [Jayesh] Cleaned requirements.txt — removed 6 unused deps (langchain, langchain-groq, langchain-community, langgraph, pyyaml, ragas)
+- [Jayesh] Fixed backend/.env — replaced stale Bhashini vars with SARVAM_API_KEY that code actually reads
+- [Jayesh] Noted: Groq key still not rotated (same key from before the leak in git history)
+
 ## 2026-09-21 (Jayesh — Session 9: Sarvam AI + Evaluation + AQI Cleanup)
 - [Jayesh] Replaced Bhashini translation with Sarvam AI (mayura:v1, Hindi+Marathi+English, ₹100 free credits)
 - [Jayesh] Fixed evaluation pipeline: honest "LLM-as-Judge" docstring, retrieved context passed to judge, robust JSON parsing, removed survivorship bias filter

@@ -1,6 +1,6 @@
 # Aarogya Sathi — AI-powered Digital Health Assistant
 
-> **Digital Health Assistant** for India, built on ICMR clinical guidelines with personalized, multilingual, environment-aware health advice.
+> **Context-aware digital health assistant** for India, built on ICMR clinical guidelines with personalized, multilingual, environment-aware health advice.
 
 ## Team
 | Name | Roll No | Role |
@@ -13,80 +13,87 @@
 
 ## Architecture
 ```
-Flutter App → FastAPI (SSE) → CRAG Pipeline → Llama 3.1 8B (Ollama)
-                                    ↕
-                         OKF Bundle (ICMR guidelines)
-                         + Qdrant fallback (BGE-M3)
-                         + Bhashini (HI/MR translation)
-                         + WAQI/Open-Meteo (AQI)
-                         + Health Connect (wearable data)
-                         + Semantic Router (safety)
+Flutter App (Android) → FastAPI (SSE) → CRAG Pipeline → Cloud LLM (Groq API)
+                                            ↕
+                              OKF Bundle (40 ICMR guideline files)
+                              + Sarvam AI (Hindi/Marathi translation)
+                              + WAQI + Open-Meteo (AQI & weather)
+                              + Health Connect SDK (wearable data)
+                              + Semantic Router (safety classification)
 ```
 
 ## Tech Stack
-| Component | Technology |
-|-----------|-----------|
-| LLM | Llama 3.1 8B Instruct (Ollama) |
-| Primary Retrieval | Google OKF (Open Knowledge Format) |
-| Fallback Retrieval | BGE-M3 + Qdrant |
-| Orchestration | LangChain LCEL + CRAG |
-| Backend | FastAPI + SSE |
-| Frontend | Flutter (Android) |
-| Translation | Bhashini API (HI/MR/EN) |
-| Safety | Semantic Router |
-| Wearable | Health Connect SDK |
-| AQI | WAQI + Open-Meteo |
-| Evaluation | RAGAS |
-
-## Getting Started
-
-### Dev Setup
-```bash
-git clone https://github.com/Jay-D21/Aarogya-Sathi-Final.git
-cd Aarogya-Sathi-Final
-```
-
-### For Jayesh (RAG Pipeline)
-```bash
-cd backend
-pip install -r requirements.txt
-ollama pull llama3.1:8b-instruct-q4_K_M
-```
-
-### For Abhijit (Backend)
-```bash
-cd backend
-pip install -r requirements.txt
-cp .env.example .env  # Fill in API keys
-uvicorn main:app --reload --port 8000
-```
-
-### For Ritesh (Mobile)
-```bash
-cd mobile
-flutter pub get
-flutter run
-```
+| Component | Technology | Details |
+|-----------|-----------|---------|
+| LLM Inference | Groq Cloud API (cascade: Groq → SambaNova → Cerebras) | `qwen/qwen3.8-27b` (primary), `openai/gpt-oss-20b` (judge) |
+| Primary Retrieval | OKF Navigator (ICMR knowledge bundle) | 40 structured Markdown concept files with cross-links |
+| RAG Pipeline | CRAG (Corrective RAG) | Navigate → Grade → Build Context → Generate |
+| Backend | FastAPI + SSE streaming | Python 3.11, async throughout |
+| Frontend | Flutter (Android) | Provider state management, Health Connect SDK |
+| Translation | Sarvam AI (`mayura:v1`) | Hindi, Marathi, English — sentence-chunked for long responses |
+| Safety | Semantic Router + keyword fallback | 42 utterances: emergency (20), prescription (13), non-medical (9) |
+| Wearable | Android Health Connect SDK | Steps, HR, SpO2, sleep, glucose, BP, temperature |
+| Environmental | WAQI API + Open-Meteo | AQI, PM2.5, temperature, humidity, UV index |
+| Evaluation | LLM-as-Judge | 32 gold QA pairs, 4 metrics: faithfulness, relevancy, completeness, safety |
+| Deployment | Render (backend), Local APK (frontend) | Production URL configured |
 
 ## Project Structure
 ```
-├── .context/                    ← iLabs context system
-├── .agents/                     ← Agent rules
-├── Research/                    ← Research documents
-├── icmr-knowledge-bundle/       ← OKF knowledge base (Jayesh)
-├── backend/                     ← Python backend (Jayesh + Abhijit)
-│   ├── api/                     ← FastAPI routes
-│   ├── rag/                     ← CRAG pipeline
-│   ├── translation/             ← Bhashini wrapper
-│   ├── safety/                  ← Semantic Router
-│   └── context/                 ← AQI + context builder
-├── mobile/                      ← Flutter app (Ritesh)
-├── evaluation/                  ← RAGAS evaluation
-└── docs/                        ← Reports
+├── backend/                 # FastAPI backend
+│   ├── api/                 # Routes, models, SSE streaming
+│   ├── rag/                 # CRAG pipeline, OKF navigator, grader, context builder
+│   ├── safety/              # Semantic Router (emergency/prescription blocking)
+│   ├── translation/         # Sarvam AI wrapper (Hindi/Marathi ↔ English)
+│   ├── context/             # WAQI AQI + Open-Meteo weather
+│   └── utils/               # ICMR classifiers (BP, sugar, BMI, AQI thresholds)
+├── frontend/                # Flutter Android app
+│   └── lib/
+│       ├── screens/         # Home, Chat, Health Dashboard, Profile
+│       ├── providers/       # Chat, Auth, Health, Fitness state management
+│       ├── services/        # API, Location, Health Connect, Notifications
+│       └── config/          # API endpoints, theme
+├── icmr-knowledge-bundle/   # 40 OKF Markdown files (conditions, drugs, lifestyle, emergency, environmental)
+├── evaluation/              # LLM-as-Judge evaluation (32 gold QA pairs)
+└── docs/                    # Presentations, interim report, system map
 ```
 
-## Documentation
-- **Implementation Plan**: [docs/implementation_plan.md](docs/implementation_plan.md)
-- **Architecture**: [docs/okf_architecture.md](docs/okf_architecture.md)
-- **Context System**: [.context/INDEX.md](.context/INDEX.md)
-- **Research**: [Research/](Research/)
+## Getting Started
+
+### Prerequisites
+- Python 3.11+
+- Flutter SDK (stable channel)
+- Android device/emulator with Health Connect
+
+### Backend Setup
+```bash
+cd backend
+pip install -r requirements.txt
+cp .env.example .env  # Fill in your API keys (see below)
+python -m uvicorn backend.main:app --reload
+```
+
+### Frontend Setup
+```bash
+cd frontend
+flutter pub get
+flutter run --dart-define=GROQ_API_KEY=your_groq_key_here
+```
+
+### Required API Keys
+| Key | Where to get it | Cost |
+|-----|----------------|------|
+| `GROQ_API_KEY` | https://console.groq.com | Free |
+| `SARVAM_API_KEY` | https://dashboard.sarvam.ai | ₹100 free credits |
+| `WAQI_API_TOKEN` | https://aqicn.org/data-platform/token/ | Free |
+
+### Optional API Keys (fallback LLM providers)
+| Key | Where to get it |
+|-----|----------------|
+| `SAMBANOVA_API_KEY` | https://cloud.sambanova.ai |
+| `CEREBRAS_API_KEY` | https://cloud.cerebras.ai |
+
+## Design Framework
+Built following **ICMR's "Ethical Guidelines for Application of AI in Biomedical Research and Healthcare" (March 2023)** — 10 ethical principles: Autonomy, Accountability, Safety, Trustworthiness, Validity, Non-discrimination, Data Privacy, Inclusiveness, Transparency, Professional Competence.
+
+## License
+Academic project — SVKM's NMIMS Shirpur, 2026-27.
