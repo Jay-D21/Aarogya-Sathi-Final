@@ -4,10 +4,10 @@
 name: Keep Alive
 
 on:
-  schedule:
-    # Every 14 minutes, 24/7
-    - cron: '*/14 * * * *'
-  # Allow manual trigger for testing
+  # Cron disabled — enable when Render deployment is active
+  # schedule:
+  #   - cron: '*/14 * * * *'
+  # Manual trigger only for now
   workflow_dispatch:
 
 jobs:
