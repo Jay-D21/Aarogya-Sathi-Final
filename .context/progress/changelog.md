@@ -7,6 +7,14 @@
 - [Jayesh] Fixed backend/.env — replaced stale Bhashini vars with SARVAM_API_KEY that code actually reads
 - [Jayesh] Noted: Groq key still not rotated (same key from before the leak in git history)
 
+## 2026-09-22 (Abhijit — Session 10: Demo Fallbacks + .env Fix)
+- [Abhijit] Added 5 ICMR-based demo fallback responses in chat_provider.dart (diabetes, BP, fever, AQI, diet)
+- [Abhijit] Added synonym matching (sugar/glucose→diabetes, bp/hypertension→BP, pollution/smog→AQI, etc.)
+- [Abhijit] Fallback chain is now: Backend SSE → Groq Direct → Demo Fallbacks → Generic Error
+- [Abhijit] Rewrote backend/.env to match new .env.example (Groq/SambaNova/Cerebras/Sarvam placeholders)
+- [Abhijit] Preserved live WAQI_API_TOKEN in .env
+- [Abhijit] Switched api_config.dart to emulator mode for local-first testing
+
 ## 2026-09-21 (Jayesh — Session 9: Sarvam AI + Evaluation + AQI Cleanup)
 - [Jayesh] Replaced Bhashini translation with Sarvam AI (mayura:v1, Hindi+Marathi+English, ₹100 free credits)
 - [Jayesh] Fixed evaluation pipeline: honest "LLM-as-Judge" docstring, retrieved context passed to judge, robust JSON parsing, removed survivorship bias filter

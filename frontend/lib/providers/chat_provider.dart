@@ -22,6 +22,80 @@ class ChatMessage {
 }
 
 class ChatProvider extends ChangeNotifier {
+  // Demo fallback responses — hardcoded ICMR-based answers that protect the
+  // presentation if both the backend AND Groq direct APIs are unreachable.
+  // Matched by keyword against the user's query before showing the generic error.
+  static const Map<String, String> _demoFallbacks = {
+    'diabetes': '⚕️ **Diabetes Management (ICMR Guidelines)**\n\n'
+        '• **Diet:** Follow the Indian Plate Method — ½ plate vegetables, '
+        '¼ plate whole grains (roti/brown rice), ¼ plate protein (dal/paneer/fish).\n'
+        '• **Blood Sugar Targets:** Fasting 80–130 mg/dL, Post-meal <180 mg/dL, HbA1c <7%.\n'
+        '• **Lifestyle:** Walk 30 minutes daily, reduce refined sugar and maida.\n'
+        '• **Medication:** Continue prescribed medications (e.g., Metformin) as directed.\n\n'
+        '🏥 *Please consult your doctor for personalized treatment. '
+        'If blood sugar exceeds 300 mg/dL or you feel dizzy/confused, call 108 immediately.*',
+
+    'blood pressure': '⚕️ **Blood Pressure Control (ICMR Guidelines)**\n\n'
+        '• **Target:** Below 140/90 mmHg (below 130/80 if diabetic).\n'
+        '• **DASH Diet:** Increase fruits, vegetables, low-fat dairy. '
+        'Limit salt to <5g/day (about 1 teaspoon).\n'
+        '• **Lifestyle:** 150 minutes moderate exercise/week, reduce alcohol, quit smoking.\n'
+        '• **Medication:** Take antihypertensives at the same time daily.\n\n'
+        '🏥 *Consult your doctor before changing medications. '
+        'If BP exceeds 180/120, seek emergency care immediately.*',
+
+    'fever': '⚕️ **Fever Management (ICMR Guidelines)**\n\n'
+        '• **Hydration:** Drink 2–3 liters of fluids daily — water, ORS, coconut water, buttermilk.\n'
+        '• **Paracetamol:** 500mg every 6 hours (max 4 doses/day). Avoid aspirin in dengue-prone areas.\n'
+        '• **Rest:** Complete bed rest. Use light cotton clothing.\n'
+        '• **When to worry:** Fever >103°F for 3+ days, rash, severe headache, or confusion.\n\n'
+        '🏥 *Visit a doctor if fever persists beyond 3 days or is accompanied by '
+        'difficulty breathing. Call 108 for emergencies.*',
+
+    'air quality': '⚕️ **Air Quality Precautions (ICMR + CPCB Guidelines)**\n\n'
+        '• **N95 Masks:** Wear when AQI exceeds 200 (Poor/Very Poor category).\n'
+        '• **Avoid Outdoor Exercise:** Switch to indoor workouts when AQI >150.\n'
+        '• **Indoor Air:** Use air purifiers with HEPA filters. Keep windows closed during peak pollution.\n'
+        '• **Hydration:** Drink warm water with tulsi or ginger to soothe airways.\n'
+        '• **Vulnerable Groups:** Children, elderly, and asthma patients should stay indoors when AQI >100.\n\n'
+        '🏥 *If you experience persistent cough, chest tightness, or difficulty breathing, '
+        'consult a pulmonologist immediately.*',
+
+    'diet': '⚕️ **Healthy Indian Diet (ICMR & NIN Guidelines)**\n\n'
+        '• **Indian Plate Method:** ½ plate vegetables/salad, ¼ plate whole grains, ¼ plate protein.\n'
+        '• **Daily Targets:** 400g fruits & vegetables, 30g fiber, <5g salt, <25g added sugar.\n'
+        '• **Good Sources:** Dal, rajma, chole (protein), ragi, jowar, bajra (millets), '
+        'seasonal fruits, curd, green leafy vegetables.\n'
+        '• **Avoid:** Excessive oil (>20ml/meal), packaged snacks, sugary drinks, maida-based foods.\n'
+        '• **Hydration:** 8–10 glasses of water daily.\n\n'
+        '🏥 *For personalized diet plans, especially for diabetes, heart disease, or kidney issues, '
+        'please consult a registered dietitian.*',
+  };
+
+  /// Checks the user's query against demo fallback keywords.
+  /// Returns a matching fallback response, or null if no keyword matches.
+  static String? _findDemoFallback(String query) {
+    final lower = query.toLowerCase();
+    // Check each keyword — return the first match
+    for (final entry in _demoFallbacks.entries) {
+      if (lower.contains(entry.key)) return entry.value;
+    }
+    // Also match common synonyms that map to the same fallback
+    if (lower.contains('sugar') || lower.contains('glucose') || lower.contains('hba1c')) {
+      return _demoFallbacks['diabetes'];
+    }
+    if (lower.contains('bp') || lower.contains('hypertension')) {
+      return _demoFallbacks['blood pressure'];
+    }
+    if (lower.contains('aqi') || lower.contains('pollution') || lower.contains('smog')) {
+      return _demoFallbacks['air quality'];
+    }
+    if (lower.contains('nutrition') || lower.contains('food') || lower.contains('eating')) {
+      return _demoFallbacks['diet'];
+    }
+    return null;
+  }
+
   final List<ChatMessage> _messages = [];
   bool _isLoading = false;
   bool _isTyping = false;
@@ -152,7 +226,16 @@ class ChatProvider extends ChangeNotifier {
       } catch (_) {}
     }
 
-    // 3. Last resort fallback
+    // 3. If both APIs failed, try demo fallback responses for common health queries
+    // This protects the presentation if LLM providers are down or keys are missing
+    if (reply.isEmpty) {
+      final fallback = _findDemoFallback(text);
+      if (fallback != null) {
+        reply = fallback;
+      }
+    }
+
+    // 4. Last resort — generic error with emergency helpline
     if (reply.isEmpty) {
       reply = 'I am unable to connect to the server right now. '
           'Please check your internet connection.\n\n'

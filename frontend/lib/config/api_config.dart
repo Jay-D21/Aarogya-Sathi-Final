@@ -5,7 +5,8 @@
 /// - emulator: Android emulator (10.0.2.2:8000 maps to host localhost)
 /// - physical: Local network IP address for physical device debugging
 class ApiConfig {
-  static const _Environment _environment = _Environment.production;
+  // Switch to _Environment.production before committing / deploying
+  static const _Environment _environment = _Environment.emulator;
 
   static String get baseUrl {
     switch (_environment) {
