@@ -118,7 +118,7 @@ class CRAGPipeline:
                 messages=state.messages,
                 size="70b",
                 temperature=0.3,
-                max_tokens=1024,
+                max_tokens=400,
             )
         except Exception as e:
             logger.error(f"LLM generation failed: {e}")

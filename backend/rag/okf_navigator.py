@@ -29,9 +29,9 @@ class OKFNavigator:
 
     def __init__(self, bundle_path: str):
         self.bundle_path = Path(bundle_path)
-        # Cap docs to keep context window manageable (~3000 tokens for docs)
-        self.max_initial_files = 3
-        self.max_linked_files = 3
+        # Cap docs to keep grading fast and context focused
+        self.max_initial_files = 2
+        self.max_linked_files = 2
         self.max_content_chars = 1500  # truncate each doc to this length
 
     async def navigate(self, query: str) -> list[dict]:
