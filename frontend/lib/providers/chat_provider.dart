@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import '../config/api_config.dart';
 import '../services/api_service.dart';
 import '../services/location_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatMessage {
   final String id;
