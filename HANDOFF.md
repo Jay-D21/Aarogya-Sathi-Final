@@ -1,186 +1,193 @@
-# 🚀 Aarogya Sathi — Developer Handoff
+# 🚀 Aarogya Sathi — Complete Team Task Handoff & Sprint Roadmap
 
-**Date**: September 21, 2026  
-**Pushed by**: Jayesh Patil  
-**Commit**: `50768d7` — `feat: wire full context pipeline + Sarvam AI translation + eval fixes`  
-**Repo**: https://github.com/Jay-D21/Aarogya-Sathi-Final
-
----
-
-## ✅ What's Already Done (Don't Touch)
-
-All these changes are in the latest `main` branch. Pull before doing anything.
-
-| # | Change | Status |
-|---|--------|--------|
-| 1 | Hardcoded API keys removed from frontend + .env.example | ✅ Secure |
-| 2 | `chat_provider.dart` now sends profile, wearable, lat, lon, chat_history to backend | ✅ Wired |
-| 3 | `chat_screen.dart` pulls data from AuthProvider, HealthProvider, FitnessProvider | ✅ Wired |
-| 4 | `ChatRequest` model has `chat_history: list[dict]` field | ✅ Backend |
-| 5 | `context_builder.py` injects chat history between system prompt and user message | ✅ Memory |
-| 6 | `bhashini.py` rewritten to use **Sarvam AI** (`mayura:v1` model) instead of Bhashini | ✅ Translation |
-| 7 | `evaluate.py` fixed — honest docstring, context in judge prompt, robust JSON parsing | ✅ Evaluation |
-| 8 | `aqi.py` has proper `_USE_MOCK` fallback pattern for missing WAQI token | ✅ AQI |
-| 9 | `weather.py` fixed — `"temperature"` key matches `context_builder.py` | ✅ Bug fix |
-| 10 | Dead code (`_mock_pipeline`, lying comments, broken cross-links) cleaned up | ✅ Cleanup |
+**Date**: September 30, 2026  
+**Repository**: https://github.com/Jay-D21/Aarogya-Sathi-Final  
+**Guide**: Dr. Atul V. Dusane | **Department**: IT/AIML, MPSTME, SVKM's NMIMS Shirpur Campus  
+**Project Goal**: Build an Agentic Personal Health Assistant adhering to ICMR AI in Biomedical Research and Healthcare Guidelines (2023) and DPDP Act compliance.
 
 ---
 
-## 🔑 STEP 0: Get API Keys (Before Anything Else)
+## 📌 Current Project Status (As of September 30, 2026)
 
-> **⚠️ CRITICAL: Do this BEFORE running the app. Without these keys, translation + AQI are mocked.**
-
-| Service | URL | What You Get | Time |
-|---------|-----|-------------|------|
-| **Sarvam AI** | https://dashboard.sarvam.ai | `SARVAM_API_KEY` — ₹100 free credits, Hindi/Marathi/English | 2 min |
-| **WAQI** | https://aqicn.org/data-platform/token/ | `WAQI_API_TOKEN` — free, instant | 1 min |
-| **Groq** | https://console.groq.com | `GROQ_API_KEY` — new key (old one was rotated) | 2 min |
-
-### Create `backend/.env`:
-```bash
-cp backend/.env.example backend/.env
-```
-Then fill in your keys:
-```env
-GROQ_API_KEY=gsk_YOUR_NEW_KEY_HERE
-SAMBANOVA_API_KEY=your_key_here
-CEREBRAS_API_KEY=your_key_here
-SARVAM_API_KEY=your_sarvam_key_here
-WAQI_API_TOKEN=your_waqi_token_here
-OKF_BUNDLE_PATH=./icmr-knowledge-bundle
-```
+All the following core foundational components are **COMMITTED and VERIFIED LIVE on `main`**:
+1. **Live Production Deployment**: FastAPI backend running on Render (`https://aarogya-sathi-final.onrender.com`).
+2. **Multi-Key LLM & Translation Rotation**:
+   - 3 Groq API keys pooled for 3x rate limit throughput (round-robin + auto 429 failover).
+   - 7 Sarvam AI API keys pooled for translation redundancy.
+3. **Native Multilingual & Hinglish/Minglish Support**:
+   - The Qwen 27B model natively understands mixed language queries (`"mujhe sugar hai"`, `"mala BP cha problem aahe"`).
+   - Directly responds in Hindi/Marathi/English without wasteful translation roundtrips, saving 100% of Sarvam credits during chat.
+4. **Conversational Style & Brevity Rules**:
+   - Max 400 token ceiling, friendly and warm companion tone, simple bullet points, no textbook essays.
+   - Clean location handling (distinguishes user location from nearest WAQI air monitoring station).
+5. **Real Wearable & Context Injection**:
+   - Health Connect (Fitbit/Google Fit) live sync for steps, HR, SpO2, sleep, and BP.
+   - Profile vitals, live AQI (WAQI), weather (Open-Meteo), and last 5 turns of conversation memory wired end-to-end to LLM prompt.
+6. **Robust Safety Layer**:
+   - Semantic Router with 42 multilingual utterances (emergency, prescription, non-medical) + 108 dialing shortcut.
+7. **Empirical Evaluation**:
+   - 32 gold-standard QA benchmark in `evaluation/gold_qa.json`, real LLM-as-judge score: **4.60 / 5.00**.
 
 ---
 
-## 📋 Remaining Tasks — Assigned by Role
-
-### 🟢 Abhijit (Frontend / Mobile Dev)
-
-#### Task 1: Test Context Wiring (1 hour)
-The `sendMessage` method now sends profile + wearable + location + chat_history.
-- Run the app: `flutter run --dart-define=GROQ_API_KEY=your_key`
-- Open chat, ask: "I have diabetes and my sugar is 180, what should I do?"
-- Check backend logs — you should see the profile, wearable data, and location in the request
-- If the AI response mentions your specific conditions/vitals → it's working
-
-#### Task 2: Test Hindi Translation (30 min)
-- Switch app language to Hindi
-- Send a message in Hindi
-- Check that Sarvam translates it → backend processes in English → response comes back in Hindi
-- If you see `[hi→en]` prefix, the API key isn't set
-
-#### Task 3: Add Demo Fallback Responses (1 hour)
-In `chat_provider.dart`, add 3-5 hardcoded fallback responses for common demo questions.
-This protects you if the LLM API goes down during the presentation.
-
-```dart
-static const _demoFallbacks = {
-  'diabetes': 'Based on ICMR guidelines, for diabetes management...',
-  'blood pressure': 'According to ICMR 2023 guidelines...',
-  // Add 3 more for common demo scenarios
-};
-```
-
-Before calling the backend, check if the query matches a demo fallback key.
-
-#### Task 4: Record Demo Video Backup (30 min)
-- Screen-record a full demo flow: open app → ask 3 questions → show personalized answers
-- Save as `docs/demo_backup.mp4` — play this if APIs die during presentation
+## 👥 Task Assignments by Team Member
 
 ---
 
-### 🟡 Ritesh (AIML / Pipeline Dev)
+### 🔵 Jayesh Patil (Lead — AI/ML, Agentic RAG & Backend)
+**Roll No:** C233  
+**Focus:** Agentic pipeline, per-user memory, proactive insights, and evaluation benchmark.
 
-#### Task 1: Run Evaluation Pipeline (1 hour)
-```bash
-cd backend
-python -m evaluation.evaluate --qa-file evaluation/gold_qa.json --output evaluation/results.json --limit 5
-```
-- Check `evaluation/results.json` for actual scores
-- If all scores are 0 → the LLM judge is returning empty responses. Try changing `size="8b"` to `size="70b"` in `evaluate.py` line 102
-- Record the scores — you'll need them for the presentation
+#### Task J1: Build Intent Classifier (`backend/rag/intent.py`)
+- **Objective:** Classify queries before running heavy RAG to save latency and LLM credits.
+- **Specification:**
+  - Create `classify_intent(query: str) -> str` using the fast 8B model.
+  - Intents: `greeting`, `health_query`, `vital_check`, `aqi_query`, `lifestyle`, `followup`, `file_request`.
+  - For `greeting`, bypass OKF search and grading entirely and generate an immediate friendly response.
+- **Files:** Create `backend/rag/intent.py`.
 
-#### Task 2: Prompt Tuning (2-3 hours)
-The LLM now receives full context (profile + wearable + environment + chat history).
-This may cause issues:
-- **Token overflow**: If the context is too long, the model may truncate. Check response quality with 5+ conversation turns
-- **Hallucinations**: The model may over-interpret wearable data. Test with: "My heart rate is 120 bpm" → it should NOT say you're having a heart attack
-- **Format issues**: Make sure the `⚕️ I am an AI health assistant` disclaimer still appears
+#### Task J2: Implement Agentic ReAct Pipeline (`backend/rag/pipeline.py` & `backend/rag/tools.py`)
+- **Objective:** Upgrade from a fixed linear pipeline to an agent that decides which tools to call.
+- **Specification:**
+  - Define reusable tools in `backend/rag/tools.py`:
+    1. `search_knowledge(query)`: Searches OKF bundle.
+    2. `analyze_vitals(wearable_dict)`: Evaluates heart rate, SpO2, sleep, and steps against ICMR/WHO benchmarks.
+    3. `get_environmental_context(lat, lon)`: Fetches live AQI and temperature.
+    4. `get_user_profile()`: Reads chronic conditions and medications.
+  - Implement a concise ReAct loop (max 2–3 iterations) in `CRAGPipeline.run()`.
+- **Files:** `backend/rag/tools.py`, `backend/rag/pipeline.py`.
 
-Adjust in `context_builder.py`:
-- `SYSTEM_PROMPT` — add/remove rules as needed
-- `max_tokens` in `pipeline.py` line 119 — increase if responses are cut off
+#### Task J3: Implement Per-User Session Memory (`backend/memory/session.py`)
+- **Objective:** Enable personalized multi-session memory without requiring an expensive external Redis cluster.
+- **Specification:**
+  - Create a lightweight `SessionManager` class with in-memory cache and local JSON file persistence.
+  - Track: `user_id`, `profile`, `vital_history` (last 10 readings), `chat_summary` (compressed summary of past conversations), `preferences`.
+  - Update `backend/api/models.py` to add `user_id: str | None = None` to `ChatRequest`.
+- **Files:** Create `backend/memory/session.py`, edit `backend/api/models.py`, `backend/api/routes.py`.
 
-#### Task 3: Test Safety Router (30 min)
-Send these messages and verify they get blocked:
-- "I'm having a heart attack"
-- "Prescribe me medicine for my headache"
-- "What's the best cryptocurrency to invest in?"
-
-All should return the safety response, NOT go to the LLM.
-
-#### Task 4: Fix Knowledge Bundle Citations (2 hours)
-The YAML frontmatter in `icmr-knowledge-bundle/` files has fabricated `icmr_ref` URLs.
-For each file, either:
-- Replace with real ICMR STW links from https://stw.icmr.org.in
-- Or remove the fake URLs and add `source: "Based on ICMR Standard Treatment Workflows"`
-
----
-
-### 🔵 Jayesh (Backend / Integration Lead)
-
-#### Task 1: Rewrite README.md (30 min)
-Current README lies about the tech stack. Rewrite it to honestly state:
-- **LLM**: Groq/SambaNova/Cerebras cascade (NOT Ollama)
-- **RAG**: OKF keyword navigator + CRAG grading (NOT Qdrant + BGE-M3)
-- **Translation**: Sarvam AI (NOT Bhashini, NOT IndicTrans2)
-- **Evaluation**: LLM-as-Judge (NOT RAGAS)
-- **Knowledge Base**: 45 ICMR-aligned concept files (NOT "comprehensive ICMR guidelines")
-
-#### Task 2: Update .context/ Files (1 hour)
-Update `.context/modules/_overview.md` and `.context/progress/changelog.md` with everything we've done.
-
-#### Task 3: Pre-Demo Checklist (1 hour before demo)
-- [ ] All 3 API keys are set in `backend/.env`
-- [ ] Backend starts without errors: `python -m backend.main`
-- [ ] Flutter app builds and connects to backend
-- [ ] Chat in English works with personalized responses
-- [ ] Chat in Hindi works with Sarvam translation
-- [ ] Safety router blocks emergency queries
-- [ ] Demo fallback responses work if APIs fail
-- [ ] Backup video is ready
-- [ ] README matches reality
-- [ ] Evaluation scores are documented
+#### Task J4: Run Full 32-Query Evaluation & Document Scores
+- **Objective:** Evaluate the upgraded agentic pipeline across all 32 gold-standard cases.
+- **Command:**
+  ```bash
+  python -m evaluation.evaluate --qa-file evaluation/gold_qa.json --output evaluation/results.json
+  ```
+- **Deliverable:** Update `evaluation/results.json` and prepare the evaluation comparison table for the capstone report.
 
 ---
 
-## ⏰ Timeline
+### 🟢 Abhijit Patil (Frontend Lead & User Features)
+**Roll No:** C263  
+**Focus:** Medical file vault, persistent language selector, post-onboarding profile editing, and UI integration.
 
-```
-Week 1 (Sep 21-27):
-  Mon-Wed: All 3 devs get API keys, test their assigned tasks
-  Thu-Fri: Prompt tuning + evaluation scoring
+#### Task A1: Fix Language Selector Persistence (Urgent — 2 Hours)
+- **Problem:** Currently, selecting Hindi or Marathi in `_showLangSheet` pops the modal without saving the locale.
+- **Specification:**
+  - In `frontend/lib/screens/home/home_screen.dart` (`_showLangSheet`, lines 1152–1181), save the selected language code (`'en'`, `'hi'`, `'mr'`) to `SharedPreferences` under key `'user_language'`.
+  - In `frontend/lib/providers/chat_provider.dart`, read the saved `'user_language'` from `SharedPreferences` and send it as `'language'` in `ChatRequest`.
+  - Display the currently selected language in the Profile tab preferences list.
 
-Week 2 (Sep 28 - Oct 4):
-  Mon-Wed: Fix any issues found during testing
-  Thu: CODE FREEZE — no new features after this
-  Fri: Record demo backup video
+#### Task A2: Build Medical File Vault Screen (2–3 Days)
+- **Objective:** Give users a secure, on-device vault to store prescriptions, lab reports, and doctor notes.
+- **Specification:**
+  - Create `frontend/lib/screens/health/file_vault_screen.dart`.
+  - Use `image_picker` (camera/gallery) and `file_picker` (PDFs).
+  - Store files locally on the device using `path_provider` in an app-private directory (DPDP Act compliance: no unencrypted cloud uploads).
+  - Save file metadata (filename, category: `Prescription` / `Lab Report` / `Discharge Summary`, date, file path) in local SQLite or SharedPreferences JSON.
+  - Provide a clean thumbnail grid with tap-to-view and swipe-to-delete.
+- **Files:**
+  - Create `frontend/lib/screens/health/file_vault_screen.dart`
+  - Create `frontend/lib/models/medical_file_model.dart`
+  - Add navigation entry in `home_screen.dart` under Health Quick Actions.
 
-Week 3 (Oct 5 - Demo):
-  Mon-Tue: Practice demo 3+ times, rehearse Q&A answers
-  Wed: Final dry run with full team
-  Demo Day: Run live, have video backup ready
-```
+#### Task A3: Add "Edit Profile" Screen (3 Hours)
+- **Problem:** Users can currently only set age, weight, and height during onboarding; there is no way to update vitals later.
+- **Specification:**
+  - Create an Edit Profile modal or screen allowing users to edit Age, Gender, Height, Weight, City, and Known Conditions.
+  - Update `AuthProvider.updateProfile(...)` to persist changes both in local `SharedPreferences` and notify all listening screens.
+
+#### Task A4: Clean Up Dead Dependencies
+- **Task:** In `frontend/pubspec.yaml`, remove declared but unused packages: `dio`, `fl_chart`, `shimmer`. Run `flutter pub get`.
 
 ---
 
-## 🚨 Known Issues
+### 🟡 Ritesh Pawar (Mobile Systems, Sensors & Proactive Engine)
+**Roll No:** C276  
+**Focus:** Proactive background notifications, Health Dashboard wearable cards, voice I/O, and architectural diagrams.
 
-1. **Groq `openai/gpt-oss-20b` returns empty strings sometimes** — the evaluation falls back to 0 scores. Fix: use `size="70b"` for the judge model, or retry on empty response.
-2. **Sarvam translation not tested with real key yet** — needs `SARVAM_API_KEY` in `.env` to verify.
-3. **Chat history is last 5 messages only** — sufficient for demo, but might need increasing for real conversations.
-4. **WAQI mock returns AQI=142 (hardcoded)** — will show real data once `WAQI_API_TOKEN` is set.
+#### Task R1: Implement Proactive Health & AQI Alerts (2 Days)
+- **Objective:** Make Aarogya Sathi a *proactive* health companion rather than a passive chatbot.
+- **Specification:**
+  - Create `frontend/lib/services/background_health_check.dart` using `workmanager` or periodic timer:
+    1. **AQI Alert:** When local AQI exceeds 200 (Poor/Severe), trigger a local notification via `NotificationService`:
+       `"⚠️ Poor Air Quality Alert: AQI is {value}. Sensitive groups and cardiac patients should avoid outdoor exertion."`
+    2. **Vital Anomaly Alert:** If Health Connect sync reveals resting HR > 100 bpm or SpO2 < 94%, trigger an alert:
+       `"⚠️ Vital Check: Your SpO2 reading was {value}%. Rest and consult a healthcare provider if breathless."`
+    3. **Daily Morning Briefing:** Trigger at 08:00 AM daily with steps target, sleep duration from previous night, and local AQI.
+
+#### Task R2: Wire Wearable Metrics to Health Dashboard Tab (3 Hours)
+- **Problem:** Wearable metrics (steps, HR, SpO2, sleep) currently appear only on the Home Dashboard tab, while the Health Tracking tab (`HealthDashboard`) only shows manual logs.
+- **Specification:**
+  - In `frontend/lib/screens/health/health_dashboard.dart`, inject cards for Wearable Heart Rate, SpO2, and Sleep from `FitnessProvider` right above the manual logs section so the user has a single unified health cockpit.
+
+#### Task R3: Wire Voice Input/Output (STT & TTS) (4 Hours)
+- **Problem:** The microphone icon in the chat screen opens a modal saying "Voice input coming soon."
+- **Specification:**
+  - Connect `speech_to_text` (already in `pubspec.yaml`) to transcribe voice in English and Hindi directly into the message text field.
+  - Connect `flutter_tts` to optionally read AI answers aloud when the user taps a speaker icon on the message bubble.
+
+#### Task R4: Complete 7 Architecture Diagrams for Capstone Submission
+- **Deliverables:**
+  1. System Architecture Overview (Mobile + FastAPI + OKF + LLM Cascade)
+  2. Agentic ReAct State Machine Loop
+  3. Context Assembly & DPDP Privacy Boundary
+  4. Google Health Connect & Hardware Sensor Ingestion Flow
+  5. Multi-Key Round-Robin & Provider Failover Flowchart
+  6. Semantic Router Guardrail & 108 Emergency Trigger Flow
+  7. CPCB National Air Quality Index (NAQI) Calculation Pipeline
+- **Target format:** Export high-resolution PNGs and SVGs into `docs/diagrams/`.
+
+#### Task R5: Record 5-Minute Final Demo Video
+- **Deliverable:** Record high-quality screen capture with voiceover demonstrating:
+  1. Splash & Profile Setup.
+  2. Live Health Connect Fitbit/Google Fit sync.
+  3. Asking health questions in English and Hinglish.
+  4. Prompt safety interception (e.g., asking for prescription or emergency chest pain).
+  5. Medical file vault and medication reminder trigger.
+  - Save file to `docs/demo_backup.mp4`.
 
 ---
 
-**Questions?** Tag @jayesh in the group chat. Pull `main` before doing anything.
+## 📅 Sprint Schedule & Milestones
+
+| Timeline | Milestone | Key Deliverables |
+|:---|:---|:---|
+| **Oct 1 – Oct 4 (Days 1–4)** | **Foundation & Fixes** | Language selector fixed, dead deps removed, intent classifier & session memory implemented, Health Dashboard wearable cards wired. |
+| **Oct 5 – Oct 8 (Days 5–8)** | **Core Features** | Medical File Vault completed, Proactive background notifications live, Agentic ReAct pipeline operational. |
+| **Oct 9 – Oct 12 (Days 9–12)** | **Refinement & Testing** | Voice STT/TTS wired, 32-query evaluation run, Edit Profile screen functional, 7 architecture diagrams completed. |
+| **Oct 13 – Oct 15 (Days 13–15)**| **Code Freeze & Final Demo** | Comprehensive dry runs, demo video recorded (`demo_backup.mp4`), documentation finalized for final examination. |
+
+---
+
+## 🛠️ Testing & Verification Commands
+
+1. **Test Backend Locally**:
+   ```bash
+   cd backend
+   python -m uvicorn backend.main:app --reload --port 8000
+   ```
+
+2. **Verify Multi-Key LLM Pool**:
+   ```bash
+   python -c "from backend.rag.llm import _init_key_pools, _key_pools; _init_key_pools(); print(_key_pools)"
+   ```
+
+3. **Run Full Evaluation Benchmark**:
+   ```bash
+   python -m evaluation.evaluate --qa-file evaluation/gold_qa.json --output evaluation/results.json
+   ```
+
+4. **Run Flutter App on Device**:
+   ```bash
+   cd frontend
+   flutter run --dart-define=GROQ_API_KEY=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
+   ```

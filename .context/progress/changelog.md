@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-30 (Jayesh — Session 11: Multi-Key Pooling, Native Hinglish, Context Polishing & Agentic Roadmap)
+- [Jayesh] Implemented comma-separated multi-key pooling with round-robin rotation & auto-429 rotation across Groq and Sarvam AI (`llm.py`, `bhashini.py`)
+- [Jayesh] Configured Render production environment variables and switched Flutter app `api_config.dart` from emulator to production URL
+- [Jayesh] Bypassed Sarvam translation during chat by prompting Qwen 27B to natively understand and reply in Hindi/Marathi/Hinglish/Minglish (saving 100% of credits)
+- [Jayesh] Enforced conversational brevity in `context_builder.py` (2-3 sentences for greetings, max 4-5 bullet points, 400 token ceiling, caring companion tone)
+- [Jayesh] Disambiguated nearest WAQI monitoring station name from the user's actual GPS city in LLM prompt
+- [Jayesh] Conducted comprehensive Flutter frontend and FastAPI backend feature audits
+- [Jayesh] Formulated the Agentic RAG ReAct architecture plan and updated team sprint assignments in `HANDOFF.md`
+
 ## 2026-09-27 (Jayesh — Session 10: Audit + Cleanup + Honest README)
 - [Jayesh] Full project state audit — discovered 0 commits from team since Sep 21
 - [Jayesh] Rewrote README.md to match reality (removed false claims: Ollama, Qdrant, BGE-M3, LangChain, Bhashini, RAGAS)

@@ -1,45 +1,31 @@
 # Abhijit Patil — Contributor Context
 
 ## Current Assignment
-- **Modules**: Backend API, Translation, Safety Layer, Environmental Data
+- **Modules**: Frontend Core, Medical File Vault, Settings & Personalization, API Sync
 - **Branch**: main
-- **Task**: Get real API keys + upgrade safety to semantic-router + integration testing
-- **Started**: 2026-09-08
+- **Task**: Medical File Vault, Language Persistence, and Profile Management
+- **Status**: Active
 
-## Responsibilities
-1. ~~Set up FastAPI backend with SSE streaming~~ ✅
-2. Integrate Bhashini API for Hindi/Marathi translation — mock working, real keys pending
-3. ~~Implement Safety Router (keyword fallback)~~ ✅ — upgrade to semantic-router pending
-4. ~~Build WAQI + Open-Meteo AQI integration~~ ✅ (mock WAQI, live Open-Meteo)
-5. ~~Design XML context template~~ — Jayesh built context_builder.py instead
-6. Help Jayesh with OKF bundle creation (medical content review)
-7. Integration testing with all components
+## Key Responsibilities
+1. **Medical File Vault**: Build `file_vault_screen.dart` with local encrypted/private file storage for prescriptions and lab reports via `image_picker` and `file_picker`.
+2. **Language Selector**: Fix language sheet in `home_screen.dart` to save and read `'user_language'` via `SharedPreferences`.
+3. **Profile Updates**: Build "Edit Profile" screen so registered and guest users can update vitals and chronic conditions after onboarding.
+4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
-- FastAPI backend: `main.py`, `models.py`, `routes.py` — full SSE streaming pipeline
-- Real CRAGPipeline wired with multi-provider cascade
-- Safety router upgraded to Semantic Router with HuggingFaceEncoder & keyword fallback
-- Live AQI integration with WAQI token + Open-Meteo live weather
-- 5 ICMR-based demo fallback responses in `frontend/lib/providers/chat_provider.dart` (diabetes, BP, fever, AQI, diet) with synonym matching
-- API Config set up with local/emulator environment toggle
-- 11 mock OKF knowledge bundle files
+- Added 5 ICMR-based demo fallback responses in `chat_provider.dart` with synonym matching.
+- Verified backend routes and models handling `profile`, `wearable`, `lat`, `lon`, and `chat_history`.
+- Set up local/emulator/production environment toggle in `api_config.dart`.
+- Audited frontend screens and providers for missing feature gaps.
 
-## What's Next 🔜
-1. **API Keys** — Acquire GROQ_API_KEY and SARVAM_API_KEY when available to test live generative chat and translation
-2. **Context Wiring Verification** — E2E test with Flutter chat screen sending profile, wearable, GPS, and chat history
-3. **Hindi Translation Testing** — Round-trip test once SARVAM_API_KEY is active
-4. **Demo Video** — Record screen walkthrough (`docs/demo_backup.mp4`)
-
-## Session: 2026-09-22 & 2026-09-29
-- Added 5 ICMR-based demo fallback responses in `chat_provider.dart` for offline/presentation protection
-- Added intelligent synonym matching (sugar/glucose→diabetes, bp/hypertension→BP, pollution/smog→AQI, nutrition/food→diet)
-- Switched `api_config.dart` to emulator mode for local-first development
-- Preserved live WAQI token in backend/.env
-- Synced and merged with Jayesh's Session 10 updates (27B model upgrade, benchmark results, clean requirements)
-- Verified backend import and Flutter analyzer (0 errors)
+## Next Action Items
+1. Fix language selector in `home_screen.dart` (lines 1152–1181) to persist selected language to `SharedPreferences`.
+2. Create `file_vault_screen.dart` and `medical_file_model.dart` for local prescription and report storage.
+3. Add Edit Profile screen for updating age, height, weight, and health conditions post-onboarding.
+4. Clean up unused pubspec dependencies.
 
 ## Files I Own
-- `backend/api/` (FastAPI endpoints)
-- `backend/translation/` (Bhashini wrapper)
-- `backend/safety/` (Semantic Router)
-- `backend/context/` (AQI + weather)
+- `frontend/lib/screens/health/file_vault_screen.dart` (new)
+- `frontend/lib/screens/home/home_screen.dart` (Preferences, Language, Profile)
+- `frontend/lib/providers/auth_provider.dart` (profile persistence)
+- `frontend/pubspec.yaml`
