@@ -48,6 +48,7 @@ def build_context(
     aqi_data: dict,
     wearable: dict | None = None,
     chat_history: list[dict] | None = None,
+    language: str = "en",
 ) -> list[dict]:
     """
     Assemble the full prompt as an OpenAI-format messages list.
@@ -176,11 +177,25 @@ def build_context(
 
 """
 
+    # Build language instruction based on user's preference
+    lang_names = {"en": "English", "hi": "Hindi (हिंदी)", "mr": "Marathi (मराठी)"}
+    lang_name = lang_names.get(language, "English")
+    if language == "en":
+        lang_instruction = "Respond in English."
+    else:
+        lang_instruction = (
+            f"Respond in {lang_name}. The user may type in {lang_name}, English, "
+            f"or a mix (Hinglish/Minglish) — understand all of these. "
+            f"Use {lang_name} script for your response but keep medical terms in English "
+            f"(e.g., 'blood pressure', 'diabetes', 'mg/dL') for clarity."
+        )
+
     user_content += f"""<instructions>
 Answer the user's health query using the documents above.
 Cite sources as [Doc 1], [Doc 2], etc. when referencing specific guidelines.
 Use warm, conversational language appropriate for urban Indian users.
 If the documents don't cover the topic, say so honestly and advise consulting a doctor.
+{lang_instruction}
 End your response with: "⚕️ I am an AI health assistant, not a doctor."
 </instructions>
 

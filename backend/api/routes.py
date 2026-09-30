@@ -60,10 +60,11 @@ async def chat_endpoint(req: ChatRequest):
             }
         return EventSourceResponse(blocked_stream())
 
-    # Step 2: Translate user query to English for RAG processing
-    query_en = req.query
-    if req.language != "en":
-        query_en = await translate(req.query, req.language, "en")
+    # Step 2: Pass query as-is to the pipeline.
+    # The Qwen 27B model understands Hinglish ("mujhe sugar hai"),
+    # Minglish ("mala BP cha problem aahe"), Hindi, Marathi, and English
+    # natively — no need to translate input (saves Sarvam credits).
+    query_for_pipeline = req.query
 
     # Step 3: Fetch environmental context (non-critical — continue without it)
     aqi_data = {}
@@ -81,55 +82,22 @@ async def chat_endpoint(req: ChatRequest):
     profile_dict["wearable"] = req.wearable.model_dump()
 
     # Step 5: Run pipeline and stream response
+    # The LLM now responds directly in the user's language (Hindi/Marathi/English)
+    # via the language instruction in the system prompt. No Sarvam translation needed.
+    # This also handles Hinglish ("mujhe sugar hai") and Minglish natively.
     async def generate():
-        if req.language == "en":
-            async for token in _pipeline.run(query_en, profile_dict, aqi_data, req.wearable.model_dump(), req.chat_history):
-                yield {
-                    "event": "message",
-                    "data": json.dumps({"token": token, "done": False})
-                }
+        async for token in _pipeline.run(
+            query_for_pipeline, profile_dict, aqi_data,
+            req.wearable.model_dump(), req.chat_history,
+            language=req.language,
+        ):
             yield {
                 "event": "message",
-                "data": json.dumps({"token": "", "done": True})
+                "data": json.dumps({"token": token, "done": False})
             }
-        else:
-            full_response = ""
-            async for token in _pipeline.run(query_en, profile_dict, aqi_data, req.wearable.model_dump(), req.chat_history):
-                full_response += token
-            
-            # Translate full response, chunking if it exceeds the 1000 char limit
-            if len(full_response) > 900:
-                import re
-                sentences = re.split(r'(?<=[.!?\n])\s+', full_response)
-                translated = ""
-                current_chunk = ""
-                for s in sentences:
-                    if len(current_chunk) + len(s) > 900:
-                        if current_chunk:
-                            translated += await translate(current_chunk.strip(), "en", req.language) + " "
-                        current_chunk = s + " "
-                    else:
-                        current_chunk += s + " "
-                if current_chunk.strip():
-                    translated += await translate(current_chunk.strip(), "en", req.language)
-            else:
-                translated = await translate(full_response, "en", req.language)
-            
-            # Stream translated text word-by-word
-            words = translated.split(" ")
-            for i, word in enumerate(words):
-                token = word + (" " if i < len(words) - 1 else "")
-                yield {
-                    "event": "message",
-                    "data": json.dumps({"token": token, "done": False})
-                }
-                await asyncio.sleep(0.01)
-                
-            yield {
-                "event": "message",
-                "data": json.dumps({
-                    "token": "", "done": True, "translated": True
-                })
-            }
+        yield {
+            "event": "message",
+            "data": json.dumps({"token": "", "done": True})
+        }
 
     return EventSourceResponse(generate())

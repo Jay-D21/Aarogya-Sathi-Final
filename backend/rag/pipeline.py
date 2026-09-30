@@ -66,6 +66,7 @@ class CRAGPipeline:
         aqi_data: dict,
         wearable: dict | None = None,
         chat_history: list[dict] | None = None,
+        language: str = "en",
     ) -> AsyncIterator[str]:
         """
         Run the full CRAG pipeline and yield response tokens.
@@ -107,6 +108,7 @@ class CRAGPipeline:
             aqi_data=aqi_data,
             wearable=wearable,
             chat_history=chat_history,
+            language=language,
         )
 
         # --- Node 4: Generate response ---
