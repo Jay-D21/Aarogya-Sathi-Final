@@ -4,6 +4,9 @@ import '../config/theme.dart';
 
 /// Google Drive-style category folder card for Medical File Vault.
 /// Features pastel background tint, icon, title, item count, and clean rounded geometry.
+/// File Vault category tile showing document count and folder icon
+/// for a specific medical category (Prescriptions, Lab Reports, etc.).
+/// Tapping navigates to the filtered file list for that category.
 class CategoryFolderCard extends StatelessWidget {
   final String title;
   final String subtitle;
