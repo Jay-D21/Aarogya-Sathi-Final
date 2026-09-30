@@ -38,6 +38,7 @@ class ChatRequest(BaseModel):
     static profile, live wearable data, preferred language, and GPS location
     for environmental context.
     """
+    user_id: str | None = None
     query: str
     language: str = "en"  # en, hi, mr
     profile: UserProfile = UserProfile()

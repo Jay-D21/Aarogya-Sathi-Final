@@ -54,6 +54,8 @@ def build_context(
     wearable: dict | None = None,
     chat_history: list[dict] | None = None,
     language: str = "en",
+    insights: list[str] | None = None,
+    session_summary: str | None = None,
 ) -> list[dict]:
     """
     Assemble the full prompt as an OpenAI-format messages list.
@@ -179,6 +181,22 @@ def build_context(
         user_content += f"""<wearable_data>
 {wearable_block}
 </wearable_data>
+
+"""
+
+    if session_summary:
+        user_content += f"""<session_memory>
+{session_summary}
+</session_memory>
+
+"""
+
+    if insights:
+        insights_text = "\n".join(f"- {item}" for item in insights)
+        user_content += f"""<proactive_observations>
+{insights_text}
+Note: If highly relevant to the user query, acknowledge these health observations with care and concern.
+</proactive_observations>
 
 """
 

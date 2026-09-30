@@ -179,9 +179,22 @@ class ChatProvider extends ChangeNotifier {
         }
       }
 
+      // Read persistent user ID and preferred language from SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final effectiveLang = prefs.getString('user_language') ?? language;
+      var userId = prefs.getString('user_id');
+      if (userId == null || userId.isEmpty) {
+        userId = prefs.getString('device_user_id');
+        if (userId == null || userId.isEmpty) {
+          userId = 'user_${DateTime.now().millisecondsSinceEpoch}';
+          await prefs.setString('device_user_id', userId);
+        }
+      }
+
       request.body = jsonEncode({
+        'user_id': userId,
         'query': text,
-        'language': language,
+        'language': effectiveLang,
         if (profile != null) 'profile': profile,
         if (wearable != null) 'wearable': wearable,
         if (lat != null) 'lat': lat,

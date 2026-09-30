@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Path
 from sse_starlette.sse import EventSourceResponse
 from backend.context.aqi import get_aqi
 from backend.context.weather import get_weather
@@ -6,6 +6,8 @@ from backend.safety.router import check_safety
 from backend.translation.bhashini import translate
 from backend.api.models import ChatRequest
 from backend.rag.pipeline import CRAGPipeline
+from backend.memory.session import session_manager
+from backend.rag.insights import generate_proactive_insights
 import os
 import json
 import asyncio
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-# Initialize once at import time — the pipeline is stateless and reusable
+# Initialize once at import time — the pipeline is reusable across requests
 _pipeline = CRAGPipeline(
     bundle_path=os.getenv("OKF_BUNDLE_PATH", "./icmr-knowledge-bundle")
 )
@@ -37,18 +39,60 @@ async def aqi_endpoint(lat: float = Query(...), lon: float = Query(...)):
         return {"success": False, "error": str(e)}
 
 
+@router.get("/session/{user_id}/insights")
+async def user_insights_endpoint(
+    user_id: str = Path(...),
+    lat: float | None = Query(None),
+    lon: float | None = Query(None),
+):
+    """Fetch proactive clinical and environmental observations for a specific user session.
+
+    Can be polled periodically by the mobile app to trigger proactive background notifications
+    (e.g., poor AQI warnings, abnormal heart rate anomalies).
+    """
+    try:
+        session = session_manager.get_session(user_id)
+        aqi_data = {}
+        if lat is not None and lon is not None:
+            try:
+                aqi_data = await get_aqi(lat, lon)
+                weather = await get_weather(lat, lon)
+                aqi_data.update(weather)
+            except Exception as e:
+                logger.warning(f"Could not fetch environmental data for insights: {e}")
+
+        latest_wearable = session.vital_history[-1] if session.vital_history else {}
+        insights = generate_proactive_insights(
+            profile=session.profile,
+            wearable=latest_wearable,
+            aqi_data=aqi_data,
+            vital_history=session.vital_history,
+        )
+        return {
+            "success": True,
+            "data": {
+                "user_id": user_id,
+                "insights": insights,
+                "vital_count": len(session.vital_history),
+                "has_profile": bool(session.profile),
+            },
+        }
+    except Exception as e:
+        logger.error(f"Insights endpoint error: {e}")
+        return {"success": False, "error": str(e)}
+
 
 @router.post("/chat")
 async def chat_endpoint(req: ChatRequest):
-    """Main chat endpoint — streams response via Server-Sent Events (SSE).
+    """Main Agentic chat endpoint — streams response via Server-Sent Events (SSE).
 
-    Full pipeline flow:
-    1. Safety Check (Semantic Router) — block emergencies/prescriptions
-    2. Translate query to English (Bhashini) — if Hindi/Marathi
-    3. Fetch AQI + Weather data (WAQI + Open-Meteo) — for environmental context
-    4. Run CRAG Pipeline (mock until Jayesh delivers) — generate response
-    5. Translate response back to user's language
-    6. Stream all tokens via SSE to Flutter app
+    Pipeline flow:
+    1. Safety Check (Semantic Router) — immediate interception for emergencies/prescriptions
+    2. Session Memory Retrieval — loads per-user longitudinal context
+    3. Environmental context — WAQI & Open-Meteo for nearest station
+    4. Agentic Pipeline execution — intent classification, tool execution & proactive synthesis
+    5. Session Memory persistence — updates vital history & recent turns
+    6. Streams response tokens via SSE to the mobile client
     """
     # Step 1: Safety check — ultra-fast intent classification
     is_safe, blocked_response = check_safety(req.query)
@@ -60,13 +104,7 @@ async def chat_endpoint(req: ChatRequest):
             }
         return EventSourceResponse(blocked_stream())
 
-    # Step 2: Pass query as-is to the pipeline.
-    # The Qwen 27B model understands Hinglish ("mujhe sugar hai"),
-    # Minglish ("mala BP cha problem aahe"), Hindi, Marathi, and English
-    # natively — no need to translate input (saves Sarvam credits).
-    query_for_pipeline = req.query
-
-    # Step 3: Fetch environmental context (non-critical — continue without it)
+    # Step 2: Fetch environmental context (non-critical — continue without it)
     aqi_data = {}
     if req.lat is not None and req.lon is not None:
         try:
@@ -77,27 +115,34 @@ async def chat_endpoint(req: ChatRequest):
             logger.warning(f"Environmental data fetch failed: {e}")
             aqi_data = {"aqi": "N/A", "error": "Could not fetch environmental data"}
 
-    # Step 4: Build profile context for the pipeline
+    # Step 3: Load or initialize per-user session memory
+    session = session_manager.get_session(req.user_id)
     profile_dict = req.profile.model_dump()
     profile_dict["wearable"] = req.wearable.model_dump()
 
-    # Step 5: Run pipeline and stream response
-    # The LLM now responds directly in the user's language (Hindi/Marathi/English)
-    # via the language instruction in the system prompt. No Sarvam translation needed.
-    # This also handles Hinglish ("mujhe sugar hai") and Minglish natively.
+    # Step 4: Run agentic pipeline and stream response
     async def generate():
         async for token in _pipeline.run(
-            query_for_pipeline, profile_dict, aqi_data,
-            req.wearable.model_dump(), req.chat_history,
+            query=req.query,
+            profile=profile_dict,
+            aqi_data=aqi_data,
+            wearable=req.wearable.model_dump(),
+            chat_history=req.chat_history,
             language=req.language,
+            session=session,
         ):
             yield {
                 "event": "message",
                 "data": json.dumps({"token": token, "done": False})
             }
+
+        # Terminal event
         yield {
             "event": "message",
             "data": json.dumps({"token": "", "done": True})
         }
+
+        # Persist session changes upon completion of dialogue turn
+        session_manager.save_session(session)
 
     return EventSourceResponse(generate())

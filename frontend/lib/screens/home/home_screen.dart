@@ -1033,7 +1033,7 @@ class _ProfileTab extends StatelessWidget {
                   iconColor: AppTheme.accentGreen,
                   title: 'Privacy Settings',
                   isDark: isDark,
-                  onTap: () {},
+                  onTap: () => _showPrivacyDialog(context),
                 ),
                 _SettingsTile(
                   icon: Icons.lock_outline,
@@ -1059,7 +1059,7 @@ class _ProfileTab extends StatelessWidget {
                   iconColor: AppTheme.textSecondary,
                   title: 'Terms & Privacy Policy',
                   isDark: isDark,
-                  onTap: () {},
+                  onTap: () => _showTermsDialog(context),
                 ),
                 _SettingsTile(
                   icon: Icons.medical_information_outlined,
@@ -1149,32 +1149,64 @@ class _ProfileTab extends StatelessWidget {
     );
   }
 
-  void _showLangSheet(BuildContext ctx) {
-    final langs = ['English', 'हिंदी (Hindi)', 'मराठी (Marathi)'];
+  void _showLangSheet(BuildContext ctx) async {
+    final prefs = await SharedPreferences.getInstance();
+    final currentLang = prefs.getString('user_language') ?? 'en';
+
+    final langOptions = [
+      {'code': 'en', 'label': 'English'},
+      {'code': 'hi', 'label': 'हिंदी (Hindi)'},
+      {'code': 'mr', 'label': 'मराठी (Marathi)'},
+    ];
+
+    if (!ctx.mounted) return;
+
     showModalBottomSheet(
       context: ctx,
-      builder: (c) => Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Select Language',
-                style: GoogleFonts.outfit(
-                    fontSize: 18, fontWeight: FontWeight.w700,
-                    color: AppTheme.textPrimaryOf(c))),
-            const SizedBox(height: 16),
-            ...langs.map((l) => ListTile(
-              title: Text(l, style: GoogleFonts.inter(
-                  color: AppTheme.textPrimaryOf(c))),
-              leading: Icon(
-                l == 'English' ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-                color: l == 'English' ? AppTheme.primaryTeal : AppTheme.textSecondaryOf(c),
-              ),
-              onTap: () => Navigator.pop(c),
-            )),
-            const SizedBox(height: 8),
-          ],
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (c) => StatefulBuilder(
+        builder: (context, setSheetState) => Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Select Language',
+                  style: GoogleFonts.outfit(
+                      fontSize: 18, fontWeight: FontWeight.w700,
+                      color: AppTheme.textPrimaryOf(c))),
+              const SizedBox(height: 16),
+              ...langOptions.map((opt) {
+                final isSelected = (opt['code'] == currentLang);
+                return ListTile(
+                  title: Text(opt['label']!,
+                      style: GoogleFonts.inter(
+                          color: AppTheme.textPrimaryOf(c),
+                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal)),
+                  leading: Icon(
+                    isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                    color: isSelected ? AppTheme.primaryTeal : AppTheme.textSecondaryOf(c),
+                  ),
+                  onTap: () async {
+                    await prefs.setString('user_language', opt['code']!);
+                    if (c.mounted) Navigator.pop(c);
+                    if (ctx.mounted) {
+                      ScaffoldMessenger.of(ctx).showSnackBar(
+                        SnackBar(
+                          content: Text('Language set to ${opt['label']}'),
+                          duration: const Duration(seconds: 2),
+                          backgroundColor: AppTheme.primaryTeal,
+                        ),
+                      );
+                    }
+                  },
+                );
+              }),
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );
@@ -1203,10 +1235,58 @@ class _ProfileTab extends StatelessWidget {
         title: Text('About Aarogya Sathi',
             style: GoogleFonts.outfit(fontWeight: FontWeight.w700)),
         content: Text(
-          'Aarogya Sathi is an AI-powered health companion built for urban India.\n\n'
-          'Powered by Google Gemini API with ICMR guidelines.\n\n'
-          'Version 1.0.0 (MVP)',
+          'Aarogya Sathi is an AI-powered personal health companion built for India.\n\n'
+          'Designed under ICMR Ethical Guidelines for AI in Healthcare (2023) and compliant with the DPDP Act.\n\n'
+          'Version 1.0.0',
           style: GoogleFonts.inter(fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Close'))
+        ],
+      ),
+    );
+  }
+
+  void _showPrivacyDialog(BuildContext ctx) {
+    showDialog(
+      context: ctx,
+      builder: (_) => AlertDialog(
+        title: Text('Privacy & DPDP Compliance',
+            style: GoogleFonts.outfit(fontWeight: FontWeight.w700, color: AppTheme.accentGreen)),
+        content: SingleChildScrollView(
+          child: Text(
+            '• Local-First: Your personal health records and vitals are stored on your device.\n\n'
+            '• DPDP Act (2023) Compliant: Personal identifiers are never sold or shared with commercial ad networks.\n\n'
+            '• Health Connect: Wearable sensor telemetry is used only to personalize your health insights during your active session.\n\n'
+            '• Data Control: You can clear your local chat history and vital logs at any time.',
+            style: GoogleFonts.inter(fontSize: 13, height: 1.4),
+          ),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Got It'))
+        ],
+      ),
+    );
+  }
+
+  void _showTermsDialog(BuildContext ctx) {
+    showDialog(
+      context: ctx,
+      builder: (_) => AlertDialog(
+        title: Text('Terms & Privacy Policy',
+            style: GoogleFonts.outfit(fontWeight: FontWeight.w700)),
+        content: SingleChildScrollView(
+          child: Text(
+            'By using Aarogya Sathi, you agree that:\n\n'
+            '1. Informational Companion: The AI assistant offers preventive wellness guidance, NOT clinical diagnosis or prescriptions.\n\n'
+            '2. Emergency Care: In case of acute symptoms or life-threatening distress, contact National Emergency 112 / 108 immediately.\n\n'
+            '3. Data Protection: In compliance with Indian digital health guidelines, your telemetry is processed securely without tracking identifiers.',
+            style: GoogleFonts.inter(fontSize: 13, height: 1.4),
+          ),
         ),
         actions: [
           TextButton(

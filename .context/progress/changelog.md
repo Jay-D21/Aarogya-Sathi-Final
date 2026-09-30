@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-09-30 (Jayesh — Session 12: Complete Agentic RAG Implementation & Integration)
+- [Jayesh] Built `backend/rag/intent.py` with regex heuristics fast-path + 70B LLM intent fallback (greeting, health_query, vital_check, aqi_query, lifestyle)
+- [Jayesh] Built `backend/rag/insights.py` proactive insights engine (elevated HR, low SpO2, Stage 1/2 BP, CPCB NAQI threshold warnings, and vital delta trends)
+- [Jayesh] Built `backend/rag/tools.py` modular tools (`tool_search_knowledge`, `tool_analyze_vitals`, `tool_get_environmental_data`)
+- [Jayesh] Built `backend/memory/session.py` per-user session memory manager with disk persistence (`data/sessions/{user_id}.json`)
+- [Jayesh] Upgraded `backend/rag/pipeline.py` to Agentic ReAct flow: short-circuits greetings, selects tools by intent, injects proactive insights and longitudinal memory
+- [Jayesh] Added `user_id` to `ChatRequest` model and added `/api/session/{user_id}/insights` endpoint to `backend/api/routes.py`
+- [Jayesh] Updated Flutter `chat_provider.dart` to automatically send `user_id` and load saved `user_language`
+- [Jayesh] Fixed language sheet in `home_screen.dart` with persistent `SharedPreferences` storage and active radio indicators
+- [Jayesh] Wired DPDP compliance info dialogs to previously empty 'Privacy Settings' and 'Terms' tiles in `home_screen.dart`
+- [Jayesh] Removed dead dependencies (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`
+- [Jayesh] Ran integration test confirming intent classification, proactive insights generation, and session persistence
+
 ## 2026-09-30 (Jayesh — Session 11: Multi-Key Pooling, Native Hinglish, Context Polishing & Agentic Roadmap)
 - [Jayesh] Implemented comma-separated multi-key pooling with round-robin rotation & auto-429 rotation across Groq and Sarvam AI (`llm.py`, `bhashini.py`)
 - [Jayesh] Configured Render production environment variables and switched Flutter app `api_config.dart` from emulator to production URL
