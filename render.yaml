@@ -10,28 +10,19 @@ services:
     region: singapore  # Closest to India for low latency
     healthCheckPath: /api/health
     envVars:
-      # LLM Providers (set actual values in Render dashboard)
+      # LLM Providers — comma-separated keys for multi-key rotation
       - key: GROQ_API_KEY
         sync: false
       - key: SAMBANOVA_API_KEY
         sync: false
       - key: CEREBRAS_API_KEY
         sync: false
-      # Translation
-      - key: BHASHINI_USER_ID
+      # Translation — Sarvam AI (comma-separated keys for rotation)
+      - key: SARVAM_API_KEY
         sync: false
-      - key: BHASHINI_API_KEY
-        sync: false
-      - key: BHASHINI_PIPELINE_URL
-        value: https://dhruva-api.bhashini.gov.in/services/inference/pipeline
       # Environmental Data
       - key: WAQI_API_TOKEN
         sync: false
       # Knowledge Bundle Path (inside Docker container)
       - key: OKF_BUNDLE_PATH
         value: ./icmr-knowledge-bundle
-      # Optional: Google Search for CRAG fallback
-      - key: GOOGLE_SEARCH_API_KEY
-        sync: false
-      - key: GOOGLE_SEARCH_CX
-        sync: false

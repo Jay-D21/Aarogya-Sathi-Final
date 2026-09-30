@@ -6,7 +6,7 @@
 /// - physical: Local network IP address for physical device debugging
 class ApiConfig {
   // Switch to _Environment.production before committing / deploying
-  static const _Environment _environment = _Environment.emulator;
+  static const _Environment _environment = _Environment.production;
 
   static String get baseUrl {
     switch (_environment) {
