@@ -33,13 +33,20 @@ ALWAYS start at Level 0 and drill down. NEVER load all Level 3 files at once.
 - Check .context/dependencies/critical-files.md before modifying shared files
 - Verify from code, never assume. If uncertain mark as: UNKNOWN â€” NEEDS VERIFICATION
 
-## Step 3 â€” Update Context (Do This Before Committing)
+## Step 3 — Update Context (Do This Before Committing)
 
 1. Update .context/contributors/dev-{name}.md with session summary
-2. If API changed â†’ update .context/api/{relevant}.md
-3. If DB changed â†’ update .context/database/schema.md
-4. If feature completed â†’ update .context/modules/_overview.md
+2. If API changed → update .context/api/{relevant}.md
+3. If DB changed → update .context/database/schema.md
+4. If feature completed → update .context/modules/_overview.md
 5. Add entry to .context/progress/changelog.md
+
+## Step 4 — Context Auto-Sync & Push Loop (Permanent Memory)
+
+Whenever any changes are made by any contributor and pushed to the repository (identified during git pull or git log):
+1. **Analyze the changes** to understand what was built or modified.
+2. **Update the main context files** (`.context/modules/_overview.md`, `.context/architecture/_overview.md`, etc.) and `.context/progress/changelog.md` to reflect the new state.
+3. **Automatically commit and re-push** these updated context files back to the git repository to maintain a perfectly synchronized project state for the entire team.
 
 ## Coding Standards
 
