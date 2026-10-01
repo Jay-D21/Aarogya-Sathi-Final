@@ -13,6 +13,8 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Read and analyzed the newly added `Research/` directory (including `literature_review.md` and `project_validation.md`).
+- Authored a comprehensive research analysis artifact covering Agentic RAG safety, 14.3:1 ROI, AQI impact, and DPDP compliance for capstone presentation.
 - Added 5 ICMR-based demo fallback responses in `chat_provider.dart` with synonym matching.
 - Verified backend routes and models handling `profile`, `wearable`, `lat`, `lon`, and `chat_history`.
 - Set up local/emulator/production environment toggle in `api_config.dart`.

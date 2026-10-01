@@ -3,22 +3,23 @@
 ## Project
 **Aarogya Sathi** — AI-powered Digital Health Assistant for India
 
-## Tech Stack (Updated 2026-09-11)
+## Tech Stack (Updated 2026-10-01)
 
 | Layer | Technology | Status |
 |-------|-----------|--------|
-| **LLM (navigation/grading)** | Groq → `openai/gpt-oss-20b` | ✅ Working |
-| **LLM (generation)** | Groq → `qwen/qwen3.8-27b` | ✅ Working |
-| **LLM Fallback** | SambaNova → Cerebras (auto-cascade) | Configured, untested |
-| **Primary Retrieval** | OKF Bundle (Markdown knowledge files) | ✅ 13 files, target 50+ |
-| **Fallback Retrieval** | Qdrant + BGE-M3 | 🔴 Phase 2 (not started) |
-| **Pipeline** | CRAGPipeline (navigate → grade → build → generate) | ✅ Working E2E |
-| **Translation** | Bhashini API | 🟡 Mock (keys pending) |
-| **Safety** | Keyword-based router | 🟡 Semantic-router upgrade pending |
-| **AQI** | WAQI API + Open-Meteo | 🟡 WAQI mock, weather live |
+| **LLM (navigation/grading)** | Groq → `openai/gpt-oss-20b` (Multi-key pooling) | ✅ Working |
+| **LLM (generation)** | Groq → `qwen/qwen3.8-27b` (Multi-key pooling) | ✅ Working |
+| **LLM Fallback** | SambaNova → Cerebras (auto-cascade) | ✅ Configured |
+| **Primary Retrieval** | OKF Bundle (Markdown knowledge files) | ✅ 34 files, target 50+ |
+| **Agentic Framework** | ReAct Tool Calling & Intent classification | ✅ Working E2E |
+| **Memory** | Local JSON session memory persistence | ✅ Working |
+| **Pipeline** | Agentic Flow (intent → short-circuit/tools → insights → generation) | ✅ Working E2E |
+| **Translation** | Native generation (Qwen) + Sarvam AI multi-key pooling | ✅ Live |
+| **Safety** | Semantic-router + HuggingFaceEncoder | ✅ ML Activated |
+| **AQI** | WAQI API (real token) + Open-Meteo | ✅ Live |
 | **Backend** | FastAPI + SSE streaming | ✅ Working |
-| **Frontend** | Flutter (Android) — Riverpod + Material3 | ✅ Connected — SSE chat, Health Connect, profile |
-| **Evaluation** | RAGAS + Gemini API | 🔴 Not started |
+| **Frontend** | Flutter (Android) — Riverpod + Material3 | ✅ Connected — SSE chat, Health Connect, profile, ICMR fallbacks |
+| **Evaluation** | RAGAS + Gemini API | 🟡 In Progress |
 
 ## Compute
 - **Development**: Free Groq API (no GPU needed — cloud inference)

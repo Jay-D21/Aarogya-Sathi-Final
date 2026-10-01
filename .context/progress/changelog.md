@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-01 (Abhijit — Session 13: Research Validation & Capstone Analysis)
+- [Abhijit] Read and analyzed `literature_review.md` and `project_validation.md` from the newly pulled `Research/` directory.
+- [Abhijit] Synthesized project claims mapping technical achievements (Agentic RAG, WAQI integration, IndicTrans2) to academic literature and ICMR guidelines.
+- [Abhijit] Generated `research_analysis.md` artifact summarizing the 14.3:1 ROI, 43.8% RAG hallucination reduction, DPDP compliance, and competitive gap analysis for capstone presentation.
+
 ## 2026-09-30 (Jayesh — Session 12: Complete Agentic RAG Implementation & Integration)
 - [Jayesh] Built `backend/rag/intent.py` with regex heuristics fast-path + 70B LLM intent fallback (greeting, health_query, vital_check, aqi_query, lifestyle)
 - [Jayesh] Built `backend/rag/insights.py` proactive insights engine (elevated HR, low SpO2, Stage 1/2 BP, CPCB NAQI threshold warnings, and vital delta trends)
