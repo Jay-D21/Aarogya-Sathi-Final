@@ -88,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen>
 
     await context.read<ChatProvider>().sendMessage(
       msg,
-      language: auth.user?['language'] ?? 'en',
+      language: auth.language,
       profile: profile,
       wearable: wearable,
     );
@@ -158,13 +158,46 @@ class _ChatScreenState extends State<ChatScreen>
             ]),
           ]),
           const Spacer(),
-          if (chat.messages.isNotEmpty)
+          // Language selector chip
+          GestureDetector(
+            onTap: () => _showChatLangSheet(context),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+              decoration: BoxDecoration(
+                color: AppTheme.primaryTeal.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: AppTheme.primaryTeal.withValues(alpha: 0.35),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.translate_rounded,
+                      size: 13, color: AppTheme.primaryTeal),
+                  const SizedBox(width: 4),
+                  Text(
+                    context.watch<AuthProvider>().language.toUpperCase(),
+                    style: GoogleFonts.inter(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.primaryTeal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (chat.messages.isNotEmpty) ...[
+            const SizedBox(width: 4),
             IconButton(
               icon: Icon(Icons.delete_outline_rounded,
                   size: 20, color: textSec),
               onPressed: () => _confirmClear(context, chat),
               tooltip: 'Clear chat',
             ),
+          ],
         ]),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
@@ -253,6 +286,73 @@ class _ChatScreenState extends State<ChatScreen>
                 style: TextStyle(color: AppTheme.accentRed)),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showChatLangSheet(BuildContext ctx) {
+    final auth = ctx.read<AuthProvider>();
+    var currentLang = auth.language;
+
+    final langOptions = [
+      {'code': 'en', 'label': 'English'},
+      {'code': 'hi', 'label': 'हिंदी (Hindi)'},
+      {'code': 'mr', 'label': 'मराठी (Marathi)'},
+    ];
+
+    showModalBottomSheet(
+      context: ctx,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (c) => StatefulBuilder(
+        builder: (context, setSheetState) => Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Chat Language',
+                  style: GoogleFonts.outfit(
+                      fontSize: 18, fontWeight: FontWeight.w700,
+                      color: AppTheme.textPrimaryOf(c))),
+              const SizedBox(height: 6),
+              Text('Aarogya Sathi will respond in this language',
+                  style: GoogleFonts.inter(
+                      fontSize: 13, color: AppTheme.textSecondaryOf(c))),
+              const SizedBox(height: 16),
+              ...langOptions.map((opt) {
+                final isSelected = (opt['code'] == currentLang);
+                return ListTile(
+                  title: Text(opt['label']!,
+                      style: GoogleFonts.inter(
+                          color: AppTheme.textPrimaryOf(c),
+                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal)),
+                  leading: Icon(
+                    isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                    color: isSelected ? AppTheme.primaryTeal : AppTheme.textSecondaryOf(c),
+                  ),
+                  onTap: () async {
+                    final newLang = opt['code']!;
+                    setSheetState(() => currentLang = newLang);
+                    await auth.setLanguage(newLang);
+                    if (c.mounted) Navigator.pop(c);
+                    if (ctx.mounted) {
+                      ScaffoldMessenger.of(ctx).showSnackBar(
+                        SnackBar(
+                          content: Text('Chat language set to ${opt['label']}'),
+                          duration: const Duration(seconds: 2),
+                          backgroundColor: AppTheme.primaryTeal,
+                        ),
+                      );
+                    }
+                  },
+                );
+              }),
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
       ),
     );
   }

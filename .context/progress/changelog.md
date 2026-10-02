@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-02 (Abhijit — Session 16: Language Persistence & Full End-to-End Wiring)
+- [Abhijit] Implemented reactive language persistence in `frontend/lib/providers/auth_provider.dart`: `_language` state, `languageLabel`, and `setLanguage(lang)` with `SharedPreferences` persistence (`user_language`) and user session synchronization.
+- [Abhijit] Updated `HomeScreen` settings: dynamically bound language subtitle to `context.watch<AuthProvider>().languageLabel` and wired `_showLangSheet` directly to `auth.setLanguage(...)`.
+- [Abhijit] Enhanced `ChatScreen`: added an interactive language switcher chip in AppBar (`EN`/`HI`/`MR`) allowing in-chat language switching, and wired `sendMessage` to pass `auth.language`.
+- [Abhijit] Enhanced `ChatProvider`: fixed variable scoping for `effectiveLang`, passed `language` parameter to `_callGroqDirectly` with dedicated system prompt guidance for Hindi and Marathi.
+- [Abhijit] Automated Verification: authored `frontend/test/language_persistence_test.dart` (4/4 tests passed) and created `scratch/test_language_wiring.py` confirming backend context assembly and localized greeting generation.
+
 ## 2026-10-02 (Abhijit — Session 15: Paper Enhancement with Diagrams & Tables)
 - [Abhijit] Enhanced `paper/paper.md` from 298 to 710 lines (+687 insertions, +412 net new lines)
 - [Abhijit] Added 23 comprehensive tables: NCD burden statistics, RAG comparison, ICMR clinical thresholds, CPCB AQI thresholds, pollutant-health impacts, competitive analysis (7 platforms × 11 features), API specs, Pydantic data models, Health Connect data types, DPDP compliance matrix, module registry, evaluation dataset, safety router results, technology stack decisions, and more

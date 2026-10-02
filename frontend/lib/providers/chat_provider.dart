@@ -153,6 +153,10 @@ class ChatProvider extends ChangeNotifier {
     String reply = '';
     bool isEmergency = _detectEmergency(text);
 
+    // Read persistent user ID and preferred language from SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    final effectiveLang = prefs.getString('user_language') ?? language;
+
     try {
       // Fetch location if not provided
       if (lat == null || lon == null) {
@@ -180,9 +184,6 @@ class ChatProvider extends ChangeNotifier {
         }
       }
 
-      // Read persistent user ID and preferred language from SharedPreferences
-      final prefs = await SharedPreferences.getInstance();
-      final effectiveLang = prefs.getString('user_language') ?? language;
       var userId = prefs.getString('user_id');
       if (userId == null || userId.isEmpty) {
         userId = prefs.getString('device_user_id');
@@ -233,7 +234,7 @@ class ChatProvider extends ChangeNotifier {
     // 2. If backend response is empty or failed, fallback to Groq Cloud API directly
     if (reply.isEmpty) {
       try {
-        final groqReply = await _callGroqDirectly(text);
+        final groqReply = await _callGroqDirectly(text, language: effectiveLang);
         if (groqReply != null && groqReply.isNotEmpty) {
           reply = groqReply.trim();
         }
@@ -283,11 +284,21 @@ class ChatProvider extends ChangeNotifier {
 
   /// Calls the Groq Cloud API directly when our backend is unreachable.
   /// Uses llama-3.1-8b-instant which is fast and free-tier friendly.
-  static Future<String?> _callGroqDirectly(String userMessage) async {
+  static Future<String?> _callGroqDirectly(
+    String userMessage, {
+    String language = 'en',
+  }) async {
     try {
       const apiKey = String.fromEnvironment('GROQ_API_KEY', defaultValue: '');
       if (apiKey.isEmpty) return null;
       const url = 'https://api.groq.com/openai/v1/chat/completions';
+
+      String langInstruction = 'Respond in clear English.';
+      if (language == 'hi') {
+        langInstruction = 'Respond in clear, natural Hindi (Devanagari script or natural Hinglish), keeping medical terms in English.';
+      } else if (language == 'mr') {
+        langInstruction = 'Respond in clear, natural Marathi, keeping medical terms in English.';
+      }
 
       final resp = await http
           .post(
@@ -307,7 +318,8 @@ class ChatProvider extends ChangeNotifier {
                       'consulting a qualified doctor for diagnosis or treatment. '
                       'For emergencies, always advise the user to call 108. '
                       'Keep responses concise, practical, and empathetic. '
-                      'Use simple language that non-medical users can understand.',
+                      'Use simple language that non-medical users can understand. '
+                      '$langInstruction',
                 },
                 {'role': 'user', 'content': userMessage},
               ],

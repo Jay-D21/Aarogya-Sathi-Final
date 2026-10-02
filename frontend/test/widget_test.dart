@@ -9,7 +9,19 @@ import 'package:frontend/providers/reminder_provider.dart';
 import 'package:frontend/providers/theme_provider.dart';
 import 'package:frontend/providers/user_goals_provider.dart';
 
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+    const channel = MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async => null);
+  });
+
   testWidgets('App smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(
       MultiProvider(
@@ -25,5 +37,6 @@ void main() {
         child: const AarogyaSathiApp(),
       ),
     );
+    await tester.pump(const Duration(milliseconds: 200));
   });
 }

@@ -9,12 +9,25 @@ class AuthProvider extends ChangeNotifier {
   bool _isGuest = false;
   String? _error;
   Map<String, dynamic>? _user;
+  String _language = 'en';
 
   bool get isLoading      => _isLoading;
   bool get isLoggedIn     => _isLoggedIn;
   bool get isGuest        => _isGuest;
   String? get error       => _error;
   Map<String, dynamic>? get user => _user;
+  String get language     => _language;
+
+  String get languageLabel {
+    switch (_language) {
+      case 'hi':
+        return 'हिंदी (Hindi)';
+      case 'mr':
+        return 'मराठी (Marathi)';
+      default:
+        return 'English';
+    }
+  }
 
   /// True when a guest user hasn't completed onboarding yet.
   /// Used by splash to route incomplete profiles back to /onboarding.
@@ -30,17 +43,40 @@ class AuthProvider extends ChangeNotifier {
     _isGuest = true;
     _isLoggedIn = true;
     
-    // Attempt to load existing guest profile
+    // Attempt to load existing guest profile & language
     final prefs = await SharedPreferences.getInstance();
+    _language = prefs.getString('user_language') ?? 'en';
     final profileStr = prefs.getString('guest_profile');
     if (profileStr != null) {
       _user = jsonDecode(profileStr);
+      if (_user?['language'] != null && prefs.getString('user_language') == null) {
+        _language = _user!['language'];
+        await prefs.setString('user_language', _language);
+      }
     } else {
       _user = {
         'id': 'guest',
         'first_name': 'Guest',
         'email': 'guest@aarogyasathi.in',
+        'language': _language,
       };
+    }
+    notifyListeners();
+  }
+
+  Future<void> setLanguage(String lang) async {
+    _language = lang;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_language', lang);
+    if (_user != null) {
+      _user = {..._user!, 'language': lang};
+      if (_isGuest) {
+        await prefs.setString('guest_profile', jsonEncode(_user));
+      } else {
+        try {
+          await ApiService.put('/auth/me', {'language': lang});
+        } catch (_) {}
+      }
     }
     notifyListeners();
   }
@@ -61,6 +97,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
 
     final prefs = await SharedPreferences.getInstance();
+    _language = prefs.getString('user_language') ?? 'en';
 
     // Restore guest session if previously active
     if (prefs.getString('guest_profile') != null) {
@@ -75,6 +112,10 @@ class AuthProvider extends ChangeNotifier {
       try {
         final resp = await ApiService.get('/auth/me');
         _user = resp['data'] as Map<String, dynamic>?;
+        if (_user?['language'] != null && prefs.getString('user_language') == null) {
+          _language = _user!['language'];
+          await prefs.setString('user_language', _language);
+        }
         _isLoggedIn = true;
       } catch (_) {
         // Token expired or backend unreachable — stay logged out

@@ -89,9 +89,9 @@ Aarogya Sathi follows a three-tier architecture: a Flutter-based mobile frontend
 **Figure 1: High-Level System Architecture**
 
 ```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                           MOBILE CLIENT (Flutter / Dart)                     │
-│                                                                              │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                           MOBILE CLIENT (Flutter / Dart)                   │
+│                                                                            │
 │  ┌──────────┐  ┌──────────────┐  ┌──────────┐  ┌────────────────────────┐  │
 │  │ Chat UI  │  │Health Connect│  │ GPS /    │  │ SharedPreferences      │  │
 │  │ (SSE     │  │ SDK          │  │ Location │  │ (Language, Profile)    │  │
@@ -99,12 +99,12 @@ Aarogya Sathi follows a three-tier architecture: a Flutter-based mobile frontend
 │  │          │  │  Steps,Sleep,│  │          │  │ 5 ICMR Demo Fallbacks  │  │
 │  │          │  │  Glucose)    │  │          │  │ (Offline Mode)         │  │
 │  └────┬─────┘  └──────┬───────┘  └────┬─────┘  └────────────────────────┘  │
-│       │               │               │                                     │
-│       └───────────────┴───────────────┘                                     │
-│                       │ POST /api/chat (ChatRequest JSON)                   │
-│                       │ GET /api/aqi?lat=X&lon=Y                            │
-│                       │ GET /api/session/{user_id}/insights                  │
-└───────────────────────┼─────────────────────────────────────────────────────┘
+│       │               │               │                                    │
+│       └───────────────┴───────────────┘                                    │
+│                       │ POST /api/chat (ChatRequest JSON)                  │
+│                       │ GET /api/aqi?lat=X&lon=Y                           │
+│                       │ GET /api/session/{user_id}/insights                │
+└───────────────────────┼────────────────────────────────────────────────────┘
                         │ SSE Stream (token-by-token)
                         ▼
 ┌──────────────────────────────────────────────────────────────────────────────┐
@@ -112,50 +112,50 @@ Aarogya Sathi follows a three-tier architecture: a Flutter-based mobile frontend
 │                                                                              │
 │  ┌────────────────────────────────────────────────────────────────────────┐  │
 │  │                    SAFETY LAYER (Pre-Processing)                       │  │
-│  │  SemanticRouter + HuggingFaceEncoder (all-MiniLM-L6-v2)              │  │
-│  │  42 classified utterances → Emergency | Prescription | Non-Medical    │  │
-│  │  ↓ BLOCKED → Predefined safe response returned immediately           │  │
-│  │  ↓ PASSED  → Continue to Agentic Pipeline                            │  │
+│  │  SemanticRouter + HuggingFaceEncoder (all-MiniLM-L6-v2)                │  │
+│  │  42 classified utterances → Emergency | Prescription | Non-Medical     │  │
+│  │  ↓ BLOCKED → Predefined safe response returned immediately             │  │
+│  │  ↓ PASSED  → Continue to Agentic Pipeline                              │  │
 │  └────────────────────────────────────────────────────────────────────────┘  │
 │                              │                                               │
 │  ┌────────────────────────────────────────────────────────────────────────┐  │
 │  │                    AGENTIC ReAct PIPELINE                              │  │
 │  │                                                                        │  │
-│  │  Step 1: Intent Classification (Regex Heuristics + LLM Fallback)      │  │
-│  │          → greeting | health_query | vital_check | aqi_query |        │  │
+│  │  Step 1: Intent Classification (Regex Heuristics + LLM Fallback)       │  │
+│  │          → greeting | health_query | vital_check | aqi_query |         │  │
 │  │            lifestyle | general                                         │  │
 │  │                              │                                         │  │
-│  │  Step 2: Tool Dispatch (based on classified intent)                   │  │
-│  │  ┌─────────────────┐ ┌─────────────────┐ ┌───────────────────────┐   │  │
-│  │  │tool_search_     │ │tool_analyze_    │ │tool_get_              │   │  │
-│  │  │knowledge        │ │vitals           │ │environmental_data     │   │  │
-│  │  │                 │ │                 │ │                       │   │  │
-│  │  │OKF Navigator    │ │Health Connect   │ │WAQI API (PM2.5,      │   │  │
-│  │  │→ ICMR Bundles   │ │→ ICMR Classif.  │ │PM10, AQI) +          │   │  │
-│  │  │→ Relevancy Grade│ │→ BP/Sugar/BMI   │ │Open-Meteo (Temp,     │   │  │
-│  │  │→ Context Window │ │  Thresholds     │ │Humidity, Wind)       │   │  │
-│  │  └─────────────────┘ └─────────────────┘ └───────────────────────┘   │  │
+│  │  Step 2: Tool Dispatch (based on classified intent)                    │  │
+│  │  ┌─────────────────┐ ┌─────────────────┐ ┌───────────────────────┐     │  │
+│  │  │tool_search_     │ │tool_analyze_    │ │tool_get_              │     │  │
+│  │  │knowledge        │ │vitals           │ │environmental_data     │     │  │
+│  │  │                 │ │                 │ │                       │     │  │
+│  │  │OKF Navigator    │ │Health Connect   │ │WAQI API (PM2.5,       │     │  │
+│  │  │→ ICMR Bundles   │ │→ ICMR Classif.  │ │PM10, AQI) +           │     │  │
+│  │  │→ Relevancy Grade│ │→ BP/Sugar/BMI   │ │Open-Meteo (Temp,      │     │  │
+│  │  │→ Context Window │ │  Thresholds     │ │Humidity, Wind)        │     │  │
+│  │  └─────────────────┘ └─────────────────┘ └───────────────────────┘     │  │
 │  │                              │                                         │  │
-│  │  Step 3: Session Memory + Proactive Insights Injection                │  │
-│  │          → Longitudinal vital trend detection                         │  │
-│  │          → Abnormality flags (elevated HR, low SpO2, Stage 2 BP)     │  │
-│  │          → AQI threshold warnings for user's conditions               │  │
+│  │  Step 3: Session Memory + Proactive Insights Injection                 │  │
+│  │          → Longitudinal vital trend detection                          │  │
+│  │          → Abnormality flags (elevated HR, low SpO2, Stage 2 BP)       │  │
+│  │          → AQI threshold warnings for user's conditions                │  │
 │  │                              │                                         │  │
-│  │  Step 4: Context Assembly + LLM Generation                            │  │
-│  │          → ICMR system prompt + retrieved docs + profile + AQI       │  │
-│  │          → Qwen 27B (qwen/qwen3.8-27b) via Groq Cloud API           │  │
-│  │          → Native Hindi/Marathi/English generation                    │  │
-│  │          → SSE token streaming to client                              │  │
+│  │  Step 4: Context Assembly + LLM Generation                             │  │
+│  │          → ICMR system prompt + retrieved docs + profile + AQI         │  │
+│  │          → Qwen 27B (qwen/qwen3.8-27b) via Groq Cloud API              │  │
+│  │          → Native Hindi/Marathi/English generation                     │  │
+│  │          → SSE token streaming to client                               │  │
 │  └────────────────────────────────────────────────────────────────────────┘  │
 │                                                                              │
 │  ┌────────────────────────────────────────────────────────────────────────┐  │
 │  │                    SUPPORTING SERVICES                                 │  │
-│  │  ┌─────────────┐  ┌──────────────┐  ┌──────────────────────────────┐ │  │
-│  │  │Session Memory│  │Multi-Key LLM │  │Sarvam AI Translation        │ │  │
-│  │  │(JSON per-   │  │Pool (Groq +  │  │Fallback (mayura:v1)         │ │  │
-│  │  │user, local  │  │SambaNova +   │  │Multi-key rotation           │ │  │
-│  │  │disk)        │  │Cerebras)     │  │                              │ │  │
-│  │  └─────────────┘  └──────────────┘  └──────────────────────────────┘ │  │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌──────────────────────────────┐   │  │
+│  │  │Session Memory│  │Multi-Key LLM│  │Sarvam AI Translation         │   │  │
+│  │  │(JSON per-   │  │Pool (Groq +  │  │Fallback (mayura:v1)          │   │  │
+│  │  │user, local  │  │SambaNova +   │  │Multi-key rotation            │   │  │
+│  │  │disk)        │  │Cerebras)     │  │                              │   │  │
+│  │  └─────────────┘  └──────────────┘  └──────────────────────────────┘   │  │
 │  └────────────────────────────────────────────────────────────────────────┘  │
 └──────────────────────────────────────────────────────────────────────────────┘
                         │
@@ -163,22 +163,22 @@ Aarogya Sathi follows a three-tier architecture: a Flutter-based mobile frontend
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                    ICMR KNOWLEDGE BUNDLE (34 Markdown Files)                 │
 │                                                                              │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌────────────┐  ┌────────────┐ │
-│  │Conditions│  │  Drugs   │  │Emergency │  │Environmental│  │ Lifestyle  │ │
-│  │(12 files)│  │(7 files) │  │(6 files) │  │ (4 files)   │  │ (6 files)  │ │
-│  │          │  │          │  │          │  │             │  │            │ │
-│  │diabetes  │  │metformin │  │chest-pain│  │aqi-health   │  │diet-diab.  │ │
-│  │hypertens.│  │insulin   │  │stroke    │  │heat-health  │  │exercise    │ │
-│  │asthma    │  │amlodipine│  │hypoglyc. │  │monsoon-dis. │  │hydration   │ │
-│  │copd      │  │atenolol  │  │heatstroke│  │winter-resp. │  │sleep-hyg.  │ │
-│  │obesity   │  │aspirin   │  │snakebite │  │             │  │smoking-ces.│ │
-│  │ckd       │  │paracet.  │  │allergy   │  │             │  │stress-mgmt │ │
-│  │anemia    │  │glimepirid│  │          │  │             │  │            │ │
-│  │thyroid   │  │          │  │          │  │             │  │            │ │
-│  │CAD       │  │          │  │          │  │             │  │            │ │
-│  │dengue    │  │          │  │          │  │             │  │            │ │
-│  │TB        │  │          │  │          │  │             │  │            │ │
-│  └──────────┘  └──────────┘  └──────────┘  └────────────┘  └────────────┘ │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌────────────┐   ┌────────────┐   │
+│  │Conditions│  │  Drugs   │  │Emergency │  │Environmental│  │ Lifestyle  │   │
+│  │(12 files)│  │(7 files) │  │(6 files) │  │ (4 files)   │  │ (6 files)  │   │
+│  │          │  │          │  │          │  │             │  │            │   │
+│  │diabetes  │  │metformin │  │chest-pain│  │aqi-health   │  │diet-diab.  │   │
+│  │hypertens.│  │insulin   │  │stroke    │  │heat-health  │  │exercise    │   │
+│  │asthma    │  │amlodipine│  │hypoglyc. │  │monsoon-dis. │  │hydration   │   │
+│  │copd      │  │atenolol  │  │heatstroke│  │winter-resp. │  │sleep-hyg.  │   │
+│  │obesity   │  │aspirin   │  │snakebite │  │             │  │smoking-ces.│   │
+│  │ckd       │  │paracet.  │  │allergy   │  │             │  │stress-mgmt │   │
+│  │anemia    │  │glimepirid│  │          │  │             │  │            │   │
+│  │thyroid   │  │          │  │          │  │             │  │            │   │
+│  │CAD       │  │          │  │          │  │             │  │            │   │
+│  │dengue    │  │          │  │          │  │             │  │            │   │ 
+│  │TB        │  │          │  │          │  │             │  │            │   │
+│  └──────────┘  └──────────┘  └──────────┘  └────────────┘  └────────────┘    │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -207,7 +207,7 @@ USER INPUT (Hindi/Marathi/English)
 │ PHASE 1: SAFETY GATE                          │
 │                                               │
 │ SemanticRouter.check_safety(query)            │
-│   ├─ Embed query → all-MiniLM-L6-v2          │
+│   ├─ Embed query → all-MiniLM-L6-v2           │
 │   ├─ Compare against 42 utterance templates   │
 │   ├─ Categories: EMERGENCY | PRESCRIPTION |   │
 │   │               NON_MEDICAL                 │
@@ -215,7 +215,7 @@ USER INPUT (Hindi/Marathi/English)
 │   ├─ MATCHED → Return blocked_response        │
 │   │   "⚠️ This sounds like an emergency.      │
 │   │    Please call 112 or visit nearest       │
-│   │    hospital immediately."                  │
+│   │    hospital immediately."                 │
 │   │                                           │
 │   └─ NOT MATCHED → Continue to Phase 2        │
 └───────────────────────────────────────────────┘
@@ -225,13 +225,13 @@ USER INPUT (Hindi/Marathi/English)
 │ PHASE 2: ENVIRONMENT + SESSION LOADING        │
 │                                               │
 │ Parallel Execution:                           │
-│   ├─ get_aqi(lat, lon) → WAQI API            │
+│   ├─ get_aqi(lat, lon) → WAQI API             │
 │   │   Returns: {aqi, pm25, pm10, station}     │
 │   ├─ get_weather(lat, lon) → Open-Meteo       │
-│   │   Returns: {temp, humidity, wind}          │
+│   │   Returns: {temp, humidity, wind}         │
 │   └─ session_manager.get_session(user_id)     │
 │       Returns: {profile, vital_history,       │
-│                 recent_turns}                   │
+│                 recent_turns}                 │
 └───────────────────────────────────────────────┘
     │
     ▼
@@ -299,19 +299,19 @@ USER INPUT (Hindi/Marathi/English)
 │   └─ Language Preference (en/hi/mr)           │
 │                                               │
 │ LLM Generate:                                 │
-│   model = qwen/qwen3.8-27b                   │
-│   provider = Groq (→ SambaNova → Cerebras)   │
+│   model = qwen/qwen3.8-27b                    │
+│   provider = Groq (→ SambaNova → Cerebras)    │
 │   max_tokens = 400                            │
 │   streaming = True (SSE)                      │
 │                                               │
-│ → Token-by-token SSE stream to Flutter client  │
+│ → Token-by-token SSE stream to Flutter client │
 └───────────────────────────────────────────────┘
     │
     ▼
 ┌───────────────────────────────────────────────┐
 │ PHASE 7: SESSION PERSISTENCE                  │
 │                                               │
-│ session_manager.save_session(session):         │
+│ session_manager.save_session(session):        │
 │   ├─ Append wearable snapshot to vital_history│
 │   ├─ Append (query, response) to recent_turns │
 │   ├─ Update profile if new data received      │
@@ -369,33 +369,33 @@ When a query matches a safety route (cosine similarity above threshold), the sys
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │ APPROACH A: Translation Pipeline (NOT used by Aarogya Sathi)    │
-│                                                                  │
-│ User (Hindi) → IndicTrans2 (HI→EN) → RAG Pipeline (EN)         │
-│             → LLM Generate (EN) → IndicTrans2 (EN→HI)          │
+│                                                                 │
+│ User (Hindi) → IndicTrans2 (HI→EN) → RAG Pipeline (EN)          │
+│             → LLM Generate (EN) → IndicTrans2 (EN→HI)           │
 │             → User sees Hindi response                          │
-│                                                                  │
+│                                                                 │
 │ Problems: +200ms latency, semantic drift in medical terms,      │
 │           loss of code-mixed Hinglish naturalness               │
-│                                                                  │
+│                                                                 │
 │ Evidence: CLINIC benchmark [31] shows English-centric eval      │
-│           overestimates multilingual safety by 15-20%            │
+│           overestimates multilingual safety by 15-20%           │
 └─────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────┐
 │ APPROACH B: Native Generation (USED by Aarogya Sathi)           │
-│                                                                  │
+│                                                                 │
 │ User (Hindi/Marathi/Hinglish) → RAG Pipeline (multilingual)     │
 │             → LLM system prompt includes language instruction   │
 │             → Qwen 27B generates DIRECTLY in Hindi/Marathi      │
 │             → Natural Hinglish code-mixing preserved            │
 │             → User sees native response                         │
-│                                                                  │
+│                                                                 │
 │ Advantages: Zero translation latency, medical terms preserved   │
 │             (e.g., "blood pressure", "sugar level" stay English),│
 │             natural code-mixed output matches Indian speech      │
 │                                                                  │
-│ Fallback: Sarvam AI (mayura:v1) for edge cases                 │
-│           Multi-key rotation for rate-limit resilience            │
+│ Fallback: Sarvam AI (mayura:v1) for edge cases                  │
+│           Multi-key rotation for rate-limit resilience          │
 └─────────────────────────────────────────────────────────────────┘
 ```
 

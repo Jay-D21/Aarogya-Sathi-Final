@@ -1011,7 +1011,7 @@ class _ProfileTab extends StatelessWidget {
                   icon: Icons.language_outlined,
                   iconColor: AppTheme.accentBlue,
                   title: 'Language',
-                  subtitle: 'English',
+                  subtitle: context.watch<AuthProvider>().languageLabel,
                   isDark: isDark,
                   onTap: () => _showLangSheet(context),
                 ),
@@ -1149,9 +1149,9 @@ class _ProfileTab extends StatelessWidget {
     );
   }
 
-  void _showLangSheet(BuildContext ctx) async {
-    final prefs = await SharedPreferences.getInstance();
-    final currentLang = prefs.getString('user_language') ?? 'en';
+  void _showLangSheet(BuildContext ctx) {
+    final auth = ctx.read<AuthProvider>();
+    var currentLang = auth.language;
 
     final langOptions = [
       {'code': 'en', 'label': 'English'},
@@ -1190,7 +1190,9 @@ class _ProfileTab extends StatelessWidget {
                     color: isSelected ? AppTheme.primaryTeal : AppTheme.textSecondaryOf(c),
                   ),
                   onTap: () async {
-                    await prefs.setString('user_language', opt['code']!);
+                    final newLang = opt['code']!;
+                    setSheetState(() => currentLang = newLang);
+                    await auth.setLanguage(newLang);
                     if (c.mounted) Navigator.pop(c);
                     if (ctx.mounted) {
                       ScaffoldMessenger.of(ctx).showSnackBar(
