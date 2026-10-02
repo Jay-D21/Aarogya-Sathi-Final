@@ -17,14 +17,30 @@
 - `semantic-router>=0.1.0` — Safety layer upgrade (keyword fallback active for now)
 
 ## Frontend Dependencies (pubspec.yaml)
-- `flutter_riverpod: ^3.1.0` — State management
-- `go_router: ^17.0.1` — Navigation
-- `dio: ^5.9.0` — HTTP client (will be used for SSE)
-- `speech_to_text: ^7.0.0` — Voice input
-- `pedometer: ^4.1.1` — Step counting
-- `geolocator: ^14.0.2` — GPS location for AQI
-- `fl_chart: ^1.1.1` — Charts for dashboard
-- `google_fonts: ^7.0.0` — Outfit font family
+- `provider: ^6.1.5+1` — App-wide reactive state management
+- `http: ^1.6.0` — REST API calls and SSE streaming
+- `shared_preferences: ^2.5.5` — Key-value persistence (language, cached user profile, vault index)
+- `flutter_secure_storage: ^10.0.0` — Encrypted storage for JWT auth tokens
+- `google_fonts: ^8.0.2` — Outfit & Inter design system typography
+- `intl: ^0.19.0` — Date, time, and number localization
+- `uuid: ^4.5.3` — Unique ID generator for medical vault & health records
+- `path_provider: ^2.1.5` — Sandboxed app document directory for vault
+- `permission_handler: ^12.0.1` — Runtime permissions (location, notifications, sensors)
+- `geolocator: ^14.0.2` — GPS coordinates for WAQI environmental data
+- `geocoding: ^4.0.0` — Reverse geocoding coordinates to city name
+- `flutter_local_notifications: ^21.0.0` — Local scheduled alarms & health alerts
+- `timezone: ^0.11.0` — Timezone-aware scheduling for notifications
+- `pedometer: ^4.2.0` — Hardware step sensor event stream
+- `url_launcher: ^6.3.1` — Emergency 112 calling and external links
+- `health: ^11.0.0` — Google Health Connect SDK (Fitbit vitals, SpO2, sleep)
+- `image_picker: ^1.2.3` — Camera and gallery photo picker for prescriptions
+- `file_picker: ^11.0.3` — PDF lab report and document picker for vault
+- `cupertino_icons: ^1.0.8` — Material/Cupertino asset icons
+
+## Removed / Dead Dependencies (cleaned up)
+- `dio`, `fl_chart`, `shimmer` — removed in session 12 (standardized to `http` and Canvas)
+- `flutter_riverpod`, `go_router` — replaced by `provider` and native `Navigator`
+- `speech_to_text`, `flutter_tts` — removed in session 19 (unused, eliminates unneeded C++ binaries)
 
 → Critical files: .context/dependencies/critical-files.md
 → Dependency graph: .context/dependencies/dependency-graph.md

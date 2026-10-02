@@ -1,5 +1,11 @@
 # Changelog
  
+## 2026-10-03 (Abhijit — Session 19: Pubspec Dependency Audit & Native Package Pruning)
+- [Abhijit] Pruned unused dependencies `speech_to_text: ^7.0.0` and `flutter_tts: ^3.8.3` from `frontend/pubspec.yaml`, removing unused native platform overhead and Windows C++ plugin compilation (`speech_to_text_windows`, `speech_to_text_platform_interface`, `flutter_tts`).
+- [Abhijit] Ran `flutter pub get` cleanly updating `frontend/pubspec.lock`.
+- [Abhijit] Updated `.context/dependencies/_overview.md` with the full specification of all 19 active frontend packages and historical documentation of removed packages (`dio`, `fl_chart`, `shimmer`, `flutter_riverpod`, `go_router`, `speech_to_text`, `flutter_tts`).
+- [Abhijit] Automated Verification: `flutter analyze` reported 0 errors, 0 warnings, 0 infos (`No issues found!`), and all 17 unit and widget tests in `frontend/test/` passed cleanly (`flutter test`).
+
 ## 2026-10-03 (Abhijit — Session 18: Edit Profile Screen with Asian ICMR BMI & Conditions Management)
 - [Abhijit] Created `EditProfileScreen` (`frontend/lib/screens/profile/edit_profile_screen.dart`): personal info form (First Name, Last Name, Age, Gender dropdown, City with GPS auto-detection via `LocationService.getCityName()`), dynamic Asian ICMR BMI calculation & live classification cards (Normal: 18.5–22.9, Overweight: 23–27.4, Obese: ≥27.5), chronic conditions multi-select filter chips + custom condition addition, and medications list with chip management.
 - [Abhijit] Updated `AuthProvider` (`frontend/lib/providers/auth_provider.dart`): extended `updateProfile` with immediate local state sync, local persistence (`guest_profile` or `cached_user_profile`), and backend `PUT /auth/me` with offline resilience; updated `checkAuth` to load `cached_user_profile` during network disconnection.

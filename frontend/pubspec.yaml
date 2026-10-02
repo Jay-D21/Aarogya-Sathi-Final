@@ -27,8 +27,6 @@ dependencies:
   geocoding: ^4.0.0
   url_launcher: ^6.3.1
   health: ^11.0.0
-  speech_to_text: ^7.0.0
-  flutter_tts: ^3.8.3
   image_picker: ^1.2.3
   file_picker: ^11.0.3
 

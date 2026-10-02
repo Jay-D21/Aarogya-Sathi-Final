@@ -13,6 +13,11 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Executed **Pubspec Dependency Audit & Cleanup (`frontend/pubspec.yaml`, `pubspec.lock`, `.context/dependencies/_overview.md`)**:
+  - Removed dead, unused native packages `speech_to_text` and `flutter_tts` from `pubspec.yaml`, pruning 4 unused dependencies (`speech_to_text`, `speech_to_text_windows`, `speech_to_text_platform_interface`, `flutter_tts`) and eliminating unused native Windows C++ plugin compilation.
+  - Verified all 19 active dependencies are in active use across the codebase.
+  - Updated `.context/dependencies/_overview.md` to accurately catalog all 19 active dependencies and historical removals (`dio`, `fl_chart`, `shimmer`, `flutter_riverpod`, `go_router`, `speech_to_text`, `flutter_tts`).
+  - Automated Verification: Ran `flutter pub get`, followed by `flutter analyze` (0 errors, 0 warnings, 0 infos) and `flutter test` (all 17 tests passed with zero regressions).
 - Built and fully tested **Edit Profile & Asian ICMR BMI Management (`edit_profile_screen.dart`, `auth_provider.dart`, `models.py`)**:
   - `EditProfileScreen`: Personal details editing (first name, last name, age, gender dropdown, city with GPS auto-detection), live Asian ICMR BMI calculator with reactive status color-coding, chronic conditions multi-select filter chips + custom input, and active medications chip manager.
   - `AuthProvider`: Extended `updateProfile` to synchronize in-memory state, persist to `guest_profile` or `cached_user_profile` in `SharedPreferences`, and sync to backend `PUT /auth/me` with offline resilience.
@@ -39,7 +44,7 @@
 - Audited frontend screens and providers for missing feature gaps.
 
 ## Next Action Items
-1. Clean up unused pubspec dependencies (`dio`, `fl_chart`, `shimmer`).
+- All 4 planned frontend roadmap tasks (Language Persistence, Medical File Vault, Edit Profile, Pubspec Cleanup) are complete and tested!
 
 ## Files I Own
 - `frontend/lib/screens/profile/edit_profile_screen.dart`
