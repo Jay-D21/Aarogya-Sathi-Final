@@ -1,9 +1,9 @@
 # Research Project Context: Aarogya Sathi
 
-**Version**: 1.1.0
+**Version**: 1.2.0
 **Last Full Scan**: 2026-10-02
 **Last Incremental Update**: 2026-10-02
-**Context Head**: f4cb0b0d5f5abf589b90f84d62f99036908033b7
+**Context Head**: 5d96dac5babbb6ed1114fc30c868736b98681d99
 
 ## §1. Project Identity
 - **Name**: Aarogya Sathi — AI-powered Digital Health Assistant
@@ -60,8 +60,11 @@
 - `backend/rag/tools.py`, `backend/memory/session.py` -> §4 System Architecture
 - `backend/safety/` -> §3 Safety Framework
 - `Research/` -> §2 & §3 Clinical Validation
+- `paper/paper.md` -> Full IMRAD Research Paper
+- `paper/outline.md` -> Phase 4 Writing Plan
+- `LITERATURE_DB.md` -> Phase 3 Literature Database
 - `evaluation/` -> §5 Evaluation
 - `icmr-knowledge-bundle/` -> §3 Primary Retrieval
 
 ## §9. Git Baseline
-- **HEAD at scan**: `f4cb0b0d5f5abf589b90f84d62f99036908033b7`
+- **HEAD at scan**: `5d96dac5babbb6ed1114fc30c868736b98681d99`
