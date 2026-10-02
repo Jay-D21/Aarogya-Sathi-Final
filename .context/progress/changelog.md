@@ -1,4 +1,12 @@
 # Changelog
+ 
+## 2026-10-03 (Abhijit — Session 18: Edit Profile Screen with Asian ICMR BMI & Conditions Management)
+- [Abhijit] Created `EditProfileScreen` (`frontend/lib/screens/profile/edit_profile_screen.dart`): personal info form (First Name, Last Name, Age, Gender dropdown, City with GPS auto-detection via `LocationService.getCityName()`), dynamic Asian ICMR BMI calculation & live classification cards (Normal: 18.5–22.9, Overweight: 23–27.4, Obese: ≥27.5), chronic conditions multi-select filter chips + custom condition addition, and medications list with chip management.
+- [Abhijit] Updated `AuthProvider` (`frontend/lib/providers/auth_provider.dart`): extended `updateProfile` with immediate local state sync, local persistence (`guest_profile` or `cached_user_profile`), and backend `PUT /auth/me` with offline resilience; updated `checkAuth` to load `cached_user_profile` during network disconnection.
+- [Abhijit] Wired UI Navigation: registered `/edit-profile` in `main.dart`, and embedded accessible "Edit Health Profile" buttons on both the `HomeScreen` profile card and the preferences menu.
+- [Abhijit] Wired RAG & Chat Integration: updated `ChatScreen` (`frontend/lib/screens/chat/chat_screen.dart`) to extract conditions, medications, height, and weight from `auth.user` and forward them in `ChatRequest.profile`.
+- [Abhijit] Updated Backend Data Model: added `height_cm` and `weight_kg` to `UserProfile` in `backend/api/models.py`, enabling `backend/rag/context_builder.py` to calculate Asian ICMR BMI classification (`BMI: 27.0 → Overweight`) and inject conditions and medications into `<user_profile>` for personalized AI health advice.
+- [Abhijit] Automated Verification: created `frontend/test/edit_profile_test.dart` (6/6 tests passed), updated `test/widget_test.dart` with `FileVaultProvider` and proper timer settlement (all 17 frontend tests passing cleanly), and created `scratch/test_profile_backend_wiring.py` validating backend serialization and context builder prompt formatting. `flutter analyze` verified with 0 errors, 0 warnings, and 0 infos.
 
 ## 2026-10-03 (Abhijit — Session 17: Medical File Vault Implementation & Testing)
 - [Abhijit] Added `image_picker` (1.2.3) and `file_picker` (11.0.3) packages for native camera, photo gallery, and PDF report capture.

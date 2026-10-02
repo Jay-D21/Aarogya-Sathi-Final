@@ -990,13 +990,45 @@ class _ProfileTab extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 14),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () => Navigator.pushNamed(context, '/edit-profile'),
+                      icon: const Icon(Icons.edit_outlined, size: 16),
+                      label: Text(
+                        'Edit Health Profile',
+                        style: GoogleFonts.inter(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppTheme.primaryTeal,
+                        side: BorderSide(
+                            color: AppTheme.primaryTeal.withValues(alpha: 0.5)),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
                 ]),
               ),
 
               const SizedBox(height: 20),
 
               // ── Settings ──
-              _SettingsSection(title: 'Preferences', children: [
+              _SettingsSection(title: 'Account & Preferences', children: [
+                _SettingsTile(
+                  icon: Icons.person_outline_rounded,
+                  iconColor: AppTheme.primaryTeal,
+                  title: 'Edit Profile',
+                  subtitle: 'Personal info, BMI, conditions & medications',
+                  isDark: isDark,
+                  onTap: () => Navigator.pushNamed(context, '/edit-profile'),
+                ),
                 _SettingsTile(
                   icon: Icons.dark_mode_outlined,
                   iconColor: AppTheme.accentPurple,

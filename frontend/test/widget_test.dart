@@ -12,6 +12,8 @@ import 'package:frontend/providers/user_goals_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:frontend/providers/file_vault_provider.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -33,10 +35,13 @@ void main() {
           ChangeNotifierProvider(create: (_) => FitnessProvider()),
           ChangeNotifierProvider(create: (_) => ReminderProvider()),
           ChangeNotifierProvider(create: (_) => UserGoalsProvider()),
+          ChangeNotifierProvider(create: (_) => FileVaultProvider()),
         ],
         child: const AarogyaSathiApp(),
       ),
     );
-    await tester.pump(const Duration(milliseconds: 200));
+    // Advance time past the splash delay and settle animations
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
   });
 }

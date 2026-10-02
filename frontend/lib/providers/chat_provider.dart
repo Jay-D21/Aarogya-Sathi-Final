@@ -197,10 +197,10 @@ class ChatProvider extends ChangeNotifier {
         'user_id': userId,
         'query': text,
         'language': effectiveLang,
-        if (profile != null) 'profile': profile,
-        if (wearable != null) 'wearable': wearable,
-        if (lat != null) 'lat': lat,
-        if (lon != null) 'lon': lon,
+        'profile': ?profile,
+        'wearable': ?wearable,
+        'lat': ?lat,
+        'lon': ?lon,
         'chat_history': chatHistory,
       });
 

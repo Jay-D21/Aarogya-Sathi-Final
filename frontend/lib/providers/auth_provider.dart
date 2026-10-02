@@ -83,11 +83,16 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> updateProfile(Map<String, dynamic> data) async {
     _user = {...?_user, ...data};
+    final prefs = await SharedPreferences.getInstance();
     if (_isGuest) {
-      final prefs = await SharedPreferences.getInstance();
       await prefs.setString('guest_profile', jsonEncode(_user));
     } else {
-      // Note: PUT /auth/me for real users
+      await prefs.setString('cached_user_profile', jsonEncode(_user));
+      try {
+        await ApiService.put('/auth/me', data);
+      } catch (_) {
+        // Silently preserve local update if offline or network unavailable
+      }
     }
     notifyListeners();
   }
@@ -118,9 +123,20 @@ class AuthProvider extends ChangeNotifier {
         }
         _isLoggedIn = true;
       } catch (_) {
-        // Token expired or backend unreachable — stay logged out
-        await ApiService.clearToken();
-        _isLoggedIn = false;
+        // Token expired or backend unreachable — attempt loading cached profile
+        final cached = prefs.getString('cached_user_profile');
+        if (cached != null) {
+          try {
+            _user = jsonDecode(cached);
+            _isLoggedIn = true;
+          } catch (_) {
+            await ApiService.clearToken();
+            _isLoggedIn = false;
+          }
+        } else {
+          await ApiService.clearToken();
+          _isLoggedIn = false;
+        }
       }
     }
 

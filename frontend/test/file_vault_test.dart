@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/models/medical_file_model.dart';
@@ -77,27 +76,6 @@ void main() {
     });
 
     test('Filters files by category correctly', () async {
-      // Seed SharedPreferences with mock records
-      final file1 = MedicalFileModel(
-        id: 'f1',
-        title: 'Diabetes Rx',
-        category: MedicalFileCategory.prescription,
-        recordDate: DateTime(2026, 9, 1),
-        localFilePath: '/mock/1.jpg',
-        fileType: 'image',
-        createdAt: DateTime.now(),
-      );
-
-      final file2 = MedicalFileModel(
-        id: 'f2',
-        title: 'Lipid Profile',
-        category: MedicalFileCategory.labReport,
-        recordDate: DateTime(2026, 9, 2),
-        localFilePath: '/mock/2.pdf',
-        fileType: 'pdf',
-        createdAt: DateTime.now(),
-      );
-
       final prefs = await SharedPreferences.getInstance();
       await prefs.setStringList('medical_vault_files', [
         '{"id":"f1","title":"Diabetes Rx","category":"Prescription","record_date":"2026-09-01T00:00:00.000","local_file_path":"/mock/1.jpg","file_type":"image","file_size_bytes":100,"created_at":"2026-09-01T00:00:00.000"}',

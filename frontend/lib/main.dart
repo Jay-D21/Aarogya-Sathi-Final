@@ -16,6 +16,7 @@ import 'screens/auth/register_screen.dart';
 import 'screens/onboarding/profile_setup_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/health/file_vault_screen.dart';
+import 'screens/profile/edit_profile_screen.dart';
 
 import 'services/notification_service.dart';
 
@@ -93,6 +94,7 @@ class _AarogyaSathiAppState extends State<AarogyaSathiApp> {
           case '/onboarding': page = const ProfileSetupScreen(); break;
           case '/home':     page = const HomeScreen();     break;
           case '/vault':    page = const FileVaultScreen(); break;
+          case '/edit-profile': page = const EditProfileScreen(); break;
           default:          page = const SplashScreen();
         }
         return _FadeRoute(page: page, settings: settings);

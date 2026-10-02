@@ -13,6 +13,12 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Built and fully tested **Edit Profile & Asian ICMR BMI Management (`edit_profile_screen.dart`, `auth_provider.dart`, `models.py`)**:
+  - `EditProfileScreen`: Personal details editing (first name, last name, age, gender dropdown, city with GPS auto-detection), live Asian ICMR BMI calculator with reactive status color-coding, chronic conditions multi-select filter chips + custom input, and active medications chip manager.
+  - `AuthProvider`: Extended `updateProfile` to synchronize in-memory state, persist to `guest_profile` or `cached_user_profile` in `SharedPreferences`, and sync to backend `PUT /auth/me` with offline resilience.
+  - Navigation Wiring: Registered `/edit-profile` in `main.dart`, and embedded accessible "Edit Health Profile" buttons on both the `HomeScreen` profile card and the preferences menu.
+  - Backend Context & RAG Integration: Updated `backend/api/models.py` (`UserProfile`) to include `height_cm` and `weight_kg`. Updated `ChatScreen` to extract profile metrics and forward them to `ChatRequest`, enabling `backend/rag/context_builder.py` to inject ICMR BMI classifications, conditions, and medications directly into the LLM system context.
+  - Automated Verification: Created `frontend/test/edit_profile_test.dart` (6/6 tests passed), updated `widget_test.dart` (all 17 frontend tests passing cleanly), and created `scratch/test_profile_backend_wiring.py` confirming complete backend model serialization and context assembly. `flutter analyze` verified with 0 errors, 0 warnings, and 0 infos.
 - Built and fully tested **Medical File Vault (`file_vault_screen.dart`, `medical_file_model.dart`, `file_vault_provider.dart`)**:
   - `MedicalFileModel`: Local DPDP-compliant data model supporting Prescriptions, Lab Reports, Scans, and Vaccinations with formatted dates and file sizes.
   - `FileVaultProvider`: State management for on-device sandbox storage (`/medical_vault/`), persistent `SharedPreferences` index, category filtering, search queries, and safe deletion.
@@ -33,14 +39,13 @@
 - Audited frontend screens and providers for missing feature gaps.
 
 ## Next Action Items
-1. Add Edit Profile screen for updating age, height, weight, and health conditions post-onboarding.
-2. Clean up unused pubspec dependencies (`dio`, `fl_chart`, `shimmer`).
+1. Clean up unused pubspec dependencies (`dio`, `fl_chart`, `shimmer`).
 
 ## Files I Own
+- `frontend/lib/screens/profile/edit_profile_screen.dart`
 - `frontend/lib/models/medical_file_model.dart`
 - `frontend/lib/providers/file_vault_provider.dart`
 - `frontend/lib/screens/health/file_vault_screen.dart`
-- `frontend/lib/screens/health/file_vault_screen.dart` (new)
 - `frontend/lib/screens/home/home_screen.dart` (Preferences, Language, Profile)
 - `frontend/lib/providers/auth_provider.dart` (profile persistence)
 - `frontend/pubspec.yaml`

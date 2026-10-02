@@ -27,6 +27,8 @@ class UserProfile(BaseModel):
     """Static health profile stored in SQLite on the user's device."""
     age: int | None = None
     gender: str | None = None
+    height_cm: float | None = None
+    weight_kg: float | None = None
     conditions: list[str] = []
     medications: list[str] = []
 

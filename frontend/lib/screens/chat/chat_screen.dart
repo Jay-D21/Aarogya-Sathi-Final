@@ -64,19 +64,48 @@ class _ChatScreenState extends State<ChatScreen>
     final health = context.read<HealthProvider>();
     final fitness = context.read<FitnessProvider>();
     
+    final conditionsSet = <String>{};
+    if (auth.user?['conditions'] is List) {
+      for (final c in auth.user!['conditions']) {
+        if (c != null && c.toString().isNotEmpty) {
+          conditionsSet.add(c.toString());
+        }
+      }
+    }
+    for (var r in health.records) {
+      if (r['record_type'] == 'condition') {
+        final c = r['data']?['condition_name'];
+        if (c != null && c.toString().isNotEmpty) {
+          conditionsSet.add(c.toString());
+        }
+      }
+    }
+
+    final medicationsSet = <String>{};
+    if (auth.user?['medications'] is List) {
+      for (final m in auth.user!['medications']) {
+        if (m != null && m.toString().isNotEmpty) {
+          medicationsSet.add(m.toString());
+        }
+      }
+    }
+    for (var r in health.records) {
+      if (r['record_type'] == 'medication') {
+        final m = r['data']?['medication_name'];
+        if (m != null && m.toString().isNotEmpty) {
+          medicationsSet.add(m.toString());
+        }
+      }
+    }
+
     final Map<String, dynamic> profile = {
       if (auth.user?['age'] != null) 'age': auth.user!['age'],
       if (auth.user?['gender'] != null) 'gender': auth.user!['gender'],
-      'conditions': [],
-      'medications': [],
+      if (auth.user?['height_cm'] != null) 'height_cm': auth.user!['height_cm'],
+      if (auth.user?['weight_kg'] != null) 'weight_kg': auth.user!['weight_kg'],
+      'conditions': conditionsSet.toList(),
+      'medications': medicationsSet.toList(),
     };
-    
-    for (var r in health.records) {
-      if (r['record_type'] == 'condition') {
-         final c = r['data']?['condition_name'];
-         if (c != null) (profile['conditions'] as List).add(c);
-      }
-    }
 
     final Map<String, dynamic> wearable = {
       if (fitness.steps > 0) 'today_steps': fitness.steps,
