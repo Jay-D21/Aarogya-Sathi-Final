@@ -9,11 +9,13 @@ import 'providers/fitness_provider.dart';
 import 'providers/reminder_provider.dart';
 import 'providers/theme_provider.dart';
 import 'providers/user_goals_provider.dart';
+import 'providers/file_vault_provider.dart';
 import 'screens/onboarding/splash_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/onboarding/profile_setup_screen.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/health/file_vault_screen.dart';
 
 import 'services/notification_service.dart';
 
@@ -37,6 +39,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => FitnessProvider()),
         ChangeNotifierProvider(create: (_) => ReminderProvider()),
         ChangeNotifierProvider(create: (_) => UserGoalsProvider()),
+        ChangeNotifierProvider(create: (_) => FileVaultProvider()),
       ],
       child: const AarogyaSathiApp(),
     ),
@@ -89,6 +92,7 @@ class _AarogyaSathiAppState extends State<AarogyaSathiApp> {
           case '/register': page = const RegisterScreen(); break;
           case '/onboarding': page = const ProfileSetupScreen(); break;
           case '/home':     page = const HomeScreen();     break;
+          case '/vault':    page = const FileVaultScreen(); break;
           default:          page = const SplashScreen();
         }
         return _FadeRoute(page: page, settings: settings);

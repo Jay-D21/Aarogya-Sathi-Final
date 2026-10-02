@@ -13,6 +13,12 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Built and fully tested **Medical File Vault (`file_vault_screen.dart`, `medical_file_model.dart`, `file_vault_provider.dart`)**:
+  - `MedicalFileModel`: Local DPDP-compliant data model supporting Prescriptions, Lab Reports, Scans, and Vaccinations with formatted dates and file sizes.
+  - `FileVaultProvider`: State management for on-device sandbox storage (`/medical_vault/`), persistent `SharedPreferences` index, category filtering, search queries, and safe deletion.
+  - `FileVaultScreen`: Native photo capture (`image_picker`), gallery selection, and PDF document picker (`file_picker`), categorized chips, real-time search, document preview dialog, and delete confirmation.
+  - Navigation Wiring: Registered `/vault` route in `main.dart`, added settings entry in `HomeScreen`, and integrated Medical File Vault card into `HealthDashboard`.
+  - Automated Tests: Created `frontend/test/file_vault_test.dart` (6/6 tests passed).
 - Built and fully tested **Language Persistence & End-to-End Wiring**:
   - `AuthProvider`: Added reactive `_language` state, `languageLabel`, and `setLanguage(lang)` syncing with `SharedPreferences` (`user_language`) and user profiles.
   - `HomeScreen`: Made settings tile subtitle dynamic (`context.watch<AuthProvider>().languageLabel`) and wired `_showLangSheet` to `auth.setLanguage(...)`.
@@ -27,11 +33,13 @@
 - Audited frontend screens and providers for missing feature gaps.
 
 ## Next Action Items
-1. Create `file_vault_screen.dart` and `medical_file_model.dart` for local prescription and report storage (Medical File Vault).
-2. Add Edit Profile screen for updating age, height, weight, and health conditions post-onboarding.
-3. Clean up unused pubspec dependencies (`dio`, `fl_chart`, `shimmer`).
+1. Add Edit Profile screen for updating age, height, weight, and health conditions post-onboarding.
+2. Clean up unused pubspec dependencies (`dio`, `fl_chart`, `shimmer`).
 
 ## Files I Own
+- `frontend/lib/models/medical_file_model.dart`
+- `frontend/lib/providers/file_vault_provider.dart`
+- `frontend/lib/screens/health/file_vault_screen.dart`
 - `frontend/lib/screens/health/file_vault_screen.dart` (new)
 - `frontend/lib/screens/home/home_screen.dart` (Preferences, Language, Profile)
 - `frontend/lib/providers/auth_provider.dart` (profile persistence)

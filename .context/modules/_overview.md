@@ -11,5 +11,6 @@
 | 7 | Flutter App | Ritesh/Jayesh | ✅ Connected | SSE chat, Health Connect, profile, ICMR demo fallbacks, persistent language settings |
 | 8 | Evaluation | Jayesh | 🟡 In Progress | RAGAS pipeline built, 32 gold Q&A pairs, LLM-as-judge scoring |
 | 9 | Research | Abhijit | ✅ Done | Capstone research validation, 14.3:1 ROI, and MMed-RAG hallucination analysis artifacts |
+| 10 | Medical File Vault | Abhijit | ✅ Live | Local DPDP-compliant vault for prescriptions, lab reports, and scans with camera/file picker & on-device sandbox |
 
 → Each module: [modules/{name}/summary.md] and [modules/{name}/detail.md]

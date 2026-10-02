@@ -1027,7 +1027,15 @@ class _ProfileTab extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              _SettingsSection(title: 'Privacy & Security', children: [
+              _SettingsSection(title: 'Medical Records & Privacy', children: [
+                _SettingsTile(
+                  icon: Icons.folder_shared_outlined,
+                  iconColor: AppTheme.primaryTeal,
+                  title: 'Medical File Vault',
+                  subtitle: 'Prescriptions, lab reports & scans (On-Device)',
+                  isDark: isDark,
+                  onTap: () => Navigator.pushNamed(context, '/vault'),
+                ),
                 _SettingsTile(
                   icon: Icons.shield_outlined,
                   iconColor: AppTheme.accentGreen,

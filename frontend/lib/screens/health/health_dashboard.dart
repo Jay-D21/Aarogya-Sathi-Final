@@ -115,6 +115,72 @@ class _HealthDashboardState extends State<HealthDashboard>
                   textSec: textSec,
                 ),
 
+                const SizedBox(height: 16),
+
+                // ── Medical File Vault Banner ──
+                InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () => Navigator.pushNamed(context, '/vault'),
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppTheme.primaryTeal.withValues(alpha: 0.14),
+                          AppTheme.accentBlue.withValues(alpha: 0.08),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: AppTheme.primaryTeal.withValues(alpha: 0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 42,
+                          height: 42,
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryTeal,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(Icons.folder_shared_rounded,
+                              color: Colors.white, size: 22),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Medical File Vault',
+                                style: GoogleFonts.outfit(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: textPri,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                'Prescriptions, lab reports & scans (On-Device)',
+                                style: GoogleFonts.inter(
+                                  fontSize: 11,
+                                  color: textSec,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(Icons.arrow_forward_ios_rounded,
+                            size: 13, color: AppTheme.primaryTeal),
+                      ],
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 20),
 
                 // ── Section header ──

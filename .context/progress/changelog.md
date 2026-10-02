@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-03 (Abhijit — Session 17: Medical File Vault Implementation & Testing)
+- [Abhijit] Added `image_picker` (1.2.3) and `file_picker` (11.0.3) packages for native camera, photo gallery, and PDF report capture.
+- [Abhijit] Created `MedicalFileModel` (`frontend/lib/models/medical_file_model.dart`) supporting DPDP on-device records for prescriptions, lab reports, scans, and vaccinations with file size and date formatting.
+- [Abhijit] Built `FileVaultProvider` (`frontend/lib/providers/file_vault_provider.dart`) managing sandbox file persistence (`/medical_vault/`), SharedPreferences metadata indexing, category filtering, search queries, and secure deletion.
+- [Abhijit] Built `FileVaultScreen` (`frontend/lib/screens/health/file_vault_screen.dart`) featuring real-time search, category filter chips, upload bottom sheet (camera/gallery/file), file details/image preview dialog, and delete confirmation.
+- [Abhijit] Wired `/vault` route in `main.dart`, added settings entry in `HomeScreen`, and integrated an on-device Medical File Vault banner into `HealthDashboard`.
+- [Abhijit] Automated Verification: created `frontend/test/file_vault_test.dart` (6/6 tests passed) and re-ran `language_persistence_test.dart` (4/4 passed) with zero regressions; `flutter analyze` verified with 0 errors and 0 warnings.
+
 ## 2026-10-02 (Abhijit — Session 16: Language Persistence & Full End-to-End Wiring)
 - [Abhijit] Implemented reactive language persistence in `frontend/lib/providers/auth_provider.dart`: `_language` state, `languageLabel`, and `setLanguage(lang)` with `SharedPreferences` persistence (`user_language`) and user session synchronization.
 - [Abhijit] Updated `HomeScreen` settings: dynamically bound language subtitle to `context.watch<AuthProvider>().languageLabel` and wired `_showLangSheet` directly to `auth.setLanguage(...)`.
