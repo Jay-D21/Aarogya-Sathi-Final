@@ -1,5 +1,20 @@
 # Changelog
  
+## 2026-10-03 (Abhijit — Session 20: Research Paper Engine Synchronization & Verification Suite Integration)
+- [Abhijit] Updated `RESEARCH_CONTEXT.md` to `v1.3.0` establishing `355ef4b` as the latest git baseline following completion of all 4 frontend tasks.
+- [Abhijit] Synchronized sections 1–5, 8, 9, 10 of `RESEARCH_CONTEXT.md` to document the DPDP On-Device Medical File Vault (`/medical_vault/`), Asian ICMR BMI calculation & dynamic classification, in-chat dynamic language toggle, Flutter automated testing suite (17/17 tests passing), and backend model wiring.
+- [Abhijit] Appended incremental change log entry to `CHANGE_LOG.md` per Phase 2 of `research-paper-engine` protocol.
+- [Abhijit] Enhanced `paper/paper.md`:
+  - Updated Figure 4 (Data Flow & Privacy Architecture) to incorporate on-device sandboxed `/medical_vault/` file isolation.
+  - Updated Table 11 (DPDP Act Compliance Matrix) adding sensitive file storage row.
+  - Updated Table 13 (Pydantic Data Models) adding `height_cm` and `weight_kg` to `UserProfile`.
+  - Expanded Section 4.3 (Frontend Implementation) prose covering on-device medical vault, Asian ICMR BMI computation, and reactive multilingual state management.
+  - Restored Table 14 (Health Connect SDK Data Types) and added Table 15 (Frontend Architectural Components & State Management).
+  - Renumbered Backend Module Registry to Table 16.
+  - Added Table 20 (Comprehensive Automated Verification Suite — 17 unit/widget tests + backend model integration suite, 100% pass rate, zero static analysis lints).
+  - Sequentially renumbered all subsequent tables through Table 25 (Summary of Contributions), plus Appendix A1 and B1 (27 tables in total).
+- [Abhijit] Updated `.context/contributors/dev-abhijit.md` and `.context/modules/_overview.md`.
+
 ## 2026-10-03 (Abhijit — Session 19: Pubspec Dependency Audit & Native Package Pruning)
 - [Abhijit] Pruned unused dependencies `speech_to_text: ^7.0.0` and `flutter_tts: ^3.8.3` from `frontend/pubspec.yaml`, removing unused native platform overhead and Windows C++ plugin compilation (`speech_to_text_windows`, `speech_to_text_platform_interface`, `flutter_tts`).
 - [Abhijit] Ran `flutter pub get` cleanly updating `frontend/pubspec.lock`.

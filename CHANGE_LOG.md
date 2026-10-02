@@ -30,3 +30,20 @@ Used by the Research Paper Engine to update RESEARCH_CONTEXT.md without full re-
 - **Sections Updated**: §8 (File-to-Research Mapping), §9 (Git Baseline)
 - **Summary**: Completed Phase 4 structured writing. Created paper/outline.md (section-by-section writing plan) and paper/paper.md (complete IMRAD research paper with Abstract, Introduction, Related Work, System Architecture, Implementation, Evaluation, Discussion, Limitations, Conclusion, and 42 IEEE-formatted references). AI-ism scrubbing applied per avoid-ai-writing skill. All manuscript sections written in flowing prose paragraphs with no bullet points.
 - **New Baseline Commit**: 5d96dac5babbb6ed1114fc30c868736b98681d99
+
+### Update: 2026-10-03 (Phase 2 — Context Sync & Architecture Evolution)
+- **Git Range**: 5d96dac5babbb6ed1114fc30c868736b98681d99..355ef4b396e95c1a7a4bf0049ceba030438cf11d
+- **Files Changed/Created**: 
+  - `paper/paper.md` (enhanced from 298 to 710 lines, +23 tables, +5 ASCII architecture diagrams)
+  - `frontend/lib/models/medical_file_model.dart`
+  - `frontend/lib/providers/file_vault_provider.dart`
+  - `frontend/lib/screens/health/file_vault_screen.dart`
+  - `frontend/lib/screens/profile/edit_profile_screen.dart`
+  - `frontend/lib/providers/auth_provider.dart`
+  - `frontend/lib/screens/chat/chat_screen.dart`
+  - `backend/api/models.py`
+  - `frontend/pubspec.yaml`
+  - `frontend/test/` (edit_profile_test.dart, file_vault_test.dart, language_persistence_test.dart, widget_test.dart)
+- **Sections Updated in RESEARCH_CONTEXT.md**: §1, §2, §3 (Technical Approach), §4 (System Architecture), §5 (Evaluation & Results), §6 (Limitations), §7 (Related Work Hooks), §8 (File-to-Research Mapping), §9 (Git Baseline), §10 (Contributor Activity Map)
+- **Summary**: Updated research context to v1.3.0 reflecting completed frontend architecture evolution (DPDP on-device sandboxed Medical File Vault, dynamic Asian ICMR BMI calculation & conditions management, real-time in-chat multilingual language switching, pruned dependency tree) and 100% passing automated test suite (17/17 tests).
+- **New Baseline Commit**: 355ef4b396e95c1a7a4bf0049ceba030438cf11d

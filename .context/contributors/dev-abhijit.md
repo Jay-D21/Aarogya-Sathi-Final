@@ -13,6 +13,19 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Executed **Research Paper Engine Synchronization (Session 20: `paper/paper.md`, `RESEARCH_CONTEXT.md`, `CHANGE_LOG.md`)**:
+  - Incremental baseline tracking updated to `v1.3.0` referencing commit `355ef4b` as new baseline.
+  - Synchronized `RESEARCH_CONTEXT.md` across sections 1, 2, 3 (DPDP on-device medical vault, Asian ICMR BMI cutoffs, dynamic in-chat language toggles), 4 (system architecture), 5 (verification results), 8 (file-to-research mapping), 9 (git baseline), and 10 (contributor activity map).
+  - Appended structured incremental update entry to `CHANGE_LOG.md` adhering to Phase 2 of `research-paper-engine` protocol.
+  - Updated `paper/paper.md`:
+    - Updated Figure 4 (Data Flow & Privacy Architecture) with on-device sandboxed `/medical_vault/`.
+    - Updated Table 11 (DPDP Act Compliance Matrix) with private medical file storage.
+    - Updated Table 13 (Pydantic Data Models) with `height_cm` and `weight_kg`.
+    - Expanded Section 4.3 (Frontend Implementation) prose covering the DPDP on-device vault, dynamic Asian ICMR BMI calculation & profile engine, and reactive multilingual state management.
+    - Restored Table 14 (Health Connect SDK Data Types) and added Table 15 (Frontend Architectural Components & State Management).
+    - Renumbered Backend Module Registry to Table 16.
+    - Added Table 20 (Comprehensive Automated Verification Suite — 17 unit/widget tests + backend model integration suite, 100% pass rate, zero static analysis lints).
+    - Sequentially renumbered all downstream tables up to Table 25 (Summary of Contributions), plus Appendix A1 and B1 (total 27 tables).
 - Executed **Pubspec Dependency Audit & Cleanup (`frontend/pubspec.yaml`, `pubspec.lock`, `.context/dependencies/_overview.md`)**:
   - Removed dead, unused native packages `speech_to_text` and `flutter_tts` from `pubspec.yaml`, pruning 4 unused dependencies (`speech_to_text`, `speech_to_text_windows`, `speech_to_text_platform_interface`, `flutter_tts`) and eliminating unused native Windows C++ plugin compilation.
   - Verified all 19 active dependencies are in active use across the codebase.

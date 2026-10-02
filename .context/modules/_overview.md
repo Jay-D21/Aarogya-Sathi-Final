@@ -10,7 +10,7 @@
 | 6 | Environmental Data | Abhijit | ✅ Live | Real WAQI API token integration and Open-Meteo live weather |
 | 7 | Flutter App | Ritesh/Jayesh | ✅ Connected | SSE chat, Health Connect, profile, ICMR demo fallbacks, persistent language settings |
 | 8 | Evaluation | Jayesh | 🟡 In Progress | RAGAS pipeline built, 32 gold Q&A pairs, LLM-as-judge scoring |
-| 9 | Research | Abhijit | ✅ Done | Capstone research validation, 14.3:1 ROI, and MMed-RAG hallucination analysis artifacts |
+| 9 | Research | Abhijit | ✅ Live & Synced | Full IEEE-format paper (`paper/paper.md`, 25 tables + 2 appendix tables, 5 ASCII architecture diagrams, full verification suite), research context v1.3.0, and change log tracking |
 | 10 | Medical File Vault | Abhijit | ✅ Live | Local DPDP-compliant vault for prescriptions, lab reports, and scans with camera/file picker & on-device sandbox |
 | 11 | Health Profile & BMI | Abhijit | ✅ Live | Live Asian ICMR BMI calculation, chronic conditions & medications manager, offline profile caching & RAG sync |
 
