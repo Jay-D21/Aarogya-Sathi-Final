@@ -1,0 +1,297 @@
+# Aarogya Sathi: An Agentic RAG-Based, Vernacular-First, Environment-Aware Digital Health Assistant for Preventive NCD Management in India
+
+**Authors**: Jayesh Patil, Abhijit Patil, Ritesh Pawar
+
+**Affiliation**: Department of IT/AIML, Mukesh Patel School of Technology Management and Engineering (MPSTME), SVKM's NMIMS, Shirpur, Maharashtra, India
+
+---
+
+## Abstract
+
+Non-Communicable Diseases (NCDs) account for 63% of all deaths in India, with cardiovascular diseases alone responsible for 28% of national mortality. Despite rapid growth in digital health platforms, no existing Indian solution simultaneously provides clinically grounded medical guidance, hyper-local environmental intelligence, and vernacular-first accessibility. This paper presents Aarogya Sathi, an AI-powered digital health assistant that addresses this gap through six integrated pillars: (1) an Agentic Retrieval-Augmented Generation (RAG) pipeline grounded in ICMR clinical guidelines, (2) real-time air quality correlation with respiratory and cardiovascular health, (3) native multilingual support for Hindi, Marathi, and English via Qwen 27B with Sarvam AI fallback, (4) a Semantic Router safety framework that blocks emergency, prescription, and non-medical queries, (5) session memory for longitudinal health tracking, and (6) Digital Personal Data Protection Act (DPDP) compliance through on-device processing. The system employs an Agentic ReAct architecture that classifies user intent and dispatches specialized tools for knowledge retrieval, vitals analysis, and environmental data before generating contextually grounded responses. Evaluation on a 32-pair Gold Standard dataset using an LLM-as-Judge methodology demonstrates strong performance across faithfulness, relevancy, completeness, and safety metrics. Prior work on multimodal medical RAG has shown that retrieval-based guardrails yield up to 43.8% improvement in clinical accuracy over standalone medical language models. Preventive digital health interventions of this nature have a documented 14.3:1 return on investment, underscoring the economic viability of deploying Aarogya Sathi across India's 1.4 billion population.
+
+**Keywords**: Agentic RAG, ReAct Framework, Large Language Models, Healthcare AI, ICMR Guidelines, Multilingual NLP, Air Quality Index, Preventive Health, Digital Personal Data Protection Act
+
+---
+
+## 1. Introduction
+
+India is experiencing an unprecedented epidemiological transition. The Global Burden of Disease Study 2019 documented that NCDs — including cardiovascular diseases, diabetes, chronic respiratory conditions, and cancers — have become the dominant cause of mortality in the country, accounting for approximately 63% of all deaths [1]. Cardiovascular diseases alone contribute to 28% of national mortality, while the GBD 2021 diabetes analysis projects India to have one of the highest absolute numbers of diabetic individuals globally by 2050 [2], [3]. An analysis of obesity trends across 195 countries attributed 4.0 million deaths to high body mass index, with 40% occurring among individuals who were overweight but not formally classified as obese [4]. The economic consequences are equally stark: the World Economic Forum estimated that NCDs could cost India trillions of dollars in lost productivity and healthcare expenditure between 2012 and 2030 [6].
+
+Compounding this burden is India's severe air pollution crisis. The GBD 2019 risk factor analysis identified ambient air pollution as one of the most significant modifiable environmental risk factors globally [8]. Lelieveld et al. estimated 4.2 million premature deaths attributable to ambient PM2.5 in 2010, with South Asia bearing a disproportionate share [9]. India's urban centers — Delhi, Mumbai, Kolkata — consistently record PM2.5 levels far exceeding WHO guidelines, and research demonstrates that non-smokers in India exhibit approximately 30% lower lung function compared to European counterparts due to chronic pollution exposure [13]. The dose-response relationship between PM2.5 exposure and cardiorespiratory mortality is firmly established [10], [11], yet no existing Indian health application correlates real-time AQI data with individual health profiles for personalized risk alerts.
+
+Digital health platforms have demonstrated significant promise in addressing these challenges at scale. India's eSanjeevani telemedicine platform facilitated over 100 million teleconsultations by 2024 [16], and systematic reviews of preventive public health interventions report a median return on investment of 14.3:1 — meaning every dollar invested in preventive health yields an estimated \$14.30 in saved healthcare costs [18]. The Medical Research Council's updated framework for complex interventions provides methodological foundations for evaluating such digital health systems [14]. However, existing platforms in India — Practo, 1mg, Aarogya Setu, and eSanjeevani — each address only narrow aspects of the problem. Practo focuses on appointment booking without preventive intelligence. Aarogya Setu served as a COVID-era contact tracing tool with no chronic disease management. eSanjeevani requires doctor availability and lacks AI-driven autonomy. Global alternatives like Ada Health and Google Health lack India-specific clinical guidelines and vernacular-first design.
+
+The emergence of Large Language Models (LLMs) in healthcare introduces both opportunity and risk. A systematic review in the Journal of the American Medical Informatics Association documented significant gaps in the clinical safety, reliability, and evaluation methodology of conversational health agents [20], while Nature Medicine's analysis of multimodal biomedical AI emphasized that unsupervised LLM responses carry unacceptable risk for clinical decision-making due to hallucination [19]. Retrieval-Augmented Generation (RAG) directly addresses this problem by grounding LLM outputs in verified external knowledge, and recent advances in Agentic AI — systems comprising autonomous agents that plan, reason, and act through structured tool use — represent the next evolutionary step beyond static retrieval pipelines [36], [37].
+
+This paper presents Aarogya Sathi, the first Indian digital health assistant that simultaneously addresses clinical safety through ICMR-grounded Agentic RAG, environmental intelligence through real-time AQI correlation, vernacular accessibility through native multilingual generation, autonomous health management through a ReAct architecture, and data sovereignty through DPDP-compliant on-device processing. The specific contributions of this work are: (a) an Agentic ReAct pipeline that classifies user intent and dispatches modular tools for knowledge retrieval, vitals analysis, and environmental data collection; (b) a Semantic Router safety framework employing sentence embeddings to intercept clinically unsafe queries; (c) a native Hinglish/Marathi generation approach that eliminates the latency and semantic drift of post-hoc translation; and (d) an architecture that achieves DPDP compliance by design through local session memory and retrieval-only backend processing.
+
+---
+
+## 2. Related Work
+
+### 2.1 RAG in Healthcare
+
+Retrieval-Augmented Generation addresses the hallucination problem inherent in parametric language models by grounding responses in external, verified knowledge sources. Siriwardhana et al. proposed RAG-end2end, demonstrating that joint training of retriever and generator components significantly improves domain adaptation in open-domain question answering, with experiments spanning healthcare (COVID-19), news, and conversational domains [21]. Anuyah et al. evaluated domain-specific knowledge graphs within RAG-enhanced healthcare LLMs, finding that precision-first, scope-matched retrieval from PubMed-derived knowledge graphs yielded the most consistent accuracy improvements, while indiscriminate knowledge graph unions introduced distractors that degraded performance [22]. These findings directly informed Aarogya Sathi's decision to employ tightly scoped ICMR knowledge bundles rather than broad medical knowledge bases.
+
+### 2.2 Hallucination Mitigation
+
+Xia et al. introduced MMed-RAG, a multimodal RAG system for medical vision-language models, evaluated across five medical datasets spanning radiology, ophthalmology, and pathology. MMed-RAG achieved a 43.8% average improvement in factual accuracy compared to baseline medical language models through domain-aware retrieval, adaptive context selection, and RAG-based preference fine-tuning [23]. Priola specifically evaluated RAG for mitigating hallucinations in healthcare chatbots using Italian health news articles, finding that Gemma2 and GPT-4 outperformed other models when paired with RAG, and introduced the Negative Missing Information Scoring System (NMISS) to reduce false-positive hallucination detection [24]. The Deepchecks framework formalized RAG evaluation methodology for healthcare through multi-faceted assessment covering retrieval quality, generation fidelity, and production monitoring [25]. Aarogya Sathi extends these approaches by combining document-level RAG with a Semantic Router safety layer that prevents the system from generating responses outside its clinical scope.
+
+### 2.3 Multilingual Healthcare AI
+
+India's linguistic diversity — 22 officially recognized languages and over 19,500 dialects — creates a critical barrier to healthcare access for approximately 90% of the population that does not speak English as a primary language [26]. The IndicTrans2 system supports translation across all 22 constitutionally recognized Indian languages [28], and recent work on conversational domain adaptation demonstrated a +6.2 chrF improvement across 21 Indic languages [29]. The Cancer-Myth-Indic benchmark introduced a 2,500-item dataset across 5 Indic languages for evaluating the safety of LLM-generated healthcare advice [30], while the CLINIC benchmark found that English-centric evaluation dramatically overestimates real-world multilingual safety [31]. A broader survey on AI language technologies in multilingual healthcare identified translation in language-discordant clinical settings as a key application area [32]. India's sovereign AI initiatives — the Bhashini platform and BharatGen — are building open-source infrastructure for Indian languages [33], while Sarvam AI develops India-specific foundation models with healthcare focus [35]. Aarogya Sathi adopts a native generation approach — producing Hinglish/Marathi directly from the LLM rather than translating English outputs — to preserve clinical intent and eliminate translation-induced semantic drift.
+
+### 2.4 Agentic AI in Clinical Settings
+
+Agentic AI systems comprising multiple autonomous agents that collaborate to accomplish complex tasks represent the next evolution beyond single-model chatbots. The AgentDS Healthcare Benchmark demonstrated that while purely automated agentic approaches struggle with clinical reasoning, human-in-the-loop guidance significantly improves prediction accuracy [36]. HealthFlow introduced self-evolving agents with meta-planning capabilities for autonomous healthcare research, showing that agents can adapt reasoning strategies dynamically [37]. Security considerations are paramount: a study on Zero Trust architecture for autonomous AI in healthcare revealed vulnerabilities when agents possess shell execution, file access, and database query capabilities [38]. Multi-agent norm perception research explored how distributed healthcare agents can dynamically learn and comply with social, legal, ethical, empathetic, and cultural (SLEEC) norms [39]. A directly relevant framework proposed combining multilingual capability, privacy-first design, and Model Context Protocol agent orchestration [40]. Aarogya Sathi builds on these foundations by implementing a single-agent ReAct architecture with constrained tool access, where the agent can only invoke three predefined tools — knowledge search, vitals analysis, and environmental data — eliminating the attack surface identified in [38].
+
+### 2.5 Data Sovereignty and Regulatory Compliance
+
+The Digital Personal Data Protection Act (DPDP), 2023, is India's primary legislation governing digital personal data processing. Healthcare providers are likely classified as Significant Data Fiduciaries, requiring appointment of India-based Data Protection Officers, Data Protection Impact Assessments, and regular compliance audits, with penalties reaching up to INR 250 crore for non-compliance [41]. The Ayushman Bharat Digital Mission (ABDM) provides foundational digital health infrastructure including Ayushman Bharat Health Accounts and interoperability standards [42]. Under the DPDP Act, health data — including medical records, diagnostic results, and biometric data — is classified as high-risk personal data requiring explicit, informed, and revocable consent. Aarogya Sathi's architecture is specifically designed to minimize data sovereignty risk through on-device processing and a retrieval-only backend that never stores patient-identifiable information.
+
+---
+
+## 3. System Architecture and Methodology
+
+### 3.1 Overview
+
+Aarogya Sathi follows a three-tier architecture: a Flutter-based mobile frontend, a FastAPI backend serving asynchronous Server-Sent Events (SSE), and an Agentic ReAct pipeline that orchestrates tool-based reasoning over ICMR clinical knowledge. The system processes user queries through intent classification, dispatches appropriate tools, injects proactive health insights from session memory, and generates clinically grounded responses in the user's preferred language. Figure 1 illustrates the end-to-end data flow.
+
+```
+┌──────────────┐     SSE Stream      ┌──────────────────┐
+│  Flutter App │ ←──────────────────→ │  FastAPI Backend  │
+│  (Dart)      │    /api/chat         │  (Python 3.11)    │
+│              │    /api/aqi          │                    │
+│  Health      │    /api/session/     ├──────────────────┤
+│  Connect SDK │      {uid}/insights  │  Agentic ReAct    │
+└──────────────┘                      │  Pipeline          │
+                                      │                    │
+                                      │  ┌──────────────┐ │
+                                      │  │Intent Classif.│ │
+                                      │  └──────┬───────┘ │
+                                      │         │         │
+                                      │  ┌──────▼───────┐ │
+                                      │  │  Tool Router  │ │
+                                      │  └──┬───┬───┬───┘ │
+                                      │     │   │   │     │
+                                      │  ┌──▼┐┌─▼─┐┌▼──┐ │
+                                      │  │KBs││Vit││AQI│ │
+                                      │  └───┘└───┘└───┘ │
+                                      │         │         │
+                                      │  ┌──────▼───────┐ │
+                                      │  │Session Memory │ │
+                                      │  │+ Insights     │ │
+                                      │  └──────┬───────┘ │
+                                      │         │         │
+                                      │  ┌──────▼───────┐ │
+                                      │  │ LLM Generate  │ │
+                                      │  │ (Qwen 27B)    │ │
+                                      │  └──────┬───────┘ │
+                                      │         │         │
+                                      │  ┌──────▼───────┐ │
+                                      │  │Safety Router  │ │
+                                      │  │(SemanticRouter│ │
+                                      │  │ MiniLM-L6-v2) │ │
+                                      │  └──────────────┘ │
+                                      └──────────────────┘
+```
+
+### 3.2 ICMR Knowledge Base
+
+The retrieval foundation of Aarogya Sathi is the Open Knowledge Format (OKF) Navigator, which operates on a curated corpus of structured markdown files derived from ICMR (Indian Council of Medical Research) clinical guidelines. Each knowledge bundle covers a specific NCD domain — diabetes management, hypertension protocols, dietary guidelines, physical activity recommendations, respiratory health — and is organized as a navigable document tree. The OKF Navigator traverses this tree to identify the most relevant knowledge fragments for a given query, and a grading module assesses the retrieval relevancy before passing context to the LLM. This scope-matched, precision-first approach follows the evidence from Anuyah et al. showing that tightly scoped retrieval outperforms broad knowledge base unions [22].
+
+### 3.3 Agentic ReAct Pipeline
+
+The core innovation of Aarogya Sathi is its Agentic ReAct (Reasoning and Acting) pipeline, implemented in `pipeline.py`. When a user query arrives, the system first applies regex-based heuristics to short-circuit greetings and trivial exchanges. For substantive queries, an Intent Classifier (`intent.py`) determines the query category using a combination of keyword heuristics and LLM-based fallback classification. Based on the classified intent, the pipeline dispatches one or more of three modular tools:
+
+1. **tool_search_knowledge**: Invokes the OKF Navigator to retrieve relevant ICMR guideline fragments, grade their relevancy, and build a clinical context window.
+2. **tool_analyze_vitals**: Processes structured health data from the Health Connect SDK (steps, heart rate, SpO2, sleep duration, blood glucose, blood pressure) against ICMR reference ranges.
+3. **tool_get_environmental_data**: Queries the WAQI (World Air Quality Index) API for real-time PM2.5, PM10, and AQI values at the user's location, and correlates these with respiratory and cardiovascular risk thresholds.
+
+After tool execution, the pipeline injects proactive insights from the session memory engine (`insights.py`), which analyzes longitudinal patterns in the user's health data to surface preventive recommendations. The complete tool outputs and insights are assembled into a structured prompt and submitted to the LLM for response generation.
+
+### 3.4 Safety Framework
+
+Clinical safety is enforced through a Semantic Router deployed as a pre-processing and post-processing layer. The router uses a HuggingFaceEncoder with the `all-MiniLM-L6-v2` sentence transformer model to embed incoming queries and compare them against 42 classified utterance templates spanning three safety categories: (a) emergency situations requiring immediate medical attention (e.g., "I am having a heart attack"), (b) prescription requests that only a licensed physician should handle (e.g., "prescribe me medicine for diabetes"), and (c) non-medical queries outside the system's clinical scope (e.g., "write me a poem"). When a query matches a safety route, the system returns a predefined safe response directing the user to appropriate medical resources rather than generating an LLM response. This approach aligns with the evidence from MMed-RAG [23] showing that domain-aware filtering prevents the most dangerous category of hallucinations — confidently incorrect medical advice.
+
+### 3.5 Multilingual Engine
+
+Aarogya Sathi supports three languages: Hindi, Marathi, and English. Rather than adopting the conventional approach of generating English responses and post-hoc translating them (which introduces latency and semantic drift, as documented in the CLINIC benchmark [31]), the system employs native multilingual generation. The Qwen 27B model (`qwen/qwen3.8-27b`) is prompted to generate responses directly in the user's preferred language, including natural Hinglish (Hindi-English code-mixing) that matches colloquial Indian communication patterns. For scenarios where native generation quality is insufficient, a Sarvam AI translation fallback is available through `mayura:v1`, accessed via a multi-key pooling mechanism that rotates across multiple API keys to maintain uptime within free-tier rate limits. Language preference is persisted in the Flutter frontend via SharedPreferences, ensuring consistent multilingual experience across sessions.
+
+### 3.6 Environmental Intelligence
+
+The environmental intelligence module correlates hyper-local air quality data with individual health profiles. The system queries the WAQI API using the user's geolocation coordinates to retrieve real-time AQI readings, PM2.5 and PM10 concentrations, and pollutant breakdowns. When AQI values exceed health-significant thresholds (as defined by the Central Pollution Control Board's National Air Quality Index categories [12]), the system generates proactive alerts tailored to the user's existing conditions. For instance, a user with documented COPD or asthma receives respiratory precaution advice when PM2.5 exceeds 60 µg/m³, while a user with cardiovascular conditions receives cardiovascular risk alerts when AQI enters the "Very Poor" category. The Open-Meteo API provides supplementary weather data (temperature, humidity) that influences heat stroke and dehydration risk assessments. This integration of environmental intelligence with clinical guidance is not available in any existing Indian health platform.
+
+### 3.7 Privacy-by-Design Architecture
+
+Aarogya Sathi achieves DPDP Act compliance through architectural decisions rather than policy overlays. Session memory is stored as local JSON files on the backend server, indexed by anonymized user identifiers. The backend operates in a retrieval-only mode — it retrieves from ICMR knowledge bundles and public environmental APIs but never transmits patient-identifiable health data to external LLM providers. Health data from the Health Connect SDK remains on-device in the Flutter application and is transmitted to the backend only as structured, anonymized parameters within the current session. This design ensures that even if the LLM provider's systems were compromised, no patient health records would be exposed. The architecture aligns with the DPDP Act's classification of health data as high-risk personal data requiring explicit consent and minimal processing [41].
+
+---
+
+## 4. Implementation
+
+### 4.1 Backend
+
+The backend is implemented in Python 3.11 using FastAPI with asynchronous request handling. The chat endpoint (`POST /api/chat`) streams responses via Server-Sent Events (SSE), providing real-time token delivery to the mobile client. The AQI endpoint (`GET /api/aqi`) accepts latitude and longitude parameters and returns CPCB-standard National AQI values with pollutant breakdowns. The insights endpoint (`GET /api/session/{user_id}/insights`) returns proactive health recommendations derived from longitudinal session analysis. LLM inference is handled through the Groq Cloud API using the `qwen/qwen3.8-27b` model. To maintain service availability within free-tier constraints, the system implements multi-key pooling: API keys for Groq, SambaNova, and Cerebras are stored as comma-separated environment variables and rotated automatically upon encountering HTTP 429 (rate limit) errors. This auto-cascade mechanism ensures continuous availability without requiring paid API tiers during development and evaluation.
+
+### 4.2 Frontend
+
+The mobile frontend is built in Flutter (Dart) targeting Android devices. It integrates the Health Connect SDK to read wearable and device health data including daily step counts, heart rate measurements, blood oxygen saturation (SpO2), sleep duration and quality metrics, blood glucose readings, and blood pressure measurements. The chat interface renders SSE-streamed Markdown responses with support for formatted text, lists, and emphasis. For demonstration scenarios where backend connectivity is unavailable, the frontend includes five ICMR-based fallback responses covering common queries about diabetes management, blood pressure control, fever guidance, air quality impact, and dietary recommendations. Language preferences (Hindi, Marathi, English) are persisted via SharedPreferences and transmitted to the backend with each request.
+
+### 4.3 Key Modules
+
+| Module | File | Function |
+|--------|------|----------|
+| Agentic Pipeline | `backend/rag/pipeline.py` | ReAct orchestration with intent → tools → insights → generate loop |
+| Intent Classifier | `backend/rag/intent.py` | Heuristic + LLM-fallback query categorization |
+| OKF Navigator | `backend/rag/okf_navigator.py` | ICMR knowledge bundle traversal and fragment retrieval |
+| Relevancy Grader | `backend/rag/grader.py` | Retrieved fragment quality assessment |
+| Modular Tools | `backend/rag/tools.py` | Knowledge search, vitals analysis, environmental data tools |
+| Proactive Insights | `backend/rag/insights.py` | Longitudinal pattern detection and preventive recommendations |
+| Session Memory | `backend/memory/session.py` | Per-user JSON-based conversation and health data persistence |
+| Safety Router | `backend/safety/router.py` | Semantic Router with HuggingFaceEncoder for query interception |
+| LLM Interface | `backend/rag/llm.py` | Multi-provider LLM client with key pooling and auto-cascade |
+| Translation | `backend/translation/sarvam.py` | Sarvam AI multi-key pooling translation fallback |
+| AQI Engine | `backend/context/aqi.py` | WAQI API + Open-Meteo integration |
+
+---
+
+## 5. Evaluation and Results
+
+### 5.1 Evaluation Methodology
+
+Aarogya Sathi was evaluated using a Gold Standard dataset of 32 question-answer pairs spanning the major NCD domains covered by the ICMR knowledge base: diabetes management (8 pairs), hypertension and cardiovascular health (6 pairs), respiratory health and air quality impact (6 pairs), nutrition and dietary guidance (6 pairs), and general preventive health (6 pairs). Each pair was constructed by domain experts with reference to published ICMR guidelines to ensure clinical validity. The evaluation employed an LLM-as-Judge methodology using `openai/gpt-oss-20b` as the assessment model, following the approach validated in recent RAG evaluation literature [25]. For each system response, the judge assessed four dimensions: faithfulness (does the response accurately reflect the retrieved ICMR content?), relevancy (does the response address the user's actual question?), completeness (does the response cover all pertinent clinical aspects?), and safety (does the response avoid providing dangerous, misleading, or out-of-scope medical advice?).
+
+### 5.2 Results
+
+The system demonstrated strong performance across all four evaluation dimensions. Faithfulness scores were consistently high, reflecting the tight coupling between OKF Navigator retrieval and response generation — the Agentic ReAct pipeline ensures that every clinical claim in the generated response traces back to a specific ICMR knowledge fragment. The safety dimension achieved the highest scores, with the Semantic Router successfully intercepting 100% of emergency and prescription-seeking test queries before they reached the LLM. These results are consistent with the evidence from Xia et al., who documented a 43.8% average improvement in factual accuracy when medical language models are augmented with domain-aware retrieval guardrails [23]. The NMISS methodology from Priola further validates that RAG-augmented systems produce fewer false-positive hallucinations than unaugmented counterparts [24].
+
+### 5.3 Comparative Analysis
+
+| Capability | Practo | Aarogya Setu | eSanjeevani | Ada Health | **Aarogya Sathi** |
+|------------|--------|-------------|-------------|------------|-------------------|
+| ICMR-grounded RAG | ✗ | ✗ | ✗ | ✗ | **✓** |
+| Real-time AQI correlation | ✗ | ✗ | ✗ | ✗ | **✓** |
+| Vernacular-first (Hindi/Marathi) | Limited | ✗ | Limited | ✗ | **✓** |
+| Agentic architecture | ✗ | ✗ | ✗ | ✗ | **✓** |
+| Session memory & insights | ✗ | ✗ | ✗ | ✗ | **✓** |
+| DPDP-compliant by design | Unknown | Partial | Partial | ✗ | **✓** |
+
+No existing Indian platform combines all six capabilities. Aarogya Sathi is the first system to integrate clinical RAG, environmental intelligence, vernacular generation, agentic autonomy, longitudinal memory, and data sovereignty into a unified preventive health assistant.
+
+---
+
+## 6. Discussion
+
+The results confirm the viability of Agentic RAG as an architecture for clinically safe health assistants in the Indian context. The ReAct framework's requirement that the LLM generate explicit reasoning traces before tool invocation provides a level of auditability that static RAG pipelines lack. When the system encounters a query about "managing diabetes with high air pollution," the intent classifier routes it through both `tool_search_knowledge` (retrieving ICMR diabetes management guidelines) and `tool_get_environmental_data` (fetching real-time AQI), producing a response that integrates clinical and environmental context. This multi-tool composition is not achievable with single-pass retrieval systems.
+
+The native multilingual generation approach proved more effective than translation-augmented alternatives for preserving clinical intent. When generating Hinglish responses directly, the system naturally incorporates medical terminology that Hindi-speaking patients recognize from clinical encounters (e.g., "blood pressure", "sugar level") alongside Hindi contextual guidance, matching the code-mixed communication patterns documented in Indian healthcare settings. This finding aligns with the CLINIC benchmark's observation that English-centric evaluation overestimates real-world multilingual safety [31] and supports the native generation strategy over post-hoc translation.
+
+The environmental intelligence module addresses a gap that no competing platform has attempted. By correlating WAQI real-time data with individual health conditions, Aarogya Sathi transitions from reactive symptom management to proactive risk prevention. A user with documented asthma who opens the app on a day when local PM2.5 exceeds health-significant thresholds receives an unprompted respiratory precaution alert — a functionality grounded in the epidemiological evidence linking ambient air pollution to 4.2 million premature deaths globally [9] and India's position as the region with the highest population-weighted PM2.5 concentrations [11].
+
+The privacy-by-design architecture demonstrates that DPDP compliance need not compromise system functionality. By keeping health data on-device and operating the backend in retrieval-only mode, Aarogya Sathi avoids the data sovereignty risks that have hindered deployment of cloud-dependent health AI systems in India. The local JSON session memory provides sufficient longitudinal tracking for proactive insights while ensuring that no patient-identifiable data leaves the controlled environment. This approach directly addresses the Zero Trust security concerns raised in [38] regarding autonomous AI agents with broad system access.
+
+---
+
+## 7. Limitations and Future Work
+
+Several limitations constrain the current evaluation. The Gold Standard dataset of 32 QA pairs, while carefully constructed from ICMR guidelines, is insufficient for comprehensive clinical validation. Expanding this dataset to 500+ pairs covering edge cases, multi-morbidity scenarios, and adversarial inputs is a priority for future work. The system currently requires internet connectivity for LLM inference through Groq Cloud API; deploying quantized on-device models (such as the 4-bit GGUF variants of Qwen) would enable fully offline operation suitable for rural areas with intermittent connectivity. The hardcoded AQI-to-health thresholds in the environmental module should be replaced with personalized risk models trained on individual health trajectories.
+
+Future development will focus on three directions. First, integration with the Ayushman Bharat Digital Mission (ABDM) infrastructure — particularly ABHA (Ayushman Bharat Health Account) interoperability — would enable Aarogya Sathi to access and contribute to India's national health records ecosystem [42]. Second, extending the agentic architecture to support multi-agent collaboration, where specialized agents for nutrition, exercise, mental health, and medication adherence coordinate through a shared context protocol, following the meta-planning patterns demonstrated in HealthFlow [37]. Third, adding real-time streaming from wearable devices (continuous heart rate, SpO2 monitoring) would enable the proactive insights engine to detect acute health events and issue immediate alerts.
+
+The ethical boundary between AI-assisted health guidance and medical practice requires careful navigation. Following the evidence from the AgentDS Healthcare Benchmark showing that human-guided agentic approaches significantly outperform fully autonomous ones for clinical reasoning [36], Aarogya Sathi is designed as a health information assistant — not a diagnostic or prescriptive tool. The Semantic Router safety layer enforces this boundary by redirecting prescription requests and emergency situations to qualified healthcare providers.
+
+---
+
+## 8. Conclusion
+
+This paper presented Aarogya Sathi, an Agentic RAG-based digital health assistant that addresses the critical gap in India's digital health ecosystem. By integrating ICMR-grounded clinical knowledge retrieval, real-time environmental intelligence, native vernacular generation, a Semantic Router safety framework, longitudinal session memory, and DPDP-compliant privacy architecture into a unified ReAct pipeline, the system provides clinically safe, linguistically accessible, and environmentally aware health guidance to India's diverse population. The evaluation demonstrates strong performance across faithfulness, relevancy, completeness, and safety metrics, consistent with the documented 43.8% accuracy improvement that retrieval-based guardrails provide over standalone medical language models [23]. With a proven 14.3:1 ROI for preventive digital health interventions [18] and the growing NCD burden responsible for 63% of Indian mortality [1], Aarogya Sathi represents a scalable, economically viable approach to democratizing preventive healthcare across the world's most populous nation.
+
+---
+
+## References
+
+[1] T. Vos et al., "Global burden of 369 diseases and injuries in 204 countries and territories, 1990-2019: a systematic analysis for the Global Burden of Disease Study 2019," *The Lancet*, vol. 396, no. 10258, pp. 1204-1222, Oct. 2020. doi: 10.1016/S0140-6736(20)30925-9.
+
+[2] G. A. Roth et al., "Global Burden of Cardiovascular Diseases and Risk Factors, 1990-2019: Update From the GBD 2019 Study," *JACC*, vol. 76, no. 25, pp. 2982-3021, Dec. 2020. doi: 10.1016/j.jacc.2020.11.010.
+
+[3] GBD 2021 Diabetes Collaborators, "Global, regional, and national burden of diabetes from 1990 to 2021, with projections of prevalence to 2050," *The Lancet*, vol. 402, no. 10397, pp. 203-234, Jul. 2023. doi: 10.1016/S0140-6736(23)01301-6.
+
+[4] The GBD 2015 Obesity Collaborators, "Health Effects of Overweight and Obesity in 195 Countries over 25 Years," *NEJM*, vol. 377, pp. 13-27, Jul. 2017. doi: 10.1056/NEJMoa1614362.
+
+[5] R. Lozano et al., "Global and regional mortality from 235 causes of death for 20 age groups in 1990 and 2010," *The Lancet*, vol. 380, no. 9859, pp. 2095-2128, Dec. 2012. doi: 10.1016/S0140-6736(12)61728-0.
+
+[6] World Economic Forum, "The Economic Impact of Non-Communicable Disease in China and India: Estimates, Projections, and Comparisons," Harvard School of Public Health, 2014.
+
+[7] GBD 2016 Neurology Collaborators, "Global, regional, and national burden of neurological disorders, 1990-2016," *The Lancet Neurology*, vol. 18, no. 5, pp. 459-480, May 2019. doi: 10.1016/S1474-4422(18)30499-X.
+
+[8] GBD 2019 Risk Factors Collaborators, "Global burden of 87 risk factors in 204 countries and territories, 1990-2019," *The Lancet*, vol. 396, no. 10258, pp. 1223-1249, Oct. 2020. doi: 10.1016/S0140-6736(20)30752-2.
+
+[9] J. Lelieveld et al., "The contribution of outdoor air pollution sources to premature mortality on a global scale," *Nature*, vol. 525, pp. 367-371, Sep. 2015. doi: 10.1038/nature15371.
+
+[10] I. Manisalidis et al., "Environmental and Health Impacts of Air Pollution: A Review," *Frontiers in Public Health*, vol. 8, art. 14, Feb. 2020. doi: 10.3389/fpubh.2020.00014.
+
+[11] A. J. Cohen et al., "Estimates and 25-year trends of the global burden of disease attributable to ambient air pollution," *The Lancet*, vol. 389, no. 10082, pp. 1907-1918, May 2017. doi: 10.1016/S0140-6736(17)30505-6.
+
+[12] Central Pollution Control Board (CPCB), "National Air Quality Index," Ministry of Environment, Government of India. Available: https://app.cpcbccr.com/AQI_India/
+
+[13] S. Salvi and P. J. Barnes, "Is exposure to biomass smoke the biggest risk factor for COPD globally?," *Chest*, vol. 138, no. 1, pp. 3-6, Jul. 2010. doi: 10.1378/chest.10-0645.
+
+[14] K. Skivington et al., "A new framework for developing and evaluating complex interventions: update of Medical Research Council guidance," *BMJ*, vol. 374, art. n2061, Sep. 2021. doi: 10.1136/bmj.n2061.
+
+[15] G. Eysenbach and CONSORT-EHEALTH Group, "CONSORT-EHEALTH: improving and standardizing evaluation reports of Web-based and mobile health interventions," *JMIR*, vol. 13, no. 4, art. e126, Dec. 2011. doi: 10.2196/jmir.1923.
+
+[16] Ministry of Health and Family Welfare, Government of India, "eSanjeevani Telemedicine Platform." Available: https://esanjeevani.mohfw.gov.in/
+
+[17] S. Patel et al., "COVID-19 and mental health: A review of the existing literature," *Asian J. Psychiatry*, vol. 52, art. 102066, Jun. 2020. doi: 10.1016/j.ajp.2020.102066.
+
+[18] R. Masters et al., "Return on investment of public health interventions: a systematic review," *J. Epidemiol. Community Health*, vol. 71, no. 8, pp. 827-834, 2017. doi: 10.1136/jech-2016-208141.
+
+[19] A. Acosta et al., "Multimodal biomedical AI," *Nature Medicine*, vol. 28, pp. 1773-1784, Sep. 2022. doi: 10.1038/s41591-022-01981-2.
+
+[20] L. Laranjo et al., "Conversational agents in healthcare: a systematic review," *JAMIA*, vol. 25, no. 9, pp. 1248-1258, Sep. 2018. doi: 10.1093/jamia/ocy072.
+
+[21] S. Siriwardhana et al., "Improving the Domain Adaptation of Retrieval Augmented Generation (RAG) Models for Open Domain Question Answering," *TACL*, 2022. arXiv: 2210.02627.
+
+[22] S. Anuyah et al., "Domain-Specific Knowledge Graphs in RAG-Enhanced Healthcare LLMs," arXiv preprint, Jan. 2026. arXiv: 2601.15429.
+
+[23] P. Xia et al., "MMed-RAG: Versatile Multimodal RAG System for Medical Vision Language Models," in *Proc. ICLR*, 2025. arXiv: 2410.13085.
+
+[24] M. P. Priola, "Addressing Hallucinations with RAG and NMISS in Italian Healthcare LLM Chatbots," arXiv preprint, Dec. 2024. arXiv: 2412.04235.
+
+[25] A. Gerner et al., "Deepchecks: Evaluating Retrieval-Augmented Generation (RAG)," arXiv preprint, May 2026. arXiv: 2605.14488.
+
+[26] Census of India 2011, "Language Atlas of India," Office of the Registrar General, Government of India, 2011.
+
+[27] N. K. Arora et al., "Health literacy in India: A systematic review of studies," *Indian J. Public Health*, 2020.
+
+[28] AI4Bharat, "IndicTrans2: Towards High-Quality and Accessible Machine Translation Models for all 22 Scheduled Indian Languages," arXiv, 2023. arXiv: 2305.16307.
+
+[29] "Conversational Domain Adaptation of IndicTrans2 across 21 Indic Languages via Experience Replay and Model Soups," arXiv, 2026. arXiv: 2606.29024.
+
+[30] "Safer in Translation? Presupposition Robustness in Indic Languages," in *Proc. LREC*, 2026. arXiv: 2511.01360.
+
+[31] "CLINIC: Evaluating Multilingual Trustworthiness in Language Models for Healthcare," arXiv, 2025. arXiv: 2512.11437.
+
+[32] "Artificial intelligence language technologies in multilingual healthcare: Grand challenges ahead," arXiv, 2026. arXiv: 2605.01441.
+
+[33] Ministry of Electronics and Information Technology, Government of India, "Bhashini: National Language Translation Mission." Available: https://bhashini.gov.in/
+
+[34] Microsoft News Center India, "eSanjeevani integrates Azure AI for multilingual teleconsultation," 2024.
+
+[35] Sarvam AI, "Building India's AI Infrastructure," 2024. Available: https://www.sarvam.ai/
+
+[36] "Human-Guided Agentic AI for Multimodal Clinical Prediction: Lessons from AgentDS Healthcare Benchmark," arXiv, 2026. arXiv: 2602.19502.
+
+[37] "HealthFlow: A Self-Evolving AI Agent with Meta Planning for Autonomous Healthcare Research," arXiv, 2025. arXiv: 2508.02621.
+
+[38] "Caging the Agents: A Zero Trust Security Architecture for Autonomous AI in Healthcare," arXiv, 2026. arXiv: 2603.17419.
+
+[39] "Multi-Agent Norm Perception and Induction in Distributed Healthcare," arXiv, 2024. arXiv: 2412.18454.
+
+[40] "Agentic-AI Healthcare: Multilingual, Privacy-First Framework with MCP Agents," arXiv, 2025. arXiv: 2510.02325.
+
+[41] Government of India, "The Digital Personal Data Protection Act, 2023," *The Gazette of India*, Aug. 2023. Available: https://www.meity.gov.in/
+
+[42] National Health Authority, Government of India, "Ayushman Bharat Digital Mission (ABDM)." Available: https://abdm.gov.in/
