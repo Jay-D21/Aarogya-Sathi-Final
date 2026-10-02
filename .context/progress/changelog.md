@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-02 (Abhijit — Session 15: Paper Enhancement with Diagrams & Tables)
+- [Abhijit] Enhanced `paper/paper.md` from 298 to 710 lines (+687 insertions, +412 net new lines)
+- [Abhijit] Added 23 comprehensive tables: NCD burden statistics, RAG comparison, ICMR clinical thresholds, CPCB AQI thresholds, pollutant-health impacts, competitive analysis (7 platforms × 11 features), API specs, Pydantic data models, Health Connect data types, DPDP compliance matrix, module registry, evaluation dataset, safety router results, technology stack decisions, and more
+- [Abhijit] Added 5 detailed ASCII architecture diagrams: full system architecture (3-tier), agentic ReAct pipeline workflow (7 phases), data flow/privacy architecture, multi-key LLM pooling with auto-cascade, native vs translation multilingual comparison
+- [Abhijit] Added Appendix A (AI/ML Skill Demonstration Matrix — 11 competencies) and Appendix B (Economic Feasibility — zero-cost development stack)
+- [Abhijit] Committed and pushed: `f5c974c`
+
 ## 2026-10-02 (Abhijit — Session 14: Research Paper Engine Phase 3 & 4)
 - [Abhijit] Phase 3 (Literature Search): Searched academic databases for Agentic RAG in Healthcare, Multilingual LLMs, Preventive Health ROI. Created `LITERATURE_DB.md` with 4 HIGH-relevance papers. Generated `Research/academic_literature_review.md` with thematic synthesis and gap analysis.
 - [Abhijit] Phase 4 (Structured Writing): Created `paper/outline.md` (section-by-section IMRAD writing plan). Wrote complete `paper/paper.md` — full research paper with Abstract, 8 sections, architecture diagrams, comparative analysis table, and 42 IEEE-formatted references. Applied AI-ism scrubbing (no "leverage", "delve", "robust"). All manuscript sections in flowing prose paragraphs (no bullets).
