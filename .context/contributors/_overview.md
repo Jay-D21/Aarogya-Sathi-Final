@@ -2,9 +2,9 @@
 
 | Name | Roll No | Role | Primary Modules | Status |
 |------|---------|------|----------------|--------|
-| Jayesh Patil | C233 | Lead — RAG & LLM Pipeline | OKF Bundle, RAG Pipeline, Evaluation | Active — Pipeline done, OKF expanding |
-| Abhijit Patil | C263 | Backend & Integration | APIs, Translation, Safety, Context | Active — APIs done, awaiting Bhashini keys |
-| Ritesh Pawar | C276 | Frontend & Mobile | Flutter App, UI/UX, Diagrams | Active — Issues #5 #6 assigned |
+| Jayesh Patil | C233 | Lead — Agentic RAG & LLM Pipeline | OKF Bundle, Agentic Pipeline, Session Memory, Evaluation | Active — Agentic RAG complete, evaluation pending |
+| Abhijit Patil | C263 | Frontend & Research Paper | File Vault, Edit Profile, Language, Step Filter, Research Paper | Active — All 4 frontend tasks + research paper complete (9 commits Oct 1–3) |
+| Ritesh Pawar | C276 | Mobile Sensors & Diagrams | Background Notifications, Architecture Diagrams, Demo Video | Pending — 0 commits since project start |
 
 **Guide**: Dr. Atul V. Dusane
 **Department**: IT/AIML, MPSTME, SVKM's NMIMS Shirpur Campus

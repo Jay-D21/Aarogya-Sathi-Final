@@ -1,17 +1,19 @@
 # Ritesh Pawar — Contributor Context
 
 ## Current Assignment
-- **Modules**: Mobile Proactive Systems, Sensors & Wearables, Architecture Diagrams, Voice I/O
+- **Modules**: Proactive Background Notifications, Architecture Diagrams, Demo Video
 - **Branch**: main
-- **Task**: Proactive Background Notifications, Wearable Health Dashboard, and Capstone Diagrams
-- **Status**: Active
+- **Status**: Pending (0 commits since project start)
 
 ## Key Responsibilities
-1. **Proactive Background Notifications**: Build `background_health_check.dart` using `workmanager` or periodic alarms for AQI > 200 alerts, abnormal vitals alerts, and 8 AM daily briefings.
-2. **Health Dashboard Wearable Integration**: Inject live Health Connect cards (Heart Rate, SpO2, Sleep) into `screens/health/health_dashboard.dart`.
-3. **Voice Input/Output**: Connect `speech_to_text` and `flutter_tts` in `chat_screen.dart`.
-4. **Architecture Diagrams**: Create 7 capstone diagrams (System overview, ReAct state machine, DPDP privacy boundary, Health Connect flow, Multi-key pool, Safety router, NAQI pipeline) in `docs/diagrams/`.
-5. **Demo Video**: Record 5-minute walkthrough (`docs/demo_backup.mp4`).
+1. **Proactive Background Notifications**: Build `background_health_check.dart` for AQI > 200 alerts, abnormal vitals alerts, and 8 AM daily briefings.
+2. **Architecture Diagrams**: Create 7 capstone diagrams for report/presentation in `docs/diagrams/`.
+3. **Demo Video**: Record 5-minute walkthrough (`docs/demo_backup.mp4`).
+
+## Reassigned/Completed By Others
+- ~~Health Dashboard Wearable Integration~~ → Abhijit added Medical File Vault banner to HealthDashboard (Session 17).
+- ~~Voice Input/Output (STT/TTS)~~ → Abhijit removed `speech_to_text` and `flutter_tts` from pubspec as unused (Session 19). Voice I/O is now dropped from scope.
+- ~~Language selector~~ → Jayesh fixed initial persistence (Session 12), Abhijit built full end-to-end wiring with in-chat switcher (Session 16).
 
 ## What's Done ✅
 - Health Connect sync with Google Fit and Fitbit live in `health_connect_service.dart`.
@@ -19,15 +21,12 @@
 - Local notification service with timezone-aware scheduled reminders in `notification_service.dart`.
 - Interactive blood pressure, blood sugar, and symptom logging in `health_dashboard.dart`.
 
-## Next Action Items
-1. Implement `background_health_check.dart` for AQI and vital anomaly notifications.
-2. Display wearable metrics (HR, SpO2, Sleep) inside `HealthDashboard`.
-3. Wire `speech_to_text` mic button in `chat_screen.dart`.
-4. Export 7 architecture diagrams to `docs/diagrams/`.
-5. Record final demonstration video.
+## Outstanding Work
+1. **Proactive background health check service** (`background_health_check.dart`) — NOT STARTED.
+2. **7 architecture diagrams** for capstone report — NOT STARTED.
+3. **5-minute demo video** — NOT STARTED.
 
 ## Files I Own
-- `frontend/lib/services/background_health_check.dart` (new)
+- `frontend/lib/services/background_health_check.dart` (not yet created)
 - `frontend/lib/screens/health/health_dashboard.dart`
-- `frontend/lib/screens/chat/chat_screen.dart` (voice input wiring)
 - `docs/diagrams/`
