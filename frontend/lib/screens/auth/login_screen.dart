@@ -86,25 +86,27 @@ class _LoginScreenState extends State<LoginScreen>
                   children: [
                     const SizedBox(height: 48),
 
-                    // Logo + brand
+                    // Logo + brand — uses the real gold mandala image
                     Center(
                       child: Column(
                         children: [
-                          Container(
-                            width: 72,
-                            height: 72,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: AppTheme.primaryGradient,
-                              boxShadow: AppTheme.glowTeal(blur: 20, opacity: 0.35),
-                            ),
-                            child: const Icon(Icons.favorite_rounded,
-                                size: 36, color: Colors.white),
+                          Image.asset(
+                            'assets/images/app_logo.jpg',
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.contain,
                           ),
                           const SizedBox(height: 16),
                           ShaderMask(
                             shaderCallback: (b) =>
-                                AppTheme.primaryGradient.createShader(b),
+                                const LinearGradient(
+                                  colors: [
+                                    Color(0xFFFFD700), // gold
+                                    Color(0xFFFFB300), // warm gold
+                                    Color(0xFF00D9C0), // teal
+                                  ],
+                                  stops: [0.0, 0.6, 1.0],
+                                ).createShader(b),
                             child: Text(
                               'Aarogya Sathi',
                               style: GoogleFonts.outfit(
