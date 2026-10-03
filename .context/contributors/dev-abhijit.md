@@ -13,6 +13,12 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Verified & Compiled **Production Release APK & Render Backend Deployment (Session 22: `api_config.dart`, OpenJDK 17, `app-release.apk`)**:
+  - Validated live Render deployment (`https://aarogya-sathi-final.onrender.com`, Service ID: `srv-dai457gjo6nc73ddaggg`) with `/api/health` (Llama 3.1 8B) and `/api/aqi` (live NAQI & Open-Meteo weather).
+  - Configured `frontend/lib/config/api_config.dart` production baseUrl.
+  - Resolved Gradle 8.14 JDK compatibility with Microsoft OpenJDK 17 LTS (`C:\Program Files\Microsoft\jdk-17.0.20.101-hotspot`).
+  - Compiled universal production release APK (`frontend/build/app/outputs/flutter-apk/app-release.apk`, 57.5 MB) supporting ARM64-v8a, ARMv7, and x86_64 devices for mass tester distribution.
+  - Documented 24/7 keep-warm monitoring setup via UptimeRobot to bypass free-tier cold start latency.
 - Built and verified **Pedometer False-Positive Hand Movement & Cadence Rejection Filter (Session 21: `step_filter_service.dart`, `fitness_provider.dart`, `step_filter_test.dart`)**:
   - Identified root cause of desk hand movement false steps: raw Android `Sensor.TYPE_STEP_COUNTER` peak detection triggers on non-locomotion hand fidgets when Google Health Connect is not synced.
   - Implemented `StepFilterService` (`frontend/lib/services/step_filter_service.dart`):

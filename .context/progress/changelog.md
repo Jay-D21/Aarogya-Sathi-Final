@@ -1,5 +1,15 @@
 # Changelog
  
+## 2026-10-03 (Abhijit — Session 22: Render Production Verification, JDK 17 Migration, & Universal Release APK Compilation)
+- [Abhijit] Verified live Render backend deployment (`https://aarogya-sathi-final.onrender.com`, Service ID: `srv-dai457gjo6nc73ddaggg`):
+  - Confirmed `/api/health` status 200 OK (model: llama3.1-8b).
+  - Confirmed `/api/aqi` status 200 OK with real-time NAQI and Open-Meteo live weather data.
+  - Confirmed root endpoint `/` status 200 OK (`Aarogya Sathi API v1.0.0`).
+- [Abhijit] Configured frontend API baseUrl to `https://aarogya-sathi-final.onrender.com` in `frontend/lib/config/api_config.dart`.
+- [Abhijit] Resolved Gradle 8.14 JDK compatibility by installing and linking Microsoft OpenJDK 17 LTS (`C:\Program Files\Microsoft\jdk-17.0.20.101-hotspot`).
+- [Abhijit] Successfully compiled universal production release APK (`frontend/build/app/outputs/flutter-apk/app-release.apk`, 57.5 MB) containing native binaries for ARM64-v8a, ARMv7, and x86_64 architectures for mass tester distribution.
+- [Abhijit] Established 24/7 Keep-Warm architecture via HTTP monitor hitting `/api/health` every 10 minutes to eliminate Render free-tier cold boot delays.
+
 ## 2026-10-03 (Abhijit — Session 21: Pedometer False-Positive Hand Movement & Cadence Filter)
 - [Abhijit] Resolved hardware pedometer sensitivity issue where moving the phone 20–30 times by hand while sitting at a desk falsely registered as walking steps.
 - [Abhijit] Created `StepFilterService` (`frontend/lib/services/step_filter_service.dart`):
