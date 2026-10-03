@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_service.dart';
 import '../services/health_connect_service.dart';
+import '../services/step_filter_service.dart';
 import '../models/wearable_data_model.dart';
 
 enum SyncStatus {
@@ -39,8 +40,6 @@ class FitnessProvider extends ChangeNotifier {
   static const _kHeartRate  = 'fit_heart_rate';     // int: latest bpm
   static const _kCalories   = 'fit_calories';       // int: calories burned
   static const _kSpo2       = 'fit_spo2';           // double: SpO2 %
-  static const _kPedoOffset = 'fit_pedo_offset';    // int: pedometer baseline
-  static const _kPedoDate   = 'fit_pedo_date';      // String: date offset was set
 
   // ── Internal state ──────────────────────────────────────────────────────────
   bool _loading = false;
@@ -48,6 +47,9 @@ class FitnessProvider extends ChangeNotifier {
   bool _healthConnectAuthorized = false;
   bool _isHealthConnectSynced = false;
   StreamSubscription<StepCount>? _stepSub;
+  StreamSubscription<PedestrianStatus>? _statusSub;
+  final StepFilterService _stepFilter = StepFilterService();
+  int? _lastHardwareSteps;
   final HealthConnectService _healthConnect = HealthConnectService();
 
   int    _localSteps = 0;
@@ -67,6 +69,8 @@ class FitnessProvider extends ChangeNotifier {
   double get sleepHours  => _localSleep;
   int?   get heartRate   => _heartRate;
   double? get spo2       => _spo2;
+  String get pedestrianStatus => _stepFilter.pedestrianStatus;
+  bool   get isConfirmedWalking => _stepFilter.isConfirmedWalking;
 
   /// Calorie estimate: uses wearable synced calories if available,
   /// otherwise weight-aware MET formula: steps × weight(kg) × 0.000516.
@@ -120,6 +124,8 @@ class FitnessProvider extends ChangeNotifier {
       _heartRate = null;
       _wearableCalories = null;
       _spo2 = null;
+      _stepFilter.reset();
+      _lastHardwareSteps = null;
     } else {
       _localSteps = prefs.getInt(_kSteps) ?? 0;
       _localWater = prefs.getInt(_kWater) ?? 0;
@@ -268,22 +274,22 @@ class FitnessProvider extends ChangeNotifier {
     if (!granted) return;
 
     await _stepSub?.cancel();
+    await _statusSub?.cancel();
     final prefs = await SharedPreferences.getInstance();
 
+    // 1. Listen to pedestrian status (walking vs stopped)
+    _statusSub = Pedometer.pedestrianStatusStream.listen(
+      (PedestrianStatus event) {
+        _stepFilter.updatePedestrianStatus(event.status);
+        notifyListeners();
+      },
+      onError: (err) => debugPrint('[PedestrianStatus] $err'),
+    );
+
+    // 2. Listen to step count stream with cadence and bout hysteresis filter
     _stepSub = Pedometer.stepCountStream.listen(
       (StepCount event) async {
         final todayStr = _todayStr();
-        final offsetDate = prefs.getString(_kPedoDate);
-
-        int offset;
-        if (offsetDate != todayStr) {
-          // First event of the day → capture baseline
-          offset = event.steps;
-          await prefs.setInt(_kPedoOffset, offset);
-          await prefs.setString(_kPedoDate, todayStr);
-        } else {
-          offset = prefs.getInt(_kPedoOffset) ?? event.steps;
-        }
 
         // If Health Connect / Google Fit is authorized and has already synced today,
         // we respect the wearable/Google Fit authoritative count.
@@ -291,11 +297,21 @@ class FitnessProvider extends ChangeNotifier {
           return;
         }
 
-        final todaySteps = (event.steps - offset).clamp(0, 999999);
+        final rawSteps = event.steps;
+        if (_lastHardwareSteps == null) {
+          _lastHardwareSteps = rawSteps;
+          return;
+        }
 
-        // Don't overwrite if wearable reported
-        if (todaySteps > _localSteps) {
-          _localSteps = todaySteps;
+        final rawDelta = rawSteps - _lastHardwareSteps!;
+        _lastHardwareSteps = rawSteps;
+
+        if (rawDelta <= 0) return;
+
+        // Apply intelligent gait cadence & bout hysteresis filter to eliminate hand shaking
+        final verifiedSteps = _stepFilter.processStepDelta(rawDelta, event.timeStamp);
+        if (verifiedSteps > 0) {
+          _localSteps += verifiedSteps;
           await prefs.setInt(_kSteps, _localSteps);
           notifyListeners();
 
@@ -380,6 +396,7 @@ class FitnessProvider extends ChangeNotifier {
   @override
   void dispose() {
     _stepSub?.cancel();
+    _statusSub?.cancel();
     super.dispose();
   }
 

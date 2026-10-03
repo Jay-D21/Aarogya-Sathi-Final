@@ -1,5 +1,14 @@
 # Changelog
  
+## 2026-10-03 (Abhijit — Session 21: Pedometer False-Positive Hand Movement & Cadence Filter)
+- [Abhijit] Resolved hardware pedometer sensitivity issue where moving the phone 20–30 times by hand while sitting at a desk falsely registered as walking steps.
+- [Abhijit] Created `StepFilterService` (`frontend/lib/services/step_filter_service.dart`):
+  - Integrates `Pedometer.pedestrianStatusStream` to detect stationary/stopped state.
+  - Implements frequency/cadence limiting to reject rapid hand shaking (> 3.2 Hz or < 250ms per step).
+  - Implements 8-step hysteresis bout validation: isolated desk fidgets (< 8 steps) are buffered tentatively and discarded after a 3-second idle timeout without incrementing steps; only continuous rhythmic walking commits to the persistent count.
+- [Abhijit] Integrated into `FitnessProvider` (`frontend/lib/providers/fitness_provider.dart`), cleaning up obsolete raw baseline fields and ensuring proper stream cancellation.
+- [Abhijit] Automated Verification: created `frontend/test/step_filter_test.dart` (6/6 tests passed), `flutter analyze` verified clean (0 errors, 0 warnings, 0 infos), and full test suite passed 100% (23/23 tests passed).
+
 ## 2026-10-03 (Abhijit — Session 20: Research Paper Engine Synchronization & Verification Suite Integration)
 - [Abhijit] Updated `RESEARCH_CONTEXT.md` to `v1.3.0` establishing `355ef4b` as the latest git baseline following completion of all 4 frontend tasks.
 - [Abhijit] Synchronized sections 1–5, 8, 9, 10 of `RESEARCH_CONTEXT.md` to document the DPDP On-Device Medical File Vault (`/medical_vault/`), Asian ICMR BMI calculation & dynamic classification, in-chat dynamic language toggle, Flutter automated testing suite (17/17 tests passing), and backend model wiring.

@@ -13,6 +13,14 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Built and verified **Pedometer False-Positive Hand Movement & Cadence Rejection Filter (Session 21: `step_filter_service.dart`, `fitness_provider.dart`, `step_filter_test.dart`)**:
+  - Identified root cause of desk hand movement false steps: raw Android `Sensor.TYPE_STEP_COUNTER` peak detection triggers on non-locomotion hand fidgets when Google Health Connect is not synced.
+  - Implemented `StepFilterService` (`frontend/lib/services/step_filter_service.dart`):
+    - Subscribed to `Pedometer.pedestrianStatusStream` to reject step events while the device is in a stationary `stopped` state.
+    - Implemented Cadence Gating: Rejects high-frequency hand shakes exceeding 3.2 Hz or sub-250ms intervals.
+    - Implemented 8-Step Hysteresis Bout Window: Buffers small isolated desk fidgets (< 8 steps) and discards them upon a 3-second idle timeout; only sustained rhythmic locomotion flushes into confirmed steps.
+  - Wired into `FitnessProvider` (`frontend/lib/providers/fitness_provider.dart`): Streamlined step delta validation, removed deprecated manual offset fields, and added status disposal.
+  - Automated Verification: Created `frontend/test/step_filter_test.dart` (6/6 tests passed), ran `flutter analyze` (0 errors, 0 warnings, 0 infos), and full test suite (23/23 tests passed).
 - Executed **Research Paper Engine Synchronization (Session 20: `paper/paper.md`, `RESEARCH_CONTEXT.md`, `CHANGE_LOG.md`)**:
   - Incremental baseline tracking updated to `v1.3.0` referencing commit `355ef4b` as new baseline.
   - Synchronized `RESEARCH_CONTEXT.md` across sections 1, 2, 3 (DPDP on-device medical vault, Asian ICMR BMI cutoffs, dynamic in-chat language toggles), 4 (system architecture), 5 (verification results), 8 (file-to-research mapping), 9 (git baseline), and 10 (contributor activity map).
