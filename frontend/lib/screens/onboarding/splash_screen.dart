@@ -121,21 +121,22 @@ class _SplashScreenState extends State<SplashScreen>
       backgroundColor: bg,
       body: Stack(
         children: [
-          // ── Deep ambient radial glow (top-right) ──────────────────────────
+          // ── Deep ambient radial glow (top-right) — golden warmth ───────────
           Positioned(
             top: -120,
             right: -100,
             child: AnimatedBuilder(
               animation: _buildAnim,
               builder: (_, _) => Opacity(
-                opacity: (_buildAnim.value * 0.55).clamp(0, 1),
+                opacity: (_buildAnim.value * 0.5).clamp(0, 1),
                 child: Container(
                   width: 380,
                   height: 380,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(colors: [
-                      const Color(0xFF00D9C0).withValues(alpha: 0.18),
+                      const Color(0xFFFFB300).withValues(alpha: 0.14), // warm gold
+                      const Color(0xFF00D9C0).withValues(alpha: 0.06), // teal fade
                       Colors.transparent,
                     ]),
                   ),
@@ -143,7 +144,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
           ),
-          // ── Deep ambient glow (bottom-left) ───────────────────────────────
+          // ── Deep ambient glow (bottom-left) — amber-purple depth ───────────
           Positioned(
             bottom: -80,
             left: -80,
@@ -157,7 +158,8 @@ class _SplashScreenState extends State<SplashScreen>
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(colors: [
-                      AppTheme.accentPurple.withValues(alpha: 0.15),
+                      const Color(0xFFFF8F00).withValues(alpha: 0.10), // deep amber
+                      AppTheme.accentPurple.withValues(alpha: 0.08),
                       Colors.transparent,
                     ]),
                   ),
@@ -165,6 +167,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
           ),
+
 
           // ── Main content ──────────────────────────────────────────────────
           Center(
@@ -196,8 +199,15 @@ class _SplashScreenState extends State<SplashScreen>
                   builder: (_, _) => Opacity(
                     opacity: _logoFade.value.clamp(0, 1),
                     child: ShaderMask(
-                      shaderCallback: (b) =>
-                          AppTheme.primaryGradient.createShader(b),
+                      // Gold-to-teal gradient on the app name for premium feel
+                      shaderCallback: (b) => const LinearGradient(
+                        colors: [
+                          Color(0xFFFFD700), // gold
+                          Color(0xFFFFB300), // warm gold
+                          Color(0xFF00D9C0), // teal accent
+                        ],
+                        stops: [0.0, 0.6, 1.0],
+                      ).createShader(b),
                       child: Text(
                         'Aarogya Sathi',
                         style: GoogleFonts.outfit(
@@ -226,9 +236,10 @@ class _SplashScreenState extends State<SplashScreen>
                             'आरोग्य साथी',
                             style: GoogleFonts.notoSansDevanagari(
                               fontSize: 13,
-                              color: const Color(0xFF00D9C0).withValues(alpha: 0.75),
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.5,
+                              // Gold for the Sanskrit name — premium Ayurvedic identity
+                              color: const Color(0xFFFFB300).withValues(alpha: 0.85),
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 2.0,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -303,9 +314,14 @@ class _AyurTechLogoPainter extends CustomPainter {
   final double spinProgress;  // 0→1 continuous rotation
   final double pulse;         // 0.85→1.0 glow pulse
 
+  // Teal — tech/AI layer accent
   static const _teal  = Color(0xFF00D9C0);
-  static const _cyan  = Color(0xFF00BCD4);
-  static const _gold  = Color(0xFFFFD54F);
+  static const _cyan  = Color(0xFF26C6DA);
+  // Gold palette — premium Ayurvedic warmth
+  static const _gold      = Color(0xFFFFD700); // pure gold
+  static const _goldLight = Color(0xFFFFF176); // pale gold highlight
+  static const _goldDeep  = Color(0xFFFF8F00); // deep amber-gold
+  static const _goldWarm  = Color(0xFFFFB300); // warm marigold
 
   _AyurTechLogoPainter({
     required this.buildProgress,
@@ -340,46 +356,53 @@ class _AyurTechLogoPainter extends CustomPainter {
 
   // ── Layer 1: Circuit orbit ring with 8 node dots ─────────────────────────
   void _drawCircuitRing(Canvas canvas, Offset center, double r, double p) {
-    // Main ring (builds up clockwise)
+    // Main ring — gold-to-teal sweep (premium bimetallic look)
     final ringPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5
-      ..color = _teal.withValues(alpha: p * 0.45)
+      ..strokeWidth = 1.8
+      ..color = _gold.withValues(alpha: p * 0.45)
       ..shader = SweepGradient(colors: [
-        _teal.withValues(alpha: p),
-        _cyan.withValues(alpha: p * 0.3),
-        _teal.withValues(alpha: p),
+        _gold.withValues(alpha: p * 0.9),
+        _goldWarm.withValues(alpha: p * 0.7),
+        _teal.withValues(alpha: p * 0.6),
+        _cyan.withValues(alpha: p * 0.4),
+        _gold.withValues(alpha: p * 0.9),
       ]).createShader(Rect.fromCircle(center: center, radius: r));
 
     canvas.drawArc(Rect.fromCircle(center: center, radius: r),
         -math.pi / 2, 2 * math.pi * p, false, ringPaint);
 
-    // Outer faint glow ring
+    // Outer faint gold glow ring
     final glowPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.8
-      ..color = _teal.withValues(alpha: p * 0.15);
+      ..strokeWidth = 1.0
+      ..color = _gold.withValues(alpha: p * 0.18)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
     canvas.drawCircle(center, r + 6, glowPaint);
 
     if (p < 0.3) return;
 
-    // 8 node dots at equal angles, with small circuit "stems"
+    // 8 node dots — alternating gold (cardinal) and teal (diagonal)
     for (int i = 0; i < 8; i++) {
       final angle = (2 * math.pi * i / 8) - math.pi / 2;
       final nodeAlpha = ((p - 0.3) / 0.7).clamp(0.0, 1.0);
+      // Cardinal positions (top/bottom/left/right) = gold; diagonals = teal
+      final isGoldNode = i % 2 == 0;
+      final nodeColor = isGoldNode ? _gold : _teal;
 
       final nodeX = center.dx + r * math.cos(angle);
       final nodeY = center.dy + r * math.sin(angle);
       final nodeCenter = Offset(nodeX, nodeY);
 
-      // Glowing node dot
-      final dotPaint = Paint()
-        ..color = _teal.withValues(alpha: nodeAlpha * pulse)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
-      canvas.drawCircle(nodeCenter, 3.5, dotPaint);
+      // Glowing halo
+      canvas.drawCircle(nodeCenter, isGoldNode ? 5.0 : 3.5,
+          Paint()
+            ..color = nodeColor.withValues(alpha: nodeAlpha * pulse * 0.5)
+            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5));
 
-      final dotSolid = Paint()..color = _teal.withValues(alpha: nodeAlpha);
-      canvas.drawCircle(nodeCenter, 2.5, dotSolid);
+      // Solid core dot
+      canvas.drawCircle(nodeCenter, isGoldNode ? 3.0 : 2.2,
+          Paint()..color = nodeColor.withValues(alpha: nodeAlpha));
 
       // Short circuit stem inward
       final stemInner = Offset(
@@ -388,22 +411,19 @@ class _AyurTechLogoPainter extends CustomPainter {
       );
       canvas.drawLine(nodeCenter, stemInner,
           Paint()
-            ..color = _teal.withValues(alpha: nodeAlpha * 0.5)
+            ..color = nodeColor.withValues(alpha: nodeAlpha * 0.45)
             ..strokeWidth = 1.0);
     }
   }
+
 
   // ── Layer 2: 8-pointed star (sacred geometry / yantra) ────────────────────
   void _drawSacredStar(Canvas canvas, Offset center, double r, double p) {
     if (p < 0.2) return;
     final alpha = ((p - 0.2) / 0.8).clamp(0.0, 1.0);
 
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0
-      ..color = _teal.withValues(alpha: alpha * 0.35);
-
     // Two overlapping squares form an 8-pointed star (octagram)
+    // Square 1: gold; Square 2: slightly lighter gold with gradient
     for (int sq = 0; sq < 2; sq++) {
       final startAngle = sq * math.pi / 4 - math.pi / 4;
       final path = Path();
@@ -418,16 +438,40 @@ class _AyurTechLogoPainter extends CustomPainter {
         }
       }
       path.close();
-      canvas.drawPath(path, paint);
+
+      // Subtle gold fill inside the overlapping star region
+      canvas.drawPath(path,
+          Paint()
+            ..style = PaintingStyle.fill
+            ..color = _gold.withValues(alpha: alpha * 0.055));
+
+      // Gold stroke outline — sq==0 is deeper gold, sq==1 is warm gold
+      canvas.drawPath(path,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 1.1
+            ..color = (sq == 0 ? _gold : _goldWarm).withValues(alpha: alpha * 0.55));
     }
 
-    // Subtle inner hexagon-like detail ring
-    final innerPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.6
-      ..color = _gold.withValues(alpha: alpha * 0.20);
-    canvas.drawCircle(center, r * 0.72, innerPaint);
+    // Inner detail ring — marigold tint
+    canvas.drawCircle(center, r * 0.72,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.7
+          ..color = _goldLight.withValues(alpha: alpha * 0.30));
+
+    // Tiny gold accent dot at each star-point tip
+    for (int i = 0; i < 8; i++) {
+      final angle = (i * math.pi / 4) - math.pi / 8;
+      final dotPos = Offset(
+        center.dx + r * math.cos(angle),
+        center.dy + r * math.sin(angle),
+      );
+      canvas.drawCircle(dotPos, 1.4,
+          Paint()..color = _goldLight.withValues(alpha: alpha * 0.6));
+    }
   }
+
 
   // ── Layer 3: DNA-inspired twin sweeping arcs (rotating) ───────────────────
   void _drawDNAHelix(Canvas canvas, Offset center, double r, double p) {
@@ -435,51 +479,64 @@ class _AyurTechLogoPainter extends CustomPainter {
     final alpha = ((p - 0.35) / 0.65).clamp(0.0, 1.0);
     final spin  = spinProgress * 2 * math.pi;
 
-    // Draw two arcs 180° apart = double-helix effect when rotating
+    // Arc 0 = gold (ancient); Arc 1 = teal (tech) → bimetallic double helix
+    final arcColors = [
+      [_gold, _goldDeep],
+      [_teal, _cyan],
+    ];
+
     for (int h = 0; h < 2; h++) {
-      final offset = h * math.pi;
-      final arcPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.5
-        ..strokeCap = StrokeCap.round
-        ..color = _teal.withValues(alpha: 0.0)
-        ..shader = SweepGradient(
-          startAngle: spin + offset,
-          endAngle: spin + offset + math.pi,
-          colors: [
-            _teal.withValues(alpha: alpha * 0.9),
-            _cyan.withValues(alpha: alpha * 0.5),
-            _teal.withValues(alpha: 0),
-          ],
-        ).createShader(Rect.fromCircle(center: center, radius: r));
+      final offset     = h * math.pi;
+      final c1 = arcColors[h][0];
+      final c2 = arcColors[h][1];
 
       // Glow pass
-      final glowPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 6
-        ..strokeCap = StrokeCap.round
-        ..color = _teal.withValues(alpha: 0.0)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5)
-        ..shader = SweepGradient(
-          startAngle: spin + offset,
-          endAngle: spin + offset + math.pi,
-          colors: [
-            _teal.withValues(alpha: alpha * 0.4 * pulse),
-            _cyan.withValues(alpha: alpha * 0.2 * pulse),
-            _teal.withValues(alpha: 0),
-          ],
-        ).createShader(Rect.fromCircle(center: center, radius: r));
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: r),
+        spin + offset, math.pi, false,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 7
+          ..strokeCap = StrokeCap.round
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6)
+          ..shader = SweepGradient(
+            startAngle: spin + offset,
+            endAngle:   spin + offset + math.pi,
+            colors: [
+              c1.withValues(alpha: alpha * 0.35 * pulse),
+              c2.withValues(alpha: alpha * 0.18 * pulse),
+              c1.withValues(alpha: 0),
+            ],
+          ).createShader(Rect.fromCircle(center: center, radius: r)),
+      );
 
-      canvas.drawArc(Rect.fromCircle(center: center, radius: r),
-          spin + offset, math.pi, false, glowPaint);
-      canvas.drawArc(Rect.fromCircle(center: center, radius: r),
-          spin + offset, math.pi, false, arcPaint);
+      // Solid arc
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: r),
+        spin + offset, math.pi, false,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2.5
+          ..strokeCap = StrokeCap.round
+          ..shader = SweepGradient(
+            startAngle: spin + offset,
+            endAngle:   spin + offset + math.pi,
+            colors: [
+              c1.withValues(alpha: alpha * 0.95),
+              c2.withValues(alpha: alpha * 0.55),
+              c1.withValues(alpha: 0),
+            ],
+          ).createShader(Rect.fromCircle(center: center, radius: r)),
+      );
     }
 
-    // 3 cross-bar "rungs" of the DNA ladder at rotating angles
-    for (int rung = 0; rung < 3; rung++) {
-      final rungAngle = spin + rung * (2 * math.pi / 3);
-      final rungAlpha = alpha * 0.45;
+    // DNA ladder rungs — alternating gold and teal
+    for (int rung = 0; rung < 4; rung++) {
+      final rungAngle = spin + rung * (math.pi / 2);
+      final isGoldRung = rung % 2 == 0;
+      final rungColor = isGoldRung ? _goldWarm : _teal;
+      final rungAlpha = alpha * (isGoldRung ? 0.60 : 0.40);
+
       final start = Offset(
         center.dx + r * math.cos(rungAngle),
         center.dy + r * math.sin(rungAngle),
@@ -490,10 +547,17 @@ class _AyurTechLogoPainter extends CustomPainter {
       );
       canvas.drawLine(start, end,
           Paint()
-            ..color = _cyan.withValues(alpha: rungAlpha)
-            ..strokeWidth = 1.0);
+            ..color = rungColor.withValues(alpha: rungAlpha)
+            ..strokeWidth = 1.2);
+
+      // Small accent dots at rung endpoints
+      canvas.drawCircle(start, 1.8,
+          Paint()..color = rungColor.withValues(alpha: rungAlpha * 0.9));
+      canvas.drawCircle(end, 1.8,
+          Paint()..color = rungColor.withValues(alpha: rungAlpha * 0.9));
     }
   }
+
 
   // ── Layer 4: Lotus flower (8 petals — Ashtadala Padma) ────────────────────
   void _drawLotus(Canvas canvas, Offset center, double r, double p) {
@@ -508,7 +572,7 @@ class _AyurTechLogoPainter extends CustomPainter {
       canvas.translate(center.dx, center.dy);
       canvas.rotate(angle);
 
-      // Petal body: tall, narrow oval shifted outward
+      // Petal body: tall, narrow oval
       final petalPath = Path();
       final petalX = r * 0.45;
       final petalW = r * 0.30;
@@ -527,71 +591,90 @@ class _AyurTechLogoPainter extends CustomPainter {
       );
       petalPath.close();
 
-      // Subtle petal fill
-      final fillPaint = Paint()
-        ..style = PaintingStyle.fill
-        ..shader = LinearGradient(
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-          colors: [
-            _teal.withValues(alpha: alpha * 0.12),
-            _teal.withValues(alpha: alpha * 0.06),
-          ],
-        ).createShader(Rect.fromLTWH(-petalW, -petalH, petalW * 2, petalH));
-      canvas.drawPath(petalPath, fillPaint);
+      // Golden gradient petal fill — deep amber at base, pale gold at tip
+      canvas.drawPath(petalPath,
+          Paint()
+            ..style = PaintingStyle.fill
+            ..shader = LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: [
+                _goldDeep.withValues(alpha: alpha * 0.28),
+                _gold.withValues(alpha: alpha * 0.18),
+                _goldLight.withValues(alpha: alpha * 0.08),
+              ],
+              stops: const [0.0, 0.5, 1.0],
+            ).createShader(Rect.fromLTWH(-petalW, -petalH, petalW * 2, petalH)));
 
-      // Petal outline stroke
-      final strokePaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.0
-        ..color = _teal.withValues(alpha: alpha * 0.55);
-      canvas.drawPath(petalPath, strokePaint);
+      // Teal stroke outline for contrast with the golden fill
+      canvas.drawPath(petalPath,
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 0.9
+            ..color = _teal.withValues(alpha: alpha * 0.45));
 
-      // Petal vein line
+      // Gold center vein
       canvas.drawLine(
         const Offset(0, 0),
-        Offset(petalX * 0.5, -petalH * 0.75),
+        Offset(petalX * 0.5, -petalH * 0.78),
         Paint()
-          ..color = _teal.withValues(alpha: alpha * 0.3)
-          ..strokeWidth = 0.5,
+          ..color = _goldWarm.withValues(alpha: alpha * 0.50)
+          ..strokeWidth = 0.6,
+      );
+
+      // Tiny gold tip accent dot at petal apex
+      canvas.drawCircle(
+        Offset(petalX, -petalH),
+        1.5,
+        Paint()..color = _goldLight.withValues(alpha: alpha * 0.65),
       );
 
       canvas.restore();
     }
   }
 
+
   // ── Layer 5: Center glow disc + Om glyph ──────────────────────────────────
   void _drawCenter(Canvas canvas, Offset center, double r, double p) {
     if (p < 0.6) return;
     final alpha = ((p - 0.6) / 0.4).clamp(0.0, 1.0);
 
-    // Outer glow halo
-    final haloPaint = Paint()
-      ..color = _teal.withValues(alpha: alpha * 0.25 * pulse)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 18);
-    canvas.drawCircle(center, r * 1.4, haloPaint);
+    // Outer gold glow halo — double ring (gold + faint teal)
+    canvas.drawCircle(center, r * 1.6,
+        Paint()
+          ..color = _gold.withValues(alpha: alpha * 0.20 * pulse)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20));
+    canvas.drawCircle(center, r * 1.2,
+        Paint()
+          ..color = _teal.withValues(alpha: alpha * 0.12 * pulse)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10));
 
-    // Gradient fill disc
-    final discPaint = Paint()
-      ..style = PaintingStyle.fill
-      ..shader = RadialGradient(
-        colors: [
-          _teal.withValues(alpha: alpha * 0.95),
-          _cyan.withValues(alpha: alpha * 0.6),
-          const Color(0xFF006064).withValues(alpha: alpha * 0.9),
-        ],
-        stops: const [0.0, 0.5, 1.0],
-      ).createShader(Rect.fromCircle(center: center, radius: r));
-    canvas.drawCircle(center, r, discPaint);
+    // Gradient fill disc — warm gold center → deep amber edge (premium bullion look)
+    canvas.drawCircle(center, r,
+        Paint()
+          ..style = PaintingStyle.fill
+          ..shader = RadialGradient(
+            colors: [
+              _goldLight.withValues(alpha: alpha * 0.95), // bright center
+              _gold.withValues(alpha: alpha * 0.88),      // true gold
+              _goldDeep.withValues(alpha: alpha * 0.92),  // deep amber edge
+            ],
+            stops: const [0.0, 0.45, 1.0],
+          ).createShader(Rect.fromCircle(center: center, radius: r)));
 
-    // Thin border ring
+    // Gold border ring with a thin teal inner accent
     canvas.drawCircle(center, r,
         Paint()
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.2
-          ..color = _teal.withValues(alpha: alpha * 0.6));
+          ..strokeWidth = 2.0
+          ..color = _goldLight.withValues(alpha: alpha * 0.70));
+    canvas.drawCircle(center, r - 2.5,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.6
+          ..color = _teal.withValues(alpha: alpha * 0.35));
 
-    // ॐ symbol drawn as a TextPainter (Unicode U+0950)
+    // ॐ symbol — dark amber color so it contrasts against the bright gold disc
     if (alpha > 0.5) {
       final textAlpha = ((alpha - 0.5) / 0.5).clamp(0.0, 1.0);
       final tp = TextPainter(
@@ -599,8 +682,9 @@ class _AyurTechLogoPainter extends CustomPainter {
           text: 'ॐ',
           style: TextStyle(
             fontSize: r * 1.1,
-            fontWeight: FontWeight.w700,
-            color: Colors.white.withValues(alpha: textAlpha * 0.92),
+            fontWeight: FontWeight.w900,
+            // Dark amber color for Om text — maximum legibility on gold bg
+            color: const Color(0xFF3E1A00).withValues(alpha: textAlpha * 0.88),
             // System default handles Devanagari Unicode on all Android devices
             height: 1.0,
           ),
@@ -613,6 +697,7 @@ class _AyurTechLogoPainter extends CustomPainter {
       );
     }
   }
+
 
   @override
   bool shouldRepaint(_AyurTechLogoPainter old) =>
@@ -668,40 +753,41 @@ class _LoadingBarPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Track
+    // Track — subtle gold
     canvas.drawRRect(
       RRect.fromRectAndRadius(
           Rect.fromLTWH(0, 0, size.width, size.height),
           const Radius.circular(2)),
-      Paint()..color = const Color(0xFF00D9C0).withValues(alpha: 0.15),
+      Paint()..color = const Color(0xFFFFB300).withValues(alpha: 0.18),
     );
 
-    // Sliding glowing segment
-    const segW = 28.0;
+    // Sliding glowing segment — gold → teal gradient
+    const segW = 32.0;
     final travel = size.width + segW;
     final x = (t * travel) - segW;
 
-    final segRect = Rect.fromLTWH(x.clamp(-segW, size.width), 0,
-        segW, size.height);
+    final segRect = Rect.fromLTWH(
+        x.clamp(-segW, size.width), 0, segW, size.height);
 
-    // Glow
+    // Gold glow
     canvas.drawRRect(
       RRect.fromRectAndRadius(segRect, const Radius.circular(2)),
       Paint()
-        ..color = const Color(0xFF00D9C0).withValues(alpha: 0.4)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+        ..color = const Color(0xFFFFD700).withValues(alpha: 0.45)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
     );
-    // Solid
+    // Solid gold→teal gradient segment
     canvas.drawRRect(
       RRect.fromRectAndRadius(segRect, const Radius.circular(2)),
       Paint()
-        ..shader = const LinearGradient(colors: [
-          Color(0xFF00D9C0),
-          Color(0xFF00BCD4),
-          Color(0xFF00D9C0),
+        ..shader = LinearGradient(colors: const [
+          Color(0xFFFFD700), // pure gold
+          Color(0xFFFFB300), // warm gold
+          Color(0xFF00D9C0), // teal
         ]).createShader(segRect),
     );
   }
+
 
   @override
   bool shouldRepaint(_LoadingBarPainter old) => old.t != t;
