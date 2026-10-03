@@ -34,6 +34,24 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+
+# Flutter launcher icon configuration
+# Source: assets/images/icon.png (1024×1024 gold mandala logo)
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/images/icon.png"
+  min_sdk_android: 21
+  web:
+    generate: false
+  windows:
+    generate: false
 
 flutter:
   uses-material-design: true
+
+  # Register logo asset so it can be used on splash & other screens
+  assets:
+    - assets/images/app_logo.jpg
+    - assets/images/icon.png
