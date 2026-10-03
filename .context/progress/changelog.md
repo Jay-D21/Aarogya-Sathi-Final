@@ -1,5 +1,22 @@
 # Changelog
  
+## 2026-10-03 (Abhijit — Session 23: Gold Mandala Splash Redesign & Android Launcher Icon)
+- [Abhijit] Redesigned splash screen logo (`frontend/lib/screens/onboarding/splash_screen.dart`) with premium golden color palette (`#FFD400`, `#FFC300`, `#FF8C00`, `#FF5F00`) across all 5 painter layers:
+  - Layer 1 (circuit ring): gold-to-teal sweep gradient; alternating gold/teal node dots
+  - Layer 2 (octagram star): golden fill + gold stroke sacred geometry + pale-gold tip dots
+  - Layer 3 (DNA helix): Arc 1 = gold/amber, Arc 2 = teal/cyan; alternating gold/teal rungs
+  - Layer 4 (lotus petals): deep-amber → pale-gold fill gradient + gold center veins + apex dots
+  - Layer 5 (center disc): pale-gold → true-gold → deep-amber radial gradient; dark amber Om glyph
+- [Abhijit] Updated ambient background glows (warm gold top-right, deep amber bottom-left).
+- [Abhijit] App name text shader updated to gold → warm-gold → teal gradient.
+- [Abhijit] Hindi subtitle (`आरोग्य साथी`) updated to warm marigold `#FFB300`.
+- [Abhijit] Loading bar updated to gold → warm-gold → teal sweep gradient.
+- [Abhijit] Generated AI gold mandala logo image (exact same structure as reference — circuit orbit, octagram, DNA helix, 8-petal lotus, Om center — all in golden sunset palette on navy bg).
+- [Abhijit] Added `flutter_launcher_icons ^0.14.4` dev dependency; registered `assets/images/icon.png` and `assets/images/app_logo.jpg` in `pubspec.yaml`.
+- [Abhijit] Generated all 5 Android density launcher icons: mdpi (48px), hdpi (72px), xhdpi (96px), xxhdpi (144px), xxxhdpi (192px) — all replaced with gold mandala logo.
+- [Abhijit] All commits pushed: `8e211ca` (gold splash colors), `64fabb3` (launcher icons + assets).
+- flutter analyze: 0 errors, 0 warnings, 0 infos throughout.
+
 ## 2026-10-03 (Abhijit — Session 22: Render Production Verification, JDK 17 Migration, & Universal Release APK Compilation)
 - [Abhijit] Verified live Render backend deployment (`https://aarogya-sathi-final.onrender.com`, Service ID: `srv-dai457gjo6nc73ddaggg`):
   - Confirmed `/api/health` status 200 OK (model: llama3.1-8b).
