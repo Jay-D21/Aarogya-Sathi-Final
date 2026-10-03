@@ -6,6 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import '../models/medical_file_model.dart';
 
+/// Manages encrypted file storage and retrieval for the medical
+/// document vault. Uses AES-256 encryption via flutter_secure_storage
+/// and maintains a local index of file metadata in SharedPreferences.
 class FileVaultProvider extends ChangeNotifier {
   static const String _prefKey = 'medical_vault_files';
   static const _uuid = Uuid();
