@@ -5,6 +5,9 @@ import 'package:uuid/uuid.dart';
 import '../services/api_service.dart';
 import '../services/notification_service.dart';
 
+/// Schedules and manages medication, hydration, and activity reminders
+/// using flutter_local_notifications. Reminder state is persisted so
+/// schedules survive app restarts and device reboots.
 class ReminderProvider extends ChangeNotifier {
   static const _kReminders = 'local_reminders_v2';
   static const _uuid = Uuid();
