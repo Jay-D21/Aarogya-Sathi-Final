@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarogya Sathi — Privacy Policy</title>
+    <style>
+        :root { --teal: #00C9A7; --dark: #0F172A; --gray: #475569; --bg: #F8FAFC; --card: #FFFFFF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--dark); line-height: 1.7; }
+        .container { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
+        .header { text-align: center; margin-bottom: 48px; }
+        .header h1 { font-size: 28px; font-weight: 800; color: var(--teal); margin-bottom: 8px; }
+        .header p { color: var(--gray); font-size: 14px; }
+        .card { background: var(--card); border-radius: 16px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        h2 { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--teal); display: inline-block; }
+        h3 { font-size: 16px; font-weight: 600; margin: 16px 0 8px; }
+        p, li { font-size: 15px; color: var(--gray); margin-bottom: 12px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        .badge { display: inline-block; background: #ECFDF5; color: #059669; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        th, td { text-align: left; padding: 10px 12px; font-size: 14px; border-bottom: 1px solid #E2E8F0; }
+        th { font-weight: 600; color: var(--dark); background: #F8FAFC; }
+        td { color: var(--gray); }
+        .footer { text-align: center; padding: 32px 0; color: var(--gray); font-size: 13px; }
+        @media (max-width: 480px) { .container { padding: 20px 16px; } .card { padding: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 Aarogya Sathi</h1>
+            <p>Privacy Policy · Effective Date: October 10, 2026</p>
+        </div>
+
+        <div class="card">
+            <h2>Overview</h2>
+            <p>Aarogya Sathi (आरोग्य साथी) is an AI-powered personal health companion app built by students at SVKM's NMIMS Shirpur Campus. This policy explains how we collect, use, and protect your data.</p>
+            <span class="badge">🔒 Privacy-First · DPDP Act Compliant</span>
+            <p>We are committed to protecting your privacy in accordance with the <strong>Digital Personal Data Protection (DPDP) Act, 2023</strong> of India.</p>
+        </div>
+
+        <div class="card">
+            <h2>Data We Collect</h2>
+            <table>
+                <tr><th>Data Type</th><th>Purpose</th><th>Storage</th></tr>
+                <tr><td>Health Profile (age, gender, height, weight, conditions, medications)</td><td>Personalized AI health guidance</td><td>Device only (SharedPreferences)</td></tr>
+                <tr><td>Wearable Metrics (steps, heart rate, SpO2, blood pressure, glucose, sleep, weight, body temperature, calories, distance)</td><td>Health monitoring, vital trend analysis, proactive alerts</td><td>Read via Health Connect — never stored on our servers</td></tr>
+                <tr><td>Location (city-level)</td><td>Air quality (AQI) and weather data for your area</td><td>Device only — only city name is sent to WAQI API</td></tr>
+                <tr><td>Chat Messages</td><td>AI health query processing</td><td>Sent to backend for AI inference — not permanently stored</td></tr>
+                <tr><td>Medical Documents (prescriptions, lab reports, scans)</td><td>Personal health records management</td><td>Device only — 100% on-device sandboxed storage</td></tr>
+                <tr><td>Language Preference</td><td>Multilingual support (English, Hindi, Marathi)</td><td>Device only</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Health Connect Data</h2>
+            <span class="badge">📱 Read-Only Access</span>
+            <p>Aarogya Sathi accesses health data through <strong>Android Health Connect</strong> with <strong>read-only</strong> permissions. We:</p>
+            <ul>
+                <li><strong>Never write</strong> to or modify your Health Connect data</li>
+                <li><strong>Never store</strong> your Health Connect data on external servers</li>
+                <li><strong>Never sell</strong> or share your health data with third parties for advertising or marketing</li>
+                <li>Read health data <strong>only when you actively use the app</strong> to provide personalized health context to the AI assistant</li>
+            </ul>
+            <h3>Health Connect Data Types Used</h3>
+            <ul>
+                <li><strong>Steps</strong> — Daily activity monitoring and step goal tracking</li>
+                <li><strong>Heart Rate & Resting Heart Rate</strong> — Cardiovascular health monitoring with ICMR clinical threshold alerts</li>
+                <li><strong>Blood Pressure</strong> — Hypertension classification (Normal, Elevated, Stage 1, Stage 2)</li>
+                <li><strong>Blood Glucose</strong> — Diabetes management with fasting/postprandial classification</li>
+                <li><strong>Oxygen Saturation (SpO2)</strong> — Low-oxygen proactive alerts</li>
+                <li><strong>Sleep</strong> — Sleep quality assessment for holistic health</li>
+                <li><strong>Weight</strong> — BMI calculation using Asian ICMR cutoffs</li>
+                <li><strong>Body Temperature</strong> — Fever detection and monitoring</li>
+                <li><strong>Active & Total Calories Burned</strong> — Daily energy expenditure tracking</li>
+                <li><strong>Distance</strong> — Activity distance tracking</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>How We Use Your Data</h2>
+            <ul>
+                <li><strong>AI Health Guidance</strong> — Your health profile and wearable metrics are used to personalize AI responses based on ICMR (Indian Council of Medical Research) clinical guidelines</li>
+                <li><strong>Proactive Health Alerts</strong> — We analyze vital signs (heart rate, SpO2, blood pressure) against ICMR clinical thresholds to generate health observations</li>
+                <li><strong>Environmental Health</strong> — Your city location is used to fetch real-time Air Quality Index (AQI) data to provide pollution-aware health guidance</li>
+                <li><strong>Medical File Management</strong> — Documents are stored entirely on your device for your personal reference</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Third-Party Services</h2>
+            <table>
+                <tr><th>Service</th><th>Data Shared</th><th>Purpose</th></tr>
+                <tr><td>Groq (LLM Inference)</td><td>Chat query text + anonymized health context</td><td>AI health response generation</td></tr>
+                <tr><td>WAQI (World Air Quality Index)</td><td>City name only</td><td>Real-time AQI data</td></tr>
+                <tr><td>Open-Meteo</td><td>GPS coordinates (approximate)</td><td>Weather data (temperature, humidity)</td></tr>
+            </table>
+            <p>We do <strong>not</strong> share your data with advertising networks, data brokers, analytics services, or any other third parties not listed above.</p>
+        </div>
+
+        <div class="card">
+            <h2>Data Storage & Security</h2>
+            <ul>
+                <li><strong>Local Storage</strong> — Health profile, medical documents, and preferences are stored on your device using SharedPreferences and sandboxed file storage</li>
+                <li><strong>Transit Security</strong> — All data sent to our backend is encrypted using HTTPS/TLS</li>
+                <li><strong>No Persistent Server Storage</strong> — Chat sessions are processed in memory and not permanently stored on our servers. Session data is ephemeral</li>
+                <li><strong>No User Accounts Required</strong> — The app works as a guest without requiring personal identification</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Your Rights</h2>
+            <p>Under the DPDP Act 2023, you have the right to:</p>
+            <ul>
+                <li><strong>Access</strong> — View all data stored by the app (available in your device settings)</li>
+                <li><strong>Correction</strong> — Edit your health profile at any time within the app</li>
+                <li><strong>Erasure</strong> — Delete all app data by clearing app data in Android Settings or uninstalling the app</li>
+                <li><strong>Withdraw Consent</strong> — Revoke Health Connect permissions at any time through Android Settings → Health Connect → Aarogya Sathi</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Children's Privacy</h2>
+            <p>Aarogya Sathi is not designed for or directed at children under 13 years of age. We do not knowingly collect data from children under 13.</p>
+        </div>
+
+        <div class="card">
+            <h2>Medical Disclaimer</h2>
+            <p>Aarogya Sathi provides <strong>general health awareness information only</strong>. It is <strong>not</strong> a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or qualified health provider with any questions regarding a medical condition. In case of a medical emergency, call 108 immediately.</p>
+        </div>
+
+        <div class="card">
+            <h2>Changes to This Policy</h2>
+            <p>We may update this privacy policy from time to time. Any changes will be reflected on this page with an updated effective date. We encourage you to review this policy periodically.</p>
+        </div>
+
+        <div class="card">
+            <h2>Contact Us</h2>
+            <p>If you have questions about this privacy policy or our data practices, please contact us:</p>
+            <ul>
+                <li><strong>Email</strong>: jayesh.patil233@nmims.edu.in</li>
+                <li><strong>Institution</strong>: SVKM's NMIMS Shirpur Campus, School of Technology Management & Engineering</li>
+                <li><strong>Project</strong>: Aarogya Sathi — Capstone Project 2026-27</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 Aarogya Sathi · Built with ❤️ at NMIMS Shirpur</p>
+            <p>Jayesh Patil · Abhijit Patil · Ritesh Pawar</p>
+            <p>Guide: Dr. Atul V. Dusane</p>
+        </div>
+    </div>
+</body>
+</html>

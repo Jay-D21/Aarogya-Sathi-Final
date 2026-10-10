@@ -1,0 +1,13 @@
+# Release signing configuration for Aarogya Sathi
+# Generate your keystore first:
+#   keytool -genkey -v -keystore aarogya-sathi-release.jks -keyalg RSA -keysize 2048 -validity 10000 -alias aarogya-sathi
+#
+# Then fill in the values below and save this file as:
+#   frontend/android/key.properties
+#
+# WARNING: This file contains secrets. NEVER commit to git.
+
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=aarogya-sathi
+storeFile=C:\\path\\to\\aarogya-sathi-release.jks

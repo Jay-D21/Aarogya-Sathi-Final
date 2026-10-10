@@ -40,3 +40,11 @@ evaluation/results*.json
 # Scratch & temporary files
 scratch/
 
+# Release signing (NEVER commit these)
+*.jks
+*.keystore
+frontend/android/key.properties
+
+# Build artifacts
+**/*.apk
+**/*.aab
