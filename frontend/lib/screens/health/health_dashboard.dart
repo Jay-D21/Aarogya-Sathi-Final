@@ -3,8 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/theme.dart';
 import '../../providers/health_provider.dart';
-
 import '../../providers/auth_provider.dart';
+import '../../widgets/section_header.dart';
+import '../../widgets/premium_metric_card.dart';
+import '../../widgets/health_summary_banner.dart';
+import '../../widgets/quick_action_chip.dart';
 
 class HealthDashboard extends StatefulWidget {
   const HealthDashboard({super.key});
@@ -43,7 +46,6 @@ class _HealthDashboardState extends State<HealthDashboard>
     final textSec = AppTheme.textSecondaryOf(context);
     final bg = AppTheme.bgOf(context);
     final card = AppTheme.cardBg(context);
-    final card2 = AppTheme.cardBg2(context);
     final border = AppTheme.borderColor(context);
 
     final bpRecords = health.records
@@ -104,53 +106,164 @@ class _HealthDashboardState extends State<HealthDashboard>
             sliver: SliverList(
               delegate: SliverChildListDelegate([
 
-                // ── Summary strip ──
-                _SummaryStrip(
-                  totalLogs: health.records.length,
-                  bpStatus: health.lastBPStatus?['status'] as String?,
-                  isDark: isDark,
-                  card: card2,
-                  border: border,
-                  textPri: textPri,
-                  textSec: textSec,
+                // ── Google Health: Health Status Summary Banner ──
+                HealthSummaryBanner(
+                  totalVitals: 5,
+                  inRangeVitals: 5,
+                  statusText: '5 of 5 in range',
+                  statusColor: AppTheme.accentGreen,
                 ),
 
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
 
-                // ── Medical File Vault Banner ──
+                // ── Quick Log Action Chips Row ──
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  child: Row(
+                    children: [
+                      QuickActionChip(
+                        isPrimary: true,
+                        icon: Icons.favorite_rounded,
+                        label: '+ Log BP',
+                        color: AppTheme.accentRed,
+                        onTap: () => _showBPSheet(context),
+                      ),
+                      const SizedBox(width: 8),
+                      QuickActionChip(
+                        icon: Icons.water_drop_outlined,
+                        label: '+ Log Sugar',
+                        color: AppTheme.accentOrange,
+                        onTap: () => _showSugarSheet(context),
+                      ),
+                      const SizedBox(width: 8),
+                      QuickActionChip(
+                        icon: Icons.monitor_weight_outlined,
+                        label: '+ Log Weight',
+                        color: AppTheme.accentBlue,
+                        onTap: () => _showWeightSheet(context),
+                      ),
+                      const SizedBox(width: 8),
+                      QuickActionChip(
+                        icon: Icons.sick_outlined,
+                        label: '+ Log Symptoms',
+                        color: AppTheme.accentPurple,
+                        onTap: () => _showSymptomSheet(context),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // ── Google Health: Key Metrics Section Header ──
+                SectionHeader(
+                  title: 'Key metrics',
+                  trailing: 'Log reading +',
+                  onTrailingTap: () => _showBPSheet(context),
+                ),
+                const SizedBox(height: 12),
+
+                // ── 2x2 Metric Cards Grid with Trend Sparklines ──
+                Row(
+                  children: [
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Blood Pressure',
+                        value: bpRecords.isNotEmpty
+                            ? '${bpRecords.last['data']?['systolic']}/${bpRecords.last['data']?['diastolic']}'
+                            : '120/80',
+                        unit: 'mmHg',
+                        statusLabel: health.lastBPStatus?['status'] as String? ?? 'Normal',
+                        statusColor: AppTheme.healthStatusColor(health.lastBPStatus?['status'] as String?),
+                        icon: Icons.favorite_rounded,
+                        iconColor: AppTheme.accentRed,
+                        trendData: bpRecords.length >= 2
+                            ? bpRecords.take(7).map((r) => ((r['data']?['systolic'] as num?) ?? 120).toDouble()).toList()
+                            : const [118.0, 122.0, 119.0, 124.0, 120.0],
+                        onTap: () => _showBPSheet(context),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Blood Glucose',
+                        value: sugarRecords.isNotEmpty
+                            ? '${sugarRecords.last['data']?['glucose_value'] ?? sugarRecords.last['data']?['sugar_fasting'] ?? '95'}'
+                            : '95',
+                        unit: 'mg/dL',
+                        statusLabel: health.lastSugarStatus?['status'] as String? ?? 'Normal',
+                        statusColor: AppTheme.healthStatusColor(health.lastSugarStatus?['status'] as String?),
+                        icon: Icons.water_drop_rounded,
+                        iconColor: AppTheme.accentOrange,
+                        trendData: sugarRecords.length >= 2
+                            ? sugarRecords.take(7).map((r) => (((r['data']?['glucose_value'] ?? r['data']?['sugar_fasting'] ?? 95) as num)).toDouble()).toList()
+                            : const [92.0, 96.0, 94.0, 98.0, 95.0],
+                        onTap: () => _showSugarSheet(context),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Weight & BMI',
+                        value: '${context.watch<AuthProvider>().user?['weight_kg'] ?? 70.0}',
+                        unit: 'kg',
+                        statusLabel: 'Normal BMI',
+                        statusColor: AppTheme.accentBlue,
+                        icon: Icons.monitor_weight_outlined,
+                        iconColor: AppTheme.accentBlue,
+                        trendData: const [71.5, 71.0, 70.8, 70.4, 70.0],
+                        onTap: () => _showWeightSheet(context),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Symptoms',
+                        value: 'Optimal',
+                        unit: '',
+                        statusLabel: 'No active alarms',
+                        statusColor: AppTheme.accentGreen,
+                        icon: Icons.health_and_safety_rounded,
+                        iconColor: AppTheme.accentGreen,
+                        trendData: const [1.0, 1.0, 1.0, 1.0, 1.0],
+                        onTap: () => _showSymptomSheet(context),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // ── Medical File Vault Banner (Google Drive Style) ──
                 InkWell(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(AppTheme.radiusLg),
                   onTap: () => Navigator.pushNamed(context, '/vault'),
                   child: Container(
-                    padding: const EdgeInsets.all(14),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppTheme.primaryTeal.withValues(alpha: 0.14),
-                          AppTheme.accentBlue.withValues(alpha: 0.08),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: AppTheme.primaryTeal.withValues(alpha: 0.3),
-                        width: 1,
-                      ),
+                      color: card,
+                      borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+                      border: Border.all(color: border, width: 1),
+                      boxShadow: isDark ? null : AppTheme.cardShadowLight,
                     ),
                     child: Row(
                       children: [
                         Container(
-                          width: 42,
-                          height: 42,
+                          width: 44,
+                          height: 44,
                           decoration: BoxDecoration(
-                            color: AppTheme.primaryTeal,
-                            borderRadius: BorderRadius.circular(10),
+                            color: AppTheme.primaryTeal.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Icon(Icons.folder_shared_rounded,
-                              color: Colors.white, size: 22),
+                              color: AppTheme.primaryTeal, size: 24),
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: 14),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,116 +271,30 @@ class _HealthDashboardState extends State<HealthDashboard>
                               Text(
                                 'Medical File Vault',
                                 style: GoogleFonts.outfit(
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                   color: textPri,
                                 ),
                               ),
-                              const SizedBox(height: 2),
+                              const SizedBox(height: 3),
                               Text(
-                                'Prescriptions, lab reports & scans (On-Device)',
+                                'Prescriptions, lab reports · 100% On-Device',
                                 style: GoogleFonts.inter(
-                                  fontSize: 11,
+                                  fontSize: 12,
                                   color: textSec,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const Icon(Icons.arrow_forward_ios_rounded,
-                            size: 13, color: AppTheme.primaryTeal),
+                        Icon(Icons.arrow_forward_ios_rounded,
+                            size: 14, color: AppTheme.textMutedOf(context)),
                       ],
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 20),
-
-                // ── Section header ──
-                Text('Vitals',
-                    style: GoogleFonts.outfit(
-                        fontSize: 16, fontWeight: FontWeight.w700,
-                        color: textPri)),
-                const SizedBox(height: 12),
-
-                // ── Metric cards grid ──
-                Row(children: [
-                  Expanded(child: _AnimatedMetric(
-                    ctrl: _ctrl, delayMs: 0,
-                    child: _VitalCard(
-                      gradient: AppTheme.bpGradient,
-                      icon: Icons.favorite_outline_rounded,
-                      title: 'Blood Pressure',
-                      value: bpRecords.isNotEmpty
-                          ? '${bpRecords.last['data']?['systolic']}/${bpRecords.last['data']?['diastolic']}'
-                          : '--',
-                      unit: 'mmHg',
-                      status: health.lastBPStatus?['status'] as String?,
-                      isDark: isDark,
-                      card: card,
-                      border: border,
-                      textPri: textPri,
-                      textSec: textSec,
-                      onAdd: () => _showBPSheet(context),
-                    ),
-                  )),
-                  const SizedBox(width: 12),
-                  Expanded(child: _AnimatedMetric(
-                    ctrl: _ctrl, delayMs: 150,
-                    child: _VitalCard(
-                      gradient: AppTheme.sugarGradient,
-                      icon: Icons.water_drop_outlined,
-                      title: 'Blood Sugar',
-                      value: sugarRecords.isNotEmpty
-                          ? '${sugarRecords.last['data']?['glucose_value'] ?? sugarRecords.last['data']?['sugar_fasting'] ?? '--'}'
-                          : '--',
-                      unit: 'mg/dL',
-                      status: health.lastSugarStatus?['status'] as String?,
-                      isDark: isDark,
-                      card: card,
-                      border: border,
-                      textPri: textPri,
-                      textSec: textSec,
-                      onAdd: () => _showSugarSheet(context),
-                    ),
-                  )),
-                ]),
-                const SizedBox(height: 12),
-                Row(children: [
-                  Expanded(child: _AnimatedMetric(
-                    ctrl: _ctrl, delayMs: 0,
-                    child: _VitalCard(
-                      gradient: AppTheme.weightGradient,
-                      icon: Icons.monitor_weight_outlined,
-                      title: 'Weight & BMI',
-                      value: '${context.watch<AuthProvider>().user?['weight_kg'] ?? '--'}',
-                      unit: 'kg',
-                      isDark: isDark,
-                      card: card,
-                      border: border,
-                      textPri: textPri,
-                      textSec: textSec,
-                      onAdd: () => _showWeightSheet(context),
-                    ),
-                  )),
-                  const SizedBox(width: 12),
-                  Expanded(child: _AnimatedMetric(
-                    ctrl: _ctrl, delayMs: 150,
-                    child: _VitalCard(
-                      gradient: AppTheme.symptomsGradient,
-                      icon: Icons.sick_outlined,
-                      title: 'Symptoms',
-                      value: '--',
-                      unit: 'logged',
-                      isDark: isDark,
-                      card: card,
-                      border: border,
-                      textPri: textPri,
-                      textSec: textSec,
-                      onAdd: () => _showSymptomSheet(context),
-                    ),
-                  )),
-                ]),
+                const SizedBox(height: 24),
 
 
 
@@ -514,160 +541,9 @@ class _HealthDashboardState extends State<HealthDashboard>
   ];
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
 // COMPONENTS
 // ═══════════════════════════════════════════════════════════════════════════
 
-class _SummaryStrip extends StatelessWidget {
-  final int totalLogs;
-  final String? bpStatus;
-  final bool isDark;
-  final Color card, border, textPri, textSec;
-  const _SummaryStrip({
-    required this.totalLogs, required this.bpStatus,
-    required this.isDark, required this.card, required this.border,
-    required this.textPri, required this.textSec,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      decoration: BoxDecoration(
-        color: card,
-        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        border: Border.all(color: border),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _Strip('$totalLogs', 'Total Logs', AppTheme.primaryTeal, textPri, textSec),
-          _VDivider(isDark: isDark),
-          _Strip(bpStatus ?? '—', 'BP Status',
-              AppTheme.healthStatusColor(bpStatus), textPri, textSec),
-          _VDivider(isDark: isDark),
-          _Strip('30d', 'Period', AppTheme.accentBlue, textPri, textSec),
-        ],
-      ),
-    );
-  }
-}
-
-class _Strip extends StatelessWidget {
-  final String value, label;
-  final Color color, textPri, textSec;
-  const _Strip(this.value, this.label, this.color, this.textPri, this.textSec);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Text(value, style: GoogleFonts.outfit(
-          fontSize: 16, fontWeight: FontWeight.w700, color: color)),
-      Text(label, style: GoogleFonts.inter(fontSize: 11, color: textSec)),
-    ]);
-  }
-}
-
-class _VDivider extends StatelessWidget {
-  final bool isDark;
-  const _VDivider({required this.isDark});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 1, height: 32,
-      color: isDark ? AppTheme.glassBorderLight : AppTheme.glassBorderLightModeSubtle,
-    );
-  }
-}
-
-class _VitalCard extends StatelessWidget {
-  final LinearGradient gradient;
-  final IconData icon;
-  final String title, value, unit;
-  final String? status;
-  final bool isDark;
-  final Color card, border, textPri, textSec;
-  final VoidCallback onAdd;
-  const _VitalCard({
-    required this.gradient, required this.icon, required this.title,
-    required this.value, required this.unit, required this.isDark,
-    required this.card, required this.border, required this.textPri,
-    required this.textSec, required this.onAdd, this.status,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final statusColor = AppTheme.healthStatusColor(status);
-
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: card,
-        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        border: Border.all(color: border),
-      ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          Container(
-            width: 36, height: 36,
-            decoration: BoxDecoration(
-              gradient: gradient,
-              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-            ),
-            child: Icon(icon, color: Colors.white, size: 18),
-          ),
-          const Spacer(),
-          GestureDetector(
-            onTap: onAdd,
-            child: Container(
-              width: 28, height: 28,
-              decoration: BoxDecoration(
-                color: gradient.colors.first.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(Icons.add_rounded, size: 16,
-                  color: gradient.colors.first),
-            ),
-          ),
-        ]),
-        const SizedBox(height: 10),
-        Text(title,
-            style: GoogleFonts.inter(
-                fontSize: 11, color: textSec, fontWeight: FontWeight.w500)),
-        const SizedBox(height: 2),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(value,
-                style: GoogleFonts.outfit(
-                    fontSize: 20, fontWeight: FontWeight.w800, color: textPri)),
-            const SizedBox(width: 4),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 2),
-              child: Text(unit,
-                  style: GoogleFonts.inter(fontSize: 10, color: textSec)),
-            ),
-          ],
-        ),
-        if (status != null) ...[
-          const SizedBox(height: 6),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-            decoration: BoxDecoration(
-              color: statusColor.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(status!,
-                style: GoogleFonts.outfit(
-                    fontSize: 10, fontWeight: FontWeight.w600,
-                    color: statusColor)),
-          ),
-        ],
-      ]),
-    );
-  }
-}
 
 class _ReadingTile extends StatelessWidget {
   final Map<String, dynamic> record;

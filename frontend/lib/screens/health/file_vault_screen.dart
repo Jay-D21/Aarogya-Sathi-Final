@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import '../../config/theme.dart';
 import '../../models/medical_file_model.dart';
 import '../../providers/file_vault_provider.dart';
+import '../../widgets/category_folder_card.dart';
+import '../../widgets/section_header.dart';
 
 class FileVaultScreen extends StatefulWidget {
   const FileVaultScreen({super.key});
@@ -469,7 +471,6 @@ class _FileVaultScreenState extends State<FileVaultScreen> {
     final card = AppTheme.cardBg(context);
     final border = AppTheme.borderColor(context);
 
-    final categories = ['All', ...MedicalFileCategory.all];
 
     return Scaffold(
       backgroundColor: bg,
@@ -505,90 +506,264 @@ class _FileVaultScreenState extends State<FileVaultScreen> {
         label: Text('Add Document',
             style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
       ),
-      body: Column(
-        children: [
-          // ── Search & Filter ──
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-            child: TextField(
-              controller: _searchCtrl,
-              onChanged: vault.setSearchQuery,
-              decoration: InputDecoration(
-                hintText: 'Search prescriptions, doctors, reports...',
-                hintStyle: GoogleFonts.inter(fontSize: 13, color: textSec),
-                prefixIcon:
-                    Icon(Icons.search_rounded, size: 20, color: textSec),
-                suffixIcon: _searchCtrl.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear_rounded, size: 18),
-                        onPressed: () {
-                          _searchCtrl.clear();
-                          vault.setSearchQuery('');
-                        },
-                      )
-                    : null,
-                contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                filled: true,
-                fillColor: card,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: border),
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ── Search Bar ──
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                  child: TextField(
+                    controller: _searchCtrl,
+                    onChanged: vault.setSearchQuery,
+                    decoration: InputDecoration(
+                      hintText: 'Search prescriptions, doctors, reports...',
+                      hintStyle: GoogleFonts.inter(fontSize: 13, color: textSec),
+                      prefixIcon: Icon(Icons.search_rounded, size: 20, color: textSec),
+                      suffixIcon: _searchCtrl.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.clear_rounded, size: 18),
+                              onPressed: () {
+                                _searchCtrl.clear();
+                                vault.setSearchQuery('');
+                              },
+                            )
+                          : null,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                      filled: true,
+                      fillColor: card,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                        borderSide: BorderSide(color: border),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                        borderSide: BorderSide(color: border),
+                      ),
+                    ),
+                  ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: border),
+
+                // ── Google Drive Reference: Storage Summary Banner ──
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF0F9D58), Color(0xFF0B8043)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF0F9D58).withValues(alpha: 0.25),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(
+                              Icons.folder_shared_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Secure Health Storage',
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  '${vault.files.length} records · 100% on-device sandboxed',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    color: Colors.white.withValues(alpha: 0.85),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(
+                            Icons.verified_user_rounded,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: (vault.files.length / 50).clamp(0.05, 1.0),
+                          backgroundColor: Colors.white.withValues(alpha: 0.25),
+                          valueColor: const AlwaysStoppedAnimation(Colors.white),
+                          minHeight: 6,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // ── Google Drive Reference: My Folders (2x2 Grid) ──
+                SectionHeader(
+                  title: 'My Folders',
+                  trailing: vault.activeCategory != 'All' ? 'View all' : null,
+                  onTrailingTap: () => vault.setCategory('All'),
+                ),
+                const SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CategoryFolderCard(
+                          title: 'Prescriptions',
+                          subtitle: '${vault.files.where((f) => f.category == MedicalFileCategory.prescription).length} records',
+                          icon: Icons.medication_rounded,
+                          accentColor: AppTheme.primaryTeal,
+                          isSelected: vault.activeCategory == MedicalFileCategory.prescription,
+                          onTap: () {
+                            vault.setCategory(
+                              vault.activeCategory == MedicalFileCategory.prescription
+                                  ? 'All'
+                                  : MedicalFileCategory.prescription,
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: CategoryFolderCard(
+                          title: 'Lab Reports',
+                          subtitle: '${vault.files.where((f) => f.category == MedicalFileCategory.labReport).length} records',
+                          icon: Icons.biotech_rounded,
+                          accentColor: AppTheme.accentBlue,
+                          isSelected: vault.activeCategory == MedicalFileCategory.labReport,
+                          onTap: () {
+                            vault.setCategory(
+                              vault.activeCategory == MedicalFileCategory.labReport
+                                  ? 'All'
+                                  : MedicalFileCategory.labReport,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CategoryFolderCard(
+                          title: 'Scans & X-Rays',
+                          subtitle: '${vault.files.where((f) => f.category == MedicalFileCategory.scan).length} records',
+                          icon: Icons.document_scanner_rounded,
+                          accentColor: AppTheme.accentOrange,
+                          isSelected: vault.activeCategory == MedicalFileCategory.scan,
+                          onTap: () {
+                            vault.setCategory(
+                              vault.activeCategory == MedicalFileCategory.scan
+                                  ? 'All'
+                                  : MedicalFileCategory.scan,
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: CategoryFolderCard(
+                          title: 'Vaccinations',
+                          subtitle: '${vault.files.where((f) => f.category == MedicalFileCategory.vaccination).length} records',
+                          icon: Icons.vaccines_rounded,
+                          accentColor: AppTheme.accentGreen,
+                          isSelected: vault.activeCategory == MedicalFileCategory.vaccination,
+                          onTap: () {
+                            vault.setCategory(
+                              vault.activeCategory == MedicalFileCategory.vaccination
+                                  ? 'All'
+                                  : MedicalFileCategory.vaccination,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // ── Recent Files Header ──
+                SectionHeader(
+                  title: 'Documents (${vault.filteredFiles.length})',
+                  trailing: vault.activeCategory != 'All' ? 'Filter: ${vault.activeCategory}' : null,
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+
+          // ── File Items ──
+          if (vault.isLoading)
+            const SliverFillRemaining(
+              child: Center(child: CircularProgressIndicator()),
+            )
+          else if (vault.filteredFiles.isEmpty)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: _buildEmptyState(context, textPri, textSec),
+              ),
+            )
+          else
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 90),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, i) {
+                    final file = vault.filteredFiles[i];
+                    return _buildFileCard(
+                      context,
+                      file,
+                      isDark,
+                      textPri,
+                      textSec,
+                      card,
+                      border,
+                    );
+                  },
+                  childCount: vault.filteredFiles.length,
                 ),
               ),
             ),
-          ),
-
-          // ── Category filter chips ──
-          SizedBox(
-            height: 48,
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              scrollDirection: Axis.horizontal,
-              itemCount: categories.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 8),
-              itemBuilder: (context, i) {
-                final cat = categories[i];
-                final isSelected = vault.activeCategory == cat;
-                return ChoiceChip(
-                  label: Text(cat),
-                  labelStyle: GoogleFonts.inter(
-                    fontSize: 12,
-                    fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.normal,
-                    color: isSelected ? Colors.white : textPri,
-                  ),
-                  selected: isSelected,
-                  selectedColor: AppTheme.primaryTeal,
-                  backgroundColor: card,
-                  side: BorderSide(
-                    color: isSelected ? AppTheme.primaryTeal : border,
-                  ),
-                  onSelected: (_) => vault.setCategory(cat),
-                );
-              },
-            ),
-          ),
-
-          // ── Documents List / Empty State ──
-          Expanded(
-            child: vault.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : vault.filteredFiles.isEmpty
-                    ? _buildEmptyState(context, textPri, textSec)
-                    : ListView.builder(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 80),
-                        itemCount: vault.filteredFiles.length,
-                        itemBuilder: (context, i) {
-                          final file = vault.filteredFiles[i];
-                          return _buildFileCard(
-                              context, file, isDark, textPri, textSec, card, border);
-                        },
-                      ),
-          ),
         ],
       ),
     );

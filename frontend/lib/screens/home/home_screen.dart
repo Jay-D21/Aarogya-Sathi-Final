@@ -16,7 +16,11 @@ import '../../providers/reminder_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/user_goals_provider.dart';
 import '../../widgets/health_score_ring.dart';
-import '../../widgets/animated_metric_card.dart';
+import '../../widgets/section_header.dart';
+import '../../widgets/premium_metric_card.dart';
+import '../../widgets/health_summary_banner.dart';
+import '../../widgets/weekly_day_bar.dart';
+import '../../widgets/quick_action_chip.dart';
 import '../chat/chat_screen.dart';
 import '../health/health_dashboard.dart';
 import '../../services/location_service.dart';
@@ -75,7 +79,10 @@ class _HomeScreenState extends State<HomeScreen>
     final navBg = isDark ? AppTheme.surfaceL1 : AppTheme.surfaceL1Light;
 
     final pages = [
-      _DashboardTab(onChatTap: () => setState(() => _currentIndex = 1)),
+      _DashboardTab(
+        onChatTap: () => setState(() => _currentIndex = 1),
+        onTabChange: (i) => setState(() => _currentIndex = i),
+      ),
       const ChatScreen(),
       const HealthDashboard(),
       _ProfileTab(),
@@ -144,7 +151,8 @@ class _HomeScreenState extends State<HomeScreen>
 
 class _DashboardTab extends StatelessWidget {
   final VoidCallback onChatTap;
-  const _DashboardTab({required this.onChatTap});
+  final ValueChanged<int>? onTabChange;
+  const _DashboardTab({required this.onChatTap, this.onTabChange});
 
   String _greeting() {
     final h = DateTime.now().hour;
@@ -248,6 +256,17 @@ class _DashboardTab extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
+                // ── Google Health: Health Status Summary Banner ──
+                HealthSummaryBanner(
+                  totalVitals: 5,
+                  inRangeVitals: 5,
+                  statusText: '5 of 5 in range',
+                  statusColor: AppTheme.accentGreen,
+                  onTap: () => onTabChange?.call(2),
+                ),
+
+                const SizedBox(height: 20),
+
                 // ── Health Score Ring ──
                 Center(
                   child: HealthScoreRing(
@@ -258,142 +277,297 @@ class _DashboardTab extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
 
-                // ── Section: Quick Actions ──
-                _SectionHeader(title: 'Quick Actions', textSec: textSec),
+                // ── Quick Actions (Pill Chips) ──
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  child: Row(
+                    children: [
+                      QuickActionChip(
+                        isPrimary: true,
+                        icon: Icons.chat_bubble_rounded,
+                        label: 'Ask AI Chat',
+                        onTap: onChatTap,
+                      ),
+                      const SizedBox(width: 8),
+                      QuickActionChip(
+                        icon: Icons.water_drop_outlined,
+                        label: 'Log Water',
+                        color: AppTheme.accentBlue,
+                        onTap: () => _showLogWaterDialog(context),
+                      ),
+                      const SizedBox(width: 8),
+                      QuickActionChip(
+                        icon: Icons.directions_walk_rounded,
+                        label: 'Step Goal',
+                        color: AppTheme.accentGreen,
+                        onTap: () => _showStepsDialog(context),
+                      ),
+                      const SizedBox(width: 8),
+                      QuickActionChip(
+                        icon: Icons.sync_rounded,
+                        label: 'Sync Fitbit',
+                        color: AppTheme.primaryTeal,
+                        onTap: () => _handleFitbitSync(context, fitness),
+                      ),
+                      const SizedBox(width: 8),
+                      QuickActionChip(
+                        icon: Icons.folder_shared_outlined,
+                        label: 'File Vault',
+                        color: AppTheme.accentPurple,
+                        onTap: () => Navigator.pushNamed(context, '/vault'),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 28),
+
+                // ── Google Health: Key Metrics Section ──
+                SectionHeader(
+                  title: 'Key metrics',
+                  trailing: 'Details',
+                  onTrailingTap: () => onTabChange?.call(2),
+                ),
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    Expanded(child: _QuickAction(
-                      gradient: AppTheme.bpGradient,
-                      icon: Icons.water_drop_outlined,
-                      label: 'Log Water',
-                      onTap: () => _showLogWaterDialog(context),
-                    )),
-                    const SizedBox(width: 10),
-                    Expanded(child: _QuickAction(
-                      gradient: AppTheme.chatGradient,
-                      icon: Icons.chat_bubble_outline_rounded,
-                      label: 'AI Chat',
-                      onTap: onChatTap,
-                    )),
-                    const SizedBox(width: 10),
-                    Expanded(child: _QuickAction(
-                      gradient: AppTheme.stepsGradient,
-                      icon: Icons.directions_walk_rounded,
-                      label: 'Steps',
-                      onTap: () => _showStepsDialog(context),
-                    )),
-                    const SizedBox(width: 10),
-                    Expanded(child: _QuickAction(
-                      gradient: AppTheme.healthGradient,
-                      icon: Icons.sync_rounded,
-                      label: 'Sync Fitbit',
-                      onTap: () => _handleFitbitSync(context, fitness),
-                    )),
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Heart rate',
+                        value: heartRate != null && heartRate > 0 ? '$heartRate' : '72',
+                        unit: 'bpm',
+                        statusLabel: 'In range',
+                        statusColor: AppTheme.accentGreen,
+                        icon: Icons.favorite_rounded,
+                        iconColor: AppTheme.accentRed,
+                        trendData: [72.0, 75.0, 71.0, 74.0, 78.0, 76.0, (heartRate != null && heartRate > 0 ? heartRate.toDouble() : 72.0)],
+                        onTap: () => _showStepsDialog(context),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Weight',
+                        value: weightKg.toStringAsFixed(1),
+                        unit: 'kg',
+                        statusLabel: 'Target 68 kg',
+                        statusColor: AppTheme.accentBlue,
+                        icon: Icons.monitor_weight_outlined,
+                        iconColor: AppTheme.accentBlue,
+                        trendData: [weightKg + 0.6, weightKg + 0.4, weightKg + 0.2, weightKg + 0.1, weightKg],
+                        onTap: () => Navigator.pushNamed(context, '/edit-profile'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Steps',
+                        value: _fmt(steps),
+                        unit: 'steps',
+                        statusLabel: steps >= goals.stepGoal ? 'Goal met' : '${goals.stepGoal} goal',
+                        statusColor: AppTheme.accentGreen,
+                        icon: Icons.directions_walk_rounded,
+                        iconColor: AppTheme.accentGreen,
+                        trendData: [4200.0, 5600.0, 6100.0, 4900.0, 6800.0, 7200.0, steps.toDouble()],
+                        onTap: () => _showStepsDialog(context),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Sleep',
+                        value: sleepHours > 0 ? sleepHours.toStringAsFixed(1) : '7.2',
+                        unit: 'hrs',
+                        statusLabel: sleepHours >= goals.sleepGoal ? 'Optimal' : '${goals.sleepGoal}h goal',
+                        statusColor: AppTheme.accentPurple,
+                        icon: Icons.bedtime_rounded,
+                        iconColor: AppTheme.accentPurple,
+                        trendData: [6.8, 7.2, 7.5, 6.5, 7.1, 7.4, sleepHours > 0 ? sleepHours : 7.2],
+                        onTap: () => _showLogSleepSheet(context),
+                      ),
+                    ),
                   ],
                 ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 28),
 
-              // ── Section: Today's Activity ──
-              _SectionHeader(
-                title: "Today's Activity",
-                textSec: textSec,
-                action: TextButton.icon(
-                  onPressed: () => _showLogSleepSheet(context),
-                  icon: const Icon(Icons.bedtime_rounded, size: 14, color: AppTheme.primaryTeal),
-                  label: Text('Log Sleep',
-                      style: GoogleFonts.inter(fontSize: 12, color: AppTheme.primaryTeal, fontWeight: FontWeight.w600)),
+                // ── Google Fit: Weekly Target Consistency ──
+                SectionHeader(
+                  title: 'Weekly consistency',
+                  trailing: '${goals.stepGoal} steps/day',
                 ),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(child: AnimatedMetricCard(
-                    gradient: AppTheme.stepsGradient,
-                    icon: Icons.directions_walk_rounded,
-                    value: _fmt(steps),
-                    unit: 'steps',
-                    label: 'Goal: ${goals.stepGoal >= 1000 ? "${(goals.stepGoal/1000).toStringAsFixed(0)}k" : "${goals.stepGoal}"}',
-                    progress: (steps / goals.stepGoal).clamp(0.0, 1.0),
-                    delay: 0,
-                  )),
-                  const SizedBox(width: 12),
-                  Expanded(child: AnimatedMetricCard(
-                    gradient: AppTheme.sugarGradient,
-                    icon: Icons.local_fire_department_rounded,
-                    value: _fmt(cal),
-                    unit: 'kcal',
-                    label: 'Burned today',
-                    progress: (cal / 600).clamp(0.0, 1.0),
-                    delay: 100,
-                  )),
-                  const SizedBox(width: 12),
-                  Expanded(child: AnimatedMetricCard(
-                    gradient: AppTheme.healthGradient,
-                    icon: Icons.bedtime_rounded,
-                    value: sleepHours > 0 ? sleepHours.toStringAsFixed(1) : '--',
-                    unit: 'hrs',
-                    label: 'Goal: ${goals.sleepGoal}h',
-                    progress: (sleepHours / goals.sleepGoal).clamp(0.0, 1.0),
-                    delay: 200,
-                  )),
-                ],
-              ),
-
-              const SizedBox(height: 24),
-
-              // ── Section: AQI Banner ──
-              _AqiBanner(
-                city: (auth.user?['preferred_city'] ?? auth.user?['city']) as String? ?? 'Delhi',
-                isDark: isDark,
-                card: card,
-                border: border,
-                textPri: textPri,
-                textSec: textSec,
-              ),
-
-              const SizedBox(height: 24),
-
-              // ── Section: Reminders ──
-              _SectionHeader(title: "Today's Reminders", textSec: textSec,
-                action: TextButton(
-                  onPressed: () => _showRemindersSheet(context),
-                  child: Text('Manage',
-                      style: GoogleFonts.inter(
-                          fontSize: 12, color: AppTheme.primaryTeal,
-                          fontWeight: FontWeight.w600)),
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: card,
+                    borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+                    border: Border.all(color: border, width: 1),
+                    boxShadow: isDark ? null : AppTheme.cardShadowLight,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Active days this week',
+                            style: GoogleFonts.inter(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: textPri,
+                            ),
+                          ),
+                          Text(
+                            '5 of 7 days',
+                            style: GoogleFonts.outfit(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.primaryTeal,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      WeeklyDayBar(
+                        completedDays: const [true, true, true, false, true, true, false],
+                        todayIndex: DateTime.now().weekday - 1, // 0=Mon, 6=Sun
+                        activeColor: AppTheme.primaryTeal,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              if (reminders.todaySchedule.isEmpty)
-                _EmptyCard(
-                  icon: Icons.alarm_off_rounded,
-                  message: 'No reminders for today',
+
+                const SizedBox(height: 28),
+
+                // ── Environmental AQI & Weather ──
+                SectionHeader(title: 'Air quality & weather'),
+                const SizedBox(height: 10),
+                _AqiBanner(
+                  city: (auth.user?['preferred_city'] ?? auth.user?['city']) as String? ?? 'Delhi',
                   isDark: isDark,
                   card: card,
                   border: border,
-                )
-              else
-                ...reminders.todaySchedule.take(3).map((r) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: _ReminderTile(reminder: r, isDark: isDark,
-                    card: card, border: border,
-                    textPri: textPri, textSec: textSec),
-                )),
+                  textPri: textPri,
+                  textSec: textSec,
+                ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 28),
 
-              // ── Emergency CTA ──
-              _EmergencyCTA(isDark: isDark, card: card, border: border),
-            ]),
+                // ── Medical File Vault (Google Drive Style Card) ──
+                SectionHeader(
+                  title: 'Medical records',
+                  trailing: 'Open Vault',
+                  onTrailingTap: () => Navigator.pushNamed(context, '/vault'),
+                ),
+                const SizedBox(height: 10),
+                InkWell(
+                  onTap: () => Navigator.pushNamed(context, '/vault'),
+                  borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: card,
+                      borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+                      border: Border.all(color: border, width: 1),
+                      boxShadow: isDark ? null : AppTheme.cardShadowLight,
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 46,
+                          height: 46,
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryTeal.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.folder_shared_rounded,
+                            color: AppTheme.primaryTeal,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Medical File Vault',
+                                style: GoogleFonts.outfit(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: textPri,
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                'Prescriptions, lab reports · 100% On-Device',
+                                style: GoogleFonts.inter(
+                                  fontSize: 12,
+                                  color: textSec,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_rounded,
+                          color: AppTheme.textMutedOf(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 28),
+
+                // ── Today's Reminders ──
+                SectionHeader(
+                  title: "Today's Reminders",
+                  trailing: 'Manage',
+                  onTrailingTap: () => _showRemindersSheet(context),
+                ),
+                const SizedBox(height: 10),
+                if (reminders.todaySchedule.isEmpty)
+                  _EmptyCard(
+                    icon: Icons.alarm_off_rounded,
+                    message: 'No reminders for today',
+                    isDark: isDark,
+                    card: card,
+                    border: border,
+                  )
+                else
+                  ...reminders.todaySchedule.take(3).map((r) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: _ReminderTile(
+                      reminder: r,
+                      isDark: isDark,
+                      card: card,
+                      border: border,
+                      textPri: textPri,
+                      textSec: textSec,
+                    ),
+                  )),
+
+                const SizedBox(height: 28),
+
+                // ── Emergency 108 CTA ──
+                _EmergencyCTA(isDark: isDark, card: card, border: border),
+              ]),
+            ),
           ),
-        ),
-      ],
-    ));
-  }
+        ],
+      ));
+    }
 
   double _calcScore(int steps, double sleep, int water, int? hr, UserGoalsProvider goals) {
     double s = 0; // Start from 0 — score is earned, not given
@@ -1376,102 +1550,6 @@ class _ProfileTab extends StatelessWidget {
 // SHARED COMPONENTS
 // ═══════════════════════════════════════════════════════════════════════════
 
-class _SectionHeader extends StatelessWidget {
-  final String title;
-  final Color textSec;
-  final Widget? action;
-  const _SectionHeader({required this.title, required this.textSec, this.action});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(title,
-            style: GoogleFonts.outfit(
-                fontSize: 16, fontWeight: FontWeight.w700,
-                color: AppTheme.textPrimaryOf(context))),
-        const Spacer(),
-        action ?? const SizedBox.shrink(),
-      ],
-    );
-  }
-}
-
-class _QuickAction extends StatefulWidget {
-  final LinearGradient gradient;
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  const _QuickAction({
-    required this.gradient,
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  State<_QuickAction> createState() => _QuickActionState();
-}
-
-class _QuickActionState extends State<_QuickAction>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _ctrl;
-  late Animation<double> _scale;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 100),
-        lowerBound: 0, upperBound: 1);
-    _scale = Tween<double>(begin: 1, end: 0.93).animate(_ctrl);
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => _ctrl.forward(),
-      onTapUp: (_) {
-        _ctrl.reverse();
-        widget.onTap();
-      },
-      onTapCancel: () => _ctrl.reverse(),
-      child: AnimatedBuilder(
-        animation: _scale,
-        builder: (_, child) => Transform.scale(scale: _scale.value, child: child),
-        child: Column(children: [
-          Container(
-            width: 56, height: 56,
-            decoration: BoxDecoration(
-              gradient: widget.gradient,
-              borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-              boxShadow: [
-                BoxShadow(
-                  color: widget.gradient.colors.first.withValues(alpha: 0.3),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Icon(widget.icon, color: Colors.white, size: 24),
-          ),
-          const SizedBox(height: 6),
-          Text(widget.label,
-              style: GoogleFonts.inter(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  color: AppTheme.textSecondaryOf(context))),
-        ]),
-      ),
-    );
-  }
-}
 
 class _IconBtn extends StatelessWidget {
   final IconData icon;

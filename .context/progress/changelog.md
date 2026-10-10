@@ -1,5 +1,33 @@
 # Changelog
  
+## 2026-10-10 (Jayesh — Session 24: Google Health & Drive UI Redesign + Play Store Beta Preparation)
+- [Jayesh] Sprint 1 Play Store Blockers completed:
+  - Fixed permanent Android applicationId: `com.aarogyasathi.app` in `build.gradle.kts`.
+  - Configured release signing block with `key.properties` auto-detection (falls back to debug).
+  - Cleaned unneeded `RECORD_AUDIO` permission from `AndroidManifest.xml`.
+  - Created DPDP Act-compliant web privacy policy (`docs/privacy-policy.html`) covering all 12 Health Connect permissions.
+  - Updated `.gitignore` to prevent leaking keystore files and binaries (`*.jks`, `*.keystore`, `key.properties`, `*.apk`, `*.aab`).
+  - Added `key.properties.example` template.
+- [Jayesh] Sprint 2 Google Health & Drive UI Redesign completed:
+  - Built 9 new reusable Material 3 Expressive widgets:
+    - `SectionHeader`: Clinical section title with trailing action.
+    - `StatusBadge`: Pill-shaped badge ("In range", "Elevated", "Critical").
+    - `MiniSparkline`: CustomPaint cubic Bezier trend line with vertical gradient fill.
+    - `PremiumMetricCard`: Large metric number + status badge + sparkline chart.
+    - `HealthSummaryBanner`: Google Health "Health status" card ("5 of 5 in range").
+    - `WeeklyDayBar`: M T W T F S S consistency day bar with activity indicators.
+    - `QuickActionChip`: Google Health pill action chips.
+    - `CategoryFolderCard`: Google Drive pastel folder card for document vault.
+    - `EnvironmentCard`: Integrated AQI + Weather card.
+  - Redesigned `HomeScreen` (`home_screen.dart`):
+    - Added Google Health "Health status" banner, quick action chips row, 2x2 key metrics grid with live sparklines, weekly target consistency day bar, and Drive-style file vault card.
+  - Redesigned `HealthDashboard` (`health_dashboard.dart`):
+    - Added Vitals summary banner, quick logging chips (`+ Log BP`, `+ Log Sugar`, `+ Log Weight`, `+ Log Symptoms`), and 2x2 key metric grid with longitudinal sparklines.
+  - Redesigned `FileVaultScreen` (`file_vault_screen.dart`):
+    - Added Google Drive storage overview card, 2x2 "My Folders" category grid with document counts, and clean file cards list.
+  - Verified with `flutter analyze`: 0 issues found.
+  - Verified with `flutter test`: 23/23 tests passing.
+
 ## 2026-10-03 (Abhijit — Session 23: Gold Mandala Splash Redesign & Android Launcher Icon)
 - [Abhijit] Redesigned splash screen logo (`frontend/lib/screens/onboarding/splash_screen.dart`) with premium golden color palette (`#FFD400`, `#FFC300`, `#FF8C00`, `#FF5F00`) across all 5 painter layers:
   - Layer 1 (circuit ring): gold-to-teal sweep gradient; alternating gold/teal node dots

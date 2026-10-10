@@ -13,6 +13,9 @@
 5. **OKF Bundle Expansion**: Grow from 34 → 50+ concept files covering more conditions, drugs, and lifestyle topics.
 
 ## What's Done ✅
+- Play Store closed testing preparation (applicationId `com.aarogyasathi.app`, release signing, manifest cleanup, privacy policy)
+- Google Health & Fit UI redesign (reusable widget library: sparklines, status badges, summary banner, weekly bars, metric cards)
+- Redesigned Home Dashboard, Health Dashboard, and Google Drive-style Medical File Vault
 - Agentic CRAG pipeline: Intent Classification → Selective Tool Use → Proactive Insights → Generation
 - Intent classifier with heuristic fast-path (regex) + 70B LLM fallback for nuanced queries
 - Proactive insights engine: vital thresholds (HR, SpO2, BP, glucose), AQI alerts, longitudinal BP/HR trends
