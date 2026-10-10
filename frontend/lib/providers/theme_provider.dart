@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Controls the app-wide theme mode (light, dark, system) and
+/// persists the user's preference via SharedPreferences.
+/// Notifies the MaterialApp to rebuild when the theme changes.
 class ThemeProvider extends ChangeNotifier {
   static const _key = 'is_dark_mode';
   bool _isDark = true; // Default: dark mode
