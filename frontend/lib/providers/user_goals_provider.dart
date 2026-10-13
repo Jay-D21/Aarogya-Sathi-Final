@@ -3,6 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Stores user-defined fitness goals.
 /// All values have sensible defaults but users can change them from Settings.
+/// Stores and retrieves the user's personalised daily health goals:
+/// step target, calorie target, sleep hours, hydration intake, and
+/// custom vital check-in reminders. Persisted in SharedPreferences.
 class UserGoalsProvider extends ChangeNotifier {
   static const _kStepGoal  = 'goal_steps';
   static const _kWaterGoal = 'goal_water_ml';
