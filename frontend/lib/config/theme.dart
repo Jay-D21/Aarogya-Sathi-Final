@@ -34,14 +34,14 @@ class AppTheme {
   // ═══════════════════════════════════════════════════════════════
   // LIGHT THEME SURFACES
   // ═══════════════════════════════════════════════════════════════
-  static const Color backgroundLight    = Color(0xFFF4F7FB);
+  static const Color backgroundLight    = Color(0xFFF8FAFC);
   static const Color surfaceL1Light     = Color(0xFFFFFFFF);
-  static const Color surfaceL2Light     = Color(0xFFF0F4F8);
-  static const Color surfaceL3Light     = Color(0xFFE8EDF4);
+  static const Color surfaceL2Light     = Color(0xFFF1F5F9);
+  static const Color surfaceL3Light     = Color(0xFFE2E8F0);
 
   // Glass (light)
-  static const Color glassBorderLightMode = Color(0x25000000);
-  static const Color glassBorderLightModeSubtle = Color(0x12000000);
+  static const Color glassBorderLightMode = Color(0xFFCBD5E1);
+  static const Color glassBorderLightModeSubtle = Color(0xFFE2E8F0);
 
   // Text (light)
   static const Color textPrimaryLight   = Color(0xFF0F172A);
@@ -211,7 +211,7 @@ class AppTheme {
     BoxShadow(color: Colors.black.withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 4)),
   ];
   static List<BoxShadow> cardShadowLight = [
-    BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 12, offset: const Offset(0, 3)),
+    BoxShadow(color: const Color(0xFF0F172A).withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 3)),
   ];
 
   // ═══════════════════════════════════════════════════════════════

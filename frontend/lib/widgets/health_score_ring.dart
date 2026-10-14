@@ -86,18 +86,27 @@ class _HealthScoreRingState extends State<HealthScoreRing>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          widget.score.toStringAsFixed(0),
+                          widget.score > 0 ? widget.score.toStringAsFixed(0) : '--',
                           style: GoogleFonts.outfit(
-                            fontSize: 52,
+                            fontSize: 48,
                             fontWeight: FontWeight.w800,
-                            color: AppTheme.primaryTeal,
+                            color: widget.score > 0 ? AppTheme.primaryTeal : textSec,
                             height: 1,
                           ),
                         ),
+                        const SizedBox(height: 4),
                         Text(
-                          'Health Score',
+                          'Daily Score',
+                          style: GoogleFonts.outfit(
+                            fontSize: 13,
+                            color: textPri,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          widget.score > 0 ? 'Goal: 100 pts' : 'Sync to start',
                           style: GoogleFonts.inter(
-                            fontSize: 12,
+                            fontSize: 11,
                             color: textSec,
                             fontWeight: FontWeight.w500,
                           ),

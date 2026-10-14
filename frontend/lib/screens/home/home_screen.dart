@@ -12,6 +12,7 @@ import '../../config/api_config.dart';
 import '../../config/theme.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/fitness_provider.dart';
+import '../../providers/health_provider.dart';
 import '../../providers/reminder_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/user_goals_provider.dart';
@@ -168,13 +169,17 @@ class _DashboardTab extends StatelessWidget {
     final fitness = context.watch<FitnessProvider>();
     final reminders = context.watch<ReminderProvider>();
     final goals = context.watch<UserGoalsProvider>();
+    final health = context.watch<HealthProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textPri = AppTheme.textPrimaryOf(context);
     final textSec = AppTheme.textSecondaryOf(context);
     final card = AppTheme.cardBg(context);
     final border = AppTheme.borderColor(context);
 
-    final firstName = auth.user?['first_name'] as String? ?? 'Friend';
+    final rawName = auth.user?['first_name'] as String? ?? 'Friend';
+    final firstName = rawName.isNotEmpty
+        ? '${rawName[0].toUpperCase()}${rawName.substring(1)}'
+        : 'Friend';
     final steps = fitness.steps;
     final weightKg = (auth.user?['weight_kg'] as num?)?.toDouble() ?? 70.0;
     final cal = fitness.calories(weightKg: weightKg);
@@ -182,6 +187,39 @@ class _DashboardTab extends StatelessWidget {
     final sleepHours = fitness.sleepHours;
     final heartRate = fitness.heartRate;
     final healthScore = _calcScore(steps, sleepHours, waterMl, heartRate, goals);
+
+    // Compute REAL vitals dynamically based on what user has logged/synced
+    int totalVitals = 0;
+    int inRangeVitals = 0;
+
+    if (health.lastBPStatus != null) {
+      totalVitals++;
+      if (health.lastBPStatus!['status'] == 'Normal') inRangeVitals++;
+    }
+    if (health.lastSugarStatus != null) {
+      totalVitals++;
+      if (health.lastSugarStatus!['status'] == 'Normal') inRangeVitals++;
+    }
+    if (fitness.heartRate != null && fitness.heartRate! > 0) {
+      totalVitals++;
+      if (fitness.heartRate! >= 60 && fitness.heartRate! <= 100) inRangeVitals++;
+    }
+    if (fitness.sleepHours > 0) {
+      totalVitals++;
+      if (fitness.sleepHours >= (goals.sleepGoal - 1)) inRangeVitals++;
+    }
+    if (fitness.steps > 0) {
+      totalVitals++;
+      if (fitness.steps >= (goals.stepGoal / 2)) inRangeVitals++;
+    }
+
+    final hasVitals = totalVitals > 0;
+    final vitalsStatusText = hasVitals
+        ? '$inRangeVitals of $totalVitals in range'
+        : 'No vitals logged today';
+    final vitalsStatusColor = hasVitals
+        ? (inRangeVitals == totalVitals ? AppTheme.accentGreen : AppTheme.accentOrange)
+        : AppTheme.primaryTeal;
 
     return RefreshIndicator(
       color: AppTheme.primaryTeal,
@@ -258,10 +296,10 @@ class _DashboardTab extends StatelessWidget {
               delegate: SliverChildListDelegate([
                 // ── Google Health: Health Status Summary Banner ──
                 HealthSummaryBanner(
-                  totalVitals: 5,
-                  inRangeVitals: 5,
-                  statusText: '5 of 5 in range',
-                  statusColor: AppTheme.accentGreen,
+                  totalVitals: totalVitals,
+                  inRangeVitals: inRangeVitals,
+                  statusText: vitalsStatusText,
+                  statusColor: vitalsStatusColor,
                   onTap: () => onTabChange?.call(2),
                 ),
 
@@ -337,27 +375,29 @@ class _DashboardTab extends StatelessWidget {
                     Expanded(
                       child: PremiumMetricCard(
                         label: 'Heart rate',
-                        value: heartRate != null && heartRate > 0 ? '$heartRate' : '72',
+                        value: heartRate != null && heartRate > 0 ? '$heartRate' : '--',
                         unit: 'bpm',
-                        statusLabel: 'In range',
-                        statusColor: AppTheme.accentGreen,
+                        statusLabel: heartRate != null && heartRate > 0 ? 'In range' : 'Tap to sync',
+                        statusColor: heartRate != null && heartRate > 0 ? AppTheme.accentGreen : AppTheme.textMutedOf(context),
                         icon: Icons.favorite_rounded,
                         iconColor: AppTheme.accentRed,
-                        trendData: [72.0, 75.0, 71.0, 74.0, 78.0, 76.0, (heartRate != null && heartRate > 0 ? heartRate.toDouble() : 72.0)],
-                        onTap: () => _showStepsDialog(context),
+                        trendData: heartRate != null && heartRate > 0
+                            ? [70.0, 72.0, 74.0, 71.0, 75.0, 73.0, heartRate.toDouble()]
+                            : null,
+                        onTap: () => _handleFitbitSync(context, fitness),
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: PremiumMetricCard(
                         label: 'Weight',
-                        value: weightKg.toStringAsFixed(1),
+                        value: weightKg > 0 ? weightKg.toStringAsFixed(1) : '--',
                         unit: 'kg',
-                        statusLabel: 'Target 68 kg',
+                        statusLabel: 'Logged',
                         statusColor: AppTheme.accentBlue,
                         icon: Icons.monitor_weight_outlined,
                         iconColor: AppTheme.accentBlue,
-                        trendData: [weightKg + 0.6, weightKg + 0.4, weightKg + 0.2, weightKg + 0.1, weightKg],
+                        trendData: null,
                         onTap: () => Navigator.pushNamed(context, '/edit-profile'),
                       ),
                     ),
@@ -375,7 +415,7 @@ class _DashboardTab extends StatelessWidget {
                         statusColor: AppTheme.accentGreen,
                         icon: Icons.directions_walk_rounded,
                         iconColor: AppTheme.accentGreen,
-                        trendData: [4200.0, 5600.0, 6100.0, 4900.0, 6800.0, 7200.0, steps.toDouble()],
+                        trendData: steps > 0 ? [steps * 0.3, steps * 0.6, steps.toDouble()] : null,
                         onTap: () => _showStepsDialog(context),
                       ),
                     ),
@@ -383,13 +423,15 @@ class _DashboardTab extends StatelessWidget {
                     Expanded(
                       child: PremiumMetricCard(
                         label: 'Sleep',
-                        value: sleepHours > 0 ? sleepHours.toStringAsFixed(1) : '7.2',
+                        value: sleepHours > 0 ? sleepHours.toStringAsFixed(1) : '--',
                         unit: 'hrs',
-                        statusLabel: sleepHours >= goals.sleepGoal ? 'Optimal' : '${goals.sleepGoal}h goal',
-                        statusColor: AppTheme.accentPurple,
+                        statusLabel: sleepHours > 0
+                            ? (sleepHours >= goals.sleepGoal ? 'Optimal' : '${goals.sleepGoal}h goal')
+                            : 'Not logged',
+                        statusColor: sleepHours > 0 ? AppTheme.accentPurple : AppTheme.textMutedOf(context),
                         icon: Icons.bedtime_rounded,
                         iconColor: AppTheme.accentPurple,
-                        trendData: [6.8, 7.2, 7.5, 6.5, 7.1, 7.4, sleepHours > 0 ? sleepHours : 7.2],
+                        trendData: sleepHours > 0 ? [sleepHours] : null,
                         onTap: () => _showLogSleepSheet(context),
                       ),
                     ),
@@ -404,46 +446,58 @@ class _DashboardTab extends StatelessWidget {
                   trailing: '${goals.stepGoal} steps/day',
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-                  decoration: BoxDecoration(
-                    color: card,
-                    borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                    border: Border.all(color: border, width: 1),
-                    boxShadow: isDark ? null : AppTheme.cardShadowLight,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Builder(
+                  builder: (context) {
+                    final todayIdx = DateTime.now().weekday - 1; // 0=Mon, 6=Sun
+                    final isTodayActive = steps >= 1000;
+                    final completedDays = List.generate(7, (i) {
+                      if (i == todayIdx) return isTodayActive;
+                      return false;
+                    });
+                    final activeDaysCount = completedDays.where((d) => d).length;
+
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+                      decoration: BoxDecoration(
+                        color: card,
+                        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+                        border: Border.all(color: border, width: 1),
+                        boxShadow: isDark ? null : AppTheme.cardShadowLight,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Active days this week',
-                            style: GoogleFonts.inter(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: textPri,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Active days this week',
+                                style: GoogleFonts.inter(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: textPri,
+                                ),
+                              ),
+                              Text(
+                                '$activeDaysCount of 7 days',
+                                style: GoogleFonts.outfit(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppTheme.primaryTeal,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            '5 of 7 days',
-                            style: GoogleFonts.outfit(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: AppTheme.primaryTeal,
-                            ),
+                          const SizedBox(height: 14),
+                          WeeklyDayBar(
+                            completedDays: completedDays,
+                            todayIndex: todayIdx,
+                            activeColor: AppTheme.primaryTeal,
                           ),
                         ],
                       ),
-                      const SizedBox(height: 14),
-                      WeeklyDayBar(
-                        completedDays: const [true, true, true, false, true, true, false],
-                        todayIndex: DateTime.now().weekday - 1, // 0=Mon, 6=Sun
-                        activeColor: AppTheme.primaryTeal,
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 28),
@@ -1045,7 +1099,11 @@ class _ProfileTab extends StatelessWidget {
     final border = AppTheme.borderColor(context);
 
     final user = auth.user ?? {};
-    final name = '${user['first_name'] ?? 'Guest'} ${user['last_name'] ?? ''}'.trim();
+    final rawFirst = user['first_name'] as String? ?? 'Guest';
+    final rawLast = user['last_name'] as String? ?? '';
+    final capFirst = rawFirst.isNotEmpty ? '${rawFirst[0].toUpperCase()}${rawFirst.substring(1)}' : 'Guest';
+    final capLast = rawLast.isNotEmpty ? '${rawLast[0].toUpperCase()}${rawLast.substring(1)}' : '';
+    final name = '$capFirst $capLast'.trim();
     final email = user['email'] as String? ?? '—';
     final city = user['preferred_city'] as String? ?? 'Not set';
     final isGuest = auth.isGuest;
@@ -1074,7 +1132,11 @@ class _ProfileTab extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: card,
                   borderRadius: BorderRadius.circular(AppTheme.radiusXl),
-                  border: Border.all(color: border, width: 1),
+                  border: Border.all(
+                    color: border,
+                    width: 1,
+                  ),
+                  boxShadow: isDark ? null : AppTheme.cardShadowLight,
                 ),
                 child: Column(children: [
                   // Avatar
@@ -1726,14 +1788,15 @@ class _AqiBannerState extends State<_AqiBanner> {
 
     // 1. First try resolving using high-precision GPS coordinates
     try {
-      final pos = await LocationService.getCurrentPosition();
+      final pos = await LocationService.getCurrentPosition()
+          .timeout(const Duration(seconds: 3), onTimeout: () => null);
       double? lat = pos?.latitude;
       double? lon = pos?.longitude;
 
       // If no GPS or city is custom-selected, geocode the city name
       if (lat == null || lon == null || (city.isNotEmpty && city.toLowerCase() != 'shirpur' && city.toLowerCase() != 'babulde')) {
         try {
-          final locs = await locationFromAddress(city).timeout(const Duration(seconds: 4));
+          final locs = await locationFromAddress(city).timeout(const Duration(seconds: 2));
           if (locs.isNotEmpty) {
             lat = locs.first.latitude;
             lon = locs.first.longitude;
@@ -1749,7 +1812,7 @@ class _AqiBannerState extends State<_AqiBanner> {
       try {
         final omResp = await http.get(
           Uri.parse('https://air-quality-api.open-meteo.com/v1/air-quality?latitude=$lat&longitude=$lon&current=us_aqi,european_aqi,pm10,pm2_5'),
-        ).timeout(const Duration(seconds: 5));
+        ).timeout(const Duration(seconds: 3));
         if (omResp.statusCode == 200) {
           final data = jsonDecode(omResp.body);
           final cur = data['current'];
@@ -1775,7 +1838,7 @@ class _AqiBannerState extends State<_AqiBanner> {
         try {
           final backendResp = await http.get(
             Uri.parse('${ApiConfig.baseUrl}/api/aqi?lat=$lat&lon=$lon'),
-          ).timeout(const Duration(seconds: 5));
+          ).timeout(const Duration(seconds: 3));
           if (backendResp.statusCode == 200) {
             final data = jsonDecode(backendResp.body);
             if (data['success'] == true && data['data'] != null) {
@@ -1793,7 +1856,7 @@ class _AqiBannerState extends State<_AqiBanner> {
         final encoded = Uri.encodeComponent(city);
         final resp = await http.get(
           Uri.parse('https://api.waqi.info/feed/$encoded/?token=demo'),
-        ).timeout(const Duration(seconds: 4));
+        ).timeout(const Duration(seconds: 2));
         if (resp.statusCode == 200) {
           final data = jsonDecode(resp.body) as Map<String, dynamic>;
           if (data['status'] == 'ok') {

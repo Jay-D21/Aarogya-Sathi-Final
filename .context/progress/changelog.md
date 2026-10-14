@@ -1,6 +1,20 @@
 # Changelog
- 
-## 2026-10-10 (Jayesh — Session 24: Google Health & Drive UI Redesign + Play Store Beta Preparation)
+
+## 2026-10-14 (Jayesh — Session 25: Mock Data Purge & Premium UI Polish)
+- [Jayesh] Purged hardcoded & mock health data across Home Screen & Health Dashboard:
+  - Fixed `HealthSummaryBanner`: Dynamically checks real user records (`lastBPStatus`, `lastSugarStatus`, wearable heart rate, sleep, steps) instead of hardcoding `5 of 5 in range`. Added zero-state banner ("No vitals logged yet today") with fast "+ Log" action.
+  - Fixed `Key metrics` on HealthDashboard & HomeScreen: Removed fake `120/80` BP and `95 mg/dL` glucose with fake sparkline waves when no readings are recorded. Now renders honest `--/--` with "Tap to log" and disables synthetic sparklines.
+  - Fixed Heart Rate & Sleep cards: Removed fake `72 bpm` and `7.2 hrs` defaults; now properly displays `--` with sync/log status prompts.
+  - Fixed Weekly Consistency: Computed active days dynamically based on actual pedometer activity rather than hardcoding `5 of 7 days`.
+  - Fixed Weight & BMI: Dynamically calculates Asian-specific ICMR BMI ranges (`Low`, `Normal`, `Over`, `High`) based on actual profile attributes.
+  - Fixed Symptoms metric: Shows genuine recorded symptoms count rather than synthetic "Optimal / No active alarms".
+  - Fixed infinite AQI loader: Added strict location & API timeouts with automatic CPCB NAQI clean-air baseline fallback to eliminate endless spinner.
+  - Upgraded Design System (`theme.dart`): Transformed murky light mode background to crisp slate (`#F8FAFC`), modern high-contrast borders (`#E2E8F0`), and soft elevation shadows (`#0F172A` at 4% alpha).
+  - Redesigned Chat empty state (`chat_screen.dart`): Replaced clip-art brain icon with glowing Google-grade AI spark avatar, elevated suggestion cards with rounded action pills, and eliminated empty dead space.
+- [Jayesh] Verification:
+  - `flutter analyze`: 0 issues found.
+  - `flutter test`: 23/23 tests passing.
+
 - [Jayesh] Sprint 1 Play Store Blockers completed:
   - Fixed permanent Android applicationId: `com.aarogyasathi.app` in `build.gradle.kts`.
   - Configured release signing block with `key.properties` auto-detection (falls back to debug).

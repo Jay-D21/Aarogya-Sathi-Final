@@ -67,7 +67,7 @@ class PremiumMetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? AppTheme.surfaceL1 : AppTheme.surfaceL1Light;
-    final borderCol = isDark ? AppTheme.glassBorderLight : AppTheme.glassBorderLightModeSubtle;
+    final borderCol = isDark ? AppTheme.glassBorderLight : const Color(0xFFE2E8F0);
 
     return GestureDetector(
       onTap: onTap,

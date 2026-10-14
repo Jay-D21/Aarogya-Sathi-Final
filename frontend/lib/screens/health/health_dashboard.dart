@@ -54,8 +54,49 @@ class _HealthDashboardState extends State<HealthDashboard>
     final sugarRecords = health.records
         .where((r) => r['data'] != null && (r['data']['glucose_value'] != null || r['data']['sugar_fasting'] != null))
         .toList();
+    final symptomRecords = health.records
+        .where((r) => r['record_type'] == 'symptom')
+        .toList();
 
-    // lastBP / lastSugar derived on demand from health.lastBPStatus
+    // Dynamic vitals calculation based on real records
+    int totalVitals = 0;
+    int inRangeVitals = 0;
+
+    if (bpRecords.isNotEmpty) {
+      totalVitals++;
+      if (health.lastBPStatus?['status'] == 'Normal') inRangeVitals++;
+    }
+    if (sugarRecords.isNotEmpty) {
+      totalVitals++;
+      if (health.lastSugarStatus?['status'] == 'Normal') inRangeVitals++;
+    }
+
+    final hasVitals = totalVitals > 0;
+    final vitalsText = hasVitals
+        ? '$inRangeVitals of $totalVitals in range'
+        : 'No vitals logged yet';
+    final vitalsColor = hasVitals
+        ? (inRangeVitals == totalVitals ? AppTheme.accentGreen : AppTheme.accentOrange)
+        : AppTheme.primaryTeal;
+
+    // Real BMI Calculation
+    final authUser = context.watch<AuthProvider>().user;
+    final weightKgVal = (authUser?['weight_kg'] as num?)?.toDouble() ?? 70.0;
+    final heightCmVal = (authUser?['height_cm'] as num?)?.toDouble();
+    String bmiCategory = 'Logged';
+    if (heightCmVal != null && heightCmVal > 0) {
+      final hM = heightCmVal / 100.0;
+      final bmi = weightKgVal / (hM * hM);
+      if (bmi < 18.5) {
+        bmiCategory = 'BMI ${bmi.toStringAsFixed(1)} (Low)';
+      } else if (bmi < 25.0) {
+        bmiCategory = 'BMI ${bmi.toStringAsFixed(1)} (Normal)';
+      } else if (bmi < 30.0) {
+        bmiCategory = 'BMI ${bmi.toStringAsFixed(1)} (Over)';
+      } else {
+        bmiCategory = 'BMI ${bmi.toStringAsFixed(1)} (High)';
+      }
+    }
 
     return Scaffold(
       backgroundColor: bg,
@@ -108,10 +149,11 @@ class _HealthDashboardState extends State<HealthDashboard>
 
                 // ── Google Health: Health Status Summary Banner ──
                 HealthSummaryBanner(
-                  totalVitals: 5,
-                  inRangeVitals: 5,
-                  statusText: '5 of 5 in range',
-                  statusColor: AppTheme.accentGreen,
+                  totalVitals: totalVitals,
+                  inRangeVitals: inRangeVitals,
+                  statusText: vitalsText,
+                  statusColor: vitalsColor,
+                  onTap: () => _showBPSheet(context),
                 ),
 
                 const SizedBox(height: 18),
@@ -172,15 +214,19 @@ class _HealthDashboardState extends State<HealthDashboard>
                         label: 'Blood Pressure',
                         value: bpRecords.isNotEmpty
                             ? '${bpRecords.last['data']?['systolic']}/${bpRecords.last['data']?['diastolic']}'
-                            : '120/80',
+                            : '--/--',
                         unit: 'mmHg',
-                        statusLabel: health.lastBPStatus?['status'] as String? ?? 'Normal',
-                        statusColor: AppTheme.healthStatusColor(health.lastBPStatus?['status'] as String?),
+                        statusLabel: bpRecords.isNotEmpty
+                            ? (health.lastBPStatus?['status'] as String? ?? 'Normal')
+                            : 'Tap to log',
+                        statusColor: bpRecords.isNotEmpty
+                            ? AppTheme.healthStatusColor(health.lastBPStatus?['status'] as String?)
+                            : AppTheme.textMutedOf(context),
                         icon: Icons.favorite_rounded,
                         iconColor: AppTheme.accentRed,
                         trendData: bpRecords.length >= 2
                             ? bpRecords.take(7).map((r) => ((r['data']?['systolic'] as num?) ?? 120).toDouble()).toList()
-                            : const [118.0, 122.0, 119.0, 124.0, 120.0],
+                            : null,
                         onTap: () => _showBPSheet(context),
                       ),
                     ),
@@ -189,16 +235,20 @@ class _HealthDashboardState extends State<HealthDashboard>
                       child: PremiumMetricCard(
                         label: 'Blood Glucose',
                         value: sugarRecords.isNotEmpty
-                            ? '${sugarRecords.last['data']?['glucose_value'] ?? sugarRecords.last['data']?['sugar_fasting'] ?? '95'}'
-                            : '95',
+                            ? '${sugarRecords.last['data']?['glucose_value'] ?? sugarRecords.last['data']?['sugar_fasting'] ?? '--'}'
+                            : '--',
                         unit: 'mg/dL',
-                        statusLabel: health.lastSugarStatus?['status'] as String? ?? 'Normal',
-                        statusColor: AppTheme.healthStatusColor(health.lastSugarStatus?['status'] as String?),
+                        statusLabel: sugarRecords.isNotEmpty
+                            ? (health.lastSugarStatus?['status'] as String? ?? 'Normal')
+                            : 'Tap to log',
+                        statusColor: sugarRecords.isNotEmpty
+                            ? AppTheme.healthStatusColor(health.lastSugarStatus?['status'] as String?)
+                            : AppTheme.textMutedOf(context),
                         icon: Icons.water_drop_rounded,
                         iconColor: AppTheme.accentOrange,
                         trendData: sugarRecords.length >= 2
                             ? sugarRecords.take(7).map((r) => (((r['data']?['glucose_value'] ?? r['data']?['sugar_fasting'] ?? 95) as num)).toDouble()).toList()
-                            : const [92.0, 96.0, 94.0, 98.0, 95.0],
+                            : null,
                         onTap: () => _showSugarSheet(context),
                       ),
                     ),
@@ -210,13 +260,13 @@ class _HealthDashboardState extends State<HealthDashboard>
                     Expanded(
                       child: PremiumMetricCard(
                         label: 'Weight & BMI',
-                        value: '${context.watch<AuthProvider>().user?['weight_kg'] ?? 70.0}',
+                        value: weightKgVal.toStringAsFixed(1),
                         unit: 'kg',
-                        statusLabel: 'Normal BMI',
+                        statusLabel: bmiCategory,
                         statusColor: AppTheme.accentBlue,
                         icon: Icons.monitor_weight_outlined,
                         iconColor: AppTheme.accentBlue,
-                        trendData: const [71.5, 71.0, 70.8, 70.4, 70.0],
+                        trendData: null,
                         onTap: () => _showWeightSheet(context),
                       ),
                     ),
@@ -224,13 +274,15 @@ class _HealthDashboardState extends State<HealthDashboard>
                     Expanded(
                       child: PremiumMetricCard(
                         label: 'Symptoms',
-                        value: 'Optimal',
-                        unit: '',
-                        statusLabel: 'No active alarms',
-                        statusColor: AppTheme.accentGreen,
+                        value: symptomRecords.isNotEmpty ? '${symptomRecords.length}' : 'None',
+                        unit: symptomRecords.isNotEmpty ? 'logged' : '',
+                        statusLabel: symptomRecords.isNotEmpty
+                            ? 'Last: ${symptomRecords.last['data']?['symptom_name'] ?? 'Logged'}'
+                            : 'No active symptoms',
+                        statusColor: symptomRecords.isNotEmpty ? AppTheme.accentOrange : AppTheme.accentGreen,
                         icon: Icons.health_and_safety_rounded,
                         iconColor: AppTheme.accentGreen,
-                        trendData: const [1.0, 1.0, 1.0, 1.0, 1.0],
+                        trendData: null,
                         onTap: () => _showSymptomSheet(context),
                       ),
                     ),

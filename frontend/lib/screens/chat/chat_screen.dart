@@ -447,76 +447,113 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
       child: Column(
         children: [
-          // Hero
+          const SizedBox(height: 8),
+          // Hero AI Avatar with soft pulsing glow ring
           Container(
-            width: 80, height: 80,
-            decoration: const BoxDecoration(
+            width: 68,
+            height: 68,
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: AppTheme.chatGradient,
+              boxShadow: [
+                BoxShadow(
+                  color: AppTheme.accentPurple.withValues(alpha: 0.35),
+                  blurRadius: 20,
+                  offset: const Offset(0, 6),
+                ),
+              ],
             ),
-            child: const Icon(Icons.psychology_rounded,
-                color: Colors.white, size: 40),
+            child: const Icon(
+              Icons.auto_awesome_rounded,
+              color: Colors.white,
+              size: 32,
+            ),
           ),
-          const SizedBox(height: 16),
-          Text('How can I help you?',
-              style: GoogleFonts.outfit(
-                  fontSize: 22, fontWeight: FontWeight.w700,
-                  color: textPri)),
+          const SizedBox(height: 14),
+          Text(
+            'How can I help you today?',
+            style: GoogleFonts.outfit(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: textPri,
+              letterSpacing: -0.3,
+            ),
+          ),
           const SizedBox(height: 6),
           Text(
-            'Ask me anything about your health in Hindi,\nMarathi, or English.',
+            'Ask medical queries in English, हिंदी, or मराठी.\nResponses follow validated ICMR guidelines.',
             textAlign: TextAlign.center,
-            style: GoogleFonts.inter(fontSize: 14, color: textSec, height: 1.5),
+            style: GoogleFonts.inter(
+              fontSize: 13,
+              color: textSec,
+              height: 1.4,
+            ),
           ),
 
-          const SizedBox(height: 28),
+          const SizedBox(height: 18),
 
-          // Feature chips row
+          // Feature trust chips
           Wrap(
             alignment: WrapAlignment.center,
             spacing: 8,
             runSpacing: 8,
             children: [
-              ('🌿', 'ICMR Guidelines'),
+              ('🩺', 'ICMR Guidelines'),
               ('🌬️', 'AQI-Aware'),
-              ('🔒', 'Private'),
-              ('🌐', 'Multilingual'),
+              ('🔒', 'On-Device Private'),
+              ('🌐', 'Multilingual AI'),
             ].map((item) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: AppTheme.primaryTeal.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(50),
+                color: isDark ? AppTheme.surfaceL2 : const Color(0xFFF1F5F9),
+                borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                    color: AppTheme.primaryTeal.withValues(alpha: 0.3)),
+                  color: isDark ? AppTheme.glassBorderLight : const Color(0xFFE2E8F0),
+                  width: 0.8,
+                ),
               ),
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Text(item.$1, style: const TextStyle(fontSize: 13)),
-                const SizedBox(width: 4),
-                Text(item.$2,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(item.$1, style: const TextStyle(fontSize: 12)),
+                  const SizedBox(width: 5),
+                  Text(
+                    item.$2,
                     style: GoogleFonts.inter(
-                        fontSize: 11,
-                        color: AppTheme.primaryTeal,
-                        fontWeight: FontWeight.w600)),
-              ]),
+                      fontSize: 11,
+                      color: textPri,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
             )).toList(),
           ),
 
-          const SizedBox(height: 28),
+          const SizedBox(height: 22),
+
+          // Suggestion header
+          Row(
+            children: [
+              Icon(Icons.lightbulb_outline_rounded, size: 16, color: AppTheme.primaryTeal),
+              const SizedBox(width: 6),
+              Text(
+                'Suggested health topics',
+                style: GoogleFonts.outfit(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: textPri,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
 
           // Suggestion cards
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text('Try asking:',
-                  style: GoogleFonts.outfit(
-                      fontSize: 14, fontWeight: FontWeight.w600,
-                      color: textPri)),
-            ),
-          ),
           ...suggestions.map((s) => Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: _SuggestionChip(
@@ -526,9 +563,39 @@ class _EmptyState extends StatelessWidget {
               card: card,
               border: border,
               textPri: textPri,
+              textSec: textSec,
               onTap: () => onSuggestion(s.$2),
             ),
           )),
+
+          const SizedBox(height: 14),
+
+          // Privacy note at bottom
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            decoration: BoxDecoration(
+              color: isDark ? AppTheme.surfaceL2.withValues(alpha: 0.5) : const Color(0xFFF8FAFC),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.shield_outlined, size: 13, color: AppTheme.textMutedOf(context)),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    'Conversations are private & never shared with third parties.',
+                    style: GoogleFonts.inter(
+                      fontSize: 11,
+                      color: AppTheme.textMutedOf(context),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -539,7 +606,7 @@ class _SuggestionChip extends StatelessWidget {
   final String emoji;
   final String text;
   final bool isDark;
-  final Color card, border, textPri;
+  final Color card, border, textPri, textSec;
   final VoidCallback onTap;
   const _SuggestionChip({
     required this.emoji,
@@ -548,33 +615,74 @@ class _SuggestionChip extends StatelessWidget {
     required this.card,
     required this.border,
     required this.textPri,
+    required this.textSec,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        decoration: BoxDecoration(
-          color: card,
-          borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-          border: Border.all(color: border),
-        ),
-        child: Row(children: [
-          Text(emoji, style: const TextStyle(fontSize: 18)),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(text,
-                style: GoogleFonts.inter(
-                    fontSize: 13, color: textPri,
-                    fontWeight: FontWeight.w500)),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            color: card,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isDark ? AppTheme.glassBorderLight : const Color(0xFFE2E8F0),
+              width: 1,
+            ),
+            boxShadow: isDark ? null : [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.02),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          Icon(Icons.send_rounded, size: 14,
-              color: AppTheme.primaryTeal),
-        ]),
+          child: Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: isDark ? AppTheme.surfaceL2 : const Color(0xFFF1F5F9),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(emoji, style: const TextStyle(fontSize: 16)),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  text,
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    color: textPri,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Container(
+                width: 26,
+                height: 26,
+                decoration: BoxDecoration(
+                  color: AppTheme.primaryTeal.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.arrow_outward_rounded,
+                  size: 14,
+                  color: AppTheme.primaryTeal,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
