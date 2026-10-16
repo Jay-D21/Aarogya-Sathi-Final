@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Defines Material 3 light and dark [ThemeData] for Aarogya Sathi.
+///
+/// Colour tokens follow Google Health / Fit design conventions:
+///   • Primary: #006A60 (dark) / #74F8E5 (light)
+///   • Surface: True-black OLED-safe dark (#0A0E0D) / off-white light
+///   • Error: Clinical red (#B3261E) for critical vital alerts
 class AppTheme {
   // ═══════════════════════════════════════════════════════════════
   // CORE BRAND — Google Health Material 3 Teal & Tonal tokens
