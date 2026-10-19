@@ -39,6 +39,17 @@ evaluation/results*.json
 
 # Scratch & temporary files
 scratch/
+Aarogya-Sathi-Source/
+extracted_report_images/
+extracted_revised_ppt_images/
+*_Backup.docx
+*Working.docx
+temp_check.docx
+report_summary.json
+official_ppt_dump.txt
+slides_detailed_analysis.txt
+bg_page_*.png
+test_*.pptx
 
 # Release signing (NEVER commit these)
 *.jks
