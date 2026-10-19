@@ -3,7 +3,7 @@
 ## Project
 **Aarogya Sathi** — AI-powered Personal Health Agent for India
 
-## Tech Stack (Updated 2026-10-03)
+## Tech Stack (Updated 2026-10-19)
 
 | Layer | Technology | Status |
 |-------|-----------|--------|
@@ -19,8 +19,8 @@
 | **Safety** | Semantic-router + HuggingFaceEncoder (all-MiniLM-L6-v2) | ✅ ML Activated |
 | **AQI** | WAQI API (real token) + Open-Meteo weather | ✅ Live |
 | **Backend** | FastAPI + SSE streaming on Render | ✅ Working |
-| **Frontend** | Flutter (Android) — Provider + Material3 | ✅ Full features (23 tests pass) |
-| **Medical File Vault** | On-device sandboxed storage via image_picker + file_picker | ✅ Live |
+| **Frontend** | Flutter (Android `com.aarogyasathi.app`) — Material 3 Expressive, Google Health/Fit UI, Slate theme, dynamic vitals | ✅ Production Polish (23 tests pass) |
+| **Medical File Vault** | On-device sandboxed storage via image_picker + file_picker, Drive-style folders | ✅ Live |
 | **Health Profile** | Asian ICMR BMI + conditions/medications + offline caching | ✅ Live |
 | **Pedometer Filter** | Gait cadence + 8-step hysteresis bout validation | ✅ Live |
 | **Evaluation** | LLM-as-Judge + 32 gold Q&A | 🟡 Needs re-run |
@@ -37,6 +37,8 @@
 2. **Agentic RAG** instead of linear pipeline — intent-first routing saves 60-70% LLM calls for non-medical queries.
 3. **Native multilingual** instead of translate→process→translate — Qwen 27B understands Hinglish/Minglish natively, saving 100% Sarvam credits during chat.
 4. **On-device file storage** for DPDP Act compliance — no cloud uploads of medical documents.
+5. **Pure on-device vitals evaluation & zero-mock transparency**: Only real recorded measurements generate clinical status and sparklines; honest zero-states with fast "+ Log" actions prevent synthetic clinical reassurance.
+6. **DPDP & Play Store compliance**: Package applicationId `com.aarogyasathi.app`, explicit release signing with `key.properties`, elimination of unneeded permissions (`RECORD_AUDIO`), and publicly accessible privacy policy (`docs/privacy-policy.html`).
 
 → System diagram: [system-diagram.md](system-diagram.md)
 → Data flows: [data-flows.md](data-flows.md)

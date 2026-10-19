@@ -37,6 +37,10 @@
 - `file_picker: ^11.0.3` — PDF lab report and document picker for vault
 - `cupertino_icons: ^1.0.8` — Material/Cupertino asset icons
 
+## Frontend Dev Dependencies
+- `flutter_launcher_icons: ^0.14.3` — Automatic generation of multi-density Android adaptive launcher icons
+- `flutter_lints: ^6.0.0` — Official Flutter recommended lint rules
+
 ## Removed / Dead Dependencies (cleaned up)
 - `dio`, `fl_chart`, `shimmer` — removed in session 12 (standardized to `http` and Canvas)
 - `flutter_riverpod`, `go_router` — replaced by `provider` and native `Navigator`

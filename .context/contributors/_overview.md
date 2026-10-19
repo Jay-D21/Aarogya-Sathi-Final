@@ -2,8 +2,8 @@
 
 | Name | Roll No | Role | Primary Modules | Status |
 |------|---------|------|----------------|--------|
-| Jayesh Patil | C233 | Lead — Agentic RAG & LLM Pipeline | OKF Bundle, Agentic Pipeline, Session Memory, Evaluation | Active — Agentic RAG complete, evaluation pending |
-| Abhijit Patil | C263 | Frontend & Research Paper | File Vault, Edit Profile, Language, Step Filter, Research Paper | Active — All 4 frontend tasks + research paper complete (9 commits Oct 1–3) |
+| Jayesh Patil | C233 | Lead — Agentic RAG & LLM Pipeline | OKF Bundle, Agentic Pipeline, Session Memory, UI Polish | Active — Play Store beta ready (`com.aarogyasathi.app`), Google Health & Drive UI redesign, dynamic vitals |
+| Abhijit Patil | C263 | Frontend & Research Paper | File Vault, Edit Profile, Language, Step Filter, Brand & Splash | Active — Release APK & Render verified, Pedometer filter, Gold mandala branding & launcher icon, 3-phase opening motion |
 | Ritesh Pawar | C276 | Mobile Sensors & Diagrams | Background Notifications, Architecture Diagrams, Demo Video | Pending — 0 commits since project start |
 
 **Guide**: Dr. Atul V. Dusane

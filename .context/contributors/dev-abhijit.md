@@ -13,6 +13,15 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Built and verified **Gold Mandala Splash Redesign & Android Launcher Icon (Session 23: `splash_screen.dart`, `aarogya_logo_dynamic.dart`, `login_screen.dart`, `flutter_launcher_icons`)**:
+  - Redesigned splash screen opening with a 3-phase icon-to-splash animation sequence:
+    - Phase 1 (0ms): Gold mandala appears small (0.30× scale), seamlessly matching the Android home screen launcher icon.
+    - Phase 2 (200ms): Elastic-out scale animation from 0.30× to 1.0× with pulsing gold glow rings.
+    - Phase 3 (900ms): App title, Sanskrit subtitle, and custom gold gradient loading bar slide up.
+  - Replaced the 795-line CustomPainter in `splash_screen.dart` with high-performance `Image.asset('assets/images/app_logo.jpg')`.
+  - Upgraded `aarogya_logo_dynamic.dart` from old canvas geometry to the official transparent gold mandala image with breathing glow.
+  - Integrated gold mandala branding into `login_screen.dart`, replacing the generic heart icon and applying gold-to-teal gradient shader.
+  - Integrated `flutter_launcher_icons: ^0.14.3`, processed pure transparent foreground without background clipping or borders, and generated all 5 Android density launcher icons (mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi).
 - Verified & Compiled **Production Release APK & Render Backend Deployment (Session 22: `api_config.dart`, OpenJDK 17, `app-release.apk`)**:
   - Validated live Render deployment (`https://aarogya-sathi-final.onrender.com`, Service ID: `srv-dai457gjo6nc73ddaggg`) with `/api/health` (Llama 3.1 8B) and `/api/aqi` (live NAQI & Open-Meteo weather).
   - Configured `frontend/lib/config/api_config.dart` production baseUrl.
@@ -74,6 +83,8 @@
 - All 4 planned frontend roadmap tasks (Language Persistence, Medical File Vault, Edit Profile, Pubspec Cleanup) are complete and tested!
 
 ## Files I Own
+- `frontend/lib/screens/onboarding/splash_screen.dart`
+- `frontend/lib/widgets/aarogya_logo_dynamic.dart`
 - `frontend/lib/screens/profile/edit_profile_screen.dart`
 - `frontend/lib/models/medical_file_model.dart`
 - `frontend/lib/providers/file_vault_provider.dart`
