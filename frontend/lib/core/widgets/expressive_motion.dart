@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Material 3 Expressive spring-pressable feedback widget.
 /// Scales down on press down and springs back smoothly on release or cancel.
+/// Wraps any [child] widget with a spring-physics press animation.
+/// On tap-down the child scales to [pressScale] with a spring curve,
+/// reverting on tap-up. Provides tactile depth feedback without
+/// requiring device haptics.
 class SpringPressable extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
