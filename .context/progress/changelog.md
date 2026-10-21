@@ -1,6 +1,19 @@
 # Changelog
 
-## 2026-10-22 (Abhijit — Session 28: Research Paper Restructuring to Proposal Format)
+## 2026-10-22 (Abhijit — Session 28: Research Paper — Full Scientific Rewrite)
+- [Abhijit] Rewrote `paper/paper.md` following `scientific-writing` skill (IMRAD, IEEE, flowing prose):
+  - All sections written in full flowing paragraphs — zero bullet points in body text.
+  - Proper IMRAD structure: Abstract, Introduction, Related Work, System Architecture, Implementation, Evaluation, Discussion, Limitations, Timeline, Conclusion.
+  - 6 rendered PNG figures with full academic captions (Fig. 1–6).
+  - 6 self-explanatory tables with numbered captions (Table 1–6).
+  - Gap analysis placed in Introduction (Table 1) for immediate impact.
+  - Related Work expanded with proper gap statement bridging to this work.
+  - Contributions stated in flowing prose (not numbered list).
+  - Research Objectives (O1–O5) embedded in Introduction paragraph.
+  - IEEE-format references with full author lists, journal abbreviations, DOIs.
+  - 305 lines, ~6,289 words — targets ~11 pages in IEEE double-column with figures.
+  - Past tense for methods/results, present tense for established facts.
+  - Original 938-line version preserved as `paper/paper_original_backup.md`.
 - [Abhijit] Completely restructured `paper/paper.md` from 938 lines (~11,135 words) to 343 lines (~4,307 words):
   - Converted from documentation-style to professional academic proposal format (10-11 pages in IEEE double-column with figures).
   - Replaced all ASCII box diagrams with proper Figure references to 6 pre-rendered PNG assets in `docs/diagrams/images/`.
