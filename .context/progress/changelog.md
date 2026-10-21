@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-22 (Abhijit — Session 28: Research Paper Restructuring to Proposal Format)
+- [Abhijit] Completely restructured `paper/paper.md` from 938 lines (~11,135 words) to 343 lines (~4,307 words):
+  - Converted from documentation-style to professional academic proposal format (10-11 pages in IEEE double-column with figures).
+  - Replaced all ASCII box diagrams with proper Figure references to 6 pre-rendered PNG assets in `docs/diagrams/images/`.
+  - Consolidated 27 tables down to 6 high-impact tables: Gap Analysis, RAG Comparison, Tech Stack, Evaluation Results, ReAct vs Traditional RAG, and Project Timeline.
+  - Added proposal-grade sections: Research Objectives (O1-O5), Project Timeline and Team Contribution (Table 6), formal problem statement with gaps.
+  - Removed Appendix A (AI/ML Skill Matrix) and Appendix B (Feasibility Analysis) — content folded into main body where relevant.
+  - Eliminated redundant tech stack listings and verbose implementation prose.
+  - Preserved all 30 IEEE-format references with DOIs and arXiv IDs.
+  - Backed up original as `paper/paper_original_backup.md`.
+- [Abhijit] Context files updated: `changelog.md`.
+
 ## 2026-10-19 (Ritesh â€” Session 27: Final Interim Report Publication, Table Numbering & Compact High-Legibility Diagrams)
 - [Ritesh] Completed final Review 2 Interim Report formatting in `Aarogya_Sathi_Interim_Report_Review_Final.docx`, `docs/Aarogya_Sathi_Interim_Report_Review_Final.docx`, and `docs/interim_report_review2.md`:
   - Enforced low-AI student voice, single-app problem statement, and 42 IEEE citations.
