@@ -15,7 +15,7 @@
 | 11 | Health Profile & BMI | Abhijit | ✅ Live + Tested | Asian ICMR BMI calculator, chronic conditions & medications manager, offline profile caching, RAG sync, 6 unit tests |
 | 12 | Pedometer Filter | Abhijit | ✅ Live + Tested | Gait cadence filter + 8-step hysteresis bout validation to reject hand movements, 6 unit tests |
 | 13 | Proactive Notifications | Ritesh | ❌ Not Started | Background AQI alerts, vital anomaly alerts, daily morning briefings — assigned but no commits |
-| 14 | Architecture Diagrams | Ritesh | ❌ Not Started | 7 capstone diagrams for report/presentation — assigned but no commits |
+| 14 | Architecture Diagrams | Ritesh | ✅ Complete | 8 publication-grade modular architecture diagrams in `docs/diagrams/images/` and `docs/diagrams/system_architecture_diagrams.md` |
 | 15 | Demo Video | Ritesh | ❌ Not Started | 5-minute walkthrough — assigned but not recorded |
 
 → Each module: [modules/{name}/summary.md] and [modules/{name}/detail.md]

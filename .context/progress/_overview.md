@@ -1,8 +1,8 @@
 # Project Progress
 
-Last updated: 2026-10-19
+Last updated: 2026-10-21
 
-## Overall: ~92% Complete
+## Overall: ~96% Complete
 
 | Module | Progress | Status |
 |--------|----------|--------|
@@ -18,11 +18,12 @@ Last updated: 2026-10-19
 | Pedometer Filter | ▓▓▓▓▓▓▓▓▓▓ 100% | ✅ Cadence gating (3.2 Hz) + 8-step hysteresis bout filter |
 | Evaluation | ▓▓▓▓▓▓░░░░ 60% | 🟡 LLM-as-judge benchmark (4.60/5.00), needs re-run on agentic |
 | Research Paper | ▓▓▓▓▓▓▓▓▓▓ 100% | ✅ Complete IEEE paper (`paper/paper.md`, 27 tables, 42 refs) |
+| Architecture Diagrams | ▓▓▓▓▓▓▓▓▓▓ 100% | ✅ 8 modular diagrams in `docs/diagrams/images/` & Interim Report Final |
 
 ## Current Priorities & Blockers
 - **Evaluation re-run**: Execute 32-query gold benchmark through agentic pipeline.
 - **OKF expansion**: Add remaining 16 concept files to reach 50+ milestone.
-- **Capstone deliverables**: Ritesh to complete final report architecture diagrams and 5-min demo walkthrough.
+- **Capstone deliverables**: 5-minute demo video walkthrough.
 
 ## Key Milestones
 | Milestone | Target Date | Status |
@@ -37,9 +38,10 @@ Last updated: 2026-10-19
 | Gold Mandala Icon & Opening Transition | Week 7 | ✅ Complete |
 | Play Store Beta Setup & DPDP Privacy Policy | Week 8 | ✅ Complete |
 | Google Health & Drive UI Polish + Mock Purge | Week 8 | ✅ Complete |
+| Architecture Diagrams & Review 2 Report Final | Week 8-9 | ✅ Complete |
 | 50+ OKF concept files | Week 9 | 🟡 In progress (34/50+) |
 | Evaluation Re-run against Agentic Pipeline | Week 9 | 🟡 Queued |
-| Final Presentation, Diagrams & Demo Video | Week 10 | 🟡 Pending Ritesh |
+| Final Presentation & Demo Video | Week 10 | 🟡 Pending recording |
 
 → Changelog: .context/progress/changelog.md
 → Tech debt: .context/progress/tech-debt.md
