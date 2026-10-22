@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_service.dart';
+import '../services/health_alert_service.dart';
 
 class HealthProvider extends ChangeNotifier {
   static const _kCache = 'health_records_cache_v1';
@@ -93,6 +94,10 @@ class HealthProvider extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+
+    // Fire proactive notification if BP is outside safe range
+    HealthAlertService.checkBP(systolic, diastolic);
+
     return result;
   }
 
@@ -128,6 +133,10 @@ class HealthProvider extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+
+    // Fire proactive notification if blood sugar is outside safe range
+    HealthAlertService.checkBloodSugar(value.toDouble(), type: type);
+
     return result;
   }
 

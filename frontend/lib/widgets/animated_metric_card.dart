@@ -81,8 +81,6 @@ class _AnimatedMetricCardState extends State<AnimatedMetricCard>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final card = AppTheme.cardBg(context);
-    final border = AppTheme.borderColor(context);
     final textPri = AppTheme.textPrimaryOf(context);
     final textSec = AppTheme.textSecondaryOf(context);
 
@@ -100,10 +98,8 @@ class _AnimatedMetricCardState extends State<AnimatedMetricCard>
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: card,
-                borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                border: Border.all(color: border),
-                boxShadow: isDark ? AppTheme.cardShadow : AppTheme.cardShadowLight,
+                color: Theme.of(context).colorScheme.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(24),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

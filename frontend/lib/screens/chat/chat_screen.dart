@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/theme.dart';
+import '../../core/widgets/expressive_motion.dart';
 import '../../providers/chat_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/health_provider.dart';
@@ -20,14 +21,6 @@ class _ChatScreenState extends State<ChatScreen>
   final _scrollCtrl = ScrollController();
   late AnimationController _typingCtrl;
   bool _inputEmpty = true;
-
-  static const _suggestions = [
-    ('🤒', 'I have a fever and headache'),
-    ('💧', 'How much water should I drink daily?'),
-    ('🍽️', 'Best diet for diabetes management'),
-    ('😮‍💨', 'AQI is high, what precautions?'),
-    ('💊', 'How to reduce blood pressure naturally'),
-  ];
 
   @override
   void initState() {
@@ -139,13 +132,18 @@ class _ChatScreenState extends State<ChatScreen>
   @override
   Widget build(BuildContext context) {
     final chat = context.watch<ChatProvider>();
+    final auth = context.watch<AuthProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textPri = AppTheme.textPrimaryOf(context);
     final textSec = AppTheme.textSecondaryOf(context);
     final card = AppTheme.cardBg(context);
     final card2 = AppTheme.cardBg2(context);
-    final border = AppTheme.borderColor(context);
     final bg = AppTheme.bgOf(context);
+
+    final rawName = auth.user?['first_name'] as String? ?? 'Friend';
+    final firstName = rawName.isNotEmpty
+        ? '${rawName[0].toUpperCase()}${rawName.substring(1)}'
+        : 'Friend';
 
     return Scaffold(
       backgroundColor: bg,
@@ -154,16 +152,18 @@ class _ChatScreenState extends State<ChatScreen>
         surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
         titleSpacing: 20,
+        elevation: 0,
+        scrolledUnderElevation: 0,
         title: Row(children: [
           // AI avatar
           Container(
-            width: 40, height: 40,
-            decoration: const BoxDecoration(
+            width: 38, height: 38,
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: AppTheme.chatGradient,
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
-            child: const Icon(Icons.psychology_rounded,
-                color: Colors.white, size: 20),
+            child: Icon(Icons.psychology_outlined,
+                color: Theme.of(context).colorScheme.onPrimaryContainer, size: 20),
           ),
           const SizedBox(width: 12),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -191,27 +191,23 @@ class _ChatScreenState extends State<ChatScreen>
           GestureDetector(
             onTap: () => _showChatLangSheet(context),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: AppTheme.primaryTeal.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: AppTheme.primaryTeal.withValues(alpha: 0.35),
-                  width: 1,
-                ),
+                color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.translate_rounded,
-                      size: 13, color: AppTheme.primaryTeal),
+                  Icon(Icons.translate_rounded,
+                      size: 13, color: Theme.of(context).colorScheme.primary),
                   const SizedBox(width: 4),
                   Text(
-                    context.watch<AuthProvider>().language.toUpperCase(),
+                    auth.language.toUpperCase(),
                     style: GoogleFonts.inter(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: AppTheme.primaryTeal,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ],
@@ -228,44 +224,23 @@ class _ChatScreenState extends State<ChatScreen>
             ),
           ],
         ]),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Divider(height: 1, color: border),
-        ),
       ),
       body: Column(children: [
         Expanded(
-          child: chat.messages.isEmpty && !chat.isLoading
+          child: chat.messages.isEmpty
               ? _EmptyState(
-                  suggestions: _suggestions,
-                  isDark: isDark,
-                  textPri: textPri,
-                  textSec: textSec,
-                  card: card,
-                  border: border,
+                  userName: firstName,
                   onSuggestion: _send,
                 )
               : ListView.builder(
                   controller: _scrollCtrl,
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                   itemCount: chat.messages.length +
-                      (chat.isTyping ? 1 : 0) +
-                      (chat.isLoading ? 1 : 0),
+                      (chat.isTyping ? 1 : 0),
                   itemBuilder: (_, i) {
-                    if (chat.isLoading && chat.messages.isEmpty && i == 0) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: AppTheme.primaryTeal),
-                        ),
-                      );
-                    }
                     if (chat.isTyping && i == chat.messages.length) {
                       return _TypingIndicator(
-                          ctrl: _typingCtrl, isDark: isDark,
-                          card: card, border: border);
+                          ctrl: _typingCtrl, isDark: isDark);
                     }
                     return _MessageBubble(
                       message: chat.messages[i],
@@ -283,11 +258,6 @@ class _ChatScreenState extends State<ChatScreen>
         _InputBar(
           ctrl: _inputCtrl,
           inputEmpty: _inputEmpty,
-          isDark: isDark,
-          textPri: textPri,
-          textSec: textSec,
-          card: card,
-          border: border,
           onSend: _send,
           onVoice: () => _showVoiceSheet(context),
         ),
@@ -429,260 +399,179 @@ class _ChatScreenState extends State<ChatScreen>
 // EMPTY STATE
 // ═══════════════════════════════════════════════════════════════════════════
 
+class _StarterPrompt {
+  final IconData icon;
+  final String title;
+  final String query;
+
+  const _StarterPrompt({
+    required this.icon,
+    required this.title,
+    required this.query,
+  });
+}
+
 class _EmptyState extends StatelessWidget {
-  final List<(String, String)> suggestions;
-  final bool isDark;
-  final Color textPri, textSec, card, border;
+  final String userName;
   final Function(String) onSuggestion;
+
   const _EmptyState({
-    required this.suggestions,
-    required this.isDark,
-    required this.textPri,
-    required this.textSec,
-    required this.card,
-    required this.border,
+    required this.userName,
     required this.onSuggestion,
   });
 
+  static const _starterPrompts = [
+    _StarterPrompt(
+      icon: Icons.thermostat_rounded,
+      title: 'Fever & headache',
+      query: 'I have a fever and headache',
+    ),
+    _StarterPrompt(
+      icon: Icons.water_drop_rounded,
+      title: 'Daily hydration',
+      query: 'How much water should I drink daily?',
+    ),
+    _StarterPrompt(
+      icon: Icons.restaurant_rounded,
+      title: 'Diabetes diet',
+      query: 'Best diet for diabetes management',
+    ),
+    _StarterPrompt(
+      icon: Icons.air_rounded,
+      title: 'High AQI care',
+      query: 'AQI is high, what precautions should I take?',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+      padding: const EdgeInsets.fromLTRB(20, 28, 20, 24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 8),
-          // Hero AI Avatar with soft pulsing glow ring
-          Container(
-            width: 68,
-            height: 68,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: AppTheme.chatGradient,
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.accentPurple.withValues(alpha: 0.35),
-                  blurRadius: 20,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.auto_awesome_rounded,
-              color: Colors.white,
-              size: 32,
-            ),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            'How can I help you today?',
-            style: GoogleFonts.outfit(
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-              color: textPri,
-              letterSpacing: -0.3,
+          const SizedBox(height: 12),
+          // Gemini Expressive Greeting Header with ShaderMask Gradient
+          ShaderMask(
+            blendMode: BlendMode.srcIn,
+            shaderCallback: (bounds) => LinearGradient(
+              colors: isDark
+                  ? const [Color(0xFF66F7E2), Color(0xFFA8C8FF)]
+                  : const [Color(0xFF006A60), Color(0xFF3F5F90)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ).createShader(bounds),
+            child: Text(
+              'Hello, $userName',
+              style: GoogleFonts.outfit(
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
+                letterSpacing: -0.5,
+              ),
             ),
           ),
           const SizedBox(height: 6),
           Text(
-            'Ask medical queries in English, हिंदी, or मराठी.\nResponses follow validated ICMR guidelines.',
-            textAlign: TextAlign.center,
+            'How can I help with your health today?',
             style: GoogleFonts.inter(
-              fontSize: 13,
-              color: textSec,
-              height: 1.4,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: colorScheme.onSurfaceVariant,
+              height: 1.3,
             ),
           ),
-
-          const SizedBox(height: 18),
-
-          // Feature trust chips
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              ('🩺', 'ICMR Guidelines'),
-              ('🌬️', 'AQI-Aware'),
-              ('🔒', 'On-Device Private'),
-              ('🌐', 'Multilingual AI'),
-            ].map((item) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                color: isDark ? AppTheme.surfaceL2 : const Color(0xFFF1F5F9),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: isDark ? AppTheme.glassBorderLight : const Color(0xFFE2E8F0),
-                  width: 0.8,
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(item.$1, style: const TextStyle(fontSize: 12)),
-                  const SizedBox(width: 5),
-                  Text(
-                    item.$2,
-                    style: GoogleFonts.inter(
-                      fontSize: 11,
-                      color: textPri,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            )).toList(),
-          ),
-
-          const SizedBox(height: 22),
-
-          // Suggestion header
-          Row(
-            children: [
-              Icon(Icons.lightbulb_outline_rounded, size: 16, color: AppTheme.primaryTeal),
-              const SizedBox(width: 6),
-              Text(
-                'Suggested health topics',
-                style: GoogleFonts.outfit(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  color: textPri,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-
-          // Suggestion cards
-          ...suggestions.map((s) => Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: _SuggestionChip(
-              emoji: s.$1,
-              text: s.$2,
-              isDark: isDark,
-              card: card,
-              border: border,
-              textPri: textPri,
-              textSec: textSec,
-              onTap: () => onSuggestion(s.$2),
-            ),
-          )),
-
-          const SizedBox(height: 14),
-
-          // Privacy note at bottom
+          const SizedBox(height: 16),
+          // Trust Pill
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: isDark ? AppTheme.surfaceL2.withValues(alpha: 0.5) : const Color(0xFFF8FAFC),
-              borderRadius: BorderRadius.circular(10),
+              color: colorScheme.surfaceContainer,
+              borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.shield_outlined, size: 13, color: AppTheme.textMutedOf(context)),
+                Icon(
+                  Icons.verified_user_outlined,
+                  size: 16,
+                  color: colorScheme.primary,
+                ),
                 const SizedBox(width: 6),
-                Flexible(
-                  child: Text(
-                    'Conversations are private & never shared with third parties.',
-                    style: GoogleFonts.inter(
-                      fontSize: 11,
-                      color: AppTheme.textMutedOf(context),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.center,
+                Text(
+                  'ICMR-Guided • Private On-Device',
+                  style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
 
-class _SuggestionChip extends StatelessWidget {
-  final String emoji;
-  final String text;
-  final bool isDark;
-  final Color card, border, textPri, textSec;
-  final VoidCallback onTap;
-  const _SuggestionChip({
-    required this.emoji,
-    required this.text,
-    required this.isDark,
-    required this.card,
-    required this.border,
-    required this.textPri,
-    required this.textSec,
-    required this.onTap,
-  });
+          const SizedBox(height: 32),
 
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(
-            color: card,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: isDark ? AppTheme.glassBorderLight : const Color(0xFFE2E8F0),
-              width: 1,
+          // 2x2 Bento Starter Cards
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _starterPrompts.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 1.35,
             ),
-            boxShadow: isDark ? null : [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.02),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 32,
-                height: 32,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: isDark ? AppTheme.surfaceL2 : const Color(0xFFF1F5F9),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(emoji, style: const TextStyle(fontSize: 16)),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  text,
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    color: textPri,
-                    fontWeight: FontWeight.w500,
+            itemBuilder: (context, index) {
+              final prompt = _starterPrompts[index];
+              return SpringPressable(
+                onTap: () => onSuggestion(prompt.query),
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: colorScheme.surfaceContainerHigh,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            prompt.icon,
+                            size: 20,
+                            color: colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        prompt.title,
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: colorScheme.onSurface,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Container(
-                width: 26,
-                height: 26,
-                decoration: BoxDecoration(
-                  color: AppTheme.primaryTeal.withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.arrow_outward_rounded,
-                  size: 14,
-                  color: AppTheme.primaryTeal,
-                ),
-              ),
-            ],
+              );
+            },
           ),
-        ),
+        ],
       ),
     );
   }
@@ -695,18 +584,19 @@ class _SuggestionChip extends StatelessWidget {
 class _MessageBubble extends StatelessWidget {
   final ChatMessage message;
   final bool isDark;
-  final Color textPri, textSec, card, card2;
+  final Color? textPri, textSec, card, card2;
   const _MessageBubble({
     required this.message,
     required this.isDark,
-    required this.textPri,
-    required this.textSec,
-    required this.card,
-    required this.card2,
+    this.textPri,
+    this.textSec,
+    this.card,
+    this.card2,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final time = _fmtTime(message.timestamp);
 
     return Padding(
@@ -723,7 +613,7 @@ class _MessageBubble extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14, vertical: 10),
                 decoration: BoxDecoration(
-                  gradient: AppTheme.primaryGradient,
+                  color: colorScheme.primaryContainer,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(18),
                     topRight: Radius.circular(18),
@@ -731,9 +621,14 @@ class _MessageBubble extends StatelessWidget {
                     bottomRight: Radius.circular(4),
                   ),
                 ),
-                child: Text(message.userMessage,
-                    style: GoogleFonts.inter(
-                        fontSize: 14, color: Colors.white, height: 1.4)),
+                child: Text(
+                  message.userMessage,
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    color: colorScheme.onPrimaryContainer,
+                    height: 1.4,
+                  ),
+                ),
               ),
             ),
           ],
@@ -750,76 +645,92 @@ class _MessageBubble extends StatelessWidget {
                 width: 28, height: 28, margin: const EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: message.isEmergency
-                      ? AppTheme.emergencyGradient
-                      : AppTheme.chatGradient,
+                  color: message.isEmergency
+                      ? AppTheme.accentRed.withValues(alpha: 0.15)
+                      : colorScheme.primaryContainer,
                 ),
                 child: Icon(
                   message.isEmergency
                       ? Icons.warning_rounded
-                      : Icons.psychology_rounded,
-                  color: Colors.white, size: 14,
+                      : Icons.psychology_outlined,
+                  color: message.isEmergency
+                      ? AppTheme.accentRed
+                      : colorScheme.onPrimaryContainer,
+                  size: 16,
                 ),
               ),
               Flexible(
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: message.isEmergency
-                          ? AppTheme.accentRed.withValues(alpha: 0.12)
-                          : card,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(4),
-                        topRight: Radius.circular(18),
-                        bottomLeft: Radius.circular(18),
-                        bottomRight: Radius.circular(18),
-                      ),
-                      border: Border.all(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 10),
+                      decoration: BoxDecoration(
                         color: message.isEmergency
-                            ? AppTheme.accentRed.withValues(alpha: 0.4)
-                            : AppTheme.borderColor(context),
+                            ? AppTheme.accentRed.withValues(alpha: 0.12)
+                            : colorScheme.surfaceContainerLow,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(4),
+                          topRight: Radius.circular(18),
+                          bottomLeft: Radius.circular(18),
+                          bottomRight: Radius.circular(18),
+                        ),
+                        border: message.isEmergency
+                            ? Border.all(
+                                color: AppTheme.accentRed.withValues(alpha: 0.4))
+                            : null,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (message.isEmergency)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 6),
+                              child: Row(children: [
+                                const Icon(Icons.warning_rounded,
+                                    size: 14, color: AppTheme.accentRed),
+                                const SizedBox(width: 4),
+                                Text('URGENT — Call 108',
+                                    style: GoogleFonts.outfit(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppTheme.accentRed)),
+                              ]),
+                            ),
+                          Text(
+                            message.aiResponse,
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              color: colorScheme.onSurface,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (message.isEmergency)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 6),
-                            child: Row(children: [
-                              const Icon(Icons.warning_rounded,
-                                  size: 14, color: AppTheme.accentRed),
-                              const SizedBox(width: 4),
-                              Text('URGENT — Call 108',
-                                  style: GoogleFonts.outfit(
-                                      fontSize: 11, fontWeight: FontWeight.w700,
-                                      color: AppTheme.accentRed)),
-                            ]),
-                          ),
-                        Text(message.aiResponse,
-                            style: GoogleFonts.inter(
-                                fontSize: 14, color: textPri, height: 1.5)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(children: [
-                    const SizedBox(width: 4),
-                    Text(time,
+                    const SizedBox(height: 4),
+                    Row(children: [
+                      const SizedBox(width: 4),
+                      Text(
+                        time,
                         style: GoogleFonts.inter(
-                            fontSize: 10, color: AppTheme.textMutedOf(context))),
-                    const SizedBox(width: 8),
-                    Text('· ICMR Guided',
+                          fontSize: 10,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '· ICMR Guided',
                         style: GoogleFonts.inter(
-                            fontSize: 10,
-                            color: AppTheme.primaryTeal,
-                            fontWeight: FontWeight.w500)),
-                  ]),
-                ]),
+                          fontSize: 10,
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ]),
+                  ],
+                ),
               ),
             ],
           ),
@@ -841,39 +752,36 @@ class _MessageBubble extends StatelessWidget {
 class _TypingIndicator extends StatelessWidget {
   final AnimationController ctrl;
   final bool isDark;
-  final Color card, border;
   const _TypingIndicator({
     required this.ctrl,
     required this.isDark,
-    required this.card,
-    required this.border,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(children: [
         Container(
           width: 28, height: 28, margin: const EdgeInsets.only(right: 8),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: AppTheme.chatGradient,
+            color: colorScheme.primaryContainer,
           ),
-          child: const Icon(Icons.psychology_rounded,
-              color: Colors.white, size: 14),
+          child: Icon(Icons.psychology_outlined,
+              color: colorScheme.onPrimaryContainer, size: 16),
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           decoration: BoxDecoration(
-            color: card,
+            color: colorScheme.surfaceContainerLow,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(4),
               topRight: Radius.circular(18),
               bottomLeft: Radius.circular(18),
               bottomRight: Radius.circular(18),
             ),
-            border: Border.all(color: border),
           ),
           child: AnimatedBuilder(
             animation: ctrl,
@@ -890,7 +798,7 @@ class _TypingIndicator extends StatelessWidget {
                       width: 7, height: 7,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppTheme.primaryTeal
+                        color: colorScheme.primary
                             .withValues(alpha: 0.5 + 0.5 * bounce),
                       ),
                     ),
@@ -912,98 +820,113 @@ class _TypingIndicator extends StatelessWidget {
 class _InputBar extends StatelessWidget {
   final TextEditingController ctrl;
   final bool inputEmpty;
-  final bool isDark;
-  final Color textPri, textSec, card, border;
   final Function([String?]) onSend;
   final VoidCallback onVoice;
+
   const _InputBar({
     required this.ctrl,
     required this.inputEmpty,
-    required this.isDark,
-    required this.textPri,
-    required this.textSec,
-    required this.card,
-    required this.border,
     required this.onSend,
     required this.onVoice,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.fromLTRB(
-          16, 10, 16, MediaQuery.of(context).padding.bottom + 12),
-      decoration: BoxDecoration(
-        color: AppTheme.cardBg(context),
-        border: Border(top: BorderSide(color: border, width: 0.5)),
+          16, 6, 16, MediaQuery.of(context).padding.bottom + 10),
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          // Voice
-          GestureDetector(
-            onTap: onVoice,
-            child: Container(
-              width: 44, height: 44,
-              decoration: BoxDecoration(
-                color: isDark ? AppTheme.surfaceL2 : AppTheme.surfaceL2Light,
-                borderRadius: BorderRadius.circular(22),
-                border: Border.all(color: border),
-              ),
-              child: Icon(Icons.mic_outlined, size: 20, color: textSec),
+          // Single unified floating pill container
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerHigh,
+              borderRadius: BorderRadius.circular(32),
             ),
-          ),
-          const SizedBox(width: 8),
-
-          // Text field
-          Expanded(
-            child: Container(
-              constraints: const BoxConstraints(minHeight: 44, maxHeight: 120),
-              decoration: BoxDecoration(
-                color: isDark ? AppTheme.surfaceL2 : AppTheme.surfaceL2Light,
-                borderRadius: BorderRadius.circular(22),
-                border: Border.all(color: border),
-              ),
-              child: TextField(
-                controller: ctrl,
-                maxLines: 5,
-                minLines: 1,
-                style: GoogleFonts.inter(fontSize: 14, color: textPri),
-                decoration: InputDecoration(
-                  hintText: 'Ask about your health...',
-                  hintStyle: GoogleFonts.inter(
-                      fontSize: 14, color: AppTheme.textMutedOf(context)),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(width: 8),
+                // Text input on the left
+                Expanded(
+                  child: TextField(
+                    controller: ctrl,
+                    maxLines: 4,
+                    minLines: 1,
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: colorScheme.onSurface,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Ask about symptoms, diet, vitals...',
+                      hintStyle: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      border: InputBorder.none,
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 10,
+                      ),
+                    ),
+                    onSubmitted: (_) => onSend(),
+                  ),
                 ),
-                onSubmitted: (_) => onSend(),
-              ),
+                // Microphone icon button on the right
+                IconButton(
+                  onPressed: onVoice,
+                  icon: Icon(
+                    Icons.mic_outlined,
+                    size: 22,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  splashRadius: 20,
+                  tooltip: 'Voice Input',
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+                ),
+                const SizedBox(width: 4),
+                // Send button inside pill on far right: 36x36 circular button
+                GestureDetector(
+                  onTap: inputEmpty ? null : () => onSend(),
+                  child: AnimatedContainer(
+                    duration: AppTheme.durationFast,
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: inputEmpty
+                          ? colorScheme.surfaceContainerLow
+                          : colorScheme.primary,
+                    ),
+                    child: Icon(
+                      Icons.arrow_upward_rounded,
+                      size: 20,
+                      color: inputEmpty
+                          ? colorScheme.onSurfaceVariant.withValues(alpha: 0.5)
+                          : colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+              ],
             ),
           ),
-          const SizedBox(width: 8),
-
-          // Send
-          GestureDetector(
-            onTap: inputEmpty ? null : () => onSend(),
-            child: AnimatedContainer(
-              duration: AppTheme.durationFast,
-              width: 44, height: 44,
-              decoration: BoxDecoration(
-                gradient: inputEmpty ? null : AppTheme.primaryGradient,
-                color: inputEmpty
-                    ? (isDark ? AppTheme.surfaceL2 : AppTheme.surfaceL2Light)
-                    : null,
-                borderRadius: BorderRadius.circular(22),
-                border: Border.all(color: border),
-              ),
-              child: Icon(
-                Icons.send_rounded,
-                size: 18,
-                color: inputEmpty
-                    ? AppTheme.textMutedOf(context)
-                    : Colors.white,
-              ),
+          const SizedBox(height: 6),
+          // Subtle disclaimer at bottom
+          Text(
+            'AI responses are for informational purposes only · ICMR Guidelines',
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              fontSize: 11,
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
         ],
@@ -1011,3 +934,4 @@ class _InputBar extends StatelessWidget {
     );
   }
 }
+

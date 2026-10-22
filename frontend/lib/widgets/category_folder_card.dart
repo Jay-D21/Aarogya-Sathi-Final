@@ -24,32 +24,19 @@ class CategoryFolderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark
-        ? (isSelected
-            ? accentColor.withValues(alpha: 0.15)
-            : AppTheme.surfaceL1)
-        : (isSelected
-            ? accentColor.withValues(alpha: 0.12)
-            : AppTheme.surfaceL1Light);
+    final colorScheme = Theme.of(context).colorScheme;
+    final cardBg = isSelected
+        ? colorScheme.surfaceContainerHigh
+        : colorScheme.surfaceContainerLow;
 
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+      borderRadius: BorderRadius.circular(24),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: cardBg,
-          borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-          border: Border.all(
-            color: isSelected
-                ? accentColor
-                : (isDark
-                    ? AppTheme.glassBorderLight
-                    : AppTheme.glassBorderLightModeSubtle),
-            width: isSelected ? 1.5 : 1.0,
-          ),
-          boxShadow: isDark ? null : AppTheme.cardShadowLight,
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

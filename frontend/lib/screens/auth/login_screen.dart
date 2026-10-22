@@ -66,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final auth = context.watch<AuthProvider>();
     final bg = AppTheme.bgOf(context);
-    final card = AppTheme.cardBg(context);
     final textPri = AppTheme.textPrimaryOf(context);
     final textSec = AppTheme.textSecondaryOf(context);
 
@@ -134,10 +133,8 @@ class _LoginScreenState extends State<LoginScreen>
                     Container(
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: card,
-                        borderRadius: BorderRadius.circular(AppTheme.radiusXl),
-                        border: Border.all(
-                            color: AppTheme.borderColor(context), width: 1),
+                        color: Theme.of(context).colorScheme.surfaceContainerLow,
+                        borderRadius: BorderRadius.circular(24),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -304,14 +301,13 @@ class _LoginScreenState extends State<LoginScreen>
                     // Guest login
                     SizedBox(
                       height: 52,
-                      child: OutlinedButton(
+                      child: FilledButton.tonal(
                         onPressed: _guestLogin,
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                              color: AppTheme.borderColor(context), width: 1.5),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
                           shape: RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.circular(AppTheme.radiusMd)),
+                                  BorderRadius.circular(24)),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -324,7 +320,7 @@ class _LoginScreenState extends State<LoginScreen>
                               style: GoogleFonts.outfit(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: textSec,
+                                color: textPri,
                               ),
                             ),
                           ],

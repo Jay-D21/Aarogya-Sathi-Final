@@ -20,7 +20,7 @@ jobs:
         run: |
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
             "${{ secrets.RENDER_API_URL }}" \
-            --max-time 30)
+            --max-time 90 --retry 3)
           echo "Health check response: $RESPONSE"
           if [ "$RESPONSE" != "200" ]; then
             echo "⚠️ Server returned $RESPONSE — may be cold starting"

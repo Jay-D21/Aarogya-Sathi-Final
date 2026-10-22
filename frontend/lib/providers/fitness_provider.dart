@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_service.dart';
 import '../services/health_connect_service.dart';
 import '../services/step_filter_service.dart';
+import '../services/health_alert_service.dart';
 import '../models/wearable_data_model.dart';
 
 enum SyncStatus {
@@ -221,6 +222,14 @@ class FitnessProvider extends ChangeNotifier {
       }
 
       if (changed) notifyListeners();
+
+      // Fire proactive alerts for abnormal vital readings from wearable
+      if (_heartRate != null && _heartRate! > 0) {
+        HealthAlertService.checkHeartRate(_heartRate!);
+      }
+      if (_spo2 != null && _spo2! > 0) {
+        HealthAlertService.checkSpO2(_spo2!);
+      }
 
       if (dataCount > 0) {
         final List<String> summaryParts = [];

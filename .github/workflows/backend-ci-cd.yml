@@ -44,7 +44,15 @@ jobs:
       - name: Run tests
         env:
           # Use dummy keys so imports don't fail — tests should mock API calls
-          GROQ_API_KEY: test_key
+          GROQ_API_KEY: test_key_1,test_key_2
+          GROQ_API_KEY_1: test_key_1
+          GROQ_API_KEY_2: test_key_2
+          GROQ_API_KEY_3: test_key_3
+          SAMBANOVA_API_KEY: test_sambanova_key
+          CEREBRAS_API_KEY: test_cerebras_key
+          SARVAM_API_KEY: test_sarvam_key
+          SARVAM_API_KEY_1: test_sarvam_key_1
+          WAQI_API_TOKEN: test_waqi_token
           OKF_BUNDLE_PATH: ./icmr-knowledge-bundle
         run: |
           python -m pytest backend/ -v --tb=short || echo "No tests found yet — skipping"
@@ -66,6 +74,13 @@ jobs:
         run: |
           docker run -d --name test-container \
             -e GROQ_API_KEY=test \
+            -e GROQ_API_KEY_1=test \
+            -e GROQ_API_KEY_2=test \
+            -e GROQ_API_KEY_3=test \
+            -e SAMBANOVA_API_KEY=test \
+            -e CEREBRAS_API_KEY=test \
+            -e SARVAM_API_KEY_1=test \
+            -e WAQI_API_TOKEN=test \
             -e OKF_BUNDLE_PATH=./icmr-knowledge-bundle \
             -p 8000:8000 \
             aarogya-sathi-api:${{ github.sha }}

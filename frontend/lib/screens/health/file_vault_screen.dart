@@ -534,14 +534,14 @@ class _FileVaultScreenState extends State<FileVaultScreen> {
                           : null,
                       contentPadding: const EdgeInsets.symmetric(vertical: 12),
                       filled: true,
-                      fillColor: card,
+                      fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                        borderSide: BorderSide(color: border),
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide.none,
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                        borderSide: BorderSide(color: border),
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide.none,
                       ),
                     ),
                   ),
@@ -806,10 +806,10 @@ class _FileVaultScreenState extends State<FileVaultScreen> {
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
       elevation: 0,
-      color: card,
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: border),
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide.none,
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),

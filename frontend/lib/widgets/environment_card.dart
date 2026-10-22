@@ -42,9 +42,8 @@ class EnvironmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppTheme.surfaceL1 : AppTheme.surfaceL1Light;
-    final borderCol = isDark ? AppTheme.glassBorderLight : AppTheme.glassBorderLightModeSubtle;
+    final colorScheme = Theme.of(context).colorScheme;
+    final cardBg = colorScheme.surfaceContainerLow;
     final aqiVal = aqi ?? 0;
     final color = _aqiColor(aqiVal);
     final status = aqiStatus ?? _aqiLabel(aqiVal);
@@ -56,9 +55,7 @@ class EnvironmentCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: cardBg,
-          borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-          border: Border.all(color: borderCol, width: 1),
-          boxShadow: isDark ? null : AppTheme.cardShadowLight,
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Row(
           children: [

@@ -79,7 +79,6 @@ class _RegisterScreenState extends State<RegisterScreen>
     final auth = context.watch<AuthProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bg = AppTheme.bgOf(context);
-    final card = AppTheme.cardBg(context);
     final textPri = AppTheme.textPrimaryOf(context);
     final textSec = AppTheme.textSecondaryOf(context);
 
@@ -130,10 +129,8 @@ class _RegisterScreenState extends State<RegisterScreen>
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: card,
-                      borderRadius: BorderRadius.circular(AppTheme.radiusXl),
-                      border: Border.all(
-                          color: AppTheme.borderColor(context), width: 1),
+                      color: Theme.of(context).colorScheme.surfaceContainerLow,
+                      borderRadius: BorderRadius.circular(24),
                     ),
                     child: Column(
                       children: [

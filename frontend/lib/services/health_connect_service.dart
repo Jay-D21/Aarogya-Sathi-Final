@@ -322,16 +322,14 @@ class HealthConnectService {
     debugPrint('[HealthConnectService] Active cal by source: $activeCalBySrc');
     debugPrint('[HealthConnectService] Total cal by source: $totalCalBySrc');
 
-    // Strategy: Use TOTAL_CALORIES_BURNED from the source with the lowest value
-    // (most likely Google Fit's authoritative number). If no total, use active.
-    // If no active, leave null.
+    // Strategy: Prioritize ACTIVE_ENERGY_BURNED so resting BMR is not falsely
+    // shown as active steps burn. If no active energy is reported, fall back to
+    // total calories only if active is unavailable.
     double chosenCalories = 0;
-    if (totalCalBySrc.isNotEmpty) {
-      // Pick the minimum total across all sources — this is typically the
-      // authoritative Google Fit value (806 Cal), not an inflated sum.
+    if (activeCalBySrc.isNotEmpty) {
+      chosenCalories = activeCalBySrc.values.reduce((a, b) => a > b ? a : b);
+    } else if (totalCalBySrc.isNotEmpty) {
       chosenCalories = totalCalBySrc.values.reduce((a, b) => a < b ? a : b);
-    } else if (activeCalBySrc.isNotEmpty) {
-      chosenCalories = activeCalBySrc.values.reduce((a, b) => a < b ? a : b);
     }
 
     // ── Aggregate Sleep ─────────────────────────────────────────────────────

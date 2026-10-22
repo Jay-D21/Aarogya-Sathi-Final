@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/theme.dart';
+import '../../core/widgets/expressive_motion.dart';
 import '../../providers/health_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/section_header.dart';
 import '../../widgets/premium_metric_card.dart';
-import '../../widgets/health_summary_banner.dart';
-import '../../widgets/quick_action_chip.dart';
+
 
 class HealthDashboard extends StatefulWidget {
   const HealthDashboard({super.key});
@@ -58,26 +58,6 @@ class _HealthDashboardState extends State<HealthDashboard>
         .where((r) => r['record_type'] == 'symptom')
         .toList();
 
-    // Dynamic vitals calculation based on real records
-    int totalVitals = 0;
-    int inRangeVitals = 0;
-
-    if (bpRecords.isNotEmpty) {
-      totalVitals++;
-      if (health.lastBPStatus?['status'] == 'Normal') inRangeVitals++;
-    }
-    if (sugarRecords.isNotEmpty) {
-      totalVitals++;
-      if (health.lastSugarStatus?['status'] == 'Normal') inRangeVitals++;
-    }
-
-    final hasVitals = totalVitals > 0;
-    final vitalsText = hasVitals
-        ? '$inRangeVitals of $totalVitals in range'
-        : 'No vitals logged yet';
-    final vitalsColor = hasVitals
-        ? (inRangeVitals == totalVitals ? AppTheme.accentGreen : AppTheme.accentOrange)
-        : AppTheme.primaryTeal;
 
     // Real BMI Calculation
     final authUser = context.watch<AuthProvider>().user;
@@ -100,6 +80,22 @@ class _HealthDashboardState extends State<HealthDashboard>
 
     return Scaffold(
       backgroundColor: bg,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showLogVitalsChooser(context),
+        icon: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
+        label: Text(
+          'Log Vitals',
+          style: GoogleFonts.outfit(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        elevation: 2,
+        shape: const StadiumBorder(),
+      ),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -123,18 +119,16 @@ class _HealthDashboardState extends State<HealthDashboard>
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: AppTheme.primaryTeal.withValues(alpha: 0.1),
+                    color: Theme.of(context).colorScheme.surfaceContainerHigh,
                     borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                        color: AppTheme.primaryTeal.withValues(alpha: 0.3)),
                   ),
                   child: Row(children: [
-                    const Icon(Icons.history_rounded,
-                        size: 14, color: AppTheme.primaryTeal),
+                    Icon(Icons.history_rounded,
+                        size: 14, color: Theme.of(context).colorScheme.primary),
                     const SizedBox(width: 4),
                     Text('30 days',
                         style: GoogleFonts.inter(
-                            fontSize: 11, color: AppTheme.primaryTeal,
+                            fontSize: 11, color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.w600)),
                   ]),
                 ),
@@ -143,54 +137,91 @@ class _HealthDashboardState extends State<HealthDashboard>
           ),
 
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(20, 4, 20, 100),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-
-                // ── Google Health: Health Status Summary Banner ──
-                HealthSummaryBanner(
-                  totalVitals: totalVitals,
-                  inRangeVitals: inRangeVitals,
-                  statusText: vitalsText,
-                  statusColor: vitalsColor,
-                  onTap: () => _showBPSheet(context),
-                ),
-
-                const SizedBox(height: 18),
-
-                // ── Quick Log Action Chips Row ──
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
+                // ── Section 0: Google Health: Key Metrics Section ──
+                StaggeredFadeSlide(
+                  index: 0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      QuickActionChip(
-                        isPrimary: true,
-                        icon: Icons.favorite_rounded,
-                        label: '+ Log BP',
-                        color: AppTheme.accentRed,
-                        onTap: () => _showBPSheet(context),
+                      const SectionHeader(
+                        title: 'Key metrics',
                       ),
-                      const SizedBox(width: 8),
-                      QuickActionChip(
-                        icon: Icons.water_drop_outlined,
-                        label: '+ Log Sugar',
-                        color: AppTheme.accentOrange,
-                        onTap: () => _showSugarSheet(context),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PremiumMetricCard(
+                              label: 'Blood Pressure',
+                              value: bpRecords.isNotEmpty
+                                  ? '${bpRecords.last['data']?['systolic']}/${bpRecords.last['data']?['diastolic']}'
+                                  : '--/--',
+                              unit: 'mmHg',
+                              statusLabel: bpRecords.isNotEmpty
+                                  ? (health.lastBPStatus?['status'] as String? ?? 'Normal')
+                                  : 'Tap to log',
+                              icon: Icons.speed_rounded,
+                              iconColor: isDark ? const Color(0xFFFFB77C) : const Color(0xFFE66000),
+                              trendData: bpRecords.length >= 2
+                                  ? bpRecords.take(7).map((r) => ((r['data']?['systolic'] as num?) ?? 120).toDouble()).toList()
+                                  : null,
+                              onTap: () => _showBPSheet(context),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: PremiumMetricCard(
+                              label: 'Blood Glucose',
+                              value: sugarRecords.isNotEmpty
+                                  ? '${sugarRecords.last['data']?['glucose_value'] ?? sugarRecords.last['data']?['sugar_fasting'] ?? '--'}'
+                                  : '--',
+                              unit: 'mg/dL',
+                              statusLabel: sugarRecords.isNotEmpty
+                                  ? (health.lastSugarStatus?['status'] as String? ?? 'Normal')
+                                  : 'Tap to log',
+                              icon: Icons.water_drop_rounded,
+                              iconColor: isDark ? const Color(0xFFFF859D) : const Color(0xFFD9385A),
+                              trendData: sugarRecords.length >= 2
+                                  ? sugarRecords.take(7).map((r) => (((r['data']?['glucose_value'] ?? r['data']?['sugar_fasting'] ?? 95) as num)).toDouble()).toList()
+                                  : null,
+                              onTap: () => _showSugarSheet(context),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      QuickActionChip(
-                        icon: Icons.monitor_weight_outlined,
-                        label: '+ Log Weight',
-                        color: AppTheme.accentBlue,
-                        onTap: () => _showWeightSheet(context),
-                      ),
-                      const SizedBox(width: 8),
-                      QuickActionChip(
-                        icon: Icons.sick_outlined,
-                        label: '+ Log Symptoms',
-                        color: AppTheme.accentPurple,
-                        onTap: () => _showSymptomSheet(context),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PremiumMetricCard(
+                              label: 'Weight & BMI',
+                              value: weightKgVal.toStringAsFixed(1),
+                              unit: 'kg',
+                              statusLabel: bmiCategory,
+                              icon: Icons.monitor_weight_outlined,
+                              iconColor: Theme.of(context).colorScheme.primary,
+                              trendData: null,
+                              onTap: () => _showWeightSheet(context),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: PremiumMetricCard(
+                              label: 'Symptoms',
+                              value: symptomRecords.isNotEmpty ? '${symptomRecords.length}' : 'None',
+                              unit: symptomRecords.isNotEmpty ? 'logged' : '',
+                              statusLabel: symptomRecords.isNotEmpty
+                                  ? 'Last: ${symptomRecords.last['data']?['symptom_name'] ?? 'Logged'}'
+                                  : 'No active symptoms',
+                              icon: Icons.health_and_safety_rounded,
+                              iconColor: isDark ? const Color(0xFFA5B4FC) : const Color(0xFF4F46E5),
+                              trendData: null,
+                              onTap: () => _showSymptomSheet(context),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -198,228 +229,148 @@ class _HealthDashboardState extends State<HealthDashboard>
 
                 const SizedBox(height: 24),
 
-                // ── Google Health: Key Metrics Section Header ──
-                SectionHeader(
-                  title: 'Key metrics',
-                  trailing: 'Log reading +',
-                  onTrailingTap: () => _showBPSheet(context),
-                ),
-                const SizedBox(height: 12),
-
-                // ── 2x2 Metric Cards Grid with Trend Sparklines ──
-                Row(
-                  children: [
-                    Expanded(
-                      child: PremiumMetricCard(
-                        label: 'Blood Pressure',
-                        value: bpRecords.isNotEmpty
-                            ? '${bpRecords.last['data']?['systolic']}/${bpRecords.last['data']?['diastolic']}'
-                            : '--/--',
-                        unit: 'mmHg',
-                        statusLabel: bpRecords.isNotEmpty
-                            ? (health.lastBPStatus?['status'] as String? ?? 'Normal')
-                            : 'Tap to log',
-                        statusColor: bpRecords.isNotEmpty
-                            ? AppTheme.healthStatusColor(health.lastBPStatus?['status'] as String?)
-                            : AppTheme.textMutedOf(context),
-                        icon: Icons.favorite_rounded,
-                        iconColor: AppTheme.accentRed,
-                        trendData: bpRecords.length >= 2
-                            ? bpRecords.take(7).map((r) => ((r['data']?['systolic'] as num?) ?? 120).toDouble()).toList()
-                            : null,
-                        onTap: () => _showBPSheet(context),
+                // ── Section 1: Medical File Vault Banner (Google Drive Style) ──
+                StaggeredFadeSlide(
+                  index: 1,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(24),
+                    onTap: () => Navigator.pushNamed(context, '/vault'),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainerLow,
+                        borderRadius: BorderRadius.circular(24),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: PremiumMetricCard(
-                        label: 'Blood Glucose',
-                        value: sugarRecords.isNotEmpty
-                            ? '${sugarRecords.last['data']?['glucose_value'] ?? sugarRecords.last['data']?['sugar_fasting'] ?? '--'}'
-                            : '--',
-                        unit: 'mg/dL',
-                        statusLabel: sugarRecords.isNotEmpty
-                            ? (health.lastSugarStatus?['status'] as String? ?? 'Normal')
-                            : 'Tap to log',
-                        statusColor: sugarRecords.isNotEmpty
-                            ? AppTheme.healthStatusColor(health.lastSugarStatus?['status'] as String?)
-                            : AppTheme.textMutedOf(context),
-                        icon: Icons.water_drop_rounded,
-                        iconColor: AppTheme.accentOrange,
-                        trendData: sugarRecords.length >= 2
-                            ? sugarRecords.take(7).map((r) => (((r['data']?['glucose_value'] ?? r['data']?['sugar_fasting'] ?? 95) as num)).toDouble()).toList()
-                            : null,
-                        onTap: () => _showSugarSheet(context),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: PremiumMetricCard(
-                        label: 'Weight & BMI',
-                        value: weightKgVal.toStringAsFixed(1),
-                        unit: 'kg',
-                        statusLabel: bmiCategory,
-                        statusColor: AppTheme.accentBlue,
-                        icon: Icons.monitor_weight_outlined,
-                        iconColor: AppTheme.accentBlue,
-                        trendData: null,
-                        onTap: () => _showWeightSheet(context),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: PremiumMetricCard(
-                        label: 'Symptoms',
-                        value: symptomRecords.isNotEmpty ? '${symptomRecords.length}' : 'None',
-                        unit: symptomRecords.isNotEmpty ? 'logged' : '',
-                        statusLabel: symptomRecords.isNotEmpty
-                            ? 'Last: ${symptomRecords.last['data']?['symptom_name'] ?? 'Logged'}'
-                            : 'No active symptoms',
-                        statusColor: symptomRecords.isNotEmpty ? AppTheme.accentOrange : AppTheme.accentGreen,
-                        icon: Icons.health_and_safety_rounded,
-                        iconColor: AppTheme.accentGreen,
-                        trendData: null,
-                        onTap: () => _showSymptomSheet(context),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 24),
-
-                // ── Medical File Vault Banner (Google Drive Style) ──
-                InkWell(
-                  borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                  onTap: () => Navigator.pushNamed(context, '/vault'),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: card,
-                      borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                      border: Border.all(color: border, width: 1),
-                      boxShadow: isDark ? null : AppTheme.cardShadowLight,
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 44,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryTeal.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(12),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(Icons.folder_shared_rounded,
+                                color: Theme.of(context).colorScheme.primary, size: 22),
                           ),
-                          child: const Icon(Icons.folder_shared_rounded,
-                              color: AppTheme.primaryTeal, size: 24),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Medical File Vault',
-                                style: GoogleFonts.outfit(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                  color: textPri,
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Medical File Vault',
+                                  style: GoogleFonts.outfit(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                    color: textPri,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                'Prescriptions, lab reports · 100% On-Device',
-                                style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  color: textSec,
+                                const SizedBox(height: 3),
+                                Text(
+                                  'Prescriptions, lab reports · 100% On-Device',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    color: textSec,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Icon(Icons.arrow_forward_ios_rounded,
-                            size: 14, color: AppTheme.textMutedOf(context)),
-                      ],
+                          Icon(Icons.arrow_forward_ios_rounded,
+                              size: 14, color: AppTheme.textMutedOf(context)),
+                        ],
+                      ),
                     ),
                   ),
                 ),
 
                 const SizedBox(height: 24),
 
-
-
-                // ── Recent readings ──
-                Row(children: [
-                  Text('Recent Readings',
-                      style: GoogleFonts.outfit(
-                          fontSize: 16, fontWeight: FontWeight.w700,
-                          color: textPri)),
-                  const Spacer(),
-                  if (health.isLoading)
-                    const SizedBox(width: 16, height: 16,
-                        child: CircularProgressIndicator(
-                            strokeWidth: 2, color: AppTheme.primaryTeal)),
-                ]),
-                const SizedBox(height: 12),
-
-                if (health.records.isEmpty)
-                  Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: card,
-                      borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                      border: Border.all(color: border),
-                    ),
-                    child: Center(
-                      child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        Icon(Icons.health_and_safety_outlined,
-                            size: 28, color: AppTheme.textMutedOf(context)),
-                        const SizedBox(height: 6),
-                        Text('No readings yet — tap + to log',
-                            style: GoogleFonts.inter(
-                                fontSize: 13,
-                                color: AppTheme.textMutedOf(context))),
+                // ── Section 2: Recent readings ──
+                StaggeredFadeSlide(
+                  index: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: [
+                        Text('Recent Readings',
+                            style: GoogleFonts.outfit(
+                                fontSize: 16, fontWeight: FontWeight.w700,
+                                color: textPri)),
+                        const Spacer(),
+                        if (health.isLoading)
+                          const SizedBox(width: 16, height: 16,
+                              child: CircularProgressIndicator(
+                                  strokeWidth: 2, color: AppTheme.primaryTeal)),
                       ]),
-                    ),
-                  )
-                else
-                  ...health.records.take(5).map((r) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: _ReadingTile(
-                      record: r,
-                      isDark: isDark,
-                      card: card,
-                      border: border,
-                      textPri: textPri,
-                      textSec: textSec,
-                    ),
-                  )),
+                      const SizedBox(height: 12),
+                      if (health.records.isEmpty)
+                        Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surfaceContainerLow,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Center(
+                            child: Column(mainAxisSize: MainAxisSize.min, children: [
+                              Icon(Icons.health_and_safety_outlined,
+                                  size: 28, color: AppTheme.textMutedOf(context)),
+                              const SizedBox(height: 6),
+                              Text('No readings yet — tap + to log',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 13,
+                                      color: AppTheme.textMutedOf(context))),
+                            ]),
+                          ),
+                        )
+                      else
+                        ...health.records.take(5).map((r) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: _ReadingTile(
+                            record: r,
+                            isDark: isDark,
+                            card: card,
+                            border: border,
+                            textPri: textPri,
+                            textSec: textSec,
+                          ),
+                        )),
+                    ],
+                  ),
+                ),
 
                 const SizedBox(height: 24),
 
-                // ── Health Tips ──
-                Text('Health Tips',
-                    style: GoogleFonts.outfit(
-                        fontSize: 16, fontWeight: FontWeight.w700,
-                        color: textPri)),
-                const SizedBox(height: 12),
-                ..._tips.asMap().entries.map((e) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: _AnimatedMetric(
-                    ctrl: _ctrl,
-                    delayMs: 400 + e.key * 80,
-                    child: _TipCard(
-                      tip: e.value,
-                      isDark: isDark,
-                      card: card,
-                      border: border,
-                      textPri: textPri,
-                      textSec: textSec,
-                    ),
+                // ── Section 3: Health Tips ──
+                StaggeredFadeSlide(
+                  index: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Health Tips',
+                          style: GoogleFonts.outfit(
+                              fontSize: 16, fontWeight: FontWeight.w700,
+                              color: textPri)),
+                      const SizedBox(height: 12),
+                      ..._tips.asMap().entries.map((e) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: _AnimatedMetric(
+                          ctrl: _ctrl,
+                          delayMs: 400 + e.key * 80,
+                          child: _TipCard(
+                            tip: e.value,
+                            isDark: isDark,
+                            card: card,
+                            border: border,
+                            textPri: textPri,
+                            textSec: textSec,
+                          ),
+                        ),
+                      )),
+                    ],
                   ),
-                )),
+                ),
               ]),
             ),
           ),
@@ -429,6 +380,94 @@ class _HealthDashboardState extends State<HealthDashboard>
   }
 
   // ── Sheets ────────────────────────────────────────────────────────────────
+
+  void _showLogVitalsChooser(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      backgroundColor: AppTheme.cardBg(ctx),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (c) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 36,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppTheme.textMutedOf(c).withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Log Health Record',
+                style: GoogleFonts.outfit(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.textPrimaryOf(c),
+                ),
+              ),
+              const SizedBox(height: 12),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.favorite_rounded, color: AppTheme.accentRed, size: 24),
+                title: Text('Blood Pressure', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+                subtitle: const Text('Systolic & Diastolic reading'),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () {
+                  Navigator.pop(c);
+                  _showBPSheet(ctx);
+                },
+              ),
+              const Divider(height: 1),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.water_drop_rounded, color: AppTheme.accentOrange, size: 24),
+                title: Text('Blood Glucose', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+                subtitle: const Text('Fasting or post-meal sugar'),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () {
+                  Navigator.pop(c);
+                  _showSugarSheet(ctx);
+                },
+              ),
+              const Divider(height: 1),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.monitor_weight_outlined, color: AppTheme.accentBlue, size: 24),
+                title: Text('Weight & BMI', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+                subtitle: const Text('Body weight in kg'),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () {
+                  Navigator.pop(c);
+                  _showWeightSheet(ctx);
+                },
+              ),
+              const Divider(height: 1),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.health_and_safety_rounded, color: AppTheme.accentGreen, size: 24),
+                title: Text('Symptoms', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+                subtitle: const Text('Track symptoms or alarms'),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () {
+                  Navigator.pop(c);
+                  _showSymptomSheet(ctx);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   void _showBPSheet(BuildContext ctx) {
     showModalBottomSheet(
@@ -644,9 +683,8 @@ class _ReadingTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: card,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        border: Border.all(color: border),
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(children: [
         Container(
@@ -686,21 +724,22 @@ class _TipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: card,
-        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        border: Border.all(color: border),
+        color: colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
           width: 40, height: 40,
           decoration: BoxDecoration(
-            color: tip.$2.withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+            color: colorScheme.surfaceContainerHigh,
+            shape: BoxShape.circle,
           ),
-          child: Icon(tip.$1, color: tip.$2, size: 20),
+          child: Icon(tip.$1, color: colorScheme.primary, size: 22),
         ),
         const SizedBox(width: 12),
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -950,9 +989,8 @@ class _SugarSheetState extends State<_SugarSheet> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
           decoration: BoxDecoration(
-            color: AppTheme.cardBg2(context),
-            borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-            border: Border.all(color: AppTheme.borderColor(context)),
+            color: Theme.of(context).colorScheme.surfaceContainerHigh,
+            borderRadius: BorderRadius.circular(16),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(

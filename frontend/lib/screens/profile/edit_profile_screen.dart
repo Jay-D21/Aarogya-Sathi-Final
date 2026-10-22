@@ -217,8 +217,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final textPri = AppTheme.textPrimaryOf(context);
     final textSec = AppTheme.textSecondaryOf(context);
     final bg = AppTheme.bgOf(context);
-    final card = AppTheme.cardBg(context);
-    final border = AppTheme.borderColor(context);
 
     final (bmiStatus, bmiColor) = _bmiClassification;
 
@@ -257,9 +255,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: card,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: border),
+                color: Theme.of(context).colorScheme.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(24),
               ),
               child: Column(
                 children: [
@@ -355,9 +352,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: card,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: border),
+                color: Theme.of(context).colorScheme.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(24),
               ),
               child: Column(
                 children: [
@@ -405,9 +401,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: bmiColor.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: bmiColor.withValues(alpha: 0.3)),
+                      color: bmiColor.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
                       children: [
@@ -474,9 +469,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: card,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: border),
+                color: Theme.of(context).colorScheme.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(24),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -497,9 +491,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           fontWeight:
                               isSelected ? FontWeight.w600 : FontWeight.normal,
                         ),
-                        side: BorderSide(
-                          color: isSelected ? AppTheme.primaryTeal : border,
-                        ),
+                        side: BorderSide.none,
                         onSelected: (selected) {
                           setState(() {
                             if (selected) {
@@ -570,9 +562,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: card,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: border),
+                color: Theme.of(context).colorScheme.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(24),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

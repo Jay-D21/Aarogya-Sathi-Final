@@ -2,10 +2,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../config/theme.dart';
 
 /// Google Fit–style arc ring showing health score, steps, calories, and heart rate.
-class HealthScoreRing extends StatefulWidget {
+class HealthScoreRing extends StatelessWidget {
   final double score;   // 0–100
   final int steps;
   final int calories;
@@ -20,55 +19,25 @@ class HealthScoreRing extends StatefulWidget {
   });
 
   @override
-  State<HealthScoreRing> createState() => _HealthScoreRingState();
-}
-
-class _HealthScoreRingState extends State<HealthScoreRing>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _ctrl;
-  late Animation<double> _progress;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1400));
-    _progress = Tween<double>(begin: 0, end: (widget.score / 100).clamp(0, 1))
-        .animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
-    _ctrl.forward();
-  }
-
-  @override
-  void didUpdateWidget(HealthScoreRing old) {
-    super.didUpdateWidget(old);
-    if (old.score != widget.score) {
-      _progress = Tween<double>(
-        begin: _progress.value,
-        end: (widget.score / 100).clamp(0, 1),
-      ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
-      _ctrl
-        ..reset()
-        ..forward();
-    }
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textPri = AppTheme.textPrimaryOf(context);
-    final textSec = AppTheme.textSecondaryOf(context);
+    final activeColor = colorScheme.primary;
+    final trackColor = colorScheme.surfaceContainerHigh;
+    final onSurface = colorScheme.onSurface;
+    final onSurfaceVariant = colorScheme.onSurfaceVariant;
 
-    return AnimatedBuilder(
-      animation: _progress,
-      builder: (context, child) {
+    final kcalColor = isDark ? const Color(0xFFFFB77C) : const Color(0xFFE66000);
+    final bpmColor = isDark ? const Color(0xFFFF859D) : const Color(0xFFD9385A);
+
+    return TweenAnimationBuilder<double>(
+      tween: Tween<double>(begin: 0, end: score),
+      duration: const Duration(milliseconds: 1100),
+      curve: Curves.easeOutCubic,
+      builder: (context, animScore, child) {
+        final progress = (animScore / 100).clamp(0.0, 1.0);
         return SizedBox(
-          width: 240,
+          width: double.infinity,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -78,19 +47,20 @@ class _HealthScoreRingState extends State<HealthScoreRing>
                 height: 200,
                 child: CustomPaint(
                   painter: _RingPainter(
-                    progress: _progress.value,
-                    isDark: isDark,
+                    progress: progress,
+                    activeColor: activeColor,
+                    trackColor: trackColor,
                   ),
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          widget.score > 0 ? widget.score.toStringAsFixed(0) : '--',
+                          score > 0 ? animScore.toInt().toString() : '--',
                           style: GoogleFonts.outfit(
-                            fontSize: 48,
+                            fontSize: 44,
                             fontWeight: FontWeight.w800,
-                            color: widget.score > 0 ? AppTheme.primaryTeal : textSec,
+                            color: score > 0 ? activeColor : onSurfaceVariant,
                             height: 1,
                           ),
                         ),
@@ -99,15 +69,15 @@ class _HealthScoreRingState extends State<HealthScoreRing>
                           'Daily Score',
                           style: GoogleFonts.outfit(
                             fontSize: 13,
-                            color: textPri,
+                            color: onSurface,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
-                          widget.score > 0 ? 'Goal: 100 pts' : 'Sync to start',
+                          score > 0 ? 'Goal: 100 pts' : 'Sync to start',
                           style: GoogleFonts.inter(
                             fontSize: 11,
-                            color: textSec,
+                            color: onSurfaceVariant,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -117,41 +87,48 @@ class _HealthScoreRingState extends State<HealthScoreRing>
                 ),
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
-              // Stats row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _Stat(
-                    icon: Icons.directions_walk_rounded,
-                    color: AppTheme.primaryTeal,
-                    value: _fmt(widget.steps),
-                    label: 'Steps',
-                    textPri: textPri,
-                    textSec: textSec,
-                  ),
-                  _VDivider(isDark: isDark),
-                  _Stat(
-                    icon: Icons.local_fire_department_rounded,
-                    color: AppTheme.accentOrange,
-                    value: _fmt(widget.calories),
-                    label: 'Kcal',
-                    textPri: textPri,
-                    textSec: textSec,
-                  ),
-                  _VDivider(isDark: isDark),
-                  _Stat(
-                    icon: Icons.favorite_rounded,
-                    color: AppTheme.accentRed,
-                    value: widget.heartRate != null && widget.heartRate! > 0
-                        ? '${widget.heartRate}'
-                        : '--',
-                    label: 'BPM',
-                    textPri: textPri,
-                    textSec: textSec,
-                  ),
-                ],
+              // Inner tonal sub-metrics bar
+              Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHigh,
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _Stat(
+                      icon: Icons.directions_walk_rounded,
+                      color: activeColor,
+                      value: _fmt(steps),
+                      label: 'Steps',
+                      textPri: onSurface,
+                      textSec: onSurfaceVariant,
+                    ),
+                    _VDivider(color: colorScheme.outlineVariant.withValues(alpha: 0.4)),
+                    _Stat(
+                      icon: Icons.local_fire_department_rounded,
+                      color: kcalColor,
+                      value: _fmt(calories),
+                      label: 'Active Kcal',
+                      textPri: onSurface,
+                      textSec: onSurfaceVariant,
+                    ),
+                    _VDivider(color: colorScheme.outlineVariant.withValues(alpha: 0.4)),
+                    _Stat(
+                      icon: Icons.favorite_rounded,
+                      color: bpmColor,
+                      value: heartRate != null && heartRate! > 0
+                          ? '$heartRate'
+                          : '--',
+                      label: 'BPM',
+                      textPri: onSurface,
+                      textSec: onSurfaceVariant,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -174,35 +151,50 @@ class _Stat extends StatelessWidget {
   final String value, label;
   final Color textPri, textSec;
   const _Stat({
-    required this.icon, required this.color, required this.value,
-    required this.label, required this.textPri, required this.textSec,
+    required this.icon,
+    required this.color,
+    required this.value,
+    required this.label,
+    required this.textPri,
+    required this.textSec,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, size: 16, color: color),
+        Icon(icon, size: 18, color: color),
         const SizedBox(height: 4),
-        Text(value,
-            style: GoogleFonts.outfit(
-                fontSize: 16, fontWeight: FontWeight.w700, color: textPri)),
-        Text(label,
-            style: GoogleFonts.inter(fontSize: 11, color: textSec)),
+        Text(
+          value,
+          style: GoogleFonts.outfit(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: textPri,
+          ),
+        ),
+        Text(
+          label,
+          style: GoogleFonts.inter(
+            fontSize: 11,
+            color: textSec,
+          ),
+        ),
       ],
     );
   }
 }
 
 class _VDivider extends StatelessWidget {
-  final bool isDark;
-  const _VDivider({required this.isDark});
+  final Color color;
+  const _VDivider({required this.color});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 1, height: 36,
-      color: isDark ? AppTheme.glassBorderLight : AppTheme.glassBorderLightModeSubtle,
+      width: 1,
+      height: 28,
+      color: color,
     );
   }
 }
@@ -211,8 +203,14 @@ class _VDivider extends StatelessWidget {
 
 class _RingPainter extends CustomPainter {
   final double progress;
-  final bool isDark;
-  _RingPainter({required this.progress, required this.isDark});
+  final Color activeColor;
+  final Color trackColor;
+
+  _RingPainter({
+    required this.progress,
+    required this.activeColor,
+    required this.trackColor,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -223,56 +221,38 @@ class _RingPainter extends CustomPainter {
     // Track ring
     final trackPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 18
+      ..strokeWidth = 14
       ..strokeCap = StrokeCap.round
-      ..color = isDark
-          ? const Color(0xFF1A2436)
-          : const Color(0xFFE5EEF5);
+      ..color = trackColor;
     canvas.drawArc(rect, -math.pi / 2, 2 * math.pi, false, trackPaint);
 
-    // Progress arc (gradient)
+    // Progress arc
     if (progress > 0) {
-      final gradPaint = Paint()
+      final activePaint = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 18
+        ..strokeWidth = 14
         ..strokeCap = StrokeCap.round
-        ..shader = SweepGradient(
-          startAngle: -math.pi / 2,
-          endAngle: -math.pi / 2 + 2 * math.pi,
-          colors: const [
-            AppTheme.primaryTeal,
-            AppTheme.primaryCyan,
-            AppTheme.primaryTeal,
-          ],
-          stops: const [0.0, 0.5, 1.0],
-        ).createShader(rect);
+        ..color = activeColor;
 
-      canvas.drawArc(rect, -math.pi / 2, 2 * math.pi * progress, false, gradPaint);
+      canvas.drawArc(rect, -math.pi / 2, 2 * math.pi * progress, false, activePaint);
 
       // Glowing tip
       final tipAngle = -math.pi / 2 + 2 * math.pi * progress;
       final tipX = center.dx + outerR * math.cos(tipAngle);
       final tipY = center.dy + outerR * math.sin(tipAngle);
       final glowPaint = Paint()
-        ..color = AppTheme.primaryTeal.withValues(alpha: 0.4)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
-      canvas.drawCircle(Offset(tipX, tipY), 10, glowPaint);
+        ..color = activeColor.withValues(alpha: 0.35)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
+      canvas.drawCircle(Offset(tipX, tipY), 8, glowPaint);
 
       final dotPaint = Paint()..color = Colors.white;
-      canvas.drawCircle(Offset(tipX, tipY), 5, dotPaint);
+      canvas.drawCircle(Offset(tipX, tipY), 4, dotPaint);
     }
-
-    // Inner light ring
-    final innerPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1
-      ..color = isDark
-          ? AppTheme.primaryTeal.withValues(alpha: 0.1)
-          : AppTheme.primaryTeal.withValues(alpha: 0.07);
-    canvas.drawCircle(center, outerR - 24, innerPaint);
   }
 
   @override
   bool shouldRepaint(_RingPainter old) =>
-      old.progress != progress || old.isDark != isDark;
+      old.progress != progress ||
+      old.activeColor != activeColor ||
+      old.trackColor != trackColor;
 }

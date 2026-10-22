@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../config/theme.dart';
 
 /// Pill-shaped quick action chip button (e.g. '+ Log', 'AI Chat', 'Scan Prescriptions')
 /// Styled after Google Health / Fit action chips.
@@ -22,8 +21,7 @@ class QuickActionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveColor = color ?? AppTheme.primaryTeal;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Material(
       color: Colors.transparent,
@@ -34,19 +32,9 @@ class QuickActionChip extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           decoration: BoxDecoration(
             color: isPrimary
-                ? effectiveColor
-                : (isDark
-                    ? AppTheme.surfaceL2
-                    : AppTheme.surfaceL2Light),
+                ? colorScheme.primaryContainer
+                : colorScheme.surfaceContainerHigh,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: isPrimary
-                  ? Colors.transparent
-                  : (isDark
-                      ? AppTheme.glassBorderLight
-                      : AppTheme.glassBorderLightModeSubtle),
-              width: 1,
-            ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -55,8 +43,8 @@ class QuickActionChip extends StatelessWidget {
                 icon,
                 size: 17,
                 color: isPrimary
-                    ? Colors.white
-                    : effectiveColor,
+                    ? colorScheme.onPrimaryContainer
+                    : (color ?? colorScheme.primary),
               ),
               const SizedBox(width: 8),
               Text(
@@ -65,8 +53,8 @@ class QuickActionChip extends StatelessWidget {
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: isPrimary
-                      ? Colors.white
-                      : AppTheme.textPrimaryOf(context),
+                      ? colorScheme.onPrimaryContainer
+                      : colorScheme.onSurface,
                 ),
               ),
             ],

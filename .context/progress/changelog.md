@@ -1,17 +1,17 @@
-# Changelog
+﻿# Changelog
 
-## 2026-10-22 (Abhijit � Session 28: Research Paper � Full Scientific Rewrite)
+## 2026-10-22 (Abhijit � Session 28: Research Paper � Full Scientific Rewrite)
 - [Abhijit] Rewrote `paper/paper.md` following `scientific-writing` skill (IMRAD, IEEE, flowing prose):
-  - All sections written in full flowing paragraphs � zero bullet points in body text.
+  - All sections written in full flowing paragraphs � zero bullet points in body text.
   - Proper IMRAD structure: Abstract, Introduction, Related Work, System Architecture, Implementation, Evaluation, Discussion, Limitations, Timeline, Conclusion.
-  - 6 rendered PNG figures with full academic captions (Fig. 1�6).
-  - 6 self-explanatory tables with numbered captions (Table 1�6).
+  - 6 rendered PNG figures with full academic captions (Fig. 1�6).
+  - 6 self-explanatory tables with numbered captions (Table 1�6).
   - Gap analysis placed in Introduction (Table 1) for immediate impact.
   - Related Work expanded with proper gap statement bridging to this work.
   - Contributions stated in flowing prose (not numbered list).
-  - Research Objectives (O1�O5) embedded in Introduction paragraph.
+  - Research Objectives (O1�O5) embedded in Introduction paragraph.
   - IEEE-format references with full author lists, journal abbreviations, DOIs.
-  - 305 lines, ~6,289 words � targets ~11 pages in IEEE double-column with figures.
+  - 305 lines, ~6,289 words � targets ~11 pages in IEEE double-column with figures.
   - Past tense for methods/results, present tense for established facts.
   - Original 938-line version preserved as `paper/paper_original_backup.md`.
 - [Abhijit] Completely restructured `paper/paper.md` from 938 lines (~11,135 words) to 343 lines (~4,307 words):
@@ -19,7 +19,7 @@
   - Replaced all ASCII box diagrams with proper Figure references to 6 pre-rendered PNG assets in `docs/diagrams/images/`.
   - Consolidated 27 tables down to 6 high-impact tables: Gap Analysis, RAG Comparison, Tech Stack, Evaluation Results, ReAct vs Traditional RAG, and Project Timeline.
   - Added proposal-grade sections: Research Objectives (O1-O5), Project Timeline and Team Contribution (Table 6), formal problem statement with gaps.
-  - Removed Appendix A (AI/ML Skill Matrix) and Appendix B (Feasibility Analysis) � content folded into main body where relevant.
+  - Removed Appendix A (AI/ML Skill Matrix) and Appendix B (Feasibility Analysis) � content folded into main body where relevant.
   - Eliminated redundant tech stack listings and verbose implementation prose.
   - Preserved all 30 IEEE-format references with DOIs and arXiv IDs.
   - Backed up original as `paper/paper_original_backup.md`.
@@ -51,6 +51,77 @@
 - [Abhijit] Automated Verification:
   - `flutter analyze`: 0 issues found (ran in 83.7s).
   - `flutter test`: 23/23 tests passing cleanly.
+
+## 2026-10-22 (Jayesh — Session 29: Proactive Health Notification System + Analyze Fixes)
+- [Jayesh] Built `HealthAlertService` (`frontend/lib/services/health_alert_service.dart`, ~315 lines):
+  - `checkBP(systolic, diastolic)` — ICMR thresholds: hypotension (<90), Stage 2 (≥140/90), crisis (≥180/120)
+  - `checkBloodSugar(value, type)` — ICMR thresholds: hypoglycemia (<70), diabetes (≥126 fasting), critical (≥300)
+  - `checkHeartRate(bpm)` — Alerts for bradycardia (<50), tachycardia (≥120), severe (≥150)
+  - `checkSpO2(percent)` — Alerts for low oxygen (<94), dangerous (<90)
+  - `checkAQI(aqi, station)` — CPCB thresholds: unhealthy (≥150), very poor (≥200), hazardous (≥300)
+  - `pollInsights(userId, lat, lon)` — Polls backend `/api/session/{user_id}/insights` endpoint for proactive clinical observations
+  - Cooldown system (60min same-type vital alerts, 30min insight polling) via SharedPreferences
+  - Three Android notification channels: `aarogya_vital_alerts`, `aarogya_aqi_alerts`, `aarogya_insights`
+  - Notification IDs 200001-200030 range to avoid collision with ReminderProvider
+- [Jayesh] Wired alert triggers into providers:
+  - `health_provider.dart`: BP and blood sugar alerts after logging
+  - `fitness_provider.dart`: HR and SpO2 alerts after Health Connect sync
+  - `home_screen.dart`: AQI alerts on banner load + insight polling on app open
+- [Jayesh] Fixed `app_theme.dart` `directive_after_declaration` error (swapped export/import order)
+- [Jayesh] Fixed `expressive_motion.dart` `invalid_constant` errors (Curves.* not compile-time constants; changed const constructors to non-const with nullable curve params)
+- [Jayesh] Verification: `flutter analyze`: 0 issues, `flutter test`: 23/23 passed.
+
+## 2026-10-21 (Jayesh — Session 28: Material 3 Expressive System & Gemini Polish)
+- [Jayesh] Material 3 Expressive Design Tokens & Motion Library:
+  - Updated `app_theme.dart` with True-Black Pixel Dark Mode (`#0A0E0D` scaffold, `#141B19` cards, `#1C2523` inner containers, `#66F7E2` Tone-80 luminous mint primary) and Light Mode (`#EDF3F1` scaffold, `#FFFFFF` cards, `#E3ECE9` inner containers, `#006A60` primary).
+  - Created `expressive_motion.dart`: Added `SpringPressable` (tactile spring physics on tap) and `StaggeredFadeSlide` (staggered entrance animations).
+- [Jayesh] AI Health Assistant Empty State & Stuck Spinner Resolution:
+  - Fixed stuck spinner root cause: eliminated blocking conditions and solitary loading indicators on initial chat view so welcome state renders synchronously.
+  - Gemini Expressive Empty State: ShaderMask gradient greeting (`"Hello, $userName"` in `#006A60`→`#3F5F90` light / `#66F7E2`→`#A8C8FF` dark, 32sp w800), 20sp subtitle, tonal trust pill (`"ICMR-Guided • Private On-Device"` with `Icons.verified_user_outlined`), and 2x2 Bento Starter Cards (`"Fever & headache"`, `"Daily hydration"`, `"Diabetes diet"`, `"High AQI care"`) wrapped in `SpringPressable`.
+- [Jayesh] Home Screen & Metric Cards Polish:
+  - Animated Daily Score Ring: Wrapped score ring and counter in `TweenAnimationBuilder<double>` (1100ms, `Curves.easeOutCubic`) for smooth arc sweep and counter animation.
+  - Semantic M3 Accent Colors: Applied across submetrics and 2x2 Key Metrics Bento Grid (Steps: primary teal/mint, Active Kcal & BP: Warm Amber `#E66000`/`#FFB77C`, BPM & Blood Glucose: Coral Rose `#D9385A`/`#FF859D`, Sleep & Symptoms: Indigo/Lavender `#4F46E5`/`#A5B4FC`).
+  - Unified `PremiumMetricCard`: Replaced inconsistent add icon on BP with uniform 18px `Icons.arrow_outward_rounded`, placed metric icons in `36x36` 12% opacity tonal circular containers, and wrapped in `SpringPressable`.
+  - Weekly Day Bar: Added `1.5px` `outlineVariant` border to inactive day circles and `primary` border with dot to current day.
+  - Settings & Profile: Cleaned up settings icons to uniform `colorScheme.onSurfaceVariant` inside `36x36` circular `colorScheme.surfaceContainer` containers.
+- [Jayesh] Health Dashboard Polish:
+  - Applied semantic colors across 2x2 key metrics grid.
+  - Wrapped sections in `StaggeredFadeSlide`.
+- [Jayesh] Verification:
+  - `dart analyze lib`: **0 issues found** (clean compile).
+  - `flutter test`: **23/23 tests passed**.
+
+## 2026-10-18 (Jayesh — Session 27: Google Pixel / Gemini / Material 3 Dark & Light Mode Redesign)
+- [Jayesh] Authentic Google Material 3 Color Schemes & Tonal System:
+  - Overhauled Dark Mode tokens: `#0E1513` Carbon-Mint scaffold background, `#17201E` borderless `surfaceContainerLow` cards, `#212B28` `surfaceContainerHigh` tonal surfaces, and luminous `#74F8E5` (Tone-80 Google Fit mint) high-contrast primary accents.
+  - Overhauled Light Mode tokens: `#F4F8F6` scaffold background, `#FFFFFF` cards, `#E6EFEC` tonal surfaces, and `#006A60` primary teal.
+- [Jayesh] Borderless Architecture (Zero 1px Borders Globally):
+  - Purged 1px card borders across all metric cards, hero cards, action chips, dialogs, bottom sheets, file cards, and auth cards.
+  - Cards strictly rely on `colorScheme.surfaceContainerLow` with `BorderRadius.circular(24)` and `BorderSide.none`.
+  - Tight 10px spacing in 2x2 Bento Grids for Google Pixel Weather/Fit aesthetic.
+- [Jayesh] Screen Redesigns:
+  - **HomeScreen**: Borderless Daily Score Hero Card with radius 24, ring strokeWidth 14 with score number in 44sp w800 primary mint, sub-metrics in rounded inner tonal bar (`surfaceContainerHigh` radius 18 with monochrome primary icons). Edge-to-edge scrollable quick action chip row (active chip in `primaryContainer`/`onPrimaryContainer`, others in `surfaceContainerHigh`/`onSurface`). 2x2 Bento Grid with tight 10px spacing and plain text statuses.
+  - **HealthTrackingScreen**: Borderless 2x2 Bento Grid with tight 10px spacing. Removed pastel squircles; converted to 22px primary icons in 40x40 `surfaceContainerHigh` circles. Borderless Medical File Vault banner and reading tiles.
+  - **AIAssistantScreen (Google Gemini Style)**: Left-aligned greeting ("Hello, $userName" in 28sp w700 primary, 20sp subtitle in `onSurfaceVariant`), flat trust pill ("ICMR-Guided • Private On-Device"), 2-column bento suggestion cards in `surfaceContainerLow` radius 20 with 18px primary icons. Unified Google Gemini bottom floating pill container (`surfaceContainerHigh`, radius 32, zero border) integrating text input, mic button, and circular 36x36 upward-arrow send button. User bubble in `primaryContainer`/`onPrimaryContainer`; AI bubble in `surfaceContainerLow`.
+  - **Profile & File Vault**: Borderless section cards in `surfaceContainerLow`, tonal edit button, and borderless search bar.
+- [Jayesh] Verification & Cleanliness:
+  - `dart analyze lib`: **0 issues found** (clean compile, no warnings, no dead code).
+  - `flutter test`: **23/23 tests passed**.
+
+## 2026-10-16 (Jayesh — Session 26: Material 3 / Google Fit Production Overhaul for Play Store Beta)
+- [Jayesh] Phase 1: Design System & Strict Material 3 Tonal Surfaces:
+  - Standardized palette: `scaffoldBackgroundColor: #F5F8F7`, surface cards: `#FFFFFF` with elevation 0 and no border/shadow clash, `secondaryTonal: #EAF1EF`, `primaryAccent: #006A60`, `primaryContainer: #D0EFEA`, and emergency tokens `#FCEEEE/#B3261E`.
+  - Purged all pastel squircle icon backgrounds and raw system emojis (`🤒`, `💧`, `🍽️`, `😷`, `💊`, `🩺`, `🔒`) across UI components.
+- [Jayesh] Phase 2: Screen-by-Screen Overhauls:
+  - **HomeScreen**: Pinned `SliverAppBar` with `scrolledUnderElevation: 0` to prevent status bar collision. Hero daily score card with centered ring gauge and 3-column stats (`Steps`, `Active Kcal`, `BPM`) with BMR calorie fix. Replaced clipped action row with `SingleChildScrollView` M3 `ActionChip` row. Clean 2x2 grid (`Heart Rate`, `Sleep`, `Weight`, `Blood Pressure`). Removed redundant "Health Status" banner and duplicate File Vault card.
+  - **HealthTrackingScreen**: Removed redundant "No vitals logged yet" card, duplicate "+ Log" links, and clipping chip bar. Added bottom-right M3 `FloatingActionButton.extended` ('Log Vitals') with modal sheet logger. Added subtle `add_circle_outline` icon to key metric cards.
+  - **AIAssistantScreen**: Removed purple/indigo gradient; replaced with teal tonal circle container and teal icons. Replaced 4 feature buttons with single non-interactive subtitle: `"ICMR-Guided • AQI-Aware • Private On-Device"`. Converted emoji suggestion cards to monochrome outline icon cards with north-east arrows. Added persistent 11px Play Store medical disclaimer above chat input bar.
+  - **ProfileScreen**: Converted vertical card to horizontal header (64px avatar, user name, email/guest status, city). Clean 3-column tonal bar (`BMI`, `Height`, `Weight`), full-width tonal "Edit Health Profile" button. Replaced "Change Password" with "Sign In / Create Account" for guest users. Added "View Privacy Policy" web launcher and destructive "Delete Account & Local Data" wipe action.
+- [Jayesh] Phase 3: Workflows & Verification:
+  - Updated `.github/workflows/keep-alive.yml` curl to `--max-time 90 --retry 3`.
+  - Added dummy API keys to `.github/workflows/backend-ci-cd.yml` test and docker build steps.
+  - Verified `flutter analyze`: **0 issues found**.
+  - Verified `flutter test`: **23/23 tests passed**.
 
 ## 2026-10-14 (Jayesh — Session 25: Mock Data Purge & Premium UI Polish)
 - [Jayesh] Purged hardcoded & mock health data across Home Screen & Health Dashboard:

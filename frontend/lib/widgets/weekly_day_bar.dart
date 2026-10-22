@@ -20,6 +20,9 @@ class WeeklyDayBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final primary = colorScheme.primary;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(7, (i) {
@@ -35,8 +38,8 @@ class WeeklyDayBar extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: isToday ? FontWeight.w800 : FontWeight.w600,
                 color: isToday
-                    ? activeColor
-                    : AppTheme.textMutedOf(context),
+                    ? primary
+                    : colorScheme.onSurfaceVariant,
               ),
             ),
             const SizedBox(height: 8),
@@ -46,25 +49,21 @@ class WeeklyDayBar extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isCompleted
-                    ? activeColor.withValues(alpha: 0.15)
-                    : (isToday
-                        ? AppTheme.textMutedOf(context).withValues(alpha: 0.1)
-                        : Colors.transparent),
-                border: Border.all(
-                  color: isToday
-                      ? activeColor
-                      : (isCompleted
-                          ? activeColor.withValues(alpha: 0.4)
-                          : AppTheme.borderColor(context)),
-                  width: isToday ? 1.5 : 1.0,
-                ),
+                    ? colorScheme.primaryContainer
+                    : colorScheme.surfaceContainer,
+                border: isCompleted
+                    ? null
+                    : Border.all(
+                        color: isToday ? primary : colorScheme.outlineVariant,
+                        width: 1.5,
+                      ),
               ),
               child: Center(
                 child: isCompleted
                     ? Icon(
                         Icons.check_rounded,
                         size: 16,
-                        color: activeColor,
+                        color: colorScheme.onPrimaryContainer,
                       )
                     : (isToday
                         ? Container(
@@ -72,7 +71,7 @@ class WeeklyDayBar extends StatelessWidget {
                             height: 6,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: activeColor,
+                              color: primary,
                             ),
                           )
                         : null),

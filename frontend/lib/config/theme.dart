@@ -3,50 +3,56 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // ═══════════════════════════════════════════════════════════════
-  // CORE BRAND — shared across both themes
+  // CORE BRAND — Google Health Material 3 Teal & Tonal tokens
   // ═══════════════════════════════════════════════════════════════
-  static const Color primaryTeal        = Color(0xFF00C9A7);
-  static const Color primaryCyan        = Color(0xFF00A8E8);
-  static const Color primaryDeep        = Color(0xFF005F8A);
-  static const Color primaryMint        = Color(0xFF00E5C3);
+  static const Color primaryTeal        = Color(0xFF006A60); // Deep Google Health Teal (Light primary)
+  static const Color primaryMint        = Color(0xFF66F7E2); // Luminous Google Fit Mint (Dark primary)
+  static const Color primaryCyan        = Color(0xFF00897B);
+  static const Color primaryDeep        = Color(0xFF004D40);
+  static const Color primaryContainer   = Color(0xFFB1F1E4); // Selected Nav pill, primary chips (Light)
+  static const Color secondaryTonal     = Color(0xFFE3ECE9); // Inner pills, inactive chips (Light)
 
   // ═══════════════════════════════════════════════════════════════
-  // DARK THEME SURFACES
+  // DARK THEME SURFACES (Google Carbon-Mint Tone System)
   // ═══════════════════════════════════════════════════════════════
-  static const Color backgroundDark     = Color(0xFF0B1120);
-  static const Color surfaceL0          = Color(0xFF0B1120);
-  static const Color surfaceL1          = Color(0xFF111827);
-  static const Color surfaceL2          = Color(0xFF1A2436);
-  static const Color surfaceL3          = Color(0xFF222F45);
+  static const Color backgroundDark     = Color(0xFF0A0E0D); // True-Black Pixel Dark
+  static const Color surfaceL0          = Color(0xFF0A0E0D);
+  static const Color surfaceL1          = Color(0xFF141B19); // surfaceContainerLow (Main Cards)
+  static const Color surfaceL2          = Color(0xFF1C2523); // surfaceContainerHigh (Chips, Inner Stat Boxes, Input Pill)
+  static const Color surfaceL3          = Color(0xFF24302D); // surfaceContainerHighest
 
   // Glass (dark)
   static const Color glassLight         = Color(0x14FFFFFF);
   static const Color glassMedium        = Color(0x20FFFFFF);
-  static const Color glassBorder        = Color(0x25FFFFFF);
-  static const Color glassBorderLight   = Color(0x14FFFFFF);
+  static const Color glassBorder        = Color(0xFF24302D);
+  static const Color glassBorderLight   = Color(0xFF24302D);
 
   // Text (dark)
-  static const Color textPrimary        = Color(0xFFF1F5F9);
-  static const Color textSecondary      = Color(0xFF94A3B8);
-  static const Color textMuted          = Color(0xFF475569);
+  static const Color textPrimary        = Color(0xFFE0E4E2); // onSurface
+  static const Color textSecondary      = Color(0xFF8E9996); // onSurfaceVariant
+  static const Color textMuted          = Color(0xFF6B7673);
   static const Color textOnGradient     = Color(0xFFFFFFFF);
 
   // ═══════════════════════════════════════════════════════════════
-  // LIGHT THEME SURFACES
+  // LIGHT THEME SURFACES (Material 3 Cool Mint / Health Spec)
   // ═══════════════════════════════════════════════════════════════
-  static const Color backgroundLight    = Color(0xFFF8FAFC);
-  static const Color surfaceL1Light     = Color(0xFFFFFFFF);
-  static const Color surfaceL2Light     = Color(0xFFF1F5F9);
-  static const Color surfaceL3Light     = Color(0xFFE2E8F0);
+  static const Color backgroundLight    = Color(0xFFEDF3F1); // Soft cool clinical grey-mint
+  static const Color surfaceL1Light     = Color(0xFFFFFFFF); // surfaceContainerLow (Main Cards)
+  static const Color surfaceL2Light     = Color(0xFFE3ECE9); // surfaceContainerHigh (Chips, Inner Stat Boxes)
+  static const Color surfaceL3Light     = Color(0xFFB1F1E4); // primaryContainer
+
+  // Emergency Alert
+  static const Color emergencyAlertBg   = Color(0xFFFCEEEE);
+  static const Color emergencyAlertText = Color(0xFFB3261E);
 
   // Glass (light)
-  static const Color glassBorderLightMode = Color(0xFFCBD5E1);
-  static const Color glassBorderLightModeSubtle = Color(0xFFE2E8F0);
+  static const Color glassBorderLightMode = Color(0xFFD2DCD8);
+  static const Color glassBorderLightModeSubtle = Color(0xFFE6EFEC);
 
   // Text (light)
-  static const Color textPrimaryLight   = Color(0xFF0F172A);
-  static const Color textSecondaryLight = Color(0xFF475569);
-  static const Color textMutedLight     = Color(0xFF94A3B8);
+  static const Color textPrimaryLight   = Color(0xFF161D1B); // onSurface
+  static const Color textSecondaryLight = Color(0xFF444F4C); // onSurfaceVariant
+  static const Color textMutedLight     = Color(0xFF707B78);
 
   // ═══════════════════════════════════════════════════════════════
   // SEMANTIC / ACCENT COLORS — shared
@@ -210,23 +216,38 @@ class AppTheme {
   static List<BoxShadow> cardShadow = [
     BoxShadow(color: Colors.black.withValues(alpha: 0.35), blurRadius: 16, offset: const Offset(0, 4)),
   ];
-  static List<BoxShadow> cardShadowLight = [
-    BoxShadow(color: const Color(0xFF0F172A).withValues(alpha: 0.04), blurRadius: 10, offset: const Offset(0, 3)),
-  ];
+  // Material 3 flat tonal cards: no shadow combined with borders
+  static List<BoxShadow> cardShadowLight = const [];
 
   // ═══════════════════════════════════════════════════════════════
   // DARK THEME DATA
   // ═══════════════════════════════════════════════════════════════
   static ThemeData get darkTheme => ThemeData.dark().copyWith(
     scaffoldBackgroundColor: backgroundDark,
-    primaryColor: primaryTeal,
+    primaryColor: const Color(0xFF66F7E2),
     colorScheme: const ColorScheme.dark(
-      primary: primaryTeal,
-      secondary: primaryCyan,
-      surface: surfaceL1,
-      error: accentRed,
-      onPrimary: Colors.white,
-      onSurface: textPrimary,
+      surface: Color(0xFF0A0E0D),
+      surfaceContainerLowest: Color(0xFF060908),
+      surfaceContainerLow: Color(0xFF141B19),
+      surfaceContainer: Color(0xFF1C2523),
+      surfaceContainerHigh: Color(0xFF1C2523),
+      surfaceContainerHighest: Color(0xFF24302D),
+      primary: Color(0xFF66F7E2),
+      onPrimary: Color(0xFF003731),
+      primaryContainer: Color(0xFF005048),
+      onPrimaryContainer: Color(0xFF88F9E7),
+      secondary: Color(0xFF66F7E2),
+      onSecondary: Color(0xFF003731),
+      secondaryContainer: Color(0xFF1C2523),
+      onSecondaryContainer: Color(0xFFE0E4E2),
+      onSurface: Color(0xFFE0E4E2),
+      onSurfaceVariant: Color(0xFF8E9996),
+      outline: Color(0xFF8E9996),
+      outlineVariant: Color(0xFF24302D),
+      error: Color(0xFFFFB4AB),
+      onError: Color(0xFF690005),
+      errorContainer: Color(0xFF93000A),
+      onErrorContainer: Color(0xFFFFDAD6),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
@@ -242,13 +263,13 @@ class AppTheme {
     cardTheme: CardThemeData(
       color: surfaceL1,
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusLg)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24), side: BorderSide.none),
       margin: EdgeInsets.zero,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: primaryTeal,
-        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xFF74F8E5),
+        foregroundColor: const Color(0xFF003731),
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusMd)),
         elevation: 0,
@@ -257,8 +278,8 @@ class AppTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: primaryTeal,
-        side: const BorderSide(color: glassBorder, width: 1.5),
+        foregroundColor: const Color(0xFF74F8E5),
+        side: const BorderSide(color: Color(0xFF293330), width: 1.0),
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusMd)),
         textStyle: GoogleFonts.outfit(fontSize: 15, fontWeight: FontWeight.w600),
@@ -269,15 +290,15 @@ class AppTheme {
       fillColor: surfaceL2,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMd),
-        borderSide: const BorderSide(color: glassBorder),
+        borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMd),
-        borderSide: const BorderSide(color: glassBorderLight),
+        borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMd),
-        borderSide: const BorderSide(color: primaryTeal, width: 1.5),
+        borderSide: const BorderSide(color: Color(0xFF74F8E5), width: 1.5),
       ),
       hintStyle: GoogleFonts.inter(color: textMuted, fontSize: 14),
       labelStyle: GoogleFonts.inter(color: textSecondary, fontSize: 14),
@@ -287,17 +308,17 @@ class AppTheme {
     ),
     textTheme: _buildTextTheme(textPrimary, textSecondary, textMuted),
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: surfaceL1,
-      indicatorColor: primaryTeal.withValues(alpha: 0.15),
+      backgroundColor: backgroundDark,
+      indicatorColor: const Color(0xFF005048),
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.w700, color: primaryTeal);
+          return GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.w700, color: const Color(0xFF90F4E3));
         }
         return GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.w500, color: textMuted);
       }),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return const IconThemeData(color: primaryTeal, size: 22);
+          return const IconThemeData(color: Color(0xFF90F4E3), size: 22);
         }
         return const IconThemeData(color: textMuted, size: 22);
       }),
@@ -311,22 +332,24 @@ class AppTheme {
       behavior: SnackBarBehavior.floating,
     ),
     dialogTheme: DialogThemeData(
-      backgroundColor: surfaceL3,
+      backgroundColor: surfaceL1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusXl)),
       titleTextStyle: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.w700, color: textPrimary),
       contentTextStyle: GoogleFonts.inter(fontSize: 14, color: textSecondary),
     ),
     bottomSheetTheme: const BottomSheetThemeData(
-      backgroundColor: surfaceL2,
+      backgroundColor: surfaceL1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
       elevation: 0,
     ),
-    dividerTheme: const DividerThemeData(color: glassBorderLight, thickness: 1),
+    dividerTheme: const DividerThemeData(color: Color(0xFF293330), thickness: 1),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((s) =>
-        s.contains(WidgetState.selected) ? primaryTeal : textMuted),
+        s.contains(WidgetState.selected) ? const Color(0xFF003731) : textMuted),
       trackColor: WidgetStateProperty.resolveWith((s) =>
-        s.contains(WidgetState.selected) ? primaryTeal.withValues(alpha: 0.3) : surfaceL3),
+        s.contains(WidgetState.selected) ? const Color(0xFF66F7E2) : surfaceL2),
+      trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+      trackOutlineWidth: WidgetStateProperty.all(0),
     ),
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
@@ -339,12 +362,28 @@ class AppTheme {
     scaffoldBackgroundColor: backgroundLight,
     primaryColor: primaryTeal,
     colorScheme: const ColorScheme.light(
-      primary: primaryTeal,
-      secondary: primaryCyan,
-      surface: surfaceL1Light,
-      error: accentRed,
-      onPrimary: Colors.white,
-      onSurface: textPrimaryLight,
+      surface: Color(0xFFEDF3F1),
+      surfaceContainerLowest: Color(0xFFFFFFFF),
+      surfaceContainerLow: Color(0xFFFFFFFF),
+      surfaceContainer: Color(0xFFE3ECE9),
+      surfaceContainerHigh: Color(0xFFE3ECE9),
+      surfaceContainerHighest: Color(0xFFD8E3DF),
+      primary: Color(0xFF006A60),
+      onPrimary: Color(0xFFFFFFFF),
+      primaryContainer: Color(0xFFB1F1E4),
+      onPrimaryContainer: Color(0xFF00201C),
+      secondary: Color(0xFF006A60),
+      onSecondary: Color(0xFFFFFFFF),
+      secondaryContainer: Color(0xFFE3ECE9),
+      onSecondaryContainer: Color(0xFF161D1B),
+      onSurface: Color(0xFF161D1B),
+      onSurfaceVariant: Color(0xFF444F4C),
+      outline: Color(0xFF707B78),
+      outlineVariant: Color(0xFFD2DCD8),
+      error: Color(0xFFBA1A1A),
+      onError: Color(0xFFFFFFFF),
+      errorContainer: Color(0xFFFFDAD6),
+      onErrorContainer: Color(0xFF410002),
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
@@ -360,7 +399,10 @@ class AppTheme {
     cardTheme: CardThemeData(
       color: surfaceL1Light,
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusLg)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+        side: BorderSide.none,
+      ),
       margin: EdgeInsets.zero,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -376,7 +418,7 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: primaryTeal,
-        side: BorderSide(color: glassBorderLightMode, width: 1.5),
+        side: const BorderSide(color: Color(0xFFD2DCD8), width: 1.0),
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusMd)),
         textStyle: GoogleFonts.outfit(fontSize: 15, fontWeight: FontWeight.w600),
@@ -387,11 +429,11 @@ class AppTheme {
       fillColor: surfaceL2Light,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMd),
-        borderSide: BorderSide(color: glassBorderLightMode),
+        borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMd),
-        borderSide: BorderSide(color: glassBorderLightModeSubtle),
+        borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusMd),
@@ -404,19 +446,19 @@ class AppTheme {
     ),
     textTheme: _buildTextTheme(textPrimaryLight, textSecondaryLight, textMutedLight),
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: surfaceL1Light,
-      indicatorColor: primaryTeal.withValues(alpha: 0.12),
+      backgroundColor: backgroundLight,
+      indicatorColor: primaryContainer,
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.w700, color: primaryTeal);
+          return GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.w700, color: const Color(0xFF00201C));
         }
-        return GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.w500, color: textMutedLight);
+        return GoogleFonts.outfit(fontSize: 11, fontWeight: FontWeight.w500, color: textSecondaryLight);
       }),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return const IconThemeData(color: primaryTeal, size: 22);
+          return const IconThemeData(color: Color(0xFF00201C), size: 22);
         }
-        return const IconThemeData(color: textMutedLight, size: 22);
+        return const IconThemeData(color: textSecondaryLight, size: 22);
       }),
       height: 68,
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
@@ -428,7 +470,7 @@ class AppTheme {
       behavior: SnackBarBehavior.floating,
     ),
     dialogTheme: DialogThemeData(
-      backgroundColor: surfaceL3Light,
+      backgroundColor: surfaceL1Light,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radiusXl)),
       titleTextStyle: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.w700, color: textPrimaryLight),
       contentTextStyle: GoogleFonts.inter(fontSize: 14, color: textSecondaryLight),
@@ -438,12 +480,14 @@ class AppTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
       elevation: 0,
     ),
-    dividerTheme: DividerThemeData(color: glassBorderLightModeSubtle, thickness: 1),
+    dividerTheme: const DividerThemeData(color: Color(0xFFD2DCD8), thickness: 1),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((s) =>
-        s.contains(WidgetState.selected) ? primaryTeal : textMutedLight),
+        s.contains(WidgetState.selected) ? Colors.white : textMutedLight),
       trackColor: WidgetStateProperty.resolveWith((s) =>
-        s.contains(WidgetState.selected) ? primaryTeal.withValues(alpha: 0.25) : surfaceL2Light),
+        s.contains(WidgetState.selected) ? primaryTeal : surfaceL2Light),
+      trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+      trackOutlineWidth: WidgetStateProperty.all(0),
     ),
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
@@ -501,28 +545,29 @@ class AppTheme {
 
   /// Card background color helper — picks the correct surface based on theme
   static Color cardBg(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark ? surfaceL1 : surfaceL1Light;
+    return Theme.of(context).colorScheme.surfaceContainerLow;
   }
 
   static Color cardBg2(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark ? surfaceL2 : surfaceL2Light;
+    return Theme.of(context).colorScheme.surfaceContainerHigh;
   }
 
   static Color borderColor(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark
-        ? glassBorderLight
-        : glassBorderLightModeSubtle;
+    return Theme.of(context).colorScheme.outlineVariant;
   }
 
   static Color textPrimaryOf(BuildContext context) =>
-    Theme.of(context).brightness == Brightness.dark ? textPrimary : textPrimaryLight;
+      Theme.of(context).colorScheme.onSurface;
 
   static Color textSecondaryOf(BuildContext context) =>
-    Theme.of(context).brightness == Brightness.dark ? textSecondary : textSecondaryLight;
+      Theme.of(context).colorScheme.onSurfaceVariant;
 
   static Color textMutedOf(BuildContext context) =>
-    Theme.of(context).brightness == Brightness.dark ? textMuted : textMutedLight;
+      Theme.of(context).colorScheme.onSurfaceVariant;
 
   static Color bgOf(BuildContext context) =>
-    Theme.of(context).brightness == Brightness.dark ? backgroundDark : backgroundLight;
+      Theme.of(context).colorScheme.surface;
+
+  static Color primaryOf(BuildContext context) =>
+      Theme.of(context).colorScheme.primary;
 }

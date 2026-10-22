@@ -7,9 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:intl/intl.dart';
 import '../../config/api_config.dart';
 import '../../config/theme.dart';
+import '../../core/widgets/expressive_motion.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/fitness_provider.dart';
 import '../../providers/health_provider.dart';
@@ -19,12 +19,11 @@ import '../../providers/user_goals_provider.dart';
 import '../../widgets/health_score_ring.dart';
 import '../../widgets/section_header.dart';
 import '../../widgets/premium_metric_card.dart';
-import '../../widgets/health_summary_banner.dart';
 import '../../widgets/weekly_day_bar.dart';
-import '../../widgets/quick_action_chip.dart';
 import '../chat/chat_screen.dart';
 import '../health/health_dashboard.dart';
 import '../../services/location_service.dart';
+import '../../services/health_alert_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,6 +64,9 @@ class _HomeScreenState extends State<HomeScreen>
           }
         }
       });
+
+      // Poll backend for proactive health insights (cooldown-gated internally)
+      _pollInsightsOnce(auth);
     });
   }
 
@@ -72,6 +74,27 @@ class _HomeScreenState extends State<HomeScreen>
   void dispose() {
     _headerCtrl.dispose();
     super.dispose();
+  }
+
+  /// Fire-and-forget poll for backend proactive insights.
+  /// HealthAlertService internally enforces a 30-minute cooldown so
+  /// calling this on every home screen init is safe and free of spam.
+  void _pollInsightsOnce(AuthProvider auth) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      var userId = prefs.getString('user_id');
+      userId ??= prefs.getString('device_user_id');
+      if (userId == null || userId.isEmpty) return;
+
+      final pos = await LocationService.getCurrentPosition();
+      await HealthAlertService.pollInsights(
+        userId: userId,
+        lat: pos?.latitude,
+        lon: pos?.longitude,
+      );
+    } catch (_) {
+      // Non-critical — silently ignore failures
+    }
   }
 
   @override
@@ -98,19 +121,6 @@ class _HomeScreenState extends State<HomeScreen>
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: navBg,
-          border: Border(
-            top: BorderSide(
-                color: AppTheme.borderColor(context), width: 0.5),
-          ),
-          boxShadow: isDark
-              ? [BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, -4))]
-              : [BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.06),
-                  blurRadius: 12,
-                  offset: const Offset(0, -4))],
         ),
         child: NavigationBar(
           selectedIndex: _currentIndex,
@@ -189,37 +199,6 @@ class _DashboardTab extends StatelessWidget {
     final healthScore = _calcScore(steps, sleepHours, waterMl, heartRate, goals);
 
     // Compute REAL vitals dynamically based on what user has logged/synced
-    int totalVitals = 0;
-    int inRangeVitals = 0;
-
-    if (health.lastBPStatus != null) {
-      totalVitals++;
-      if (health.lastBPStatus!['status'] == 'Normal') inRangeVitals++;
-    }
-    if (health.lastSugarStatus != null) {
-      totalVitals++;
-      if (health.lastSugarStatus!['status'] == 'Normal') inRangeVitals++;
-    }
-    if (fitness.heartRate != null && fitness.heartRate! > 0) {
-      totalVitals++;
-      if (fitness.heartRate! >= 60 && fitness.heartRate! <= 100) inRangeVitals++;
-    }
-    if (fitness.sleepHours > 0) {
-      totalVitals++;
-      if (fitness.sleepHours >= (goals.sleepGoal - 1)) inRangeVitals++;
-    }
-    if (fitness.steps > 0) {
-      totalVitals++;
-      if (fitness.steps >= (goals.stepGoal / 2)) inRangeVitals++;
-    }
-
-    final hasVitals = totalVitals > 0;
-    final vitalsStatusText = hasVitals
-        ? '$inRangeVitals of $totalVitals in range'
-        : 'No vitals logged today';
-    final vitalsStatusColor = hasVitals
-        ? (inRangeVitals == totalVitals ? AppTheme.accentGreen : AppTheme.accentOrange)
-        : AppTheme.primaryTeal;
 
     return RefreshIndicator(
       color: AppTheme.primaryTeal,
@@ -235,13 +214,14 @@ class _DashboardTab extends StatelessWidget {
       child: CustomScrollView(
         physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         slivers: [
-          // ── App Bar ──
+          // ── Pinned App Bar (Prevents Status Bar Collision) ──
           SliverAppBar(
-            expandedHeight: 0,
-            floating: true,
-            snap: true,
-            backgroundColor: AppTheme.bgOf(context),
+            pinned: true,
+            floating: false,
+            snap: false,
+            backgroundColor: isDark ? AppTheme.backgroundDark : const Color(0xFFF5F8F7),
             surfaceTintColor: Colors.transparent,
+            scrolledUnderElevation: 0,
             titleSpacing: 20,
             automaticallyImplyLeading: false,
             title: Row(
@@ -291,22 +271,16 @@ class _DashboardTab extends StatelessWidget {
           ),
 
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                // ── Google Health: Health Status Summary Banner ──
-                HealthSummaryBanner(
-                  totalVitals: totalVitals,
-                  inRangeVitals: inRangeVitals,
-                  statusText: vitalsStatusText,
-                  statusColor: vitalsStatusColor,
-                  onTap: () => onTabChange?.call(2),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+            sliver: SliverToBoxAdapter(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
+                  borderRadius: BorderRadius.circular(24),
                 ),
-
-                const SizedBox(height: 20),
-
-                // ── Health Score Ring ──
-                Center(
+                child: Center(
                   child: HealthScoreRing(
                     score: healthScore,
                     steps: steps,
@@ -314,55 +288,83 @@ class _DashboardTab extends StatelessWidget {
                     heartRate: heartRate,
                   ),
                 ),
+              ),
+            ),
+          ),
 
-                const SizedBox(height: 20),
+          const SliverToBoxAdapter(child: SizedBox(height: 18)),
 
-                // ── Quick Actions (Pill Chips) ──
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  child: Row(
-                    children: [
-                      QuickActionChip(
-                        isPrimary: true,
-                        icon: Icons.chat_bubble_rounded,
-                        label: 'Ask AI Chat',
-                        onTap: onChatTap,
-                      ),
-                      const SizedBox(width: 8),
-                      QuickActionChip(
-                        icon: Icons.water_drop_outlined,
-                        label: 'Log Water',
-                        color: AppTheme.accentBlue,
-                        onTap: () => _showLogWaterDialog(context),
-                      ),
-                      const SizedBox(width: 8),
-                      QuickActionChip(
-                        icon: Icons.directions_walk_rounded,
-                        label: 'Step Goal',
-                        color: AppTheme.accentGreen,
-                        onTap: () => _showStepsDialog(context),
-                      ),
-                      const SizedBox(width: 8),
-                      QuickActionChip(
-                        icon: Icons.sync_rounded,
-                        label: 'Sync Fitbit',
-                        color: AppTheme.primaryTeal,
-                        onTap: () => _handleFitbitSync(context, fitness),
-                      ),
-                      const SizedBox(width: 8),
-                      QuickActionChip(
-                        icon: Icons.folder_shared_outlined,
-                        label: 'File Vault',
-                        color: AppTheme.accentPurple,
-                        onTap: () => Navigator.pushNamed(context, '/vault'),
-                      ),
-                    ],
+          // ── Quick Actions (Edge-to-edge scrollable outside parent padding) ──
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 40,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                clipBehavior: Clip.none,
+                children: [
+                  SpringPressable(
+                    onTap: onChatTap,
+                    child: ActionChip(
+                      avatar: Icon(Icons.chat_bubble_outline_rounded, size: 18, color: Theme.of(context).colorScheme.onPrimaryContainer),
+                      label: const Text('Ask AI Chat'),
+                      onPressed: onChatTap,
+                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                      side: BorderSide.none,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      labelStyle: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onPrimaryContainer),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  SpringPressable(
+                    onTap: () => _showLogWaterDialog(context),
+                    child: ActionChip(
+                      avatar: Icon(Icons.water_drop_outlined, size: 18, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      label: const Text('Log Water'),
+                      onPressed: () => _showLogWaterDialog(context),
+                      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
+                      side: BorderSide.none,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      labelStyle: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  SpringPressable(
+                    onTap: () => _showStepsDialog(context),
+                    child: ActionChip(
+                      avatar: Icon(Icons.directions_walk_outlined, size: 18, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      label: const Text('Step Goal'),
+                      onPressed: () => _showStepsDialog(context),
+                      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
+                      side: BorderSide.none,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      labelStyle: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  SpringPressable(
+                    onTap: () => _handleFitbitSync(context, fitness),
+                    child: ActionChip(
+                      avatar: Icon(Icons.sync_outlined, size: 18, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      label: const Text('Sync Fitbit'),
+                      onPressed: () => _handleFitbitSync(context, fitness),
+                      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
+                      side: BorderSide.none,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      labelStyle: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
 
-                const SizedBox(height: 28),
+          const SliverToBoxAdapter(child: SizedBox(height: 24)),
 
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
                 // ── Google Health: Key Metrics Section ──
                 SectionHeader(
                   title: 'Key metrics',
@@ -378,48 +380,15 @@ class _DashboardTab extends StatelessWidget {
                         value: heartRate != null && heartRate > 0 ? '$heartRate' : '--',
                         unit: 'bpm',
                         statusLabel: heartRate != null && heartRate > 0 ? 'In range' : 'Tap to sync',
-                        statusColor: heartRate != null && heartRate > 0 ? AppTheme.accentGreen : AppTheme.textMutedOf(context),
-                        icon: Icons.favorite_rounded,
-                        iconColor: AppTheme.accentRed,
+                        icon: Icons.favorite_border_rounded,
+                        iconColor: isDark ? const Color(0xFFFF859D) : const Color(0xFFD9385A),
                         trendData: heartRate != null && heartRate > 0
                             ? [70.0, 72.0, 74.0, 71.0, 75.0, 73.0, heartRate.toDouble()]
                             : null,
                         onTap: () => _handleFitbitSync(context, fitness),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: PremiumMetricCard(
-                        label: 'Weight',
-                        value: weightKg > 0 ? weightKg.toStringAsFixed(1) : '--',
-                        unit: 'kg',
-                        statusLabel: 'Logged',
-                        statusColor: AppTheme.accentBlue,
-                        icon: Icons.monitor_weight_outlined,
-                        iconColor: AppTheme.accentBlue,
-                        trendData: null,
-                        onTap: () => Navigator.pushNamed(context, '/edit-profile'),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: PremiumMetricCard(
-                        label: 'Steps',
-                        value: _fmt(steps),
-                        unit: 'steps',
-                        statusLabel: steps >= goals.stepGoal ? 'Goal met' : '${goals.stepGoal} goal',
-                        statusColor: AppTheme.accentGreen,
-                        icon: Icons.directions_walk_rounded,
-                        iconColor: AppTheme.accentGreen,
-                        trendData: steps > 0 ? [steps * 0.3, steps * 0.6, steps.toDouble()] : null,
-                        onTap: () => _showStepsDialog(context),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: PremiumMetricCard(
                         label: 'Sleep',
@@ -428,11 +397,54 @@ class _DashboardTab extends StatelessWidget {
                         statusLabel: sleepHours > 0
                             ? (sleepHours >= goals.sleepGoal ? 'Optimal' : '${goals.sleepGoal}h goal')
                             : 'Not logged',
-                        statusColor: sleepHours > 0 ? AppTheme.accentPurple : AppTheme.textMutedOf(context),
-                        icon: Icons.bedtime_rounded,
-                        iconColor: AppTheme.accentPurple,
+                        icon: Icons.bedtime_outlined,
+                        iconColor: isDark ? const Color(0xFFA5B4FC) : const Color(0xFF4F46E5),
                         trendData: sleepHours > 0 ? [sleepHours] : null,
                         onTap: () => _showLogSleepSheet(context),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: PremiumMetricCard(
+                        label: 'Weight',
+                        value: weightKg > 0 ? weightKg.toStringAsFixed(1) : '--',
+                        unit: 'kg',
+                        statusLabel: 'Logged',
+                        icon: Icons.monitor_weight_outlined,
+                        iconColor: Theme.of(context).colorScheme.primary,
+                        trendData: null,
+                        onTap: () => Navigator.pushNamed(context, '/edit-profile'),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Builder(
+                        builder: (context) {
+                          final bpRecords = health.records
+                              .where((r) => r['data'] != null && r['data']['systolic'] != null)
+                              .toList();
+                          final hasBp = bpRecords.isNotEmpty;
+                          return PremiumMetricCard(
+                            label: 'Blood Pressure',
+                            value: hasBp
+                                ? '${bpRecords.first['data']?['systolic']}/${bpRecords.first['data']?['diastolic']}'
+                                : '--/--',
+                            unit: 'mmHg',
+                            statusLabel: hasBp
+                                ? (health.lastBPStatus?['status'] as String? ?? 'Normal')
+                                : 'Tap to log',
+                            icon: Icons.speed_rounded,
+                            iconColor: isDark ? const Color(0xFFFFB77C) : const Color(0xFFE66000),
+                            trendData: bpRecords.length >= 2
+                                ? bpRecords.take(7).map((r) => ((r['data']?['systolic'] as num?) ?? 120).toDouble()).toList()
+                                : null,
+                            onTap: () => onTabChange?.call(2),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -459,10 +471,8 @@ class _DashboardTab extends StatelessWidget {
                     return Container(
                       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
                       decoration: BoxDecoration(
-                        color: card,
-                        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                        border: Border.all(color: border, width: 1),
-                        boxShadow: isDark ? null : AppTheme.cardShadowLight,
+                        color: Theme.of(context).colorScheme.surfaceContainerLow,
+                        borderRadius: BorderRadius.circular(24),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -514,73 +524,7 @@ class _DashboardTab extends StatelessWidget {
                   textSec: textSec,
                 ),
 
-                const SizedBox(height: 28),
 
-                // ── Medical File Vault (Google Drive Style Card) ──
-                SectionHeader(
-                  title: 'Medical records',
-                  trailing: 'Open Vault',
-                  onTrailingTap: () => Navigator.pushNamed(context, '/vault'),
-                ),
-                const SizedBox(height: 10),
-                InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/vault'),
-                  borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: card,
-                      borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-                      border: Border.all(color: border, width: 1),
-                      boxShadow: isDark ? null : AppTheme.cardShadowLight,
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 46,
-                          height: 46,
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryTeal.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Icon(
-                            Icons.folder_shared_rounded,
-                            color: AppTheme.primaryTeal,
-                            size: 24,
-                          ),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Medical File Vault',
-                                style: GoogleFonts.outfit(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                  color: textPri,
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Text(
-                                'Prescriptions, lab reports · 100% On-Device',
-                                style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  color: textSec,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_rounded,
-                          color: AppTheme.textMutedOf(context),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
 
                 const SizedBox(height: 28),
 
@@ -648,12 +592,6 @@ class _DashboardTab extends StatelessWidget {
     return s.clamp(0, 100);
   }
 
-  String _fmt(int v) {
-    if (v >= 10000) {
-      return '${(v / 1000).toStringAsFixed(1)}k';
-    }
-    return NumberFormat.decimalPattern().format(v);
-  }
 
   Future<void> _handleFitbitSync(BuildContext context, FitnessProvider fitness) async {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -760,9 +698,8 @@ class _DashboardTab extends StatelessWidget {
       builder: (ctx) => Container(
         padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
         decoration: BoxDecoration(
-          color: AppTheme.cardBg(ctx),
+          color: Theme.of(ctx).colorScheme.surfaceContainerLow,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-          border: Border.all(color: AppTheme.borderColor(ctx)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -999,12 +936,9 @@ class _DashboardTab extends StatelessWidget {
                       width: 52, height: 52,
                       decoration: BoxDecoration(
                         color: quality == q
-                            ? AppTheme.accentPurple.withValues(alpha: 0.15)
-                            : Colors.transparent,
-                        border: Border.all(color: quality == q
-                            ? AppTheme.accentPurple
-                            : AppTheme.borderColor(c)),
-                        borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                            ? Theme.of(c).colorScheme.primaryContainer
+                            : Theme.of(c).colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       alignment: Alignment.center,
                       child: Text(emojis[q]!, style: const TextStyle(fontSize: 22)),
@@ -1095,8 +1029,6 @@ class _ProfileTab extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textPri = AppTheme.textPrimaryOf(context);
     final textSec = AppTheme.textSecondaryOf(context);
-    final card = AppTheme.cardBg(context);
-    final border = AppTheme.borderColor(context);
 
     final user = auth.user ?? {};
     final rawFirst = user['first_name'] as String? ?? 'Guest';
@@ -1130,127 +1062,185 @@ class _ProfileTab extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: card,
-                  borderRadius: BorderRadius.circular(AppTheme.radiusXl),
-                  border: Border.all(
-                    color: border,
-                    width: 1,
-                  ),
-                  boxShadow: isDark ? null : AppTheme.cardShadowLight,
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
+                  borderRadius: BorderRadius.circular(24),
                 ),
-                child: Column(children: [
-                  // Avatar
-                  Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      Container(
-                        width: 80, height: 80,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: AppTheme.primaryGradient,
-                          boxShadow: AppTheme.glowTeal(blur: 20, opacity: 0.3),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          (user['first_name'] as String? ?? 'G')
-                              .substring(0, 1)
-                              .toUpperCase(),
-                          style: GoogleFonts.outfit(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white),
-                        ),
-                      ),
-                      if (isGuest)
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: AppTheme.accentOrange,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text('Guest',
-                              style: GoogleFonts.outfit(
-                                  fontSize: 9,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700)),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Text(name,
-                      style: GoogleFonts.outfit(
-                          fontSize: 20, fontWeight: FontWeight.w700,
-                          color: textPri)),
-                  const SizedBox(height: 2),
-                  Text(email,
-                      style: GoogleFonts.inter(fontSize: 13, color: textSec)),
-                  const SizedBox(height: 4),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Icon(Icons.location_on_outlined, size: 14,
-                        color: AppTheme.primaryTeal),
-                    const SizedBox(width: 4),
-                    Text(city,
-                        style: GoogleFonts.inter(
-                            fontSize: 12, color: AppTheme.primaryTeal,
-                            fontWeight: FontWeight.w500)),
-                  ]),
-                  const SizedBox(height: 16),
-                  // Stats row
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    decoration: BoxDecoration(
-                      color: isDark ? AppTheme.surfaceL2 : AppTheme.surfaceL2Light,
-                      borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Horizontal header: 64px avatar on left, Name/Email/City on right
+                    Row(
                       children: [
-                        _Stat(
-                          value: (auth.user?['bmi'] as num?) != null
-                              ? (auth.user!['bmi'] as num).toStringAsFixed(1)
-                              : '—',
-                          label: 'BMI', textPri: textPri, textSec: textSec),
-                        _Divider(isDark: isDark),
-                        _Stat(
-                          value: (auth.user?['height_cm'] as num?) != null
-                              ? '${(auth.user!['height_cm'] as num).toInt()}cm'
-                              : '—',
-                          label: 'Height', textPri: textPri, textSec: textSec),
-                        _Divider(isDark: isDark),
-                        _Stat(
-                          value: (auth.user?['weight_kg'] as num?) != null
-                              ? '${(auth.user!['weight_kg'] as num).toStringAsFixed(1)}kg'
-                              : '—',
-                          label: 'Weight', textPri: textPri, textSec: textSec),
+                        Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            (user['first_name'] as String? ?? 'G')
+                                .substring(0, 1)
+                                .toUpperCase(),
+                            style: GoogleFonts.outfit(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      name,
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: textPri,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  if (isGuest) ...[
+                                    const SizedBox(width: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 6, vertical: 2),
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.accentOrange,
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      child: Text(
+                                        'Guest',
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 9,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                isGuest ? 'Guest User' : email,
+                                style: GoogleFonts.inter(
+                                  fontSize: 13,
+                                  color: textSec,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on_outlined,
+                                    size: 14,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Expanded(
+                                    child: Text(
+                                      city,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 12,
+                                        color: Theme.of(context).colorScheme.primary,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 14),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: () => Navigator.pushNamed(context, '/edit-profile'),
-                      icon: const Icon(Icons.edit_outlined, size: 16),
-                      label: Text(
-                        'Edit Health Profile',
-                        style: GoogleFonts.inter(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
+                    const SizedBox(height: 16),
+                    // Stats row: sleek 3-column tonal bar
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(18),
                       ),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppTheme.primaryTeal,
-                        side: BorderSide(
-                            color: AppTheme.primaryTeal.withValues(alpha: 0.5)),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _Stat(
+                            value: (auth.user?['bmi'] as num?) != null
+                                ? (auth.user!['bmi'] as num).toStringAsFixed(1)
+                                : '—',
+                            label: 'BMI',
+                            textPri: textPri,
+                            textSec: textSec,
+                          ),
+                          _Divider(isDark: isDark),
+                          _Stat(
+                            value: (auth.user?['height_cm'] as num?) != null
+                                ? '${(auth.user!['height_cm'] as num).toInt()}cm'
+                                : '—',
+                            label: 'Height',
+                            textPri: textPri,
+                            textSec: textSec,
+                          ),
+                          _Divider(isDark: isDark),
+                          _Stat(
+                            value: (auth.user?['weight_kg'] as num?) != null
+                              ? '${(auth.user!['weight_kg'] as num).toStringAsFixed(1)}kg'
+                                : '—',
+                            label: 'Weight',
+                            textPri: textPri,
+                            textSec: textSec,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    // Single full-width tonal button "Edit Health Profile"
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.tonal(
+                        onPressed: () => Navigator.pushNamed(context, '/edit-profile'),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.edit_outlined, size: 16, color: Theme.of(context).colorScheme.onPrimaryContainer),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Edit Health Profile',
+                              style: GoogleFonts.inter(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 20),
@@ -1258,16 +1248,7 @@ class _ProfileTab extends StatelessWidget {
               // ── Settings ──
               _SettingsSection(title: 'Account & Preferences', children: [
                 _SettingsTile(
-                  icon: Icons.person_outline_rounded,
-                  iconColor: AppTheme.primaryTeal,
-                  title: 'Edit Profile',
-                  subtitle: 'Personal info, BMI, conditions & medications',
-                  isDark: isDark,
-                  onTap: () => Navigator.pushNamed(context, '/edit-profile'),
-                ),
-                _SettingsTile(
                   icon: Icons.dark_mode_outlined,
-                  iconColor: AppTheme.accentPurple,
                   title: 'Dark Mode',
                   isDark: isDark,
                   trailing: Switch(
@@ -1277,7 +1258,6 @@ class _ProfileTab extends StatelessWidget {
                 ),
                 _SettingsTile(
                   icon: Icons.language_outlined,
-                  iconColor: AppTheme.accentBlue,
                   title: 'Language',
                   subtitle: context.watch<AuthProvider>().languageLabel,
                   isDark: isDark,
@@ -1285,7 +1265,6 @@ class _ProfileTab extends StatelessWidget {
                 ),
                 _SettingsTile(
                   icon: Icons.notifications_outlined,
-                  iconColor: AppTheme.accentYellow,
                   title: 'Health Goals',
                   subtitle: 'Set your daily targets',
                   isDark: isDark,
@@ -1298,7 +1277,6 @@ class _ProfileTab extends StatelessWidget {
               _SettingsSection(title: 'Medical Records & Privacy', children: [
                 _SettingsTile(
                   icon: Icons.folder_shared_outlined,
-                  iconColor: AppTheme.primaryTeal,
                   title: 'Medical File Vault',
                   subtitle: 'Prescriptions, lab reports & scans (On-Device)',
                   isDark: isDark,
@@ -1306,18 +1284,25 @@ class _ProfileTab extends StatelessWidget {
                 ),
                 _SettingsTile(
                   icon: Icons.shield_outlined,
-                  iconColor: AppTheme.accentGreen,
                   title: 'Privacy Settings',
                   isDark: isDark,
                   onTap: () => _showPrivacyDialog(context),
                 ),
-                _SettingsTile(
-                  icon: Icons.lock_outline,
-                  iconColor: AppTheme.primaryTeal,
-                  title: 'Change Password',
-                  isDark: isDark,
-                  onTap: () => _showChangePassDialog(context),
-                ),
+                if (isGuest)
+                  _SettingsTile(
+                    icon: Icons.login_rounded,
+                    title: 'Sign In / Create Account',
+                    subtitle: 'Sync your data and access all features',
+                    isDark: isDark,
+                    onTap: () => Navigator.pushReplacementNamed(context, '/login'),
+                  )
+                else
+                  _SettingsTile(
+                    icon: Icons.lock_outline,
+                    title: 'Change Password',
+                    isDark: isDark,
+                    onTap: () => _showChangePassDialog(context),
+                  ),
               ]),
 
               const SizedBox(height: 12),
@@ -1325,21 +1310,18 @@ class _ProfileTab extends StatelessWidget {
               _SettingsSection(title: 'About', children: [
                 _SettingsTile(
                   icon: Icons.info_outline_rounded,
-                  iconColor: AppTheme.textSecondary,
                   title: 'About Aarogya Sathi',
                   isDark: isDark,
                   onTap: () => _showAbout(context),
                 ),
                 _SettingsTile(
                   icon: Icons.article_outlined,
-                  iconColor: AppTheme.textSecondary,
                   title: 'Terms & Privacy Policy',
                   isDark: isDark,
                   onTap: () => _showTermsDialog(context),
                 ),
                 _SettingsTile(
                   icon: Icons.medical_information_outlined,
-                  iconColor: AppTheme.accentOrange,
                   title: 'Medical Disclaimer',
                   isDark: isDark,
                   onTap: () => _showDisclaimer(context),
@@ -1531,21 +1513,97 @@ class _ProfileTab extends StatelessWidget {
     showDialog(
       context: ctx,
       builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text('Privacy & DPDP Compliance',
             style: GoogleFonts.outfit(fontWeight: FontWeight.w700, color: AppTheme.accentGreen)),
         content: SingleChildScrollView(
-          child: Text(
-            '• Local-First: Your personal health records and vitals are stored on your device.\n\n'
-            '• DPDP Act (2023) Compliant: Personal identifiers are never sold or shared with commercial ad networks.\n\n'
-            '• Health Connect: Wearable sensor telemetry is used only to personalize your health insights during your active session.\n\n'
-            '• Data Control: You can clear your local chat history and vital logs at any time.',
-            style: GoogleFonts.inter(fontSize: 13, height: 1.4),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '• Local-First: Your personal health records and vitals are stored on your device.\n\n'
+                '• DPDP Act (2023) Compliant: Personal identifiers are never sold or shared with commercial ad networks.\n\n'
+                '• Health Connect: Wearable sensor telemetry is used only to personalize your health insights during your active session.\n\n'
+                '• Data Control: You can clear your local chat history and vital logs at any time.',
+                style: GoogleFonts.inter(fontSize: 13, height: 1.4),
+              ),
+              const SizedBox(height: 16),
+              InkWell(
+                onTap: () async {
+                  final uri = Uri.parse('https://jay-d21.github.io/Aarogya-Sathi-Final/privacy-policy.html');
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+                  }
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.launch_rounded, size: 16, color: AppTheme.primaryTeal),
+                    const SizedBox(width: 6),
+                    Text(
+                      'View Privacy Policy',
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.primaryTeal,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('Got It'))
+            onPressed: () => _confirmDeleteAccountAndData(ctx),
+            child: const Text('Delete Account & Local Data',
+                style: TextStyle(color: AppTheme.accentRed, fontSize: 13)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Got It'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _confirmDeleteAccountAndData(BuildContext ctx) {
+    Navigator.pop(ctx);
+    showDialog(
+      context: ctx,
+      builder: (alertCtx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text('Delete Account & Data?',
+            style: GoogleFonts.outfit(fontWeight: FontWeight.w700, color: AppTheme.accentRed)),
+        content: Text(
+          'This will permanently wipe your authentication session, local health records, cached vitals, and app preferences from this device. This action cannot be undone.',
+          style: GoogleFonts.inter(fontSize: 13),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(alertCtx),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.accentRed,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () async {
+              Navigator.pop(alertCtx);
+              final auth = ctx.read<AuthProvider>();
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.clear();
+              await auth.logout();
+              if (ctx.mounted) {
+                Navigator.pushNamedAndRemoveUntil(ctx, '/login', (route) => false);
+              }
+            },
+            child: const Text('Delete Everything'),
+          ),
         ],
       ),
     );
@@ -1621,17 +1679,16 @@ class _IconBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: 40, height: 40,
         decoration: BoxDecoration(
-          color: isDark ? AppTheme.surfaceL1 : AppTheme.surfaceL1Light,
-          borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-          border: Border.all(color: AppTheme.borderColor(context)),
+          color: colorScheme.surfaceContainerHigh,
+          shape: BoxShape.circle,
         ),
-        child: Icon(icon, size: 20,
-            color: isDark ? AppTheme.textSecondary : AppTheme.textSecondaryLight),
+        child: Icon(icon, size: 20, color: colorScheme.onSurfaceVariant),
       ),
     );
   }
@@ -1644,18 +1701,22 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       width: 40, height: 40,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: AppTheme.primaryGradient,
+        color: colorScheme.primaryContainer,
       ),
       alignment: Alignment.center,
-      child: Text(name.isNotEmpty ? name[0].toUpperCase() : 'G',
-          style: GoogleFonts.outfit(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Colors.white)),
+      child: Text(
+        name.isNotEmpty ? name[0].toUpperCase() : 'G',
+        style: GoogleFonts.outfit(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          color: colorScheme.onPrimaryContainer,
+        ),
+      ),
     );
   }
 }
@@ -1870,6 +1931,10 @@ class _AqiBannerState extends State<_AqiBanner> {
     if (resolvedAqi != null) {
       await prefs.setInt(cacheKey, resolvedAqi);
       await prefs.setInt(cacheTimeKey, now);
+
+      // Fire proactive AQI alert notification if air quality is unhealthy
+      HealthAlertService.checkAQI(resolvedAqi, station: city);
+
       if (mounted) {
         final (lbl, col) = _classify(resolvedAqi);
         setState(() {
@@ -1931,14 +1996,13 @@ class _AqiBannerState extends State<_AqiBanner> {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+        borderRadius: BorderRadius.circular(24),
         onTap: () => _showAqiDetailSheet(context),
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: widget.card,
-            borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-            border: Border.all(color: widget.border),
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
+            borderRadius: BorderRadius.circular(24),
           ),
           child: Row(children: [
             Container(
@@ -2072,7 +2136,6 @@ class _AqiDetailSheetState extends State<_AqiDetailSheet> {
       decoration: BoxDecoration(
         color: card,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        border: Border.all(color: border),
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -2127,7 +2190,6 @@ class _AqiDetailSheetState extends State<_AqiDetailSheet> {
                   decoration: BoxDecoration(
                     color: widget.color.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: widget.color.withValues(alpha: 0.3)),
                   ),
                   child: Column(
                     children: [
@@ -2161,7 +2223,6 @@ class _AqiDetailSheetState extends State<_AqiDetailSheet> {
               decoration: BoxDecoration(
                 color: widget.color.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: widget.color.withValues(alpha: 0.2)),
               ),
               child: Row(
                 children: [
@@ -2299,8 +2360,8 @@ class _PollutantTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: border),
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2348,9 +2409,8 @@ class _ReminderTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: card,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        border: Border.all(color: border),
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(children: [
         Container(
@@ -2402,9 +2462,8 @@ class _EmptyCard extends StatelessWidget {
     return Container(
       height: 80,
       decoration: BoxDecoration(
-        color: card,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        border: Border.all(color: border),
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Center(
         child: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -2431,8 +2490,7 @@ class _EmergencyCTA extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppTheme.accentRed.withValues(alpha: isDark ? 0.1 : 0.06),
-        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        border: Border.all(color: AppTheme.accentRed.withValues(alpha: 0.3)),
+        borderRadius: BorderRadius.circular(24),
       ),
       child: Row(children: [
         Container(
@@ -2488,32 +2546,35 @@ class _SettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final card = AppTheme.cardBg(context);
-    final border = AppTheme.borderColor(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final card = colorScheme.surfaceContainerLow;
+    final dividerColor = colorScheme.outlineVariant.withValues(alpha: 0.3);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 4, bottom: 8),
-          child: Text(title,
-              style: GoogleFonts.outfit(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.textMutedOf(context),
-                  letterSpacing: 0.5)),
+          child: Text(
+            title,
+            style: GoogleFonts.outfit(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: colorScheme.onSurfaceVariant,
+              letterSpacing: 0.5,
+            ),
+          ),
         ),
         Container(
           decoration: BoxDecoration(
             color: card,
-            borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-            border: Border.all(color: border),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: Column(children: [
             for (int i = 0; i < children.length; i++) ...[
               children[i],
               if (i < children.length - 1)
-                Divider(height: 1, color: border, indent: 56),
+                Divider(height: 1, color: dividerColor, indent: 56),
             ],
           ]),
         ),
@@ -2524,7 +2585,6 @@ class _SettingsSection extends StatelessWidget {
 
 class _SettingsTile extends StatelessWidget {
   final IconData icon;
-  final Color iconColor;
   final String title;
   final String? subtitle;
   final bool isDark;
@@ -2532,7 +2592,6 @@ class _SettingsTile extends StatelessWidget {
   final VoidCallback? onTap;
   const _SettingsTile({
     required this.icon,
-    required this.iconColor,
     required this.title,
     required this.isDark,
     this.subtitle,
@@ -2542,27 +2601,48 @@ class _SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textPri = AppTheme.textPrimaryOf(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       leading: Container(
-        width: 34, height: 34,
+        width: 36,
+        height: 36,
         decoration: BoxDecoration(
-          color: iconColor.withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(8),
+          shape: BoxShape.circle,
+          color: colorScheme.surfaceContainer,
         ),
-        child: Icon(icon, size: 18, color: iconColor),
+        child: Center(
+          child: Icon(
+            icon,
+            size: 20,
+            color: colorScheme.onSurfaceVariant,
+          ),
+        ),
       ),
-      title: Text(title,
-          style: GoogleFonts.inter(
-              fontSize: 14, fontWeight: FontWeight.w500, color: textPri)),
+      title: Text(
+        title,
+        style: GoogleFonts.inter(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: colorScheme.onSurface,
+        ),
+      ),
       subtitle: subtitle != null
-          ? Text(subtitle!,
-              style: GoogleFonts.inter(fontSize: 12, color: AppTheme.textSecondaryOf(context)))
+          ? Text(
+              subtitle!,
+              style: GoogleFonts.inter(
+                fontSize: 12,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            )
           : null,
       trailing: trailing ??
-          Icon(Icons.chevron_right_rounded, size: 20, color: AppTheme.textSecondaryOf(context)),
+          Icon(
+            Icons.chevron_right_rounded,
+            size: 20,
+            color: colorScheme.onSurfaceVariant,
+          ),
       onTap: trailing == null ? onTap : null,
     );
   }
@@ -2672,9 +2752,8 @@ class _WaterBtn extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: BoxDecoration(
-          color: AppTheme.bpGradient.colors.first.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-          border: Border.all(color: AppTheme.bpGradient.colors.first.withValues(alpha: 0.3)),
+          color: Theme.of(context).colorScheme.surfaceContainerHigh,
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
           children: [
@@ -2803,9 +2882,8 @@ class _RemindersSheetState extends State<_RemindersSheet> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: card,
-                      borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                      border: Border.all(color: border),
+                      color: Theme.of(context).colorScheme.surfaceContainerLow,
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Text('New Reminder', style: GoogleFonts.outfit(
@@ -2840,17 +2918,16 @@ class _RemindersSheetState extends State<_RemindersSheet> {
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                   decoration: BoxDecoration(
-                                    color: sel ? AppTheme.primaryTeal.withValues(alpha: 0.15) : Colors.transparent,
-                                    border: Border.all(color: sel ? AppTheme.primaryTeal : border),
+                                    color: sel ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.surfaceContainerHigh,
                                     borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                                   ),
                                   child: Row(mainAxisSize: MainAxisSize.min, children: [
                                     Icon(icon, size: 15,
-                                        color: sel ? AppTheme.primaryTeal : textSec),
+                                        color: sel ? Theme.of(context).colorScheme.onPrimaryContainer : textSec),
                                     const SizedBox(width: 6),
                                     Text(label, style: GoogleFonts.inter(fontSize: 12,
                                         fontWeight: FontWeight.w500,
-                                        color: sel ? AppTheme.primaryTeal : textSec)),
+                                        color: sel ? Theme.of(context).colorScheme.onPrimaryContainer : textSec)),
                                   ]),
                                 ),
                               ),
@@ -2870,9 +2947,8 @@ class _RemindersSheetState extends State<_RemindersSheet> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                           decoration: BoxDecoration(
-                            color: AppTheme.bgOf(context),
-                            border: Border.all(color: border),
-                            borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                            color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           child: Row(children: [
                             Icon(Icons.access_time_rounded, size: 18,
@@ -2905,16 +2981,15 @@ class _RemindersSheetState extends State<_RemindersSheet> {
                             child: Container(
                               width: 34, height: 34,
                               decoration: BoxDecoration(
-                                color: sel ? AppTheme.primaryTeal : Colors.transparent,
-                                border: Border.all(color: sel ? AppTheme.primaryTeal : border),
+                                color: sel ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surfaceContainerHigh,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               alignment: Alignment.center,
                               child: Text(dayLabels[i],
                                   style: GoogleFonts.outfit(fontSize: 12,
                                       fontWeight: FontWeight.w600,
-                                      color: sel ? Colors.white : textSec)),
-                            ),
+                                      color: sel ? Theme.of(context).colorScheme.onPrimary : textSec)),
+                              ),
                           );
                         }),
                       ),

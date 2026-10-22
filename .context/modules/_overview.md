@@ -14,7 +14,7 @@
 | 10 | Medical File Vault | Abhijit | ✅ Live + Tested | Google Drive-style folders (`category_folder_card.dart`), storage overview, on-device DPDP-compliant vault for prescriptions/reports via `image_picker` + `file_picker`, 6 unit tests |
 | 11 | Health Profile & BMI | Abhijit | ✅ Live + Tested | Asian ICMR BMI calculator, chronic conditions & medications manager, offline profile caching, RAG sync, 6 unit tests |
 | 12 | Pedometer Filter | Abhijit | ✅ Live + Tested | Gait cadence filter + 8-step hysteresis bout validation to reject hand movements, 6 unit tests |
-| 13 | Proactive Notifications | Ritesh | ❌ Not Started | Background AQI alerts, vital anomaly alerts, daily morning briefings — assigned but no commits |
+| 13 | Proactive Notifications | Jayesh | ✅ Live | HealthAlertService: ICMR vital alerts (BP, sugar, HR, SpO2), CPCB AQI alerts, backend insight polling with 60min cooldowns |
 | 14 | Architecture Diagrams | Ritesh | ✅ Complete | 8 publication-grade modular architecture diagrams in `docs/diagrams/images/` and `docs/diagrams/system_architecture_diagrams.md` |
 | 15 | Demo Video | Ritesh | ❌ Not Started | 5-minute walkthrough — assigned but not recorded |
 

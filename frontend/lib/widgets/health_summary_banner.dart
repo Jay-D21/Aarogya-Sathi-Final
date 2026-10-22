@@ -26,9 +26,8 @@ class HealthSummaryBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardBg = isDark ? AppTheme.surfaceL1 : AppTheme.surfaceL1Light;
-    final borderCol = isDark ? AppTheme.glassBorderLight : const Color(0xFFE2E8F0);
+    final colorScheme = Theme.of(context).colorScheme;
+    final cardBg = colorScheme.surfaceContainerLow;
     final hasData = totalVitals > 0;
 
     return GestureDetector(
@@ -38,9 +37,7 @@ class HealthSummaryBanner extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: cardBg,
-          borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-          border: Border.all(color: borderCol, width: 1),
-          boxShadow: isDark ? null : AppTheme.cardShadowLight,
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,21 +171,20 @@ class HealthSummaryBanner extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: AppTheme.primaryTeal.withValues(alpha: 0.1),
+                      color: colorScheme.primaryContainer,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppTheme.primaryTeal.withValues(alpha: 0.3)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.add_rounded, size: 14, color: AppTheme.primaryTeal),
+                        Icon(Icons.add_rounded, size: 14, color: colorScheme.onPrimaryContainer),
                         const SizedBox(width: 4),
                         Text(
                           'Log +',
                           style: GoogleFonts.inter(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
-                            color: AppTheme.primaryTeal,
+                            color: colorScheme.onPrimaryContainer,
                           ),
                         ),
                       ],
