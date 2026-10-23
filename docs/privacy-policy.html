@@ -3,154 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aarogya Sathi — Privacy Policy</title>
+    <title>Privacy Policy — Aarogya Sathi</title>
     <style>
-        :root { --teal: #00C9A7; --dark: #0F172A; --gray: #475569; --bg: #F8FAFC; --card: #FFFFFF; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--dark); line-height: 1.7; }
-        .container { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
-        .header { text-align: center; margin-bottom: 48px; }
-        .header h1 { font-size: 28px; font-weight: 800; color: var(--teal); margin-bottom: 8px; }
-        .header p { color: var(--gray); font-size: 14px; }
-        .card { background: var(--card); border-radius: 16px; padding: 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-        h2 { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--teal); display: inline-block; }
-        h3 { font-size: 16px; font-weight: 600; margin: 16px 0 8px; }
-        p, li { font-size: 15px; color: var(--gray); margin-bottom: 12px; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 8px; }
-        .badge { display: inline-block; background: #ECFDF5; color: #059669; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
-        table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-        th, td { text-align: left; padding: 10px 12px; font-size: 14px; border-bottom: 1px solid #E2E8F0; }
-        th { font-weight: 600; color: var(--dark); background: #F8FAFC; }
-        td { color: var(--gray); }
-        .footer { text-align: center; padding: 32px 0; color: var(--gray); font-size: 13px; }
-        @media (max-width: 480px) { .container { padding: 20px 16px; } .card { padding: 20px; } }
+
+        :root {
+            --primary: #006A60;
+            --primary-light: #E0F2EF;
+            --text: #111827;
+            --muted: #6B7280;
+            --border: #E5E7EB;
+            --bg: #F9FAFB;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            font-size: 15px;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .logo-mark {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .logo-dot {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .logo-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .header-meta {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-top: 14px;
+            letter-spacing: 0.2px;
+        }
+
+        /* ── Layout ── */
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 24px 64px;
+        }
+
+        /* ── Sections ── */
+        section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        ul li {
+            color: var(--muted);
+            padding-left: 16px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        strong { color: var(--text); font-weight: 600; }
+
+        /* ── Table ── */
+        .table-wrap { overflow-x: auto; margin-top: 12px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 14px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--muted);
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 12px 14px;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        td:first-child { color: var(--text); font-weight: 500; }
+
+        /* ── Divider ── */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 40px 0;
+        }
+
+        /* ── Contact card ── */
+        .contact-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px 28px;
+        }
+
+        .contact-card h2 { margin-bottom: 16px; }
+
+        .contact-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .contact-row:last-child { border-bottom: none; }
+
+        .contact-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--muted);
+            min-width: 72px;
+            flex-shrink: 0;
+        }
+
+        .contact-value { color: var(--text); }
+
+        .contact-value a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .contact-value a:hover { text-decoration: underline; }
+
+        /* ── Warning box ── */
+        .disclaimer {
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+            border-radius: 10px;
+            padding: 16px 20px;
+            font-size: 14px;
+            color: #92400E;
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            background: var(--white);
+        }
+
+        .footer-brand {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .footer-sub {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .footer-sub span {
+            color: var(--primary);
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 28px 16px 48px; }
+            .header { padding: 24px 16px; }
+            .contact-card { padding: 20px; }
+        }
     </style>
 </head>
 <body>
+
+    <div class="header">
+        <div class="logo-mark">
+            <div class="logo-dot">🩺</div>
+            <span class="logo-name">Aarogya Sathi</span>
+        </div>
+        <h1>Privacy Policy</h1>
+        <p class="header-meta">Effective Date: October 23, 2026 · Version 1.0</p>
+        <div class="badge">🔒 DPDP Act 2023 Compliant · Privacy-First</div>
+    </div>
+
     <div class="container">
-        <div class="header">
-            <h1>🩺 Aarogya Sathi</h1>
-            <p>Privacy Policy · Effective Date: October 10, 2026</p>
-        </div>
 
-        <div class="card">
+        <section>
             <h2>Overview</h2>
-            <p>Aarogya Sathi (आरोग्य साथी) is an AI-powered personal health companion app built by students at SVKM's NMIMS Shirpur Campus. This policy explains how we collect, use, and protect your data.</p>
-            <span class="badge">🔒 Privacy-First · DPDP Act Compliant</span>
-            <p>We are committed to protecting your privacy in accordance with the <strong>Digital Personal Data Protection (DPDP) Act, 2023</strong> of India.</p>
-        </div>
+            <p>Aarogya Sathi (आरोग्य साथी) is a personal AI health companion for India. This policy explains exactly what data we collect, why we collect it, and how we protect it.</p>
+            <p>Your health data is sensitive. We treat it that way — most of it never leaves your device.</p>
+        </section>
 
-        <div class="card">
+        <section>
             <h2>Data We Collect</h2>
-            <table>
-                <tr><th>Data Type</th><th>Purpose</th><th>Storage</th></tr>
-                <tr><td>Health Profile (age, gender, height, weight, conditions, medications)</td><td>Personalized AI health guidance</td><td>Device only (SharedPreferences)</td></tr>
-                <tr><td>Wearable Metrics (steps, heart rate, SpO2, blood pressure, glucose, sleep, weight, body temperature, calories, distance)</td><td>Health monitoring, vital trend analysis, proactive alerts</td><td>Read via Health Connect — never stored on our servers</td></tr>
-                <tr><td>Location (city-level)</td><td>Air quality (AQI) and weather data for your area</td><td>Device only — only city name is sent to WAQI API</td></tr>
-                <tr><td>Chat Messages</td><td>AI health query processing</td><td>Sent to backend for AI inference — not permanently stored</td></tr>
-                <tr><td>Medical Documents (prescriptions, lab reports, scans)</td><td>Personal health records management</td><td>Device only — 100% on-device sandboxed storage</td></tr>
-                <tr><td>Language Preference</td><td>Multilingual support (English, Hindi, Marathi)</td><td>Device only</td></tr>
-            </table>
-        </div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Data Type</th>
+                        <th>Purpose</th>
+                        <th>Where it lives</th>
+                    </tr>
+                    <tr>
+                        <td>Health Profile<br><small style="font-weight:400;color:#9CA3AF">age, gender, height, weight, conditions, medications</small></td>
+                        <td>Personalized AI health guidance</td>
+                        <td>Your device only</td>
+                    </tr>
+                    <tr>
+                        <td>Wearable Metrics<br><small style="font-weight:400;color:#9CA3AF">steps, HR, SpO2, BP, glucose, sleep, calories, distance</small></td>
+                        <td>Health monitoring and proactive alerts</td>
+                        <td>Read via Health Connect — never sent to our servers</td>
+                    </tr>
+                    <tr>
+                        <td>Location (city-level)</td>
+                        <td>Real-time AQI and weather for your area</td>
+                        <td>Only city name sent to WAQI API</td>
+                    </tr>
+                    <tr>
+                        <td>Chat Messages</td>
+                        <td>AI health query processing</td>
+                        <td>Sent to backend for inference — not permanently stored</td>
+                    </tr>
+                    <tr>
+                        <td>Medical Documents<br><small style="font-weight:400;color:#9CA3AF">prescriptions, lab reports, scans</small></td>
+                        <td>Personal health record management</td>
+                        <td>Your device only — sandboxed storage</td>
+                    </tr>
+                    <tr>
+                        <td>Language Preference</td>
+                        <td>Multilingual support (English, Hindi, Marathi)</td>
+                        <td>Your device only</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
 
-        <div class="card">
-            <h2>Health Connect Data</h2>
-            <span class="badge">📱 Read-Only Access</span>
-            <p>Aarogya Sathi accesses health data through <strong>Android Health Connect</strong> with <strong>read-only</strong> permissions. We:</p>
+        <section>
+            <h2>Health Connect Access</h2>
+            <p>Aarogya Sathi uses <strong>Android Health Connect</strong> with read-only permissions. We:</p>
             <ul>
                 <li><strong>Never write</strong> to or modify your Health Connect data</li>
-                <li><strong>Never store</strong> your Health Connect data on external servers</li>
-                <li><strong>Never sell</strong> or share your health data with third parties for advertising or marketing</li>
-                <li>Read health data <strong>only when you actively use the app</strong> to provide personalized health context to the AI assistant</li>
+                <li><strong>Never store</strong> Health Connect data on external servers</li>
+                <li><strong>Never sell</strong> or share your health data for advertising or marketing</li>
+                <li>Read health data only while you are actively using the app</li>
             </ul>
-            <h3>Health Connect Data Types Used</h3>
-            <ul>
-                <li><strong>Steps</strong> — Daily activity monitoring and step goal tracking</li>
-                <li><strong>Heart Rate & Resting Heart Rate</strong> — Cardiovascular health monitoring with ICMR clinical threshold alerts</li>
-                <li><strong>Blood Pressure</strong> — Hypertension classification (Normal, Elevated, Stage 1, Stage 2)</li>
-                <li><strong>Blood Glucose</strong> — Diabetes management with fasting/postprandial classification</li>
-                <li><strong>Oxygen Saturation (SpO2)</strong> — Low-oxygen proactive alerts</li>
-                <li><strong>Sleep</strong> — Sleep quality assessment for holistic health</li>
-                <li><strong>Weight</strong> — BMI calculation using Asian ICMR cutoffs</li>
-                <li><strong>Body Temperature</strong> — Fever detection and monitoring</li>
-                <li><strong>Active & Total Calories Burned</strong> — Daily energy expenditure tracking</li>
-                <li><strong>Distance</strong> — Activity distance tracking</li>
-            </ul>
-        </div>
+        </section>
 
-        <div class="card">
-            <h2>How We Use Your Data</h2>
-            <ul>
-                <li><strong>AI Health Guidance</strong> — Your health profile and wearable metrics are used to personalize AI responses based on ICMR (Indian Council of Medical Research) clinical guidelines</li>
-                <li><strong>Proactive Health Alerts</strong> — We analyze vital signs (heart rate, SpO2, blood pressure) against ICMR clinical thresholds to generate health observations</li>
-                <li><strong>Environmental Health</strong> — Your city location is used to fetch real-time Air Quality Index (AQI) data to provide pollution-aware health guidance</li>
-                <li><strong>Medical File Management</strong> — Documents are stored entirely on your device for your personal reference</li>
-            </ul>
-        </div>
-
-        <div class="card">
+        <section>
             <h2>Third-Party Services</h2>
-            <table>
-                <tr><th>Service</th><th>Data Shared</th><th>Purpose</th></tr>
-                <tr><td>Groq (LLM Inference)</td><td>Chat query text + anonymized health context</td><td>AI health response generation</td></tr>
-                <tr><td>WAQI (World Air Quality Index)</td><td>City name only</td><td>Real-time AQI data</td></tr>
-                <tr><td>Open-Meteo</td><td>GPS coordinates (approximate)</td><td>Weather data (temperature, humidity)</td></tr>
-            </table>
-            <p>We do <strong>not</strong> share your data with advertising networks, data brokers, analytics services, or any other third parties not listed above.</p>
-        </div>
+            <p>We work with the following services. No others.</p>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>Service</th>
+                        <th>Data Shared</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>Groq / SambaNova / Cerebras</td>
+                        <td>Chat text + anonymized health context</td>
+                        <td>AI response generation</td>
+                    </tr>
+                    <tr>
+                        <td>WAQI API</td>
+                        <td>City name only</td>
+                        <td>Real-time air quality data</td>
+                    </tr>
+                    <tr>
+                        <td>Open-Meteo</td>
+                        <td>Approximate GPS coordinates</td>
+                        <td>Weather (temperature, humidity)</td>
+                    </tr>
+                </table>
+            </div>
+            <p style="margin-top:14px">We do <strong>not</strong> share your data with advertising networks, data brokers, or analytics platforms.</p>
+        </section>
 
-        <div class="card">
-            <h2>Data Storage & Security</h2>
+        <section>
+            <h2>Data Security</h2>
             <ul>
-                <li><strong>Local Storage</strong> — Health profile, medical documents, and preferences are stored on your device using SharedPreferences and sandboxed file storage</li>
-                <li><strong>Transit Security</strong> — All data sent to our backend is encrypted using HTTPS/TLS</li>
-                <li><strong>No Persistent Server Storage</strong> — Chat sessions are processed in memory and not permanently stored on our servers. Session data is ephemeral</li>
-                <li><strong>No User Accounts Required</strong> — The app works as a guest without requiring personal identification</li>
+                <li><strong>On-device storage</strong> — Health profile, documents, and preferences stored locally using Android SharedPreferences and sandboxed file storage</li>
+                <li><strong>Encrypted in transit</strong> — All server communication uses HTTPS/TLS</li>
+                <li><strong>No persistent server logs</strong> — Chat sessions are processed in memory and discarded</li>
+                <li><strong>No account required</strong> — The app works without personal identification</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
+        <section>
             <h2>Your Rights</h2>
-            <p>Under the DPDP Act 2023, you have the right to:</p>
+            <p>Under the <strong>Digital Personal Data Protection (DPDP) Act, 2023</strong>:</p>
             <ul>
-                <li><strong>Access</strong> — View all data stored by the app (available in your device settings)</li>
+                <li><strong>Access</strong> — View all data stored by the app in your device settings</li>
                 <li><strong>Correction</strong> — Edit your health profile at any time within the app</li>
-                <li><strong>Erasure</strong> — Delete all app data by clearing app data in Android Settings or uninstalling the app</li>
-                <li><strong>Withdraw Consent</strong> — Revoke Health Connect permissions at any time through Android Settings → Health Connect → Aarogya Sathi</li>
+                <li><strong>Erasure</strong> — Use the in-app "Delete Account &amp; Local Data" button, or uninstall the app</li>
+                <li><strong>Withdraw consent</strong> — Revoke Health Connect permissions via Android Settings → Health Connect → Aarogya Sathi</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="card">
+        <section>
             <h2>Children's Privacy</h2>
-            <p>Aarogya Sathi is not designed for or directed at children under 13 years of age. We do not knowingly collect data from children under 13.</p>
-        </div>
+            <p>Aarogya Sathi is not directed at children under 13. We do not knowingly collect data from children under 13.</p>
+        </section>
 
-        <div class="card">
-            <h2>Medical Disclaimer</h2>
-            <p>Aarogya Sathi provides <strong>general health awareness information only</strong>. It is <strong>not</strong> a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or qualified health provider with any questions regarding a medical condition. In case of a medical emergency, call 108 immediately.</p>
-        </div>
+        <section>
+            <div class="disclaimer">
+                ⚠️ <strong>Medical Disclaimer</strong> — Aarogya Sathi provides general health awareness information only. It is not a substitute for professional medical advice, diagnosis, or treatment. In a medical emergency, call <strong>108</strong> immediately.
+            </div>
+        </section>
 
-        <div class="card">
-            <h2>Changes to This Policy</h2>
-            <p>We may update this privacy policy from time to time. Any changes will be reflected on this page with an updated effective date. We encourage you to review this policy periodically.</p>
-        </div>
+        <section>
+            <h2>Policy Updates</h2>
+            <p>We may update this policy periodically. Changes will be reflected on this page with a revised effective date.</p>
+        </section>
 
-        <div class="card">
+        <hr>
+
+        <div class="contact-card">
             <h2>Contact Us</h2>
-            <p>If you have questions about this privacy policy or our data practices, please contact us:</p>
-            <ul>
-                <li><strong>Email</strong>: jayesh.patil233@nmims.edu.in</li>
-                <li><strong>Institution</strong>: SVKM's NMIMS Shirpur Campus, School of Technology Management & Engineering</li>
-                <li><strong>Project</strong>: Aarogya Sathi — Capstone Project 2026-27</li>
-            </ul>
+            <div class="contact-row">
+                <span class="contact-label">Email</span>
+                <span class="contact-value"><a href="mailto:ilabs4u@gmail.com">ilabs4u@gmail.com</a></span>
+            </div>
+            <div class="contact-row">
+                <span class="contact-label">App</span>
+                <span class="contact-value">Aarogya Sathi — Personal AI Health Companion</span>
+            </div>
+            <div class="contact-row">
+                <span class="contact-label">Platform</span>
+                <span class="contact-value">Android (Google Play Store)</span>
+            </div>
         </div>
 
-        <div class="footer">
-            <p>© 2026 Aarogya Sathi · Built with ❤️ at NMIMS Shirpur</p>
-            <p>Jayesh Patil · Abhijit Patil · Ritesh Pawar</p>
-            <p>Guide: Dr. Atul V. Dusane</p>
-        </div>
     </div>
+
+    <footer>
+        <p class="footer-brand">Aarogya Sathi</p>
+        <p class="footer-sub">Made with <span>♥</span> by <strong>i Labs</strong> · © 2026</p>
+    </footer>
+
 </body>
 </html>
