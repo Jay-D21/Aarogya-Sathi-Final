@@ -81,12 +81,12 @@ class _AarogyaLogoDynamicState extends State<AarogyaLogoDynamic>
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFFFFD400).withValues(alpha: 0.22),
+                          color: const Color(0xFF00BFA5).withValues(alpha: 0.25),
                           blurRadius: widget.size * 0.35,
                           spreadRadius: widget.size * 0.04,
                         ),
                         BoxShadow(
-                          color: const Color(0xFFFF8C00).withValues(alpha: 0.12),
+                          color: const Color(0xFF4285F4).withValues(alpha: 0.18),
                           blurRadius: widget.size * 0.55,
                           spreadRadius: 0,
                         ),
@@ -97,7 +97,7 @@ class _AarogyaLogoDynamicState extends State<AarogyaLogoDynamic>
 
               // The actual mandala image — transparent background
               Image.asset(
-                'assets/images/app_logo.jpg',
+                'assets/images/app_logo.png',
                 width: widget.size,
                 height: widget.size,
                 fit: BoxFit.contain,

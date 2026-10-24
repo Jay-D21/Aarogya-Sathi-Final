@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen>
                       child: Column(
                         children: [
                           Image.asset(
-                            'assets/images/app_logo.jpg',
+                            'assets/images/app_logo.png',
                             width: 80,
                             height: 80,
                             fit: BoxFit.contain,
@@ -100,9 +100,9 @@ class _LoginScreenState extends State<LoginScreen>
                             shaderCallback: (b) =>
                                 const LinearGradient(
                                   colors: [
-                                    Color(0xFFFFD700), // gold
-                                    Color(0xFFFFB300), // warm gold
-                                    Color(0xFF00D9C0), // teal
+                                    Color(0xFF8AB4F8), // periwinkle
+                                    Color(0xFF00BFA5), // teal
+                                    Color(0xFF66F7E2), // mint
                                   ],
                                   stops: [0.0, 0.6, 1.0],
                                 ).createShader(b),

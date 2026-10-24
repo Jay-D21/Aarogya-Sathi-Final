@@ -181,7 +181,7 @@ class _SplashScreenState extends State<SplashScreen>
                         // Scale from 0.30 (icon) → 1.0 (full splash logo)
                         // The elasticOut curve gives a satisfying "snap" feel
                         scale: _logoScale.value,
-                        child: _GoldMandalaSplashLogo(
+                        child: _AppSplashLogo(
                           pulse: _glowPulse.value,
                         ),
                       ),
@@ -199,9 +199,9 @@ class _SplashScreenState extends State<SplashScreen>
                     child: ShaderMask(
                       shaderCallback: (b) => const LinearGradient(
                         colors: [
-                          Color(0xFFFFD700), // pure gold
-                          Color(0xFFFFB300), // warm gold
-                          Color(0xFF00D9C0), // teal accent
+                          Color(0xFF8AB4F8), // periwinkle
+                          Color(0xFF00BFA5), // teal accent
+                          Color(0xFF66F7E2), // luminous mint
                         ],
                         stops: [0.0, 0.6, 1.0],
                       ).createShader(b),
@@ -258,7 +258,7 @@ class _SplashScreenState extends State<SplashScreen>
                 // ── Loading bar ───────────────────────────────────────────
                 FadeTransition(
                   opacity: _barFade,
-                  child: const _GoldLoadingBar(),
+                  child: const _AppLoadingBar(),
                 ),
               ],
             ),
@@ -290,10 +290,10 @@ class _SplashScreenState extends State<SplashScreen>
 
 // ── Gold Mandala Splash Logo ──────────────────────────────────────────────────
 // Uses the real generated image asset. Has a soft glow animation ring around it.
-class _GoldMandalaSplashLogo extends StatelessWidget {
+class _AppSplashLogo extends StatelessWidget {
   final double pulse;
 
-  const _GoldMandalaSplashLogo({this.pulse = 1.0});
+  const _AppSplashLogo({this.pulse = 1.0});
 
   @override
   Widget build(BuildContext context) {
@@ -313,12 +313,12 @@ class _GoldMandalaSplashLogo extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFFFD400).withValues(alpha: 0.18),
+                    color: const Color(0xFF00BFA5).withValues(alpha: 0.22),
                     blurRadius: 40,
                     spreadRadius: 8,
                   ),
                   BoxShadow(
-                    color: const Color(0xFFFF8C00).withValues(alpha: 0.12),
+                    color: const Color(0xFF4285F4).withValues(alpha: 0.16),
                     blurRadius: 70,
                     spreadRadius: 2,
                   ),
@@ -329,7 +329,7 @@ class _GoldMandalaSplashLogo extends StatelessWidget {
 
           // The actual gold mandala image — transparent background
           Image.asset(
-            'assets/images/app_logo.jpg',
+            'assets/images/app_logo.png',
             width: 220,
             height: 220,
             fit: BoxFit.contain,
@@ -342,14 +342,14 @@ class _GoldMandalaSplashLogo extends StatelessWidget {
 
 // ── Gold Loading Bar ──────────────────────────────────────────────────────────
 // A simple animated sweep bar in the gold palette — replaces the MandalaLoadingBar.
-class _GoldLoadingBar extends StatefulWidget {
-  const _GoldLoadingBar();
+class _AppLoadingBar extends StatefulWidget {
+  const _AppLoadingBar();
 
   @override
-  State<_GoldLoadingBar> createState() => _GoldLoadingBarState();
+  State<_AppLoadingBar> createState() => _AppLoadingBarState();
 }
 
-class _GoldLoadingBarState extends State<_GoldLoadingBar>
+class _AppLoadingBarState extends State<_AppLoadingBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _ctrl;
   late Animation<double> _sweep;
@@ -377,15 +377,15 @@ class _GoldLoadingBarState extends State<_GoldLoadingBar>
       builder: (_, _) => SizedBox(
         width: 120,
         height: 3,
-        child: CustomPaint(painter: _GoldBarPainter(_sweep.value)),
+        child: CustomPaint(painter: _AppBarPainter(_sweep.value)),
       ),
     );
   }
 }
 
-class _GoldBarPainter extends CustomPainter {
+class _AppBarPainter extends CustomPainter {
   final double progress;
-  _GoldBarPainter(this.progress);
+  _AppBarPainter(this.progress);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -394,7 +394,7 @@ class _GoldBarPainter extends CustomPainter {
       RRect.fromRectAndRadius(
           Rect.fromLTWH(0, 0, size.width, size.height),
           const Radius.circular(2)),
-      Paint()..color = const Color(0xFFFFD400).withValues(alpha: 0.15),
+      Paint()..color = const Color(0xFF00BFA5).withValues(alpha: 0.15),
     );
 
     // Sweep — gold gradient bar
@@ -406,9 +406,9 @@ class _GoldBarPainter extends CustomPainter {
       ..shader = LinearGradient(
         colors: [
           Colors.transparent,
-          const Color(0xFFFFD400).withValues(alpha: 0.9),
-          const Color(0xFFFFB300),
-          const Color(0xFFFF8C00).withValues(alpha: 0.9),
+          const Color(0xFF4285F4).withValues(alpha: 0.9),
+          const Color(0xFF00BFA5),
+          const Color(0xFF00C853).withValues(alpha: 0.9),
           Colors.transparent,
         ],
       ).createShader(rect);
@@ -418,5 +418,5 @@ class _GoldBarPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _GoldBarPainter old) => old.progress != progress;
+  bool shouldRepaint(covariant _AppBarPainter old) => old.progress != progress;
 }

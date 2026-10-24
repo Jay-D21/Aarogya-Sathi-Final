@@ -44,7 +44,7 @@ Health & Fitness
 health, AI, ICMR, wearable, fitness, AQI, air quality, health companion, India, Hindi, Marathi, blood pressure, diabetes, medical, wellness
 
 ## Contact Email
-jayeshp.btechaiml.shirpur@svkm.ac.in
+ilabs4u@gmail.com
 
 ## Privacy Policy URL
 https://jay-d21.github.io/Aarogya-Sathi-Final/privacy-policy.html
