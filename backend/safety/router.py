@@ -14,8 +14,8 @@ EMERGENCY_RESPONSE = (
     "Please call **112** (India Emergency) immediately.\n"
     "If someone is unconscious, start CPR.\n"
     "Do NOT wait for AI advice in emergencies.\n\n"
-    "📞 Emergency: 112\n"
-    "🏥 Ambulance: 102\n"
+    "📞 National Emergency: 112\n"
+    "🚑 Ambulance: 108 (EMRI) / 102 (NHM)\n"
     "☠️ Poison Control: 1800-11-6117"
 )
 
