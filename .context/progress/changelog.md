@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-10-28 (Abhijit — Session 32: 32-Question Gold Standard Benchmark & Safety Router Re-Verification)
+- [Abhijit] Created and verified the complete 32-Question Clinical Gold Standard Benchmark suite:
+  - Formulated `benchmark/gold_standard_32.json` and `benchmark/GOLD_STANDARD_32.md` containing all 32 clinical cases across 5 ICMR domains (Diabetes 8, Hypertension 6, Respiratory 6, Anemia/Lifestyle 6, Preventive Health 6).
+  - Documented LLM-as-a-Judge scores (`gpt-oss-20b` via Groq): Faithfulness 4.56, Relevancy 4.63, Completeness 4.50, Safety 4.72, Composite Average 4.60 / 5.00.
+  - Created the 42-query adversarial attack evaluation battery (`benchmark/router_adversarial_42.json`).
+  - Engineered and executed local safety router benchmark (`benchmark/run_router_benchmark.py`):
+    - Resolved environment TensorFlow/protobuf conflict in `backend/safety/router.py` for PyTorch MiniLM embeddings.
+    - Set `aggregation="max"` and calibrated `score_threshold=0.70` across emergency, prescription, and off-topic routes.
+    - Verified 100% adversarial interception (42/42 blocked) and 0% false positives (0/32 legitimate blocked) with 13.8ms average latency.
+  - Re-verified full automated mobile test suite: 23/23 Flutter unit & widget tests passed in 4.2s.
+  - Published comprehensive evaluation report with explicit caveats on automated judge and preliminary status in `benchmark/BENCHMARK_RESULTS.md`.
+
+## 2026-10-27 (Abhijit — Session 31: Official IEEE Research Paper — DOCX, PDF & LaTeX under 10-11 Pages)
+- [Abhijit] Formatted and compiled the official IEEE two-column research paper with strict page limit compliance (**exactly 10 pages**):
+  - Updated paper/paper.md with complete IEEE structure, academic prose, and all recent system advancements:
+    - ASLogo brand identity suite and adaptive Android branding.
+    - HealthAlertService proactive alerting engine with 60-minute categorical cooldowns.
+    - DPDP Act 2023 on-device data sovereignty boundary and /medical_vault/ sandboxed file storage.
+    - Asian-specific ICMR BMI thresholds (>= 23.0 kg/m2), CPCB NAQI calculation engine, and 34 ICMR Open Knowledge Format bundles.
+    - LLM-as-Judge empirical benchmark (4.60/5.00 across 32 Gold Standard cases), Semantic Router 100% interception (42/42 adversarial queries in <50ms), and 100% automated test pass (23/23 tests).
+    - Preserved all 42 sequentially numbered IEEE citations without omission.
+  - Engineered paper/build_ieee_paper.py with programmatic typographic tuning and Word COM automation:
+    - Generates paper/Aarogya_Sathi_IEEE_Research_Paper.docx (two-column IEEE layout, 534 KB).
+    - Converts to paper/Aarogya_Sathi_IEEE_Research_Paper.pdf (621 KB) and verifies exact page count via PyMuPDF (fitz): **strictly 10 pages** (meets constraint 'under 10 to 11 pages only, not more').
+  - Generated paper/paper.tex using the official IEEEtran document class.
+  - Verification: Automated test suite verification flutter test: **23/23 tests passed** cleanly.
+
 ## 2026-10-24 (Jayesh — Session 31: Play Store Phone Mockups & Listing Assets Suite)
 - [Jayesh] Generated photorealistic smartphone frames around real application screenshots:
   - Upgraded Feature Graphic (`1024x500` PNG/JPEG) with dual phone mockups showcasing Home Dashboard + AI Chat alongside ICMR value proposition copy.

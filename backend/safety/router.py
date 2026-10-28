@@ -6,6 +6,15 @@ or if its embedding model fails to load.
 """
 
 import logging
+import os
+import sys
+
+# Prevent TensorFlow import / protobuf mismatch in environments with PyTorch
+os.environ["USE_TF"] = "0"
+os.environ["USE_TORCH"] = "1"
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
+if "tensorflow" not in sys.modules:
+    sys.modules["tensorflow"] = None
 
 logger = logging.getLogger(__name__)
 
@@ -48,8 +57,8 @@ try:
         # We use HuggingFaceEncoder for fast, local, free embeddings
         # MiniLM is tiny (~80MB), fast, and very accurate for sentence similarity
         encoder = HuggingFaceEncoder(name="sentence-transformers/all-MiniLM-L6-v2")
-        _router = SemanticRouter(encoder=encoder, routes=[emergency, prescription, non_medical])
-        logger.info("✅ Semantic Router initialized successfully with HuggingFaceEncoder.")
+        _router = SemanticRouter(encoder=encoder, routes=[emergency, prescription, non_medical], auto_sync="local", aggregation="max")
+        logger.info("Semantic Router initialized successfully with HuggingFaceEncoder.")
     else:
         _use_keyword_fallback = True
         logger.warning("⚠️ semantic-router routes unavailable. Using keyword fallback.")
