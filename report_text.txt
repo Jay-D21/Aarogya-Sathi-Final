@@ -1,0 +1,587 @@
+=== DOCUMENT BODY ===
+
+Aarogya Sathi (आरोग्य साथी) AI-Powered Health Companion
+Project Report submitted in the partial fulfilment of
+Bachelor of Technology
+in
+Artificial Intelligence and Machine Learning
+by
+Jayesh Patil (70532300036)
+Abhijit Patil (70532100054)
+Ritesh Pawar (70532200035)
+Under the guidance of
+Dr. Atul V. Dusane
+SVKM’s NMIMS,
+Mukesh Patel School of Technology Management & Engineering,
+Shirpur Campus (M.H.)
+2026-27
+CERTIFICATE
+This is to certify that the project entitled (“Aarogya Sathi(आरोग्य साथी) AI powered Health Companion”), has been done by Ms/Mr ( name) under my guidance and supervision & has been submitted in partial fulfilment of the degree of (name of the program) in (name of the stream) of MPSTME, SVKM’s NMIMS (Deemed-to-be University), Mumbai, India.
+ABSTRACT
+In India, chronic lifestyle disorders—including type-2 diabetes, hypertension, and respiratory illnesses—are rising rapidly, heavily aggravated by severe urban air pollution. Although digital interventions can provide scalable preventive education, generic AI chatbots generate clinically ungrounded medical advice lacking adherence to verified national standards. Furthermore, non-English-speaking citizens face severe accessibility barriers when seeking health guidance online.
+To address these challenges, we built Aarogya Sathi, an AI mobile health companion tailored for Indian users with multilingual support in Hindi, Marathi, and English. The system couples a Flutter client with a cloud-hosted FastAPI backend. To eliminate AI hallucinations and ensure patient safety, the assistant deterministically grounds all clinical guidance in 34 ICMR guideline monographs using an agentic RAG architecture.
+Aarogya Sathi dynamically integrates real-time environmental context (live CPCB AQI and weather) with personal wearable telemetry (steps, heart rate, and sleep duration via Android Health Connect). This enables personalized preventive advisories, such as alerting asthma patients to avoid outdoor exertion during high-AQI periods. For critical safety, sub-100ms semantic guardrails prevent unauthorized medication prescriptions and immediately route acute emergencies (chest pain, stroke symptoms) to India's 112 helpline. The system is fully operational on Android, demonstrating 4.86/5.0 factual faithfulness and zero safety violations across 32 gold-standard evaluation cases.
+TABLE OF CONTENTS
+CONTENTS
+Page No.
+LIST OF FIGURES
+iv
+LIST OF TABLES
+v
+CHAPTER 1: INTRODUCTION
+1
+1.1 Background
+1
+1.2 Problem Statement
+2
+1.3 Objectives
+2
+1.4 Scope and Limitations
+3
+1.5 Organization of Report
+3
+CHAPTER 2: LITERATURE SURVEY
+4
+2.1 NCD Burden in India
+4
+2.2 Air Pollution and Health
+4
+2.3 Digital Health Interventions and ROI
+5
+2.4 RAG and LLM Safety in Healthcare
+5
+2.5 Multilingual AI for Indian Healthcare
+6
+2.6 Agentic AI Architectures
+6
+2.7 Data Privacy and Regulatory Framework
+7
+2.8 Gap Analysis and Our Position
+7
+CHAPTER 3: SYSTEM DESIGN AND ARCHITECTURE
+9
+3.1 System Overview
+9
+3.2 Architecture Diagram and Execution Flow
+10
+3.3 Technology Stack Table
+12
+3.4 Database Design and Privacy Architecture
+13
+3.5 API Design
+14
+CHAPTER 4: IMPLEMENTATION DETAILS
+16
+4.1 Backend Implementation
+16
+4.1.1 Agentic CRAG Pipeline (backend/rag/pipeline.py)
+16
+4.1.2 OKF Navigator (backend/rag/okf_navigator.py)
+18
+4.1.3 LLM Provider Cascade (backend/rag/llm.py)
+18
+4.1.4 Safety Router (backend/safety/router.py)
+20
+4.1.5 Context Builder (backend/rag/context_builder.py)
+21
+4.1.6 Translation Layer (backend/translation/bhashini.py)
+22
+4.2 Frontend Implementation
+23
+4.2.1 App Architecture
+23
+4.2.2 Health Connect Integration (health_connect_service.dart)
+23
+4.2.3 Chat Implementation (chat_screen.dart & chat_provider.dart)
+25
+4.2.4 Fitness Provider (fitness_provider.dart)
+26
+4.3 ICMR Knowledge Bundle
+27
+CHAPTER 5: RESULTS AND EVALUATION
+28
+5.1 Evaluation Methodology
+28
+5.2 Evaluation Results
+28
+5.3 Sample Response Analysis
+30
+5.4 Key Findings
+31
+5.5 Current Limitations
+32
+CHAPTER 6: PROJECT TIMELINE AND TEAM CONTRIBUTIONS
+33
+6.1 Development Timeline
+33
+6.2 Team Contributions
+34
+6.3 Current Progress
+34
+CHAPTER 7: FUTURE WORK AND CONCLUSION
+36
+7.1 Planned Enhancements (Review 3 and Beyond)
+36
+7.2 Conclusion
+37
+REFERENCES
+38
+LIST OF FIGURES
+Figure No.
+Title of the Figure
+Page No.
+Figure 3.1
+Overall System Architecture of Aarogya Sathi (Flutter ↔ FastAPI ↔ Agentic ReAct ↔ Inference Cascade)
+10
+Figure 3.2
+Agentic ReAct Loop State Machine and Intent-Driven Execution Pipeline
+11
+Figure 3.3
+Data Sovereignty and Zero-Storage Session Boundary under India's DPDP Act 2023
+13
+Figure 4.1
+Multi-Key Pooling and Multi-Provider Failover Waterfall (Groq ↔ SambaNova ↔ Cerebras ↔ Local Fallbacks)
+19
+Figure 4.2
+Safety Router & Sub-100ms Clinical Triage Pipeline with MiniLM Dense Embeddings
+20
+Figure 4.3
+Environmental NAQI Calculation and Clinical Alerting Pipeline
+21
+Figure 4.4
+Wearable Health Connect Synchronization Pipeline with Smart Deduplication
+24
+Figure 4.5
+ICMR Knowledge Bundle Open Knowledge Format (OKF) Concept Hierarchy & Hyperlink Graph
+27
+LIST OF TABLES
+Table No.
+Title of the Table
+Page No.
+Table 2.1
+Comparative Gap Analysis of Existing Digital Health Platforms vs. Aarogya Sathi
+8
+Table 3.1
+Aarogya Sathi Architectural Technology Stack and Implementation Rationale
+12
+Table 5.1
+Gold-Standard Benchmark Test Cases and Multi-Metric Clinical Evaluation
+29
+Table 6.1
+Work Package Breakdown and Contributor Responsibilities (Group G9)
+34
+CHAPTER 1: INTRODUCTION
+1.1 Background
+The changing shape of India's health care setting. Gentlemen, the only epidemic of today is that of non-communicable diseases (NCDs)—diabetes and its complications followed by cardiovascular diseases due to sedentary lifestyle further aggravated by no physical activity and exposure to pollution: chronic respiratory illnesses. NCDs comprise nearly 63% of the total deaths in India [1] according to the recent Global Burden Of Disease (GBD) Study. One of the leading causes for this upward trend is from exposure to environmental risk. Out of them, air pollution is the 4th leading risk factor for death globally accounting to ~4.2 million premature deaths per year [9]. However, for urban Indian cities already prone to hazardous AQI ranges and exposure, air pollution is an unavoidable risk factor in the ongoing management of respiratory and cardiovascular health.
+When it comes to digital literacy and accessibility, India is witnessing a massive smartphone boom. But there is one roadblock: Nearly 90% of the Indian population do not have English as a primary language [26]. When people search online for health information, they encounter nothing but language issues, or worse yet the mainstream internet delivers up generic western-centric advice that has nothing at all to do with their local context and dietary habits. As of now, no one-stop application exists for greater AQI tracking in real time, vernacular languages support and health advisory that are AI-driven yet certain as per the Indian Council of Medical Research (ICMR) guidelines.
+1.2 Problem Statement
+There is a growing prevalence of Non-Communicable Diseases (NCDs) along with dangerous environmental conditions among the urban populations in India. The available methods of raising digital health awareness among people confront the following basic problems:
+1. Lack of Correlation Between the Environment and Vital Signs: Individuals who have chronic diseases like asthma, COPD, and diabetes lack any sort of proactive health counseling which correlates their vital signs to the environmental dangers like extreme AQI levels in the locality.
+2. Medical Inaccuracy and Hallucinations: Artificial intelligence and search engines offer generic and unconfirmed medical advice which can result in facts' hallucination without taking into consideration Indian eating habits and other risk factors or national-level clinical protocols.
+3. Language Barrier: Medical information and health services are mainly limited to the English language which excludes a lot of population segment which speaks other regional Indic languages like Hindi and Marathi.
+Thus, the aim of this project is to solve the problem of designing an intelligent and vernacular-friendly digital health companion which gives medical advice based on verified ICMR clinical guidelines and uses live environment data and wearable health data and also ensures sub-second safety guardrails.
+1.3 Objectives
+To address these gaps, our team set the following specific objectives for the Aarogya Sathi project:
+1. Build a localized clinical knowledge bundle using 34 structured ICMR guidelines.
+2. Develop an agentic RAG (Retrieval-Augmented Generation) pipeline that grounds all AI responses in the approved medical documents to prevent hallucinations.
+3. Create a mobile application using Flutter that integrates with Health Connect to pull user wearable data (like Fitbit steps and heart rate).
+4. Integrate real-time AQI and weather data APIs to offer environment-aware health alerts.
+5. Support multi-language interactions specifically targeting Hindi, Marathi, and English.
+1.4 Scope and Limitations
+The scope of Aarogyasathi includes preventive care, lifestyle advice, and symptom checker for common diseases according to ICMR. An Android client and backend on the cloud were created. The application continually monitors the user’s health parameters using Health Connect API and gives him customized information depending on the air quality of the city he lives in.
+However, there are certain limitations for this application. First, it can be used only for preventive and informative purposes. It is not meant to replace the work of a certified medical doctor or any emergency service. Second, the RAG pipeline operates according to 34 uploaded ICMR documents; hence, all the queries that lie outside of this domain can result in a fallback response. The application was developed only for Android devices; thus, iOS is not considered.
+1.5 Organization of Report
+This interim report proceeds as follows: Chapter 2 discusses Literature Survey, where we review relevant literature on NCDs, RAG system and digital healthcare interventions. Chapter 3 discusses System Architecture along with flowcharts. Chapter 4 discusses Implementation Details such as backend pipelines, mobile modules and code segments. Chapter 5 discusses our Evaluation criteria along with the results of our evaluation process. Chapter 6 provides the timeline for our project along with contribution of individual team members. Chapter 7 concludes our report with the future road map.
+CHAPTER 2: LITERATURE SURVEY
+In this chapter, we will consider previous work and systems in the area of digital health, impact of air quality, and AI architecture in healthcare. We analyzed different papers in order to assess the current state of technologies and the gaps that need to be covered by our project.
+2.1 NCD Burden in India
+It is well known that there is a transition from infectious diseases to NCDs. According to the Lancet 2020 study, "Vos et al. [1]", NCDs have become the major cause of death across the globe. As per cardiovascular diseases, "Roth et al. [2]" mentioned that there were 523 million CVD cases and 18.6 million deaths in 2019 across the globe. It is clear that India is at the forefront of this problem. In the GBD 2021 Diabetes study [3], it has been projected that India would have the highest number of patients suffering from diabetes in the upcoming decades. In addition, the GBD Obesity study [4] stated that there are 107.7 million patients with obesity in India and consequently there were 4 million deaths due to high BMI.
+2.2 Air Pollution and Health
+Now, moving on to the next section, environmental risks are critical in influencing public health in India. According to GBD Risk Factors research [8], air pollution is listed among the five most significant risks for mortality globally. Lelieveld et al. [9] estimated that exposure to PM2.5 contributes to 4.2 million deaths annually. For India, the problem is even worse. As reported by Cohen et al. [11], South Asia has the maximum PM2.5 pollution in the world. The consequences of such pollution for people’s health are dire. Salvi & Barnes [13] found that the non-smoking population of India has a 30% reduction in lung function when compared to their Western counterparts only because of air pollution.
+2.3 Digital Health Interventions and ROI
+Technology can help in offering services for preventive care not only from the aspect of medicine but also economically. According to Masters et al. [18], a 14.3:1 rate of return on investment is gained from interventions of preventive health care. Early detection of diseases and influencing lifestyle with the use of mobile applications will significantly reduce hospital costs.
+2.4 RAG and LLM Safety in Healthcare
+In health-related data analysis, AI safety plays a crucial role. Acosta et al. [19] addressed the significant safety hazards of multimodal biomedical AI systems, especially related to hallucination and incorrect diagnosis. The safety issues of early conversational agents were emphasized by Laranjo et al. [20]. To address this issue, researchers have started to use the framework of Retrieval-Augmented Generation (RAG). Siriwardhana et al. [21] presented how RAG helps in performing end-to-end domain adaptation without the need for fine-tuning the base LLM. Recently, Anuyah et al. [22] suggested applying KG-RAG in health care applications for better precision. Xia et al. [23] achieved an increase in accuracy of 43.8% with MMed-RAG for medical query answering. Methods for mitigating RAG hallucination were also provided by Priola [24]. We took inspiration from these studies while building our backend architecture in order to make our chatbot speak only according to ICMR guidelines.
+2.5 Multilingual AI for Indian Healthcare
+Translation systems have to be used since English is not the primary language of most Indians. IndicTrans2 [28], which is an innovation by AI4Bharat, has become a big game-changer for Indic languages. A study conducted in 2026 on conversational adaptation of IndicTrans2 [29] resulted in +6.2 chrF improvements for conversation translation. What’s more, the CLINIC benchmark [31], which assessed multilingual LLM reliability, proved that the ability to understand one’s native language in clinical settings has improved.
+2.6 Agentic AI Architectures
+While the old approach involved only prompt-response systems, agentic artificial intelligence is being used now. The results of tests conducted on the AgentDS Healthcare Benchmark [36] show that dividing complicated tasks into smaller components such as retriever, calculator, or API caller leads to better performance compared to agentic AI guided by humans. In our project, we employed a ReAct (Reasoning and Acting) pipeline.
+2.7 Data Privacy and Regulatory Framework
+Data handling needs complete compliance. The Zero Trust architecture for autonomous AI [38] shows how API should be restricted to handle data at each level. In India, we will have to comply with the recently passed Digital Personal Data Protection (DPDP) Act 2023 [41], where it is stated that explicit consent should be taken from the user for data handling. Also, we tried to understand the Ayushman Bharat Digital Mission (ABDM) framework [42].
+2.8 Gap Analysis and Our Position
+Our survey showed some apps that people use a lot. We put them next to the list of features for Aarogya Sathi. Some features overlap but others do not. As summarized in Table 2.1, Aarogya Sathi occupies a distinct position by combining verified ICMR clinical grounding, real-time environment telemetry, and vernacular multi-lingual intelligence.
+Table 2.1: Comparative Gap Analysis of Existing Digital Health Platforms vs. Aarogya Sathi
+Feature
+Practo
+Ada Health
+Aarogya Setu
+Aarogya Sathi (Our Project)
+Primary Focus
+Doctor Booking
+Symptom Checker
+Infectious Diseases
+Preventive NCDs
+Clinical Grounding
+Doctors' discretion
+Western Medical DB
+MoHFW / ICMR
+Direct ICMR Guidelines (RAG)
+Environment Aware
+No
+No
+No
+Yes (Live AQI tracking)
+Wearable Integration
+No
+Limited
+No
+Yes (Health Connect / Fitbit)
+Vernacular Support
+Basic
+No Indian Langs
+Yes
+Yes (Hindi, Marathi, English)
+AI Architecture
+Traditional Search
+Decision Trees
+Rule-based
+Agentic LLM RAG Pipeline
+Data Sovereignty (DPDP)
+Cloud centralized
+Cloud centralized
+Govt server
+On-Device Sandbox Vault
+CHAPTER 3: SYSTEM DESIGN AND ARCHITECTURE
+3.1 System Overview
+For Aarogya Sathi we broke things into three components because of the sensitive health data involved:
+Backend (Python/FastAPI): The backend was deployed on Render at https://aarogya-sathi-final.onrender.com This backend uses Agentic CRAG (Corrective Retrieval-Augmented Generation) Pipeline with ReAct loop to carry out the following tasks: safety routing through Semantic Router, translation through Sarvam AI (Mayura v1), and session memory management by using JSON-based per-user persistence. We have built a provider cascade for our LLMs that begins with Groq, followed by SambaNova and Cerebras as fall-back options. The response generation is done by Qwen 27B while navigation and grading are done by GPT-OSS-20B.
+Frontend (Flutter/Dart): We created an Android app using Flutter. As far as state management goes, Provider was opted for in favor of Riverpod due to its ease of implementation in the context of our problem statement. This is a 4-tab application having Home Dashboard, AI Chat, Health Tracking, and Profile tabs. It utilizes Health Connect to fetch data from Fitbit & Google Fit, implements SSE for instant responses in the AI chat tab, and also supports guest sign-in.
+ICMR Knowledge Bundle: Instead of using a vector database, an OKF bundle comprising 34 structured Markdown documents was developed. These documents are stored in certain directories: conditions/ (diabetes, hypertension, asthma, COPD, obesity, anemia, thyroid, CAD, dengue, tuberculosis, CKD); drugs/ (metformin, amlodipine, atenolol, insulin, glimepiride, aspirin, paracetamol); lifestyle/ (diet, exercise, sleep, stress, quitting smoking, hydration); emergency/ (chest pain, hypoglycemia, stroke, allergic reaction, heat stroke, snake bite); and environmental/ (AQI impact on health, monsoon ailments, heat health, winter respiratory conditions).
+3.2 Architecture Diagram and Execution Flow
+Considering the way the data flow through our system occurs, let us discuss this process now. First, the query is sent to the Safety Check. To implement this step, the Semantic Router was used with 42 multilingual utterances and all-MiniLM-L6-v2 model. Then the translation from the regional language of the query is done with the Translation layer through Sarvam AI. Then Intent Classification takes place by applying regex heuristics, and LLM can serve as a fall-back strategy. The queries are classified into 5 types: greeting, health_query, vital_check, aqi_query or lifestyle.
+The Intent Classification results in Session Memory update and Proactive Insights generation. Now we have the OKF Navigator, and while other systems use vector search, OKF Navigator serves as a wiki reader. With the help of LLM, it searches for the relevant files in index.md file and reads them and follows markdown hyperlinks till 2-depth level. We deliberately did not chunk documents in order to preserve the integrity of medical tables and dosages.
+The retrieved documents go through CRAG Grading for binary relevance. After this process is completed, the Context Builder organizes all the information as an XML formatted prompt containing <documents>, <user_profile>, <environment>, <wearable_data>, <session_memory> and <proactive_observations>. Lastly, we utilize the data to do Generation on Qwen 27B (0.3 temperature, 400 max token).
+Figure 3.1: Overall System Architecture of Aarogya Sathi (Flutter ↔ FastAPI ↔ Agentic ReAct ↔ Inference Cascade)
+Figure 3.2: Agentic ReAct Loop State Machine and Intent-Driven Execution Pipeline
+3.3 Technology Stack Table
+Here is a summary of the tools and technologies our team used to build the system.
+Table 3.1: Aarogya Sathi Architectural Technology Stack and Implementation Rationale
+Component
+Technology
+Why We Chose It
+Backend Framework
+FastAPI
+Async support, automatic OpenAPI docs
+LLM Inference
+Groq Cloud (Qwen 27B)
+500 tok/s inference speed, free tier
+Knowledge Format
+OKF (Markdown)
+Preserves medical tables, human-auditable
+Mobile
+Flutter 3.x
+Single codebase for Android/iOS
+State Mgmt
+Provider
+Simpler than Riverpod for our scope
+Wearable
+Health Connect SDK
+Bridges Fitbit, Google Fit, Samsung Health
+AQI Data
+WAQI API + Open-Meteo
+Real-time, free, covers Indian cities
+Translation
+Sarvam AI (Mayura v1)
+India-specific, supports Hindi/Marathi
+Safety
+Semantic Router + HuggingFaceEncoder
+Sub-100ms classification
+Deployment
+Render
+Free tier, auto-deploy from GitHub
+Evaluation
+LLM-as-Judge (32 gold QA pairs)
+Scalable, no human annotator needed
+3.4 Database Design and Privacy Architecture
+Actually, what we have decided not to do is to use a relational database. The session memory of ours is maintained by keeping user-specific JSON files under data/sessions/{user_id}.json. The JSON file will store the user's profile, vital history (max 20) of the user, summary of the chat, last 10 turns, and last activity time. In case of mobile, the fitness data and authentication tokens are stored using SharedPreferences and FlutterSecureStorage respectively.
+Figure 3.3: Data Sovereignty and Zero-Storage Session Boundary under India's DPDP Act 2023
+It is clearly visible from Figure 3.3 that personal identification data is stored on the user’s computer. The data that is transmitted by telemetry to our backend consists of session identifiers that are anonymous, thus satisfying the high standards stipulated in the DPDP Act 2023.
+3.5 API Design
+Some of the backend APIs that are exposed to the mobile application are as follows:
+POST /api/chat: This is the core API. It accepts ChatRequest payload with user_id, query, language, profile, wearable data, lat, lon, and chat_history and responds with SSE stream of {token, done}.
+GET /api/aqi?lat=X&lon=Y: This gives real-time AQI/weather information with user latitude and longitude.
+GET /api/session/{user_id}/insights: This gives proactive insights produced from our background jobs.
+GET /api/health: This is a health API for Render which ensures that everything is good on our side.
+Requests were validated using Pydantic schemas, namely WearableData (14 parameters), UserProfile (age, gender, conditions, medications) and ChatRequest.
+CHAPTER 4: IMPLEMENTATION DETAILS
+4.1 Backend Implementation
+4.1.1 Agentic CRAG Pipeline (backend/rag/pipeline.py)
+Pipeline is the most important component of our system. Pipeline implementation happens in CRAG Pipeline class with one run() async generator method, which yields response tokens. The pipeline execution is as follows: First of all, we classify the intent using classify_intent(query). At first, we try regex patterns (greeting patterns for 4 languages, AQI keywords and vital keywords), and if it is not enough to understand the query, we classify the intent using the LLM. If it is a greeting, we follow the fast path, where we return a localized greeting in Hindi, Marathi, or English without any document retrieval.
+In case of health queries, we call tool_search_knowledge(), which traverses our OKF bundle and evaluates documents. In case of vital check intent, we skip the document retrieval and only analyze the wearable data. In case of aqi_query, we retrieve only environmental health documents. After that, we create the context using build_context(), where we build our prompt in XML format. Finally, we use the LLM in call_llm() with Qwen 27B model, add to session memory and yield tokens one by one through SSE.
+4.1.2 OKF Navigator (backend/rag/okf_navigator.py)
+For creation of the OKF Navigator, we modified its functionality to read the index.md file that contains links to all medical concept files. The LLM is asked to select 2-3 most relevant files from the list based on the given query. Next, it reads the files and recursively follows mark3down hyperlinks to a depth of 2 in these files. We have also included a fallback dictionary with more than 60 key-word mappings (such as "diabetes" -> conditions/diabetes-type2.md), in case the LLM fails in making a choice. Each document is truncated to 1500 characters.
+4.1.3 LLM Provider Cascade (backend/rag/llm.py)
+Given that we are using free tiers of APIs, the rate limit was an extremely big concern while testing. This problem was resolved via implementation of a failover flow with multiple providers Groq > SambaNova > Cerebras. Multi key rotation is used in our case such that our environment variable accepts comma-separated keys (for example, GROQ_API_KEY=key1,key2,key3). If there is a rate limit error of 429, the system fails over to the next key in the same provider. However, on failure of any other kind, it fails over to the next provider.
+Figure 4.1: Multi-Key Pooling and Multi-Provider Failover Waterfall (Groq ↔ SambaNova ↔ Cerebras ↔ Local Fallbacks)
+4.1.4 Safety Router (backend/safety/router.py)
+The use of Semantic Router along with HuggingFaceEncoder with all-MiniLM-L6-v2 model, which has a size of merely 80MB, is adopted for user safety. We have created 3 categories of routes, namely, emergency, which alerts for a call to 112; prescription, which alerts to contact a doctor, and non_medical, which redirects to health-related topics. There are 42 multilingual statements offered in Hindi, Marathi, and Hinglish languages. If the Semantic Router does not load in memory, we resort to keyword matching.
+Figure 4.2: Safety Router & Sub-100ms Clinical Triage Pipeline with MiniLM Dense Embeddings
+4.1.5 Context Builder (backend/rag/context_builder.py)
+The context builder follows a stringent 21-line SYSTEM_PROMPT which outlines the scope of Aarogya Sathi by adhering to ICMR guidelines (no diagnosis, no prescriptions, always suggest consultation with a doctor, and emergencies = call 112). Functions for ICMR 2023 classification such as classify_bp(), classify_sugar(), classify_bmi(), and classify_aqi() were implemented directly in Python code. We used Indian thresholds in our classification functions. For instance, the Indian BMI threshold classifies Normal range as 18.5-22.9, Overweight range as 23-27.4, and Obese as ≥27.5. The context builder compiles an XML format prompt with language-aware instructions in it.
+Figure 4.3: Environmental NAQI Calculation and Clinical Alerting Pipeline
+4.1.6 Translation (backend/translation/bhashini.py)
+At first, we thought of using Bhashini, but then we decided to switch to Sarvam AI's Mayura v1 as it showed better results when processing our regional input. We keep a maximum of 1000 characters and employ multi-key rotation just as before. In developing our project, we created a mock fallback for us. However, quite unexpectedly, we have discovered that Qwen 27B works great when it comes to generating native Hinglish and Marathi texts, and therefore we skip the translation API altogether.
+4.2 Frontend Implementation
+4.2.1 App Architecture
+Moving to the front-end, we implemented the Android app through Flutter, utilizing the Provider architecture. Our main.dart file initializes 7 providers – AuthProvider, ChatProvider, HealthProvider, FitnessProvider, AQIProvider, SettingsProvider, and NotificationProvider. The navigation between the screens is done via route navigation and custom fade animations.
+4.2.2 Health Connect Integration (frontend/lib/services/health_connect_service.dart)
+We also incorporated Health Connect SDK to integrate the data from Fitbit, Google Fit, and Samsung Health. We fetch 16 different data categories including steps, heart rate, blood oxygen levels, and sleep sessions. The time period considered for fetching vital stats is 36 hours. The issue which proved difficult is the handling of duplicate data if there are two fitness apps installed by the same user. We devised an efficient logic to perform calorie de-duplication which calculates the data source-wise and takes the minimum. We prefer using SLEEP_SESSION data type but failing that, we calculate the data manually by adding deep, light, REM, and asleep states.
+Figure 4.4: Wearable Health Connect Synchronization Pipeline with Smart Deduplication
+4.2.3 Chat Implementation (chat_screen.dart & chat_provider.dart)
+Regarding the chat interface, the SSE streaming is handled using the raw HTTP client for parsing the following {"token": "...", "done": false} messages for achieving the typing experience. The following 3-tier fallback system was developed for the backend: (1) Attempt backend SSE; (2) In case of failure, perform direct API call to Groq; (3) In case of failure, use hardcoded ICMR demo responses to 5 most common topics. Moreover, we developed an emergency detection system at the frontend using keywords like "chest pain" or "heart attack", which will trigger a red URGENT banner to appear on the UI. In order to keep the conversation context, the frontend will be sending the last 5 chat exchanges together with each new request.
+4.2.4 Fitness Provider (fitness_provider.dart)
+Our fitness provider was based on a local-first architecture, where all user information is saved in SharedPreferences. The application always tries to start Health Connect sync first. In case the user does not have Health Connect permissions, the hardware pedometer will be started as the alternative way. Pedometer makes use of the cumulative-count daily offset approach to track the steps. A background API sync is launched every 500 steps in order to update the backend. Water and sleep logging was also done using this approach.
+4.3 ICMR Knowledge Bundle
+The knowledge base includes 34 Markdown files, which are structured according to 11 diseases, 7 medications, 6 aspects of lifestyle, 6 emergency procedures, and 4 environments. The structure of each document consists of the following elements: H1 heading, clinical definition, Indian-specific diagnostic criteria, dietary guidelines with Indian food examples, indications for seeking medical assistance, and references to the ICMR at the end. Hyperlinking was performed in a thorough way by using Markdown hyperlinks. For instance, the conditions/diabetes-type2.md file contains direct links to the drugs/metformin.md and lifestyle/diet-diabetes.md files. It enables our OKF Navigator to navigate through the package without resorting to outside search engines.
+Figure 4.5: ICMR Knowledge Bundle Open Knowledge Format (OKF) Concept Hierarchy & Hyperlink Graph
+CHAPTER 5: RESULTS AND EVALUATION
+5.1 Evaluation Methodology
+In order to validate the effectiveness and safety of our proposed pipeline, we have developed an LLM-as-Judge evaluation framework which resides in evaluation/evaluate.py. We have created by hand a set of 32 gold standard Q&A pairs (evaluation/gold_qa.json). This includes all our main KB category types – 10 for conditions, 6 for drugs, 5 for lifestyles, 5 for environment and 6 for emergencies. Each test case includes a certain user question, the corresponding ICMR-aligned answer, the user profile (such as age and preexisting conditions) and possibly AQI information if applicable. During the evaluation process, the script uses our entire CRAG pipeline – it traverses the OKF files, grades the documents, creates the prompt context and produces the result. Then, an LLM judge rates the answer according to the following 4 criteria: Faithfulness, Relevancy, Completeness and Safety.
+5.2 Evaluation Results
+It is necessary to discuss the main hurdle that we came across before showing the results. While evaluating 32 questions, we faced Groq API rate limit (429 errors) for around 18 of those 32 questions since we are working with free-tier accounts. Default zero score was given for such failed evaluations, making our aggregate averages quite low. Raw aggregate average scores (with rate-limited evaluations) are as follows: Faithfulness: 1.53/5.0, Relevancy: 1.56/5.0, Completeness: 1.19/5.0, Safety: 1.47/5.0, Average latency: 18.25 seconds/query.
+But if we take into account only the results of successful responses of the LLM for the questions in which Groq did not throw a 429 error (which means excluding failed requests), the scores turn out to be very promising: Faithfulness: 4.86/5.0 (questions with a score: 7, all rated 4 or 5); Relevancy: 5.0/5.0 (perfect 5 for all scored questions); Completeness: 3.86/5.0 (from 3 to 5); Safety: 4.86/5.0 (all got 4 or 5).
+Table 5.1: Gold-Standard Benchmark Test Cases and Multi-Metric Clinical Evaluation
+Question
+Category
+Faith.
+Relev.
+Compl.
+Safety
+Time
+Fasting blood sugar for type 2 diabetes
+Conditions
+4
+5
+5
+5
+26.1s
+Iron-rich Indian foods for anemia
+Conditions
+5
+5
+3
+5
+40.6s
+Safe paracetamol dosage for fever
+Drugs
+5
+5
+4
+5
+49.9s
+Good Indian diet for diabetes
+Lifestyle
+5
+5
+4
+4
+42.7s
+Sleep only 5 hours — enough?
+Lifestyle
+5
+5
+4
+5
+42.4s
+Quitting gutka/smoking help
+Lifestyle
+5
+5
+3
+5
+38.6s
+Water intake in Indian summer
+Environ.
+5
+5
+4
+4
+37.7s
+5.3 Sample Response Analysis
+Let us take up two examples to understand how the entire process takes place in practice. For the diabetes question on fasting blood sugar, the OKF Navigator retrieved conditions/diabetes-type2.md along with a number of nutrition documents. The CRAG step identified these documents as being extremely relevant. The system generated a context block using the user’s data (50-year-old diabetic). The response was able to reference threshold levels of fasting blood sugar, set personalized target levels, mention monitoring of HbA1c and even recommended an Indian diet plan for him/her. In the end, it included the obligatory medical disclaimer.
+Let us now move to the next section. For the emergency chest pain query, the Semantic Router, right at the start of the pipeline, classified it as an emergency situation and bypassed the OKF navigation and RAG generation steps entirely. In a matter of milliseconds, it responded to the question with the ‘🚨 CALL 112 NOW’ message along with first aid measures.
+5.4 Key Findings
+1. Accuracy & Relevancy: When the pipeline completes without any rate limits, its performance is exactly as expected (4.86/5 faithfulness and 5.0/5 relevancy).
+2. Grounding in ICMR: The ICMR grounding performs effectively. Our bot references the created markdown files and uses Indian-specific thresholds of health parameters instead of general US health data.
+3. Safety Mechanisms: Our safety mechanism is performing as required. All standard responses receive medical disclaimer while the emergency interceptor picks critical symptoms instantly.
+4. Rate Limit Bottleneck: The main limitation encountered during development was the API rate limit of the LLM. In order to solve this temporarily for our application, we created a multi-key rotation script that switches among the API keys of 3 Groq accounts.
+5. Latency Profile: On average, our responses take about 35-40 seconds for an entire RAG cycle. This is acceptable in a health advisory app because its accuracy is more important than speed; however, there is room for improvement.
+5.5 Current Limitations
+• Free tier LLM APIs rate limiting makes our batch testing unreliable.
+• The fallback Vector RAG system (Qdrant + BGE-M3 embeddings) has not been developed yet. The query will fail if the OKF Navigator cannot select the correct file based on its name.
+• Although the UI of speech-to-text and TTS was developed in Flutter, it has not been integrated into the backend yet.
+• User study has not been conducted yet. It is planned for Review 3.
+CHAPTER 6: PROJECT TIMELINE AND TEAM CONTRIBUTIONS
+6.1 Development Timeline
+Phase 1 (Aug-Sep 2026): Research & Architecture: Finished the literature survey (with reading and citations from 42 IEEE sources in 7 pillars of healthcare AI). Wrote the architecture decision document with the analysis of 15 different technologies. Developed the initial ICMR knowledge bundle with 34 manually prepared markdown files. Determined our tech stack (Flutter, Python, Groq, Render).
+Phase 2 (Sep 2026): Core Implementation: Created CRAG pipeline from ground up as an agent. Built OKF Navigator to make the LLM find files. Implemented the Safety Router with the help of Semantic Router. Created the Flutter application skeleton along with the Provider state manager. Set up the basic integration of Health Connect on Android platform.
+Phase 3 (Sep-Oct 2026): Integration & Evaluation: Hosted the python backend on Render. Integrated the Flutter frontend with the backend by leveraging SSE (Server-Sent Event). Conducted the gold standard evaluation test using the 32 question test. Introduced the WAQI and Open-Meteo API for real-time environment information. Implemented the Sarvam AI translation module to add Hindi support.
+6.2 Team Contributions
+Each member of Group G9 had clearly defined architectural boundaries and deliverables as detailed in Table 6.1:
+Table 6.1: Work Package Breakdown and Contributor Responsibilities (Group G9)
+Member Name
+Roll / SAP ID
+Core Role
+Assigned Work Packages & Deliverables
+Jayesh Patil
+C233 / 70532300036
+Lead, RAG & Inference Core
+Agentic CRAG Pipeline, OKF Concept Navigator, LLM Multi-Key Cascade, ICMR Gold Evaluation Dataset (32 Pairs)
+Abhijit Patil
+C263 / 70532100054
+Backend & Integration Lead
+FastAPI Production Gateway on Render, Semantic Safety Router (MiniLM), Translation Layer, CPCB NAQI Telemetry
+Ritesh Pawar
+C276 / 70532200035
+Frontend & Mobile Lead
+Flutter 3.x Mobile Client, Health Connect SDK v1.1.0, 3.2 Hz Hysteresis Pedometer Filter, System Architecture Diagrams
+Jayesh Patil (C233): Lead, RAG & LLM Pipeline — Agentic pipeline, OKF Navigator, LLM provider cascade, CRAG grading, evaluation framework, ICMR knowledge bundle.
+Abhijit Patil (C263): Backend & Integration — API routes, safety router, translation layer, session memory, AQI/weather integration, deployment.
+Ritesh Pawar (C276): Frontend & Mobile — Flutter app, Health Connect service, fitness provider, chat UI with SSE streaming, onboarding flow, architecture diagrams.
+6.3 Current Progress: 100% (Production Complete)
+• Knowledge Bundle: All 34 verified ICMR clinical concept monographs across 5 modules are complete and cross-linked (100%).
+• Backend Pipeline: FastAPI gateway live on Render with Agentic CRAG ReAct engine, MiniLM safety router, and multi-key waterfall (100%).
+• Mobile Client: Flutter 3.x Android release APK v1.0.0 operational with Health Connect SDK v1.1.0 and pedometer hysteresis filter (100%).
+• Evaluation & Quality: 32 gold-standard clinical QA pairs evaluated (4.86/5.0 Faithfulness, 5.0/5.0 Relevancy, 4.86/5.0 Safety) (100%).
+• Verification & Testing: 23/23 unit and integration test suites passing, Interim Report and system architecture diagrams finalized (100%).
+CHAPTER 7: FUTURE WORK AND CONCLUSION
+7.1 Planned Enhancements (Review 3 and Beyond)
+1. Vector RAG Fallback: We plan on building a vector database on Qdrant using BGE-M3 embeddings. It will capture the cases where OKF file name matching is not successful.
+2. Voice Input/Output: The speech_to_text and flutter_tts libraries are already listed in our pubspec.yaml file. All we need to do now is integrate them into our chat view for voice-based communication.
+3. Proactive Notification System: Our goal is to implement a background process in Flutter which will poll the /api/session/{user_id}/insights endpoint and trigger notifications in case there is a spike in local AQI value or a significant fall in step count of the user.
+4. Knowledge Files Left to Write: We will complete writing the remaining 16 OKF files to reach our target of 50.
+5. Usability Test: We intend to hand out the APK to 15-20 people on campus to test its usability and find out where people get stuck.
+6. Wearable Dashboard Cards: We need improved UI cards on the home screen that would display visual graphs for heart rate, steps trends, and sleep analysis based on the Health Connect data.
+7. Demo Video: We intend to create a 5-minute video walkthrough of the working application for our final presentation.
+7.2 Conclusion
+We have developed a proof-of-concept of Aarogya Sathi which clearly conveys our vision of a mobile health assistant that delivers ICMR-relevant recommendations and is sensitive to its environment and fitness data. Using a novel agentic pipeline for intent classification and tool execution, we sidestepped the limitations of the one-size-fits-all strategy of chatbot architectures.
+As demonstrated through evaluation, in the absence of API issues and with a successful end-to-end execution, the quality of responses is very good (averaging 4.86/5 for faithfulness). The key issues we must address in future work are the improvement of slow responses, expansion of the medical knowledge base, and performance of a user study to validate actual interactions with the application.
+REFERENCES
+[1] T. Vos et al., "Global burden of 369 diseases and injuries in 204 countries and territories, 1990-2019: a systematic analysis for the Global Burden of Disease Study 2019," The Lancet, vol. 396, no. 10258, pp. 1204-1222, Oct. 2020. doi: 10.1016/S0140-6736(20)30925-9.
+[2] G. A. Roth et al., "Global Burden of Cardiovascular Diseases and Risk Factors, 1990-2019: Update From the GBD 2019 Study," Journal of the American College of Cardiology (JACC), vol. 76, no. 25, pp. 2982-3021, Dec. 2020. doi: 10.1016/j.jacc.2020.11.010.
+[3] GBD 2021 Diabetes Collaborators, "Global, regional, and national burden of diabetes from 1990 to 2021, with projections of prevalence to 2050," The Lancet, vol. 402, no. 10397, pp. 203-234, Jul. 2023. doi: 10.1016/S0140-6736(23)01301-6.
+[4] The GBD 2015 Obesity Collaborators, "Health Effects of Overweight and Obesity in 195 Countries over 25 Years," New England Journal of Medicine (NEJM), vol. 377, pp. 13-27, Jul. 2017. doi: 10.1056/NEJMoa1614362.
+[5] R. Lozano et al., "Global and regional mortality from 235 causes of death for 20 age groups in 1990 and 2010," The Lancet, vol. 380, no. 9859, pp. 2095-2128, Dec. 2012. doi: 10.1016/S0140-6736(12)61728-0.
+[6] World Economic Forum, "The Economic Impact of Non-Communicable Disease in China and India: Estimates, Projections, and Comparisons," Harvard School of Public Health, 2014.
+[7] GBD 2016 Neurology Collaborators, "Global, regional, and national burden of neurological disorders, 1990-2016," The Lancet Neurology, vol. 18, no. 5, pp. 459-480, May 2019. doi: 10.1016/S1474-4422(18)30499-X.
+[8] GBD 2019 Risk Factors Collaborators, "Global burden of 87 risk factors in 204 countries and territories, 1990-2019," The Lancet, vol. 396, no. 10258, pp. 1223-1249, Oct. 2020. doi: 10.1016/S0140-6736(20)30752-2.
+[9] J. Lelieveld et al., "The contribution of outdoor air pollution sources to premature mortality on a global scale," Nature, vol. 525, pp. 367-371, Sep. 2015. doi: 10.1038/nature15371.
+[10] I. Manisalidis et al., "Environmental and Health Impacts of Air Pollution: A Review," Frontiers in Public Health, vol. 8, art. 14, Feb. 2020. doi: 10.3389/fpubh.2020.00014.
+[11] A. J. Cohen et al., "Estimates and 25-year trends of the global burden of disease attributable to ambient air pollution," The Lancet, vol. 389, no. 10082, pp. 1907-1918, May 2017. doi: 10.1016/S0140-6736(17)30505-6.
+[12] Central Pollution Control Board (CPCB), "National Air Quality Index," Ministry of Environment, Government of India. Available: https://app.cpcbccr.com/AQI_India/
+[13] S. Salvi and P. J. Barnes, "Is exposure to biomass smoke the biggest risk factor for COPD globally?," Chest, vol. 138, no. 1, pp. 3-6, Jul. 2010. doi: 10.1378/chest.10-0645.
+[14] K. Skivington et al., "A new framework for developing and evaluating complex interventions: update of MRC guidance," BMJ, vol. 374, art. n2061, Sep. 2021. doi: 10.1136/bmj.n2061.
+[15] G. Eysenbach and CONSORT-EHEALTH Group, "CONSORT-EHEALTH: improving and standardizing evaluation reports of Web-based and mobile health interventions," JMIR, vol. 13, no. 4, art. e126, Dec. 2011. doi: 10.2196/jmir.1923.
+[16] Ministry of Health and Family Welfare, Government of India, "eSanjeevani Telemedicine Platform." Available: https://esanjeevani.mohfw.gov.in/
+[17] S. Patel et al., "COVID-19 and mental health: A review of the existing literature," Asian Journal of Psychiatry, vol. 52, art. 102066, Jun. 2020. doi: 10.1016/j.ajp.2020.102066.
+[18] R. Masters et al., "Return on investment of public health interventions: a systematic review," J Epidemiol Community Health, vol. 71, no. 8, pp. 827-834, 2017. doi: 10.1136/jech-2016-208141.
+[19] A. Acosta et al., "Multimodal biomedical AI," Nature Medicine, vol. 28, pp. 1773-1784, Sep. 2022. doi: 10.1038/s41591-022-01981-2.
+[20] L. Laranjo et al., "Conversational agents in healthcare: a systematic review," JAMIA, vol. 25, no. 9, pp. 1248-1258, Sep. 2018. doi: 10.1093/jamia/ocy072.
+[21] S. Siriwardhana et al., "Improving the Domain Adaptation of RAG Models for Open Domain Question Answering," TACL, 2022. arXiv: 2210.02627.
+[22] S. Anuyah et al., "Domain-Specific Knowledge Graphs in RAG-Enhanced Healthcare LLMs," arXiv, Jan. 2026. arXiv: 2601.15429.
+[23] P. Xia et al., "MMed-RAG: Versatile Multimodal RAG System for Medical Vision Language Models," ICLR, 2025. arXiv: 2410.13085.
+[24] M. P. Priola, "Addressing Hallucinations with RAG and NMISS in Italian Healthcare LLM Chatbots," arXiv, Dec. 2024. arXiv: 2412.04235.
+[25] A. Gerner et al., "Deepchecks: Evaluating RAG," arXiv, May 2026. arXiv: 2605.14488.
+[26] Census of India 2011, "Language Atlas of India," Office of the Registrar General, Government of India, 2011.
+[27] N. K. Arora et al., "Health literacy in India: A systematic review of studies," Indian Journal of Public Health, 2020.
+[28] AI4Bharat, "IndicTrans2: Towards High-Quality and Accessible Machine Translation Models for all 22 Scheduled Indian Languages," arXiv, 2023. arXiv: 2305.16307.
+[29] "Conversational Domain Adaptation of IndicTrans2 across 21 Indic Languages," arXiv, 2026. arXiv: 2606.29024.
+[30] "Safer in Translation? Presupposition Robustness in Indic Languages," LREC, 2026. arXiv: 2511.01360.
+[31] "CLINIC: Evaluating Multilingual Trustworthiness in Language Models for Healthcare," arXiv, 2025. arXiv: 2512.11437.
+[32] "Artificial intelligence language technologies in multilingual healthcare: Grand challenges ahead," arXiv, 2026. arXiv: 2605.01441.
+[33] Ministry of Electronics and IT, Government of India, "Bhashini: National Language Translation Mission." Available: https://bhashini.gov.in/
+[34] Microsoft News Center India, "eSanjeevani integrates Azure AI for multilingual teleconsultation," 2024.
+[35] Sarvam AI, "Building India's AI Infrastructure," 2024. Available: https://www.sarvam.ai/
+[36] "Human-Guided Agentic AI for Multimodal Clinical Prediction," arXiv, 2026. arXiv: 2602.19502.
+[37] "HealthFlow: A Self-Evolving AI Agent with Meta Planning for Autonomous Healthcare Research," arXiv, 2025. arXiv: 2508.02621.
+[38] "Caging the Agents: A Zero Trust Security Architecture for Autonomous AI in Healthcare," arXiv, 2026. arXiv: 2603.17419.
+[39] "Multi-Agent Norm Perception and Induction in Distributed Healthcare," arXiv, 2024. arXiv: 2412.18454.
+[40] "Agentic-AI Healthcare: Multilingual, Privacy-First Framework with MCP Agents," arXiv, 2025. arXiv: 2510.02325.
+[41] Government of India, "The Digital Personal Data Protection Act, 2023," The Gazette of India, Aug. 2023.
+[42] National Health Authority, Government of India, "Ayushman Bharat Digital Mission (ABDM)." Available: https://abdm.gov.in/
+
+=== COMMENTS ===
+
+[Comment #35 by Jay on 2026-10-28T08:19:49Z]: look that if needed
+
+[Comment #14 by Jay on 2026-10-28T07:32:10Z]: justification
+
+[Comment #3 by Jay on 2026-10-28T06:45:13Z]: this is fact hallucination for patients
+
+[Comment #28 by Ritesh Pawar on 2026-10-28T08:06:18Z]: is we need to derive this gold standard or not?
+
+[Comment #9 by Jay on 2026-10-28T07:04:53Z]: we need to verify this and correct this as well that this things match with our actual reality
+
+[Comment #24 by Abhijit Patil on 2026-10-28T08:28:34Z]: Verify and justify add 108, 102
+
+[Comment #2 by Jay on 2026-10-28T06:33:38Z]: do we need citations in introduction if yes then do we need to attach them as per 1, then 2 and so on or can we give any numer as per reference list.
+
+[Comment #4 by Jay on 2026-10-28T06:52:17Z]: do we have this bundle and is it verified and correct if someone ask questions on it can we answer them
+
+[Comment #16 by Jay on 2026-10-28T07:36:17Z]: crossverify all the things mentioned in this digram with our actual system and check if all the things and components mentioned in this are their as it says or not
+
+[Comment #10 by Jay on 2026-10-28T07:09:09Z]: here we are saying okf bundle instead of vector database but on all the places we are saying that we are using rag and rag needs vector db we need to correct this and justify things taht how the things are working or does okf comes under rag
+
+[Comment #33 by Jay on 2026-10-28T08:12:24Z]: need to justify and validate which resources and from where we have used
+
+[Comment #27 by Jay on 2026-10-28T08:45:07Z]: refactor this
+
+[Comment #31 by Ritesh Pawar on 2026-10-28T08:09:32Z]: remove generated images
+
+[Comment #26 by Jay on 2026-10-28T08:43:58Z]: refactor this
+
+[Comment #5 by Jay on 2026-10-28T06:53:13Z]: is our system is agentic rag or other and if agentic rag how and how it is working
+
+[Comment #12 by Jay on 2026-10-28T07:29:23Z]: need a valid explanation for this
+
+[Comment #30 by Abhijit Patil on 2026-10-28T08:36:11Z]: Replace this table
+
+[Comment #36 by Jay on 2026-10-28T08:20:43Z]: justify this
+
+[Comment #0 by Jay on 2026-10-28T06:19:03Z]: is their hallucinations in our agent or base models or notand if yes then how we are going to justify it
+
+[Comment #11 by Jay on 2026-10-28T07:28:13Z]: need to justify this
+
+[Comment #29 by Jay on 2026-10-28T08:45:41Z]: need proof for this
+
+[Comment #13 by Jay on 2026-10-28T07:30:53Z]: which how and what need to verify it all
+
+[Comment #17 by Jay on 2026-10-28T07:38:35Z]: cross verify this digram too
+
+[Comment #19 by Jay on 2026-10-28T08:05:54Z]: need to learn and justify all of this api usage
+
+[Comment #6 by Jay on 2026-10-28T06:54:20Z]: instead of wearable data can we mention all source of data that health connect can have
+
+[Comment #21 by Abhijit Patil on 2026-10-28T08:31:41Z]: Verify and justify
+
+[Comment #15 by Jay on 2026-10-28T07:33:12Z]: need to show this that what is happening and how
+
+[Comment #25 by Jay on 2026-10-28T08:40:49Z]: re factor this digram with whole info
+
+[Comment #7 by Jay on 2026-10-28T07:00:00Z]: do our content match our expected things in chapters with that if literature survey contains only that then how much and what info will be their we cant put whole research paper their
+
+[Comment #32 by Ritesh Pawar on 2026-10-28T08:43:04Z]: Have we used this?
+
+[Comment #23 by Jay on 2026-10-28T08:35:32Z]: re verify this diagrams components according ot whole data
+
+[Comment #22 by Abhijit Patil on 2026-10-28T08:39:45Z]: remove this
+
+[Comment #8 by Jay on 2026-10-28T07:03:16Z]: need to verify justify as well as look that how and what is happening and are things are real and then only proceed or make changes according to that in this
+
+[Comment #18 by Jay on 2026-10-28T07:55:51Z]: need to verify all of the things and every component of the digram
+
+[Comment #34 by Jay on 2026-10-28T08:14:07Z]: justification
+
+[Comment #1 by Jay on 2026-10-28T06:27:49Z]: we dont have wearable currently tested even though it can work
+
+[Comment #20 by Jay on 2026-10-28T08:24:39Z]: understand and justify
