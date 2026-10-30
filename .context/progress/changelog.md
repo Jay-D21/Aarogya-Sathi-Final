@@ -1,5 +1,36 @@
 # Changelog
 
+## 2026-10-30 (Abhijit - Session 34: Final Capstone Blackbook Appendices Documentation)
+- [Abhijit] Designed and generated comprehensive Markdown Blackbook Appendices (`docs/AAROGYA_SATHI_BLACKBOOK_APPENDICES.md`):
+  - Formulated full Appendices A through D strictly adhering to NMIMS MPSTME Capstone Report standards:
+    - **Administrative Errata Guidance:** Documented explicit fixes for the Google Doc Certificate page (rectification of SAP ID mismatch from 70532100054 to 70532100053 for Abhijit Patil; removal of AI-humanizer phrasing artifacts "normally" and "in many respects").
+    - **Appendix A (Mobile App UI & Google Play Console):** Exhaustive layout specifications, M3 color tokens, and structured figure frames for all 6 key screens: Home Dashboard + CPCB Live AQI alert, Hindi Conversational Chat, Marathi Regional Chat, 16-Stream Health Connect Vitals Dashboard, <100ms Instant Emergency Triage Card, and Google Play Console Internal Testing Release on 6 physical devices.
+    - **Appendix B (XML System Prompt & ICMR OKF Monograph):** Documented the exact 21-line embedded ICMR system prompt, the 6-tag XML prompt assembly schema from `context_builder.py`, the complete production monograph `conditions/diabetes-type2.md`, and the master `index.md` hyperlink graph catalog.
+    - **Appendix C (Semantic Safety Router Utterance Bank):** Complete 44-utterance calibrated routing bank in English, Hindi (Devanagari), Marathi, and Romanized Hinglish across emergency, prescription, and non-medical routes with zero-safety-breach CPU latency verification (13.8ms mean latency).
+    - **Appendix D (32 Gold-Standard Clinical Benchmark & DPDP Payloads):** Comprehensive directory of all 32 clinical questions (Q01–Q32 across DM, HT, RA, NA, PH) detailing 14 completed runs vs 18 rate-limited cases, LLM-as-a-judge rubric (Composite 4.60/5.00), and an anonymized DPDP-compliant client-side JSON session payload.
+
+
+## 2026-10-28 (Abhijit - Session 33: "Managing Projects with AI" Executive Presentation)
+- [Abhijit] Designed and generated the complete PowerPoint presentation (Aarogya_Sathi_Managing_Projects_with_AI.pptx):
+  - Strictly aligned to the 8 modules of Coursera's Managing Projects with AI course by AI CERTs.
+  - Exactly 14 slides (strictly within the 12 to 15 slide constraint), delivered exclusively in .pptx format.
+  - Dedicated focus on how AI was used to manage the Aarogya Sathi project:
+    - Module 1: AI Foundations & Transformation (ML embeddings, NLP guideline ingestion, heuristic triage scheduling).
+    - Module 2: AI PM Toolchains & Robotic Process Automation (Automated Word COM IEEE document generation, CI/CD telemetry).
+    - Module 3: Data-Driven Decision Making & Quantitative Risk Control (CPCB/WAQI telemetry, ICMR ground truth bundles, risk gate matrix).
+    - Module 4: AI for Team Collaboration & Knowledge Management (The iLabs 4-tier .context/ architecture & continuous git auto-sync loop).
+    - Module 5: Ethical AI Governance, Privacy & Bias Mitigation (DPDP Act 2023 sandboxing, Asian BMI calibration, zero-prescription gate).
+    - Module 6: Implementing AI in Projects: The 5-Step Model (Decomposition, tool selection, data prep, pilot validation, monitoring).
+    - Module 7: Future of AI in PM & Green AI Engineering (Prompt engineering patterns, edge-first CPU triage reducing cloud calls 68%, LPU efficiency).
+    - Module 8: Autonomous AI Agents in PM (Typology, ReAct loops, multi-agent swarm case study: Research, Architect, Code Writer, QA).
+    - Empirical Validation & Playbook: Quantified outcomes (4.60/5.00 benchmark, 100% interception, 13.4ms latency, 23/23 tests pass).
+  - Validated formatting via native PowerPoint COM automation and rendered high-res previews in scratch/slide_previews/.
+
+## 2026-10-29 (Jayesh - Fix: 108 EMRI Emergency Ambulance Dispatch & Brand Ingestion)
+- [Jayesh] Updated EMERGENCY_RESPONSE in backend/safety/router.py:
+  - Added national emergency 112 alongside 108 (EMRI) / 102 (NHM) ambulance dispatch numbers per clinical review comment #24.
+- [Jayesh] Ingested Google Play Store screenshots, feature graphics, and interim report documentation into docs/brand/ and project root.
+
 ## 2026-10-28 (Abhijit — Session 32: 32-Question Gold Standard Benchmark & Safety Router Re-Verification)
 - [Abhijit] Created and verified the complete 32-Question Clinical Gold Standard Benchmark suite:
   - Formulated `benchmark/gold_standard_32.json` and `benchmark/GOLD_STANDARD_32.md` containing all 32 clinical cases across 5 ICMR domains (Diabetes 8, Hypertension 6, Respiratory 6, Anemia/Lifestyle 6, Preventive Health 6).

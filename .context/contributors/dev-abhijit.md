@@ -13,6 +13,19 @@
 4. **Dependency Cleanup**: Remove dead packages (`dio`, `fl_chart`, `shimmer`) from `frontend/pubspec.yaml`.
 
 ## What's Done ✅
+- Generated **Final Capstone Blackbook Appendices Documentation (Session 34: `docs/AAROGYA_SATHI_BLACKBOOK_APPENDICES.md`)**:
+  - Authored the exhaustive Markdown Appendices (A through D) adhering to NMIMS MPSTME Capstone Project standards (762 lines, ~70 KB).
+  - Documented Certificate page administrative errata (correcting Abhijit's SAP ID to 70532100053 and stripping AI-humanizer phrases "normally" and "in many respects").
+  - Appendix A: Detailed 6 UI & deployment figures covering Home Dashboard + AQI, Hindi/Marathi consultations, 16-Stream Health Connect aggregation, sub-100ms Emergency Triage Card, and Google Play Console Internal Track release.
+  - Appendix B: Full 21-line embedded ICMR system prompt, 6-tag XML schema, production monograph `conditions/diabetes-type2.md`, and master `index.md` graph.
+  - Appendix C: Complete 44-utterance calibrated multilingual routing bank with 13.8ms CPU benchmark metrics.
+  - Appendix D: Complete 32 gold-standard questions (Q01–Q32 across DM, HT, RA, NA, PH) with 14 completed vs 18 rate-limited tracking, LLM judge rubric (Composite 4.60/5.00), and DPDP-compliant session payload schema.
+
+- Generated **"Managing Projects with AI" Executive Presentation (Session 33: `Aarogya_Sathi_Managing_Projects_with_AI.pptx`)**:
+  - Authored a comprehensive 14-slide executive presentation mapping all 8 modules of Coursera's *Managing Projects with AI* course to the engineering and delivery of Aarogya Sathi.
+  - Formatted strictly in PPTX format (14 slides, compliant with the 12 to 15 slide constraint).
+  - Emphasized AI-driven project management methodologies: .context/ 4-tier knowledge management, multi-agent coordination loops (Research, Architect, Code Writer, QA), automated documentation robotics, and empirical risk gating.
+
 - Built and verified **Gold Mandala Splash Redesign & Android Launcher Icon (Session 23: `splash_screen.dart`, `aarogya_logo_dynamic.dart`, `login_screen.dart`, `flutter_launcher_icons`)**:
   - Redesigned splash screen opening with a 3-phase icon-to-splash animation sequence:
     - Phase 1 (0ms): Gold mandala appears small (0.30× scale), seamlessly matching the Android home screen launcher icon.
